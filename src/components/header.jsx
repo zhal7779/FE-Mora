@@ -64,15 +64,17 @@ const MenuContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  height: 100%;
 `;
 
 const MenuItem = styled.div`
+  height: 95%;
   ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
-    margin: 2.1rem 2rem 2.1rem 2rem;
     font-weight: 700;
     font-size: 1.6rem;
     color: ${(props) => (props.active ? '#242424' : '#616161')};
+
     cursor: pointer;
   }
 `;
