@@ -17,9 +17,15 @@ const Footer = () => {
           <p>개인 정보 처리 방침</p>
         </div>
         <div>
-          <InstagramIcon />
-          <FacebookIcon />
-          <GithubIcon />
+          <button>
+            <InstagramIcon />
+          </button>
+          <button>
+            <FacebookIcon />
+          </button>
+          <button>
+            <GithubIcon />
+          </button>
         </div>
       </MainContent>
       <SubContent>
@@ -71,6 +77,10 @@ const MainContent = styled.div`
     gap: 1rem;
     right: 0;
   }
+  button {
+    background: transparent;
+    cursor: pointer;
+  }
   p {
     padding: 0 3rem;
     font-size: 1.3rem;
@@ -98,7 +108,6 @@ const SubItems = styled.div`
   p {
     font-size: 1.2rem;
     color: #616161;
-    cursor: pointer;
     padding: 1rem 0 0 0.5rem;
   }
 `;
