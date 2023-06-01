@@ -140,7 +140,7 @@ input {
 appearance:none;
 }
 
-input:: -ms-clear { display:none;}
+input::-ms-clear { display:none;}
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-out-spin-button {
 -webkit-appearance: none;
@@ -154,9 +154,9 @@ select {
 appearance:none;
 }
 
-select:: -ms-expand { display:none; }
-input[type=number]:: -webkit-outer-spin-button,
-input[type=number]:: -webkit-inner-spin-button {
+select::-ms-expand { display:none; }
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
 -webkit-appearance: none;
 -mox-appearance: none;
 appearance: none;
@@ -183,7 +183,6 @@ body {
 // rem 단위설정 (1rem = 10px)
 html {
     font-size: 62.5%;
-    letter-spacing: -0.05px;
   }
 `;
 
