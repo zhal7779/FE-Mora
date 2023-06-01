@@ -3,39 +3,50 @@ import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../icons/fi_bell.svg';
+import SearchBar from './SearchBar';
 const Header = () => {
   const [menu, setMenu] = useState(0);
   const handleMenuClick = (num) => {
     setMenu(num);
   };
+  const [onSearch, setOnSearch] = useState(false);
+  const handleSearch = (boolean) => {
+    setOnSearch(boolean);
+  };
   return (
-    <Container>
-      <MainContent>
-        <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
-        <MenuContainer>
-          <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-            <p active={menu === 1}> 토끼굴</p>
-          </MenuItem>
-          <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-            <p active={menu === 2}> 정비소</p>
-          </MenuItem>
-          <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-            <p active={menu === 3}> 개발자 오픈 프로필</p>
-          </MenuItem>
-        </MenuContainer>
-      </MainContent>
-      <SideContent>
-        <div>
-          <SearchIcon />
-        </div>
-        <div>
-          <BellIcon />
-        </div>
-        <div>
-          <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
-        </div>
-      </SideContent>
-    </Container>
+    <>
+      {onSearch ? (
+        <SearchBar />
+      ) : (
+        <Container>
+          <MainContent>
+            <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+            <MenuContainer>
+              <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+                <p active={menu === 1}> 토끼굴</p>
+              </MenuItem>
+              <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+                <p active={menu === 2}> 정비소</p>
+              </MenuItem>
+              <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+                <p active={menu === 3}> 개발자 오픈 프로필</p>
+              </MenuItem>
+            </MenuContainer>
+          </MainContent>
+          <SideContent>
+            <div>
+              <SearchIcon onClick={() => handleSearch(true)} style={{ stroke: '#242424' }} />
+            </div>
+            <div>
+              <BellIcon />
+            </div>
+            <div>
+              <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
+            </div>
+          </SideContent>
+        </Container>
+      )}
+    </>
   );
 };
 export default Header;
