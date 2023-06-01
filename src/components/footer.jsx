@@ -12,9 +12,9 @@ const Footer = () => {
       <MainContent>
         <div>
           <LogoIcon style={{ marginRight: '2rem' }} />
-          <p>개인 정보 처리 방침</p>
+          <p>개인정보처리방침</p>
           <p>이용약관</p>
-          <p>개인 정보 처리 방침</p>
+          <p>이용안내</p>
         </div>
         <div>
           <button>
