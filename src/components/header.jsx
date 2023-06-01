@@ -107,6 +107,7 @@ const MenuItem = styled.div`
     font-weight: 700;
     font-size: 1.6rem;
     color: ${(props) => (props.active ? '#242424' : '#616161')};
+
     cursor: pointer;
   }
 `;
