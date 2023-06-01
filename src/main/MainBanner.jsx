@@ -1,42 +1,29 @@
 import styled from 'styled-components';
+import * as Style from './Style/MainBannerStyle';
+import BannerImg from '../assets/main-banner-img.png';
 import { Link } from 'react-router-dom';
 
 const MainBanner = () => {
   return (
-    <Banner>
+    <Style.BannerContainer>
       <div className="main-slogan">
-        <div className="main-slogan-text">
+        <div className="main-slogan-side">
           <span>개발 트렌드부터 Q&A까지!</span>
           <br />
           엘리스에서
           <br />
           인정한 레이서
           <br /> 필수 커뮤니티, 모레
+          <div className="main-slogan-btn">
+            <Link to="#"></Link>
+          </div>
         </div>
-        <Link to="#" className="main-slogan-btn"></Link>
+        <div className="main-image">
+          <img src={BannerImg} alt="메인 배너 이미지" />
+        </div>
       </div>
-    </Banner>
+    </Style.BannerContainer>
   );
 };
 
 export default MainBanner;
-
-const Banner = styled.section`
-  height: 925px;
-
-  .main-slogan {
-    width: 1280px;
-    margin: 0 auto;
-
-    &-text {
-      font-size: 48px;
-      font-weight: 700;
-      color: #fff;
-
-      span {
-        margin-bottom: 10px;
-        font-size: 24px;
-      }
-    }
-  }
-`;
