@@ -5,8 +5,10 @@ const SearchBar = () => {
   return (
     <Background>
       <Container>
-        <SearchIcon style={{ width: '3rem', height: '3rem', stroke: '#94a3b8' }} />
-        <Input placeholder='회사, 사람, 키워드로 검색'></Input>
+        <Content>
+          <SearchIcon style={{ width: '3rem', height: '3rem', stroke: '#94a3b8' }} />
+          <Input type='text' placeholder='회사, 사람, 키워드로 검색'></Input>
+        </Content>
       </Container>
     </Background>
   );
@@ -17,10 +19,15 @@ const Container = styled.div`
   position: fixed;
   z-index: 2;
   width: 100%;
+  background: #ffffff;
+`;
+const Content = styled.div`
+  max-width: 1280px;
   display: flex;
   align-items: center;
-  padding: 1.6rem 10rem;
-  background: #ffffff;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3.2rem 0;
 `;
 const Input = styled.input`
   padding: 1.4rem;

@@ -9,52 +9,56 @@ import { ReactComponent as EmailIcon } from '../icons/envelope-at.svg';
 const Footer = () => {
   return (
     <Container>
-      <MainContent>
-        <div>
-          <LogoIcon style={{ marginRight: '2rem' }} />
-          <p>개인정보처리방침</p>
-          <p>이용약관</p>
-          <p>이용안내</p>
-        </div>
-        <div>
-          <button>
-            <InstagramIcon />
-          </button>
-          <button>
-            <FacebookIcon />
-          </button>
-          <button>
-            <GithubIcon />
-          </button>
-        </div>
-      </MainContent>
-      <SubContent>
-        <SubItems>
-          <strong>CUSTOMER SUPPORT CENTER</strong>
+      <Content>
+        <MainContent>
           <div>
-            <CustomerContentDIv>
-              <TelephoneIcon style={{ marginTop: '1rem' }} />
-              <p>02-1234-5678</p>
-            </CustomerContentDIv>
-            <CustomerContentDIv>
-              <EmailIcon style={{ marginTop: '1rem' }} />
-              <p> elice@elice.com</p>
-            </CustomerContentDIv>
+            <LogoIcon style={{ marginRight: '2rem' }} />
+            <p>개인정보처리방침</p>
+            <p>이용약관</p>
+            <p>이용안내</p>
           </div>
-        </SubItems>
-        <SubItems>
-          <strong>OPERATING HOURS</strong>
-          <p>MON - FRI AM 09:30 - PM 05:30 </p>
-          <p>LUNCH PM 12:00 - 13:00</p>
-          <p> SAT, SUN, HOLIDAY OFF</p>
-        </SubItems>
-        <SubItems>
-          <strong>COMPANY INFORMATIONS</strong>
-          <p>COMPANY : 모여라 레이서 </p>
-          <p>CREATORS : 이민영, 이성호, 이혜정, 김윤지, 임지성, 김지우, 연정환 </p>
-        </SubItems>
-      </SubContent>
-      <CopyrightItem>Copyright ⓒ 2023 - 2023 Moyeora Elice Inc. All Rights Reserved.</CopyrightItem>
+          <div>
+            <button>
+              <InstagramIcon />
+            </button>
+            <button>
+              <FacebookIcon />
+            </button>
+            <button>
+              <GithubIcon />
+            </button>
+          </div>
+        </MainContent>
+        <SubContent>
+          <SubItems>
+            <strong>CUSTOMER SUPPORT CENTER</strong>
+            <div>
+              <CustomerContentDIv>
+                <TelephoneIcon style={{ marginTop: '1rem' }} />
+                <p>02-1234-5678</p>
+              </CustomerContentDIv>
+              <CustomerContentDIv>
+                <EmailIcon style={{ marginTop: '1rem' }} />
+                <p> elice@elice.com</p>
+              </CustomerContentDIv>
+            </div>
+          </SubItems>
+          <SubItems>
+            <strong>OPERATING HOURS</strong>
+            <p>MON - FRI AM 09:30 - PM 05:30 </p>
+            <p>LUNCH PM 12:00 - 13:00</p>
+            <p> SAT, SUN, HOLIDAY OFF</p>
+          </SubItems>
+          <SubItems>
+            <strong>COMPANY INFORMATIONS</strong>
+            <p>COMPANY : 모여라 레이서 </p>
+            <p>CREATORS : 이민영, 이성호, 이혜정, 김윤지, 임지성, 김지우, 연정환 </p>
+          </SubItems>
+        </SubContent>
+        <CopyrightItem>
+          Copyright ⓒ 2023 - 2023 Moyeora Elice Inc. All Rights Reserved.
+        </CopyrightItem>
+      </Content>
     </Container>
   );
 };
@@ -63,12 +67,19 @@ const Container = styled.footer`
   position: absolute;
   width: 100%;
   bottom: 0px;
-  padding: 2rem 32rem 2rem 32rem;
   background: #f7f5ff;
+`;
+const Content = styled.div`
+  padding: 2rem 0;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
 `;
 const MainContent = styled.div`
   display: flex;
-  padding-bottom: 2rem;
+  padding: 0 3rem 2rem 3rem;
   border-bottom: #cbd5e1 0.1rem solid;
   justify-content: space-between;
   div {
@@ -93,7 +104,7 @@ const SubContent = styled.div`
   border-bottom: #cbd5e1 0.1rem solid;
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 5rem;
 `;
 
 const SubItems = styled.div`

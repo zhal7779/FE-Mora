@@ -19,49 +19,60 @@ const Header = () => {
         <SearchBar />
       ) : (
         <Container>
-          <MainContent>
-            <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+          <Content>
             <MenuContainer>
-              <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-                <p active={menu === 1}> 토끼굴</p>
-              </MenuItem>
-              <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-                <p active={menu === 2}> 정비소</p>
-              </MenuItem>
-              <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-                <p active={menu === 3}> 개발자 오픈 프로필</p>
-              </MenuItem>
+              <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+              <MenuContent>
+                <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+                  <p active={menu === 1}> 토끼굴</p>
+                </MenuItem>
+                <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+                  <p active={menu === 2}> 정비소</p>
+                </MenuItem>
+                <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+                  <p active={menu === 3}> 개발자 오픈 프로필</p>
+                </MenuItem>
+              </MenuContent>
             </MenuContainer>
-          </MainContent>
-          <SideContent>
-            <div>
-              <SearchIcon onClick={() => handleSearch(true)} style={{ stroke: '#242424' }} />
-            </div>
-            <div>
-              <BellIcon />
-            </div>
-            <div>
-              <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
-            </div>
-          </SideContent>
+            <SideContent>
+              <div>
+                <SearchIcon onClick={() => handleSearch(true)} style={{ stroke: '#242424' }} />
+              </div>
+              <div>
+                <BellIcon />
+              </div>
+              <div>
+                <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
+              </div>
+            </SideContent>
+          </Content>
         </Container>
       )}
     </>
   );
 };
 export default Header;
-const Container = styled.div`
+const Container = styled.header`
   position: fixed;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 100;
   border-bottom: #cbd5e1 1px solid;
   height: 6rem;
 `;
-const MainContent = styled.div`
+const Content = styled.nav`
+  max-width: 1280px;
+  height: 100%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+`;
+const MenuContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 32rem;
   p {
     margin: 2.1rem 2rem 2.1rem 2rem;
     font-weight: 700;
@@ -71,10 +82,9 @@ const MainContent = styled.div`
   }
 `;
 
-const MenuContainer = styled.div`
+const MenuContent = styled.div`
   display: flex;
   align-items: center;
-  position: relative;
   height: 100%;
 `;
 
@@ -85,7 +95,6 @@ const MenuItem = styled.div`
     font-weight: 700;
     font-size: 1.6rem;
     color: ${(props) => (props.active ? '#242424' : '#616161')};
-
     cursor: pointer;
   }
 `;
@@ -93,8 +102,6 @@ const MenuItem = styled.div`
 const SideContent = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 32rem;
-  right: 0;
   div {
     margin: 0 1.1rem 0 1.1rem;
     cursor: pointer;
