@@ -1,15 +1,28 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../icons/fi_bell.svg';
 const Header = () => {
+  const [menu, setMenu] = useState(0);
+  const handleMenuClick = (num) => {
+    setMenu(num);
+  };
   return (
     <Container>
       <MainContent>
-        <LogoIcon style={{ marginRight: '2rem' }} />
-        <p>토끼굴</p>
-        <p>정비소</p>
-        <p>개발자 오픈 프로필</p>
+        <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+        <MenuContainer>
+          <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+            <p active={menu === 1}> 토끼굴</p>
+          </MenuItem>
+          <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+            <p active={menu === 2}> 정비소</p>
+          </MenuItem>
+          <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+            <p active={menu === 3}> 개발자 오픈 프로필</p>
+          </MenuItem>
+        </MenuContainer>
       </MainContent>
       <SideContent>
         <div>
@@ -32,6 +45,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: #cbd5e1 1px solid;
+  height: 6rem;
 `;
 const MainContent = styled.div`
   display: flex;
@@ -45,6 +59,24 @@ const MainContent = styled.div`
     cursor: pointer;
   }
 `;
+
+const MenuContainer = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
+const MenuItem = styled.div`
+  ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
+  p {
+    margin: 2.1rem 2rem 2.1rem 2rem;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: ${(props) => (props.active ? '#242424' : '#616161')};
+    cursor: pointer;
+  }
+`;
+
 const SideContent = styled.div`
   display: flex;
   align-items: center;
