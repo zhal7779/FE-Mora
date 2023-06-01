@@ -28,11 +28,11 @@ const AdminSideBar = styled.div`
   & .side-bar-btn {
     display: flex;
     align-items: center;
-    margin: 0;
     padding: 0;
-    border: none;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    border: none;
+    margin: 0;
 
     background-color: #fff;
 
@@ -43,18 +43,13 @@ const AdminSideBar = styled.div`
     height: 2.4rem;
     margin-right: 0.8rem;
 
-    vertical-align: middle;
     line-height: 2.4rem;
+    vertical-align: middle;
   }
   & .management-list-title {
     font-size: 1.8rem;
     font-weight: bold;
   }
-`;
-// admin main
-const AdminMainContent = styled.div`
-  width: 720px;
-  padding-top: 3.6rem;
 `;
 
 // search bar
@@ -64,9 +59,9 @@ const SearchBarBlock = styled.div`
   gap: 0.8rem;
   width: 100%;
   padding: 1.1rem 1.3rem;
-  margin-bottom: 3.2rem;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
+  margin-bottom: 5rem;
 `;
 const SearchBar = styled.input`
   width: 100%;
@@ -82,6 +77,72 @@ const SearchBar = styled.input`
   }
   &:focus {
     outline: none;
+  }
+`;
+
+// admin main
+const AdminMainContent = styled.div`
+  width: 720px;
+  padding-top: 3.6rem;
+
+  & .table-title {
+    margin-bottom: 2rem;
+
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  & .table-row-info,
+  & .user-info {
+    display: grid;
+    grid-template-columns: 4.5rem 5.5rem 22rem 19.5rem 11rem 5rem 4rem;
+    grid-template-rows: 4rem;
+    justify-items: center;
+    align-items: center;
+    border-bottom: 1px solid #d6c9ff;
+  }
+  & .table-row-info {
+    border-bottom: 1px solid #000;
+  }
+  & .user-info:nth-child(even) {
+    background-color: #eeeafe;
+  }
+
+  & .table-row-info > span,
+  & .user-info > span {
+    font-size: 1.4rem;
+  }
+
+  & .table-block {
+    margin-bottom: 6rem;
+  }
+
+  & .page-nation-block {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 10rem;
+  }
+  & .page-nation-block .page {
+    width: 3rem;
+    height: 3rem;
+
+    border: 1px solid gray;
+    border-radius: 0.4rem;
+
+    font-size: 1.4rem;
+    text-align: center;
+    line-height: 3rem;
+
+    cursor: pointer;
+  }
+  & .page-nation-block .page:first-child {
+    border: none;
+
+    background-color: #7353ea;
+  }
+  & .page-nation-block .page:first-child > p {
+    color: #ffffff;
   }
 `;
 
@@ -103,7 +164,7 @@ const AdminUser = () => {
       <AdminBlock>
         <AdminSideBar>
           <div>
-            <h1>관리자 Q&A</h1>
+            <h1>관리자</h1>
           </div>
           <div className='management-list'>
             <p>관리 목록</p>
@@ -188,6 +249,403 @@ const AdminUser = () => {
             </svg>
             <SearchBar type='text' placeholder='키워드로 검색' />
           </SearchBarBlock>
+          {/* table */}
+          <h2 className='table-title'>사용자 목록</h2>
+          <div className='table-block'>
+            <div className='table-row-info' style={{ fontWeight: 'bold' }}>
+              <span>유저ID</span>
+              <span>이름</span>
+              <span>이메일</span>
+              <span>비밀번호</span>
+              <span>가입 날짜</span>
+              <span>수정</span>
+              <span>삭제</span>
+            </div>
+            <ul className='user-info-list'>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>1</span>
+                <span>임지성</span>
+                <span>jisung9105@gmail.com</span>
+                <span>dkssudgktpdy11334^^&&</span>
+                <span>2023.06.01</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+              <li className='user-info'>
+                <span>2</span>
+                <span>김윤지</span>
+                <span>yunji9105@gmail.com</span>
+                <span>ahdufkdpffl1234^^</span>
+                <span>2023.06.02</span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      fill='#7353EA'
+                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                    <path
+                      stroke='#FF1300'
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
+                    />
+                  </svg>
+                </span>
+              </li>
+            </ul>
+          </div>
+          {/* page-nation */}
+          <div className='page-nation-block'>
+            <div className='page'>
+              <p>1</p>
+            </div>
+            <div className='page'>
+              <p>2</p>
+            </div>
+            <div className='page'>
+              <p>3</p>
+            </div>
+            <div className='page'>
+              <p>4</p>
+            </div>
+            <div className='page'>
+              <p>5</p>
+            </div>
+          </div>
         </AdminMainContent>
       </AdminBlock>
     </>
