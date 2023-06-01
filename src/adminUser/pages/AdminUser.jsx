@@ -247,7 +247,7 @@ const AdminUser = () => {
                 clip-rule='evenodd'
               />
             </svg>
-            <SearchBar type='text' placeholder='키워드로 검색' />
+            <SearchBar type='text' placeholder='사용자 이름 검색' />
           </SearchBarBlock>
           {/* table */}
           <h2 className='table-title'>사용자 목록</h2>
