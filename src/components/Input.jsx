@@ -2,6 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import searchIcon from '../assets/u_search.svg';
 
+const Input = ({ width }) => {
+  // 이렇게 props 적용해서 쓰기
+  // <Input width='50%' />
+  // <Input width='75%' />
+
+  return (
+    <InputContainer width={width}>
+      <SearchIcon src={searchIcon} alt='Search' />
+      <InputElement type='text' placeholder='키워드를 입력해주세요' />
+    </InputContainer>
+  );
+};
+
+export default Input;
+
 const InputContainer = styled.div`
   position: relative;
   width: ${({ width }) => width};
@@ -30,22 +45,3 @@ const SearchIcon = styled.img`
   width: 20px;
   height: 20px;
 `;
-
-// 이렇게 props 적용해서 쓰기
-{
-  /* 
-    <Input width='50%' />
-    <Input width='75%' /> 
-    */
-}
-
-const Input = ({ width }) => {
-  return (
-    <InputContainer width={width}>
-      <SearchIcon src={searchIcon} alt='Search' />
-      <InputElement type='text' placeholder='키워드를 입력해주세요' />
-    </InputContainer>
-  );
-};
-
-export default Input;
