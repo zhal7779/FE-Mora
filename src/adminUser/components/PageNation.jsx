@@ -1,4 +1,3 @@
-import React from 'react';
 import { PageNationBlock, PageNationBlockDiv } from '../styledComponents/tableComponent';
 
 // 나중에 util 함수로 빼도 될 듯(게시글 전체 렝스, 페이지당 보여줄 게시물 개수를 인자로 받아서 몇 페이지가 나올지 배열에 넣어서 반환하는 함수)
