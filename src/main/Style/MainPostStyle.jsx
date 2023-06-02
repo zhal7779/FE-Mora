@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.section`
-  width: 1024px;
+  max-width: 1024px;
   padding-top: 180px;
   margin: 0 auto;
 
@@ -14,6 +14,7 @@ export const PostContainer = styled.section`
     p {
       margin: 14px 0 36px;
       font-size: 1.8rem;
+      line-height: 2.2rem;
       font-weight: 600;
       color: #605EA0;
     }
@@ -97,7 +98,7 @@ export const PostContainer = styled.section`
         &-text {
           /* width: ${({ hasImage }) =>
             hasImage ? 'calc(100% - 135px)' : '100%'}; */
-          width: 810px;
+          width: calc(100% - 155px);
           height: 65px;
 
           word-wrap: break-word;
