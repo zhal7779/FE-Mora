@@ -1,13 +1,13 @@
 import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
-import SearchPage from './pages/SearchPage';
+import CommunityPage from './pages/CommunityPage';
 
 const App = () => {
   return (
     <>
       <Router>
         <Routes>
-          <Route path='/' />
-          <Route path='/search' element={<SearchPage />} />
+          <Route path="/" />
+          <Route path="/community" element={<CommunityPage />} />
         </Routes>
       </Router>
     </>
