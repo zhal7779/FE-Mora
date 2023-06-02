@@ -9,6 +9,5 @@ root.render(
   <React.StrictMode>
     <ResetStyle />
     <App />
-    <Header />
   </React.StrictMode>
 );
