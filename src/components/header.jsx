@@ -59,6 +59,7 @@ const Container = styled.header`
   right: 0;
   top: 0;
   z-index: 100;
+  background: #ffffff;
   border-bottom: #cbd5e1 1px solid;
   height: 6rem;
 `;
