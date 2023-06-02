@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import * as Style from './Style/MainBannerStyle';
 import BannerImg from '../assets/main-banner-img.png';
 import { Link } from 'react-router-dom';

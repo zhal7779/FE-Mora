@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import * as Style from './Style/MainPostStyle';
 import { useState } from 'react';
 

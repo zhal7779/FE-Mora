@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 export const PostContainer = styled.section`
   width: 1024px;
   padding-top: 180px;

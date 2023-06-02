@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 export const BannerContainer = styled.section`
   height: 925px;
   background-color: #8e90ce;
