@@ -1,4 +1,4 @@
-import * as Style from './Style/CommunityPostStyle';
+import * as Style from './styledComponents/CommunityPostStyle';
 import Input from '../components/Input';
 
 const SearchBar = ({ category }) => {

@@ -1,14 +1,23 @@
 import React from 'react';
 import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 import CommunityPage from './pages/CommunityPage';
+import MainPage from './pages/MainPage';
+import Login from './pages/LoginPage';
+import Signin from './pages/SigninPage';
+import AdminUser from './pages/AdminUserPage';
+import SearchPage from './pages/SearchPage';
 
 const App = () => {
   return (
     <React.StrictMode>
       <Router>
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<MainPage />} />
           <Route path="/community" element={<CommunityPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/admin/users" element={<AdminUser />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </Router>
     </React.StrictMode>

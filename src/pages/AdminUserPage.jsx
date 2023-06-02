@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import AdminBlock from '../components/AdminBlock';
-import AdminSideBar from '../components/AdminSideBar';
-import SearchBar from '../components/SearchBar';
-import Modal from '../../adminCommon/components/Modal';
-import Header from '../components/Header';
-import AdminTable from '../components/AdminTable';
-import { AdminMainContainer } from '../styledComponents/adminMainContainer';
+import AdminBlock from '../adminUser/components/AdminBlock';
+import AdminSideBar from '../adminUser/components/AdminSideBar';
+import SearchBar from '../adminUser/components/SearchBar';
+import Modal from '../adminCommon/components/Modal';
+import Header from '../adminUser/components/Header';
+import AdminTable from '../adminUser/components/AdminTable';
+import { AdminMainContainer } from '../adminUser/styledComponents/adminMainContainer';
 
 const AdminUser = () => {
   const [modal, setModal] = useState(false);
