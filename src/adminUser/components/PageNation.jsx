@@ -4,7 +4,8 @@ import { PageNationBlock, PageNationBlockDiv } from '../styledComponents/tableCo
 const totalPages = [];
 const onePageCount = 12;
 let count = 1;
-let totalUser = tableBodyData.length;
+// let totalUser = tableBodyData.length;
+let totalUser = 14;
 
 while (totalUser > 0) {
   totalUser = ~~(totalUser / onePageCount);

@@ -125,7 +125,6 @@ const AdminTableBody = ({ toggleModal }) => {
                 fill='none'
                 onClick={() => {
                   const response = confirm('삭제하시겠습니까?');
-                  console.log(response);
                 }}
               >
                 <path
