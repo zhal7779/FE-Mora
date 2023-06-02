@@ -4,15 +4,23 @@ import { ReactComponent as LogoIcon } from '../icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../icons/fi_bell.svg';
 import SearchBar from './SearchBar';
+import AlarmModal from './AlarmModal';
 const Header = () => {
   const [menu, setMenu] = useState(0);
   const handleMenuClick = (num) => {
     setMenu(num);
   };
+
   const [onSearch, setOnSearch] = useState(false);
-  const handleSearch = (boolean) => {
+  const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
   };
+
+  const [onModal, setOnModal] = useState(false);
+  const handleModalClick = (boolean) => {
+    setOnModal(boolean);
+  };
+
   return (
     <>
       {onSearch ? (
@@ -20,6 +28,8 @@ const Header = () => {
       ) : (
         <Container>
           <Content>
+            <ModalContent>{onModal && <AlarmModal onClick={handleModalClick} />}</ModalContent>
+
             <MenuContainer>
               <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
               <MenuContent>
@@ -34,12 +44,13 @@ const Header = () => {
                 </MenuItem>
               </MenuContent>
             </MenuContainer>
+
             <SideContent>
               <div>
-                <SearchIcon onClick={() => handleSearch(true)} style={{ stroke: '#242424' }} />
+                <SearchIcon onClick={() => handleSearchClick(true)} style={{ stroke: '#242424' }} />
               </div>
               <div>
-                <BellIcon />
+                <BellIcon onClick={() => handleModalClick(!onModal)} />
               </div>
               <div>
                 <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
@@ -112,4 +123,9 @@ const ImageIcon = styled.img`
   width: 3.6rem;
   height: 3.6rem;
   border-radius: 50%;
+`;
+const ModalContent = styled.div`
+  position: fixed;
+  top: 5.8rem;
+  left: 96rem;
 `;
