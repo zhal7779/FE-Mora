@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import AdminBlock from './AdminBlock';
+import Modal from '../../adminCommon/components/Modal';
+import { useState } from 'react';
 
 // admin side bar
 const AdminSideBar = styled.div`
@@ -47,6 +49,8 @@ const AdminSideBar = styled.div`
     vertical-align: middle;
   }
   & .management-list-title {
+    color: #adadad;
+
     font-size: 1.8rem;
     font-weight: bold;
   }
@@ -95,7 +99,7 @@ const AdminMainContent = styled.div`
   & .table-row-info,
   & .user-info {
     display: grid;
-    grid-template-columns: 4.5rem 5.5rem 22rem 19.5rem 11rem 5rem 4rem;
+    grid-template-columns: 4.5rem 5.5rem 22rem 12rem 12rem 9rem 6.5rem;
     grid-template-rows: 4rem;
     justify-items: center;
     align-items: center;
@@ -105,12 +109,21 @@ const AdminMainContent = styled.div`
     border-bottom: 1px solid #000;
   }
   & .user-info:nth-child(even) {
-    background-color: #eeeafe;
+    background-color: #faf7ff;
   }
 
   & .table-row-info > span,
   & .user-info > span {
     font-size: 1.4rem;
+  }
+  & .detail-btn {
+    padding: 0.7rem 1rem 0.5rem 1rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.4rem;
+
+    background-color: #fcfcfe;
+
+    font-weight: 500;
   }
 
   & .table-block {
@@ -147,6 +160,12 @@ const AdminMainContent = styled.div`
 `;
 
 const AdminUser = () => {
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
   return (
     <>
       <header
@@ -173,21 +192,23 @@ const AdminUser = () => {
                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' className='side-bar-list-svg'>
                   <path
                     stroke='#7353EA'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='1.8'
                     d='M23 21v-2a4 4 0 0 0-3-3.87M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M16 3.13a4 4 0 0 1 0 7.75M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z'
                   />
                 </svg>
-                <span className='management-list-title'>사용자 관리</span>
+                <span className='management-list-title' style={{ color: 'black' }}>
+                  사용자 관리
+                </span>
               </button>
               <button className='side-bar-btn'>
                 <svg xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg' fill='none'>
                   <path
                     stroke='#ADADAD'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='1.8'
                     d='M11 5 6 9H2v6h4l5 4V5ZM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07'
                   />
                 </svg>
@@ -242,9 +263,8 @@ const AdminUser = () => {
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'>
               <path
                 fill='#94A3B8'
-                fill-rule='evenodd'
                 d='M10 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-7 5a7 7 0 1 1 12.606 4.192l5.101 5.1a1 1 0 0 1-1.414 1.415l-5.1-5.1A7 7 0 0 1 3 10Z'
-                clip-rule='evenodd'
+                clipRule='evenodd'
               />
             </svg>
             <SearchBar type='text' placeholder='사용자 이름 검색' />
@@ -258,7 +278,7 @@ const AdminUser = () => {
               <span>이메일</span>
               <span>비밀번호</span>
               <span>가입 날짜</span>
-              <span>수정</span>
+              <span>상세보기</span>
               <span>삭제</span>
             </div>
             <ul className='user-info-list'>
@@ -266,23 +286,29 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='22'
+                    height='22'
+                    fill='none'
+                    onClick={() => {
+                      const response = confirm('삭제하시겠습니까?');
+                      console.log(response);
+                    }}
+                  >
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -292,23 +318,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -318,23 +341,20 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -344,23 +364,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -370,23 +387,20 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -396,23 +410,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -422,23 +433,20 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -448,23 +456,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -474,23 +479,20 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -500,23 +502,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -526,23 +525,20 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -552,23 +548,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -578,23 +571,20 @@ const AdminUser = () => {
                 <span>1</span>
                 <span>임지성</span>
                 <span>jisung9105@gmail.com</span>
-                <span>dkssudgktpdy11334^^&&</span>
+                <span>********</span>
                 <span>2023.06.01</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -604,23 +594,20 @@ const AdminUser = () => {
                 <span>2</span>
                 <span>김윤지</span>
                 <span>yunji9105@gmail.com</span>
-                <span>ahdufkdpffl1234^^</span>
+                <span>********</span>
                 <span>2023.06.02</span>
                 <span>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
-                    <path
-                      fill='#7353EA'
-                      d='M20.167 6.637a.917.917 0 0 0-.266-.651l-3.887-3.887a.917.917 0 0 0-.65-.266.917.917 0 0 0-.652.266l-2.594 2.594L2.1 14.713a.916.916 0 0 0-.266.65v3.887a.917.917 0 0 0 .917.917h3.887a.916.916 0 0 0 .696-.266l9.964-10.02 2.604-2.548a1.09 1.09 0 0 0 .201-.302.92.92 0 0 0 0-.22.64.64 0 0 0 0-.128l.065-.046ZM6.26 18.333H3.667V15.74l9.102-9.102 2.594 2.594-9.102 9.102ZM16.656 7.938l-2.594-2.594 1.301-1.292 2.585 2.585-1.292 1.301Z'
-                    />
-                  </svg>
+                  <button className='detail-btn' onClick={toggleModal}>
+                    보기
+                  </button>
                 </span>
                 <span>
                   <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'>
                     <path
                       stroke='#FF1300'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                      stroke-width='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='1.8'
                       d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
                     />
                   </svg>
@@ -648,6 +635,7 @@ const AdminUser = () => {
           </div>
         </AdminMainContent>
       </AdminBlock>
+      <Modal modal={modal} toggleModal={toggleModal} />
     </>
   );
 };
