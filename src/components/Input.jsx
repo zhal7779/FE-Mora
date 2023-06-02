@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import searchIcon from '../assets/u_search.svg';
+import searchIcon from '../assets/icons/u_search.svg';
 
 const Input = ({ width }) => {
   // 이렇게 props 적용해서 쓰기
