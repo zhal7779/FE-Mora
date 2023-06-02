@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../../icons/fi_search.svg';
+import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 
 const SearchResultBar = () => {
   const [menu, setMenu] = useState(1);
-  const handleMenuClick = (num) => {
+  const handleMenuClick = num => {
     setMenu(num);
   };
   return (
@@ -12,11 +12,13 @@ const SearchResultBar = () => {
       <MainDiv>
         <Content>
           <SubSearchContent>
-            <SearchIcon style={{ width: '2.4rem', height: '2.4rem', stroke: '#94a3b8' }} />
+            <SearchIcon
+              style={{ width: '2.4rem', height: '2.4rem', stroke: '#94a3b8' }}
+            />
             <input
-              type='text'
+              type="text"
               value={'리액트'}
-              placeholder='회사, 사람, 키워드로 검색'
+              placeholder="회사, 사람, 키워드로 검색"
               readOnly
             ></input>
           </SubSearchContent>
@@ -32,16 +34,28 @@ const SearchResultBar = () => {
       <MainDiv>
         <Content>
           <SearchNav>
-            <SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+            <SearchNavItem
+              onClick={() => handleMenuClick(1)}
+              active={menu === 1}
+            >
               <p active={menu === 1}>전체</p>
             </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+            <SearchNavItem
+              onClick={() => handleMenuClick(2)}
+              active={menu === 2}
+            >
               <p active={menu === 2}>프로필</p>
             </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+            <SearchNavItem
+              onClick={() => handleMenuClick(3)}
+              active={menu === 3}
+            >
               <p active={menu === 3}>게시물</p>
             </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
+            <SearchNavItem
+              onClick={() => handleMenuClick(4)}
+              active={menu === 4}
+            >
               <p active={menu === 4}>레이서 Q&A</p>
             </SearchNavItem>
           </SearchNav>
@@ -97,12 +111,12 @@ const SearchNav = styled.div`
   gap: 0.8rem;
 `;
 const SearchNavItem = styled.div`
-  ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
+  ${props => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
     font-size: 1.6rem;
     font-weight: 700;
     padding: 1.6rem;
     cursor: pointer;
-    color: ${(props) => (props.active ? '#242424' : '#bdbdbd')};
+    color: ${props => (props.active ? '#242424' : '#bdbdbd')};
   }
 `;

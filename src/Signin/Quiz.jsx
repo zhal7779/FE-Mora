@@ -1,10 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 import { useState, useEffect } from 'react';
-import LoginContainer from '../Login/LoginContainer';
-import Headline from '../Login/Headline';
-import LoginInput from '../Login/LoginInput';
-import LoginButton from '../Login/LoginButton';
-import LittleText from '../Login/LittleText';
+import LoginContainer from '../login/LoginContainer';
+import Headline from '../login/Headline';
+import LoginInput from '../login/LoginInput';
+import LoginButton from '../login/LoginButton';
+import LittleText from '../login/LittleText';
 import turtleImg from '../assets/turtle.png';
 import rabbitImg from '../assets/rabbit.png';
 
@@ -25,7 +25,7 @@ const Quiz = () => {
   const quizList = [
     'ㅇㅇㅈ 매니저님의 이름은?',
     '잊지마 기억해 봇은 어떤 동물?',
-    '정답을 맞추면 나오는 동물은?',
+    '정답을 맞추면 나오는 동물은?'
   ];
   const quizAns = ['이어진', '거북이', '토끼'];
   const quizHint = ['힌트는 20대 꽃미남', '힌트는 세 글자', '힌트는 두 글자'];
@@ -50,45 +50,45 @@ const Quiz = () => {
 
   return (
     <LoginContainer>
-      <Headline title='자, 여기서 퀴즈!' />
+      <Headline title="자, 여기서 퀴즈!" />
 
       <LoginInput
         title={quizList[randomIndex]}
-        type='text'
+        type="text"
         placeholder={quizHint[randomIndex]}
-        name='answer'
+        name="answer"
         value={answer}
-        onChange={(e) => {
+        onChange={e => {
           e.preventDefault();
           setAnswer(e.target.value);
           setShowImage(false);
         }}
       />
 
-      <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
+      <LoginButton color="darkPurple" value="제출" onClick={handleSubmit} />
 
-      <LittleText text='퀴즈를 통과하면 회원가입으로 넘어갑니다!' />
+      <LittleText text="퀴즈를 통과하면 회원가입으로 넘어갑니다!" />
 
       {/* 임시 이미지 사용중, 1초뒤에 회원가입 페이지로 넘어가기 */}
 
       {showImage && answer === quizAns[randomIndex] && (
         <AnimatedImage
           src={rabbitImg}
-          alt='토끼 이미지'
+          alt="토끼 이미지"
           style={{ width: '50rem', height: '35rem' }}
         />
       )}
       {showImage && answer !== quizAns[randomIndex] && (
         <AnimatedImage
           src={turtleImg}
-          alt='거북이 이미지'
+          alt="거북이 이미지"
           style={{ width: '60rem', height: '35rem' }}
         />
       )}
 
       <LoginButton
-        color='lightPurple'
-        value='다른 문제 풀기'
+        color="lightPurple"
+        value="다른 문제 풀기"
         onClick={() => {
           getOtherQuiz();
           setAnswer('');

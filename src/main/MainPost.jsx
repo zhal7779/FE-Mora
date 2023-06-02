@@ -1,4 +1,4 @@
-import * as Style from './Style/MainPostStyle';
+import * as Style from './styledComponents/MainPostStyle';
 import { useState } from 'react';
 
 const MainPost = () => {

@@ -1,23 +1,23 @@
-import * as Style from './Style/CommunityCategoryStyle';
+import * as Style from './styledComponents/CommunityCategoryStyle';
 import { useState } from 'react';
 import Button from '../components/Button';
 
 const categories = [
   {
     name: '자유 게시판',
-    icon: require('../assets/icon-category01.svg').default
+    icon: require('../assets/icons/icon-category01.svg').default
   },
   {
     name: '지식 공유',
-    icon: require('../assets/icon-category02.svg').default
+    icon: require('../assets/icons/icon-category02.svg').default
   },
   {
     name: '스터디 모집',
-    icon: require('../assets/icon-category03.svg').default
+    icon: require('../assets/icons/icon-category03.svg').default
   },
   {
     name: '레이서 Q&A',
-    icon: require('../assets/icon-category04.svg').default
+    icon: require('../assets/icons/icon-category04.svg').default
   }
 ];
 
