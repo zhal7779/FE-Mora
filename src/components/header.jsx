@@ -89,7 +89,7 @@ const MenuContent = styled.div`
 `;
 
 const MenuItem = styled.div`
-  height: 95%;
+  height: 100%;
   ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
     font-weight: 700;
