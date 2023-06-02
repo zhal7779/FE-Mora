@@ -102,7 +102,7 @@ export const ModalHeaderButton = styled.button`
   border: none;
   border-radius: 4px;
 
-  background-color: #7353ea;
+  background-color: #5c469c;
   color: #fff;
 
   font-size: 1.2rem;
