@@ -20,6 +20,7 @@ const App = () => {
           <Route path='/signin' element={<Signin />} />
           <Route path='/admin/users' element={<AdminUser />} />
           <Route path='/search' element={<SearchPage />} />
+          <Route path='/openprofile' element={<OpenProfilePage />} />
         </Routes>
       </Router>
     </React.StrictMode>
