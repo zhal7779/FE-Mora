@@ -82,6 +82,7 @@ time,
 mark,
 audio,
 video,
+button,
 input[type='checkbox'],
 input[type='radio'] {
   margin: 0;
