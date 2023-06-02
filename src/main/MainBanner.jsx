@@ -1,5 +1,6 @@
 import * as Style from './Style/MainBannerStyle';
 import BannerImg from '../assets/main-banner-img.png';
+import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 
 const MainBanner = () => {
@@ -13,9 +14,9 @@ const MainBanner = () => {
           <br />
           인정한 레이서
           <br /> 필수 커뮤니티, 모레
-          <div className="main-slogan-btn">
-            <Link to="#"></Link>
-          </div>
+          <Button value="지금 시작하기" color="darkPurple">
+            <Link to="/login"></Link>
+          </Button>
         </div>
         <div className="main-image">
           <img src={BannerImg} alt="메인 배너 이미지" />
