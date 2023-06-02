@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoginButton = ({ value, color }) => {
+const LoginButton = ({ value, color, onClick }) => {
   let ButtonComponent;
 
   switch (color) {
@@ -19,9 +19,9 @@ const LoginButton = ({ value, color }) => {
   }
 
   return (
-    <div>
-      <ButtonComponent color={color}>{value}</ButtonComponent>
-    </div>
+    <ButtonComponent onClick={onClick} color={color}>
+      {value}
+    </ButtonComponent>
   );
 };
 
