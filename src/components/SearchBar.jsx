@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../icons/fi_search.svg';
+import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 const SearchBar = () => {
   return (
     <Background>

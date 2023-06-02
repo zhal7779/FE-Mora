@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as DownIcon } from '../assets/fi_chevron-down.svg';
-import { ReactComponent as UpIcon } from '../assets/fi_chevron-up.svg';
-import { ReactComponent as PostIcon } from '../assets/post.svg';
+import { ReactComponent as DownIcon } from '../assets/icons/fi_chevron-down.svg';
+import { ReactComponent as UpIcon } from '../assets/icons/fi_chevron-up.svg';
+import { ReactComponent as PostIcon } from '../assets/icons/post.svg';
 const AlarmModal = () => {
   const arr = ['이민영', '이민영', '이성호', '김윤지', '김지우', '이혜정', '연정환', '임지성'];
   const [hiddenContent, setHiddenContent] = useState(Array(arr.length).fill(false));
