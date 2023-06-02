@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 
-import AdminBlock from './AdminBlock';
+import AdminBlock from '../components/AdminBlock';
 import AdminSideBar from '../components/AdminSideBar';
 import SearchBar from '../components/SearchBar';
 import Modal from '../../adminCommon/components/Modal';
