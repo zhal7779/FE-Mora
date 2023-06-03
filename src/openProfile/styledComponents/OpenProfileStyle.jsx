@@ -63,6 +63,7 @@ export const SkillContent = styled.div`
 export const CareerContent = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 1.4rem;
   div {
     display: flex;
     align-items: center;
