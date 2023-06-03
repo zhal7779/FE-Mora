@@ -24,7 +24,6 @@ export const SideBar = styled.div`
     font-weight: 900;
   }
 `;
-
 export const SideBarBtn = styled.button`
   display: flex;
   align-items: center;

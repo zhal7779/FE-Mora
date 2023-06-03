@@ -63,12 +63,12 @@ export const PageNationBlockDiv = styled.div`
 
   cursor: pointer;
 
-  &:first-child {
+  &.now-page {
     border: none;
 
     background-color: #7353ea;
   }
-  &:first-child > p {
+  &.now-page > p {
     color: #ffffff;
   }
 `;

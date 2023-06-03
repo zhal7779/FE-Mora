@@ -77,21 +77,6 @@ export const ModalButtonBlock = styled.div`
   gap: 1.5rem;
   padding-top: 2rem;
 `;
-// 이건 안 됨.
-// & .modal-button-update,
-// & .modal-button-submit {
-//   padding: 1rem 2rem 0.8rem 2rem;
-//   border: 1px solid #d9d9d9;
-//   border-radius: 4px;
-
-//   background-color: ${(props) => (props.$purple ? '#7353ea' : 'white')};
-//   color: ${(props) => (props.$purple ? '#fff' : '#616161')};
-
-//   font-size: 1.5rem;
-//   font-weight: bold;
-
-//   cursor: pointer;
-// }
 export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
