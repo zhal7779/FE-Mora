@@ -4,14 +4,23 @@ import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import data from './profile.json';
 const OpenProfile = () => {
-  const [moreView, setMoreView] = useState(false);
-  const handleMoreViewClick = () => {
-    setMoreView(true);
+  const [moreView, setMoreView] = useState([]);
+
+  const handleMoreViewClick = (id) => {
+    setMoreView((prevMoreView) => {
+      if (!prevMoreView.includes(id)) {
+        console.log(moreView);
+        return [...prevMoreView, id];
+      } else {
+        console.log(moreView);
+        return prevMoreView.filter((item) => item !== id);
+      }
+    });
   };
   return (
     <>
-      {data.map((item, index) => (
-        <Style.Container key={index}>
+      {data.map((item) => (
+        <Style.Container key={item.id}>
           <Style.Content>
             <Style.ProfileContent>
               <div>
@@ -35,26 +44,37 @@ const OpenProfile = () => {
                 <div key={index}>{skill}</div>
               ))}
             </Style.SkillContent>
-            {item.careers.map((careear, index) => (
-              <Style.CareerContent>
-                <div>
-                  <BriefcaseIcon />
-                  <h5>{careear.company}</h5>
-                  <p>{careear.position}</p>
-                </div>
-                <p className='sub_text'>
-                  {careear.date} ・ {careear.term}년
-                </p>
-              </Style.CareerContent>
-            ))}
+            {moreView.includes(item.id)
+              ? item.careers.map((careear, index) => (
+                  <Style.CareerContent key={index}>
+                    <div>
+                      <BriefcaseIcon />
+                      <h5>{careear.company}</h5>
+                      <p>{careear.position}</p>
+                    </div>
+                    <p className='sub_text'>
+                      {careear.date} ・ {careear.term}년
+                    </p>
+                  </Style.CareerContent>
+                ))
+              : item.careers.slice(0, 2).map((careear, index) => (
+                  <Style.CareerContent key={index}>
+                    <div>
+                      <BriefcaseIcon />
+                      <h5>{careear.company}</h5>
+                      <p>{careear.position}</p>
+                    </div>
+                    <p className='sub_text'>
+                      {careear.date} ・ {careear.term}년
+                    </p>
+                  </Style.CareerContent>
+                ))}
           </Style.Content>
-          {!moreView ? (
-            <Style.MoreViewButton>
+          {!moreView.includes(item.id) && item.careers.length > 2 && (
+            <Style.MoreViewButton onClick={() => handleMoreViewClick(item.id)}>
               더 보기
-              <DownIcon stroke='#acacb0' stroke-width='1' width='19' height='19' />
+              <DownIcon stroke='#acacb0' strokeWidth='1' width='19' height='19' />
             </Style.MoreViewButton>
-          ) : (
-            ''
           )}
         </Style.Container>
       ))}
