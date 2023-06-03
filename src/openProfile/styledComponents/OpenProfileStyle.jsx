@@ -31,7 +31,7 @@ export const ProfileContent = styled.div`
     padding-bottom: 1rem;
   }
   p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: #616161;
     font-weight: 500;
   }
