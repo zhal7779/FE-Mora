@@ -1,6 +1,7 @@
 import * as Style from './styledComponents/CategoryStyle';
 import { useState } from 'react';
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 const categories = [
   {
@@ -34,7 +35,9 @@ const Category = () => {
   return (
     <Style.CategoryContainer>
       <h2>토끼굴</h2>
-      <Button value="글 작성하기" color="darkPurple" />
+      <Button value="글 작성하기" color="darkPurple">
+        <Link to="/write"></Link>
+      </Button>
       <div className="category-list">
         <p className="category-list-title">토픽</p>
         <ul>

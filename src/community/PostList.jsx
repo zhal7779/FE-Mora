@@ -7,6 +7,11 @@ const PostList = () => {
   return (
     <Style.PostContainer>
       {/* 게시글 목록을 렌더링하는 로직 작성 */}
+      <div className="filter">
+        <button className="filter-by-latest active">최신순</button>
+        <button className="filter-by-view">조회순</button>
+        <button className="filter-by-like">좋아요순</button>
+      </div>
       <ul>
         <li>
           <Link to="#">

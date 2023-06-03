@@ -1,6 +1,40 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.section`
+  .filter {
+    display: flex;
+    padding-bottom: 10px;
+
+    button {
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      font-weight: 600;
+      font-size: 1.4rem;
+      line-height: 1.7rem;
+      color: #c7c7c7;
+      background: none;
+      cursor: pointer;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        margin-right: 6px;
+        border-radius: 50%;
+        background-color: #c7c7c7;
+      }
+
+      &.active {
+        color: #616161;
+
+        &::before {
+          background-color: #7353ea;
+        }
+      }
+    }
+  }
   ul {
     padding-bottom: 100px;
   }

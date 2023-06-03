@@ -15,7 +15,7 @@ const CommunityPage = () => {
   return (
     <CommunityContainer>
       <Category />
-      <div>
+      <div className="community-content">
         <SearchBar />
         <RecommendPost />
         <PostList />
@@ -35,7 +35,7 @@ const CommunityContainer = styled.div`
   padding-top: 60px;
   margin: 0 auto;
 
-  div {
+  .community-content {
     display: flex;
     flex-direction: column;
 
