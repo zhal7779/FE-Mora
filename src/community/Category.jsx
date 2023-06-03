@@ -1,4 +1,4 @@
-import * as Style from './styledComponents/CommunityCategoryStyle';
+import * as Style from './styledComponents/CategoryStyle';
 import { useState } from 'react';
 import Button from '../components/Button';
 
@@ -21,7 +21,7 @@ const categories = [
   }
 ];
 
-const CommunityCategory = () => {
+const Category = () => {
   // 현재 카테고리 상태
   const [selectedCategory, setSelectedCategory] = useState('자유 게시판');
 
@@ -54,4 +54,4 @@ const CommunityCategory = () => {
   );
 };
 
-export default CommunityCategory;
+export default Category;

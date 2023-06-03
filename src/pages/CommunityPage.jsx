@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import CommunityCategory from '../community/CommunityCategory';
-import CommunityPost from '../community/CommunityPost';
+import Category from '../community/Category';
+import SearchBar from '../community/SearchBar';
+import RecommendPost from '../community/RecommendPost';
+import PostList from '../community/PostList';
 
 const CommunityPage = () => {
   //   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -12,8 +14,12 @@ const CommunityPage = () => {
 
   return (
     <CommunityContainer>
-      <CommunityCategory />
-      <CommunityPost />
+      <Category />
+      <div>
+        <SearchBar />
+        <RecommendPost />
+        <PostList />
+      </div>
     </CommunityContainer>
   );
 };
@@ -28,4 +34,11 @@ const CommunityContainer = styled.div`
   max-width: 1024px;
   padding-top: 60px;
   margin: 0 auto;
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 738px;
+  }
 `;

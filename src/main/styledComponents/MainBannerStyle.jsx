@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const BannerContainer = styled.section`
+  position: relative;
   height: 925px;
   background-color: #8e90ce;
 
