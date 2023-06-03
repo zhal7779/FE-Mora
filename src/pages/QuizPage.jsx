@@ -5,8 +5,8 @@ import Headline from '../logIn/Headline';
 import LoginInput from '../logIn/LogInInput';
 import LoginButton from '../logIn/LogInButton';
 import LittleText from '../logIn/LittleText';
-import turtleImg from '../assets/turtle.png';
-import rabbitImg from '../assets/rabbit.png';
+import turtleImg from '../assets/images/turtle.png';
+import rabbitImg from '../assets/images/rabbit.png';
 
 const Quiz = () => {
   const [answer, setAnswer] = useState('');
