@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const LoginInput = ({ title, type, placeholder, name, onChange }) => {
+const LoginInput = ({ title, type, placeholder, name, onChange, value }) => {
   return (
     <LoginInputContainer>
       <LoginText>{title}</LoginText>
-      <Input type={type} placeholder={placeholder} name={name} onChange={onChange} />
+      <Input type={type} placeholder={placeholder} name={name} onChange={onChange} value={value} />
     </LoginInputContainer>
   );
 };

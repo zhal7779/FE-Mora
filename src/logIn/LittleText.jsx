@@ -12,8 +12,8 @@ const StyledLittleText = styled.p`
   }
 `;
 
-const LittleText = ({ text }) => {
-  return <StyledLittleText>{text}</StyledLittleText>;
+const LittleText = ({ text, onClick }) => {
+  return <StyledLittleText onClick={onClick}>{text}</StyledLittleText>;
 };
 
 export default LittleText;

@@ -1,17 +1,22 @@
 import styled, { keyframes } from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoginContainer from '../logIn/LogInContainer';
 import Headline from '../logIn/Headline';
 import LoginInput from '../logIn/LogInInput';
 import LoginButton from '../logIn/LogInButton';
 import LittleText from '../logIn/LittleText';
-import turtleImg from '../assets/turtle.png';
-import rabbitImg from '../assets/rabbit.png';
+import turtleImg from '../assets/images/turtle.png';
+import rabbitImg from '../assets/images/rabbit.png';
+import answerSound from '../assets/sounds/answerSound.mp3';
+import errorSound from '../assets/sounds/errorSound.mp3';
 
 const Quiz = () => {
   const [answer, setAnswer] = useState('');
   const [showImage, setShowImage] = useState(false);
   const [randomIndex, setRandomIndex] = useState(0);
+  const [countdown, setCountdown] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getOtherQuiz();
@@ -20,6 +25,7 @@ const Quiz = () => {
   useEffect(() => {
     setAnswer('');
     setShowImage(false);
+    setCountdown(null);
   }, [randomIndex]);
 
   const quizList = [
@@ -34,10 +40,15 @@ const Quiz = () => {
     setShowImage(true);
   };
 
+  const playSound = (sound) => {
+    const audio = new Audio(sound);
+    audio.play();
+  };
+
   const getOtherQuiz = () => {
     let nextIndex = randomIndex + 1;
     if (nextIndex >= quizList.length) {
-      nextIndex = 0; // 문제가 마지막까지 갔다면 다시 처음으로 돌아갑니다.
+      nextIndex = 0; // 문제가 마지막까지 갔다면 다시 처음으로
     }
     setRandomIndex(nextIndex);
     setShowImage(false);
@@ -47,6 +58,31 @@ const Quiz = () => {
       inputElement.value = '';
     }
   };
+
+  useEffect(() => {
+    if (showImage) {
+      if (answer === quizAns[randomIndex]) {
+        playSound(answerSound);
+        setCountdown(5);
+      } else {
+        playSound(errorSound);
+      }
+    }
+  }, [showImage]);
+
+  useEffect(() => {
+    if (countdown !== null) {
+      if (countdown === 0) {
+        navigate('/signin');
+      } else {
+        const countdownTimeout = setTimeout(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+
+        return () => clearTimeout(countdownTimeout);
+      }
+    }
+  }, [countdown]);
 
   return (
     <LoginContainer>
@@ -66,24 +102,19 @@ const Quiz = () => {
       />
 
       <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
-
-      <LittleText text='퀴즈를 통과하면 회원가입으로 넘어갑니다!' />
-
-      {/* 임시 이미지 사용중, 1초뒤에 회원가입 페이지로 넘어가기 */}
+      <LittleText
+        text={
+          countdown !== null
+            ? `${countdown}초 뒤 회원가입으로 넘어갑니다!`
+            : '퀴즈를 통과하면 회원가입으로 넘어갑니다!'
+        }
+      />
 
       {showImage && answer === quizAns[randomIndex] && (
-        <AnimatedImage
-          src={rabbitImg}
-          alt='토끼 이미지'
-          style={{ width: '50rem', height: '35rem' }}
-        />
+        <AnimatedRabbit src={rabbitImg} style={{ width: '37rem', height: '36rem' }} />
       )}
       {showImage && answer !== quizAns[randomIndex] && (
-        <AnimatedImage
-          src={turtleImg}
-          alt='거북이 이미지'
-          style={{ width: '60rem', height: '35rem' }}
-        />
+        <AnimatedTurtle src={turtleImg} style={{ width: '40rem', height: '37rem' }} />
       )}
 
       <LoginButton
@@ -100,19 +131,23 @@ const Quiz = () => {
 
 export default Quiz;
 
-const fadeIn = keyframes`
+const popUp = keyframes`
   from {
-    opacity: 0;
-    transform: translateY(5rem);
+    transform: translateY(8rem);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 `;
 
-const AnimatedImage = styled.img`
+const AnimatedRabbit = styled.img`
   width: 50rem;
   height: 35rem;
-  animation: ${fadeIn} 0.3s ease-in;
+  animation: ${popUp} 1.5s;
+`;
+
+const AnimatedTurtle = styled.img`
+  width: 50rem;
+  height: 35rem;
+  animation: ${popUp} 0.5s;
 `;
