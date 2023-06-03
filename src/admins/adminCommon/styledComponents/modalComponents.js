@@ -98,7 +98,7 @@ export const ModalHeader = styled.div`
   margin-bottom: 5rem;
 `;
 export const ModalHeaderButton = styled.button`
-  padding: 0.6rem 1rem 0.4rem 1rem;
+  padding: 0.6rem 1rem;
   border: none;
   border-radius: 4px;
 
@@ -111,7 +111,7 @@ export const ModalHeaderButton = styled.button`
   cursor: pointer;
 `;
 export const ModalButton = styled.button`
-  padding: 1rem 2rem 0.8rem 2rem;
+  padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
 
