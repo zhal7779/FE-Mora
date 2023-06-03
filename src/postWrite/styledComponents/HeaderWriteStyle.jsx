@@ -35,6 +35,12 @@ export const HeaderContainer = styled.header`
     width: 36px;
     height: 36px;
     padding: 6px;
+    border-radius: 4px;
+    transition: 0.2s;
+
+    &:hover {
+      background: rgba(203, 213, 225, 0.4);
+    }
   }
 
   .btn-back,
