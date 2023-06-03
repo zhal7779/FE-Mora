@@ -31,10 +31,11 @@ const Container = styled.div`
 const TextContent = styled.div`
   font-size: 2.5rem;
   color: #242424;
-  padding-bottom: 3.6rem;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
   div {
     display: flex;
-    padding-bottom: 0.8rem;
+    padding-bottom: 1rem;
   }
   p {
     font-weight: 400;
