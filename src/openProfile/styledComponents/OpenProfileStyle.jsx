@@ -4,7 +4,15 @@ export const Container = styled.div`
   height: auto;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
-  padding: 1.6rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  background: #ffffff;
+  &:hover {
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+`;
+export const Content = styled.div`
+  padding: 1.6rem 1.6rem 0 1.6rem;
 `;
 export const ProfileContent = styled.div`
   display: flex;
@@ -41,6 +49,12 @@ export const ProfileContent = styled.div`
     border-radius: 4px;
     padding: 0.6rem 1.2rem;
     cursor: pointer;
+    &:hover {
+      background: #bda8ff;
+    }
+    &:active {
+      background: #aa8fff;
+    }
   }
 `;
 
@@ -82,5 +96,22 @@ export const CareerContent = styled.div`
     font-size: 1.2rem;
     color: #626262;
     font-weight: 500;
+  }
+`;
+
+export const MoreViewButton = styled.div`
+  width: 100%;
+  height: 3.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+  border-radius: 0px 0px 4px 4px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #acacb0;
+  &:hover {
+    background: rgba(233, 233, 238, 0.4);
+    transition: 0.2s ease-out;
   }
 `;
