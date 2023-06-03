@@ -32,7 +32,7 @@ export const TableTitle = styled.h2`
   font-weight: bold;
 `;
 export const DetailBtn = styled.button`
-  padding: 0.7rem 1rem 0.5rem 1rem;
+  padding: 0.7rem 1rem 0.6rem 1rem;
   border: 1px solid #d9d9d9;
   border-radius: 0.4rem;
 
@@ -52,6 +52,7 @@ export const PageNationBlock = styled.div`
 export const PageNationBlockDiv = styled.div`
   width: 3rem;
   height: 3rem;
+  padding-left: 0.1rem;
 
   border: 1px solid gray;
   border-radius: 0.4rem;
