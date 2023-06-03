@@ -1,4 +1,3 @@
-import React from 'react';
 import { TableTitle } from '../styledComponents/tableComponent';
 import PageNation from './PageNation';
 import AdminTableHead from './AdminTableHead';
