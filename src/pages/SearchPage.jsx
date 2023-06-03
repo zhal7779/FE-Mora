@@ -1,7 +1,7 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import styled from 'styled-components';
-import SearchResultBar from '../search/SearchResultBar';
+import SearchResultBar from '../search/components/SearchResultBar';
 
 const SearchPage = () => {
   return (
