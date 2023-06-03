@@ -6,15 +6,17 @@ import Login from './pages/LogInPage';
 import Signin from './pages/SignInPage';
 import AdminUser from './pages/AdminUserPage';
 import SearchPage from './pages/SearchPage';
+import Quiz from './pages/QuizPage';
 
 const App = () => {
   return (
     <React.StrictMode>
       <Router>
         <Routes>
-          <Route path='/' element={<MainPage />} />
+          <Route path='/' exact element={<MainPage />} />
           <Route path='/community' element={<CommunityPage />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/quiz' element={<Quiz />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/admin/users' element={<AdminUser />} />
           <Route path='/search' element={<SearchPage />} />
