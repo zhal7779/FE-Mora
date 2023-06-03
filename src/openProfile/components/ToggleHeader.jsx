@@ -15,11 +15,11 @@ export default ToggleHeader;
 
 const Container = styled.div`
   display: flex;
-  width: 594px;
+  width: 634px;
   height: 24px;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 4rem;
+  margin: 2rem 0;
 
   p {
     font-size: 1.4rem;
