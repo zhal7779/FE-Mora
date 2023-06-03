@@ -2,25 +2,7 @@ import * as Style from './styledComponents/CategoryStyle';
 import { useState } from 'react';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
-
-const categories = [
-  {
-    name: '자유 게시판',
-    icon: require('../assets/icons/icon-category01.svg').default
-  },
-  {
-    name: '지식 공유',
-    icon: require('../assets/icons/icon-category02.svg').default
-  },
-  {
-    name: '스터디 모집',
-    icon: require('../assets/icons/icon-category03.svg').default
-  },
-  {
-    name: '레이서 Q&A',
-    icon: require('../assets/icons/icon-category04.svg').default
-  }
-];
+import { categories } from './categoryData';
 
 const Category = () => {
   // 현재 카테고리 상태
