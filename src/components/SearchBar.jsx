@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
+import { useNavigate } from 'react-router-dom';
 const SearchBar = () => {
+  const navigate = useNavigate();
+  const [input, setInput] = useState('');
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
   return (
     <Background>
       <Container>
         <Content>
           <SearchIcon style={{ width: '3rem', height: '3rem', stroke: '#94a3b8' }} />
-          <Input type='text' placeholder='회사, 사람, 키워드로 검색'></Input>
+          <Input
+            type='text'
+            value={input}
+            onChange={handleInputChange}
+            onKeyPress={(e) => {
+              if ('Enter' === e.key) {
+                navigate('/search');
+              }
+            }}
+            placeholder='회사, 사람, 키워드로 검색'
+          ></Input>
         </Content>
       </Container>
     </Background>
