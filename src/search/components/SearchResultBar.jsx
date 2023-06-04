@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 
-const SearchResultBar = () => {
-  const [menu, setMenu] = useState(1);
+const SearchResultBar = ({ receiveMenu }) => {
+  const [menu, setMenu] = useState(0);
   const handleMenuClick = (num) => {
     setMenu(num);
+    receiveMenu(num);
   };
   return (
     <Container>

@@ -41,20 +41,21 @@ export const ProfileContent = styled.div`
     border-radius: 50%;
     margin-right: 2rem;
   }
-  .chat_button {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #3c21a0;
-    background: #d6c9ff;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    cursor: pointer;
-    &:hover {
-      background: #bda8ff;
-    }
-    &:active {
-      background: #aa8fff;
-    }
+`;
+
+export const ChatButton = styled.button`
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #3c21a0;
+  background: #d6c9ff;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  &:hover {
+    background: #bda8ff;
+  }
+  &:active {
+    background: #aa8fff;
   }
 `;
 

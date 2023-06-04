@@ -34,7 +34,7 @@ const OpenProfile = () => {
                 </span>
               </div>
               <div>
-                <button className='chat_button'>커피챗 신청</button>
+                <Style.ChatButton>커피챗 신청</Style.ChatButton>
               </div>
             </Style.ProfileContent>
             <Style.SkillContent>

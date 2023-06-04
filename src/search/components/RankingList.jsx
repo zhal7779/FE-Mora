@@ -35,7 +35,7 @@ const Content = styled.div`
   .ranking {
     font-size: 2.4rem;
     font-weight: 700;
-    color: ${(props) => (props.rank >= 4 ? '#242424' : '#7353ea')};
+    color: ${(props) => (props.rank >= 4 ? '#616161' : '#7353ea')};
     margin-right: 1rem;
     margin-bottom: 1rem;
   }
@@ -68,7 +68,7 @@ const Content = styled.div`
     p {
       font-weight: 700;
       font-size: 1rem;
-      color: #bdbdbd;
+      color: #65758c;
     }
   }
 `;
