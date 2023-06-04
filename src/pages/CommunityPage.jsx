@@ -4,6 +4,8 @@ import Category from '../community/Category';
 import SearchBar from '../community/SearchBar';
 import RecommendPost from '../community/RecommendPost';
 import PostList from '../community/PostList';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const CommunityPage = () => {
   //   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -13,14 +15,18 @@ const CommunityPage = () => {
   //   };
 
   return (
-    <CommunityContainer>
-      <Category />
-      <div className="community-content">
-        <SearchBar />
-        <RecommendPost />
-        <PostList />
-      </div>
-    </CommunityContainer>
+    <>
+      <Header />
+      <CommunityContainer>
+        <Category />
+        <div>
+          <SearchBar />
+          <RecommendPost />
+          <PostList />
+        </div>
+      </CommunityContainer>
+      <Footer />
+    </>
   );
 };
 
@@ -35,10 +41,11 @@ const CommunityContainer = styled.div`
   padding-top: 60px;
   margin: 0 auto;
 
-  .community-content {
+  & > div {
     display: flex;
     flex-direction: column;
 
+    padding-top: 38px;
     max-width: 738px;
   }
 `;
