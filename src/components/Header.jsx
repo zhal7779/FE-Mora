@@ -13,8 +13,14 @@ const Header = () => {
   };
 
   const [onSearch, setOnSearch] = useState(false);
+  //검색버튼 클릭시 검색창 true, 스크롤 숨김처리
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
+    if (boolean) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   };
 
   const [onModal, setOnModal] = useState(false);

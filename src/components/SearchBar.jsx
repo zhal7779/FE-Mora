@@ -8,6 +8,7 @@ const SearchBar = () => {
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
+
   return (
     <Background>
       <Container>
@@ -20,6 +21,7 @@ const SearchBar = () => {
             onKeyPress={(e) => {
               if ('Enter' === e.key) {
                 navigate('/search');
+                document.body.style.overflow = 'auto';
               }
             }}
             placeholder='회사, 사람, 키워드로 검색'
@@ -60,6 +62,8 @@ const Input = styled.input`
 const Background = styled.div`
   position: absolute;
   z-index: 1;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);

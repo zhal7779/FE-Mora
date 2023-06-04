@@ -29,6 +29,7 @@ const Container = styled.div`
   position: sticky;
 `;
 const TextContent = styled.div`
+  margin-top: 6rem;
   font-size: 2.5rem;
   color: #242424;
   padding-top: 4rem;
