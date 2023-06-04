@@ -1,18 +1,18 @@
 import styled from 'styled-components';
-// import Header from '../components/Header';
-// import Footer from '../components/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import MainBanner from '../main/MainBanner';
 import MainPost from '../main/MainPost';
 
 const MainPage = () => {
   return (
     <>
+      <Header />
       <MainContainer>
-        {/* <Header /> */}
         <MainBanner />
         <MainPost />
-        {/* <Footer /> */}
       </MainContainer>
+      <Footer />
     </>
   );
 };
@@ -20,6 +20,5 @@ const MainPage = () => {
 export default MainPage;
 
 const MainContainer = styled.div`
-  /* width: 100%;
-  height: 100vh; */
+  padding-top: 60px;
 `;
