@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../assets/icons/fi_bell.svg';
@@ -34,13 +35,17 @@ const Header = () => {
               <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
               <MenuContent>
                 <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-                  <p active={menu === 1}> 토끼굴</p>
+                  <Link to='/community'>
+                    <p>토끼굴</p>
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-                  <p active={menu === 2}> 정비소</p>
+                  <p> 정비소</p>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-                  <p active={menu === 3}> 개발자 오픈 프로필</p>
+                  <Link to='/openprofile'>
+                    <p> 개발자 오픈 프로필</p>
+                  </Link>
                 </MenuItem>
               </MenuContent>
             </MenuContainer>

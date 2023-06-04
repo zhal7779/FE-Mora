@@ -64,6 +64,7 @@ const Footer = () => {
 };
 export default Footer;
 const Container = styled.footer`
+  position: relative;
   width: 100%;
   background: #f7f5ff;
 `;

@@ -1,0 +1,126 @@
+[
+  {
+    "id": "ndfjsd12545",
+    "profileImg": "",
+    "name": "이민영",
+    "currentJob": "라인 프론트엔드 엔지니어",
+    "total": 3,
+    "skils": ["javsscript", "typescript", "React", "Redux", "node.js", "express.js"],
+    "careers": [
+      {
+        "company": "쿠팡",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "네이버",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      },
+      {
+        "company": "당근마켓",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "토스",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      }
+    ]
+  },
+  {
+    "id": "555sfdsdfmk",
+    "profileImg": "",
+    "name": "이민영",
+    "currentJob": "라인 프론트엔드 엔지니어",
+    "total": 3,
+    "skils": ["javsscript", "typescript", "React", "Redux", "node.js", "express.js"],
+    "careers": [
+      {
+        "company": "쿠팡",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "네이버",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      },
+      {
+        "company": "카카오",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "배달의민족",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      }
+    ]
+  },
+  {
+    "id": "qorhvkem1213",
+    "profileImg": "",
+    "name": "이민영",
+    "currentJob": "라인 프론트엔드 엔지니어",
+    "total": 3,
+    "skils": ["javsscript", "typescript", "React", "Redux", "node.js", "express.js"],
+    "careers": [
+      {
+        "company": "쿠팡",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "네이버",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      },
+      {
+        "company": "카카오",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "배달의민족",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      }
+    ]
+  },
+  {
+    "id": "qpksqldfkmn77",
+    "profileImg": "",
+    "name": "이민영",
+    "currentJob": "라인 프론트엔드 엔지니어",
+    "total": 3,
+    "skils": ["javsscript", "typescript", "React", "Redux", "node.js", "express.js"],
+    "careers": [
+      {
+        "company": "쿠팡",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 1
+      },
+      {
+        "company": "네이버",
+        "position": "프론트엔드",
+        "date": "2020-05-01 ~ 현재",
+        "term": 2
+      }
+    ]
+  }
+]

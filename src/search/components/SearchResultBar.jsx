@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
+import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 
 const SearchResultBar = () => {
   const [menu, setMenu] = useState(1);
