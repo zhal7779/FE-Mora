@@ -66,7 +66,6 @@ export default Footer;
 const Container = styled.footer`
   position: relative;
   width: 100%;
-  bottom: 0px;
   background: #f7f5ff;
 `;
 const Content = styled.div`
