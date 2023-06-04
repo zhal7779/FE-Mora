@@ -1,7 +1,20 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const moveDiagonally = keyframes`
+  from {
+    transform: translate(-100%, -200%) scale(0.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(100%, -65%) scale(1);
+    opacity: 1;
+  }
+`;
 
 export const BannerContainer = styled.section`
   position: relative;
+  overflow: hidden;
   height: 925px;
   background-color: #8e90ce;
 
@@ -34,9 +47,8 @@ export const BannerContainer = styled.section`
 
   .main-image {
     position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    transform: translate(100%, -65%);
+    animation: ${moveDiagonally} 1.6s ease-in-out;
 
     width: 50%;
 
@@ -45,5 +57,16 @@ export const BannerContainer = styled.section`
       height: 100%;
       object-fit: contain;
     }
+  }
+
+  .bg-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;

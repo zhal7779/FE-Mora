@@ -2,12 +2,12 @@ import * as Style from './styledComponents/MainBannerStyle';
 import BannerImg from '../assets/images/main-banner-img.png';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
-// import SpeedAnimation from './SpeedAnimation';
+import BannerBackgroundImg from '../assets/images/background-effect-img.svg';
 
 const MainBanner = () => {
   return (
     <Style.BannerContainer>
-      {/* <SpeedAnimation /> */}
+      <img src={BannerBackgroundImg} alt="배경 이미지" className="bg-img" />
       <div className="main-slogan">
         <div className="main-slogan-side">
           <span>개발 트렌드부터 Q&A까지!</span>
