@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 
 const SearchResultBar = ({ receiveMenu }) => {
-  const [menu, setMenu] = useState(0);
+  const [menu, setMenu] = useState(1);
   const handleMenuClick = (num) => {
     setMenu(num);
     receiveMenu(num);
