@@ -7,6 +7,7 @@ import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
 import PostList from '../community/CommunityPost';
 import { useState } from 'react';
+import RegisterQuestion from '../search/components/RegisterQuestion';
 
 const SearchPage = () => {
   const [menu, setMenu] = useState(1);
@@ -39,7 +40,7 @@ const SearchPage = () => {
             <RankingContent />
           </>
         ) : (
-          ''
+          <RegisterQuestion />
         )}
       </Wrapper>
       <Footer />
