@@ -33,16 +33,16 @@ const SearchResultBar = () => {
         <Content>
           <SearchNav>
             <SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-              <p active={menu === 1}>전체</p>
+              <p>전체</p>
             </SearchNavItem>
             <SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-              <p active={menu === 2}>프로필</p>
+              <p>프로필</p>
             </SearchNavItem>
             <SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-              <p active={menu === 3}>게시물</p>
+              <p>게시물</p>
             </SearchNavItem>
             <SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
-              <p active={menu === 4}>레이서 Q&A</p>
+              <p>레이서 Q&A</p>
             </SearchNavItem>
           </SearchNav>
         </Content>
@@ -54,7 +54,8 @@ export default SearchResultBar;
 const Container = styled.div`
   position: fixed;
   width: 100%;
-  margin-top: 6rem;
+  top: 6rem;
+  left: 0;
   background: #ffffff;
 `;
 const MainDiv = styled.div`
