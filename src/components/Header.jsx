@@ -36,15 +36,15 @@ const Header = () => {
               <MenuContent>
                 <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
                   <Link to='/community'>
-                    <p active={menu === 1}>토끼굴</p>
+                    <p>토끼굴</p>
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-                  <p active={menu === 2}> 정비소</p>
+                  <p> 정비소</p>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
                   <Link to='/openprofile'>
-                    <p active={menu === 3}> 개발자 오픈 프로필</p>
+                    <p> 개발자 오픈 프로필</p>
                   </Link>
                 </MenuItem>
               </MenuContent>
