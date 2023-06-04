@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginContainer from '../logIn/LogInContainer';
 import Headline from '../logIn/Headline';
@@ -17,6 +17,7 @@ const Quiz = () => {
   const [randomIndex, setRandomIndex] = useState(0);
   const [countdown, setCountdown] = useState(null);
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
   useEffect(() => {
     getOtherQuiz();
@@ -53,9 +54,8 @@ const Quiz = () => {
     setRandomIndex(nextIndex);
     setShowImage(false);
 
-    const inputElement = document.querySelector('input[name="answer"]');
-    if (inputElement) {
-      inputElement.value = '';
+    if (inputRef.current) {
+      inputRef.current.value = '';
     }
   };
 
@@ -99,6 +99,7 @@ const Quiz = () => {
           setAnswer(e.target.value);
           setShowImage(false);
         }}
+        ref={inputRef}
       />
 
       <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
