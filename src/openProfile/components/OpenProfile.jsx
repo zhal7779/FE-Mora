@@ -9,10 +9,8 @@ const OpenProfile = () => {
   const handleMoreViewClick = (id) => {
     setMoreView((prevMoreView) => {
       if (!prevMoreView.includes(id)) {
-        console.log(moreView);
         return [...prevMoreView, id];
       } else {
-        console.log(moreView);
         return prevMoreView.filter((item) => item !== id);
       }
     });
