@@ -4,7 +4,15 @@ const LoginInput = ({ title, type, placeholder, name, onChange, value }) => {
   return (
     <LoginInputContainer>
       <LoginText>{title}</LoginText>
-      <Input type={type} placeholder={placeholder} name={name} onChange={onChange} value={value} />
+      <InputContainer>
+        <Input
+          type={type}
+          placeholder={placeholder}
+          name={name}
+          onChange={onChange}
+          value={value}
+        />
+      </InputContainer>
     </LoginInputContainer>
   );
 };
@@ -13,7 +21,6 @@ export default LoginInput;
 
 const LoginInputContainer = styled.div`
   width: 35.2rem;
-  height: 82px;
   margin: 1.8rem;
   display: flex;
   flex-direction: column;
@@ -31,10 +38,15 @@ const LoginText = styled.h3`
   margin-bottom: 1.5rem;
 `;
 
+const InputContainer = styled.div`
+  height: 48px;
+  width: 100%;
+`;
+
 const Input = styled.input`
   box-sizing: border-box;
-  width: 352px;
-  height: 48px;
+  width: 100%;
+  height: 100%;
   background: #ffffff;
   border: 2px solid #d8e0e9;
   border-radius: 12px;
