@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
@@ -13,14 +13,8 @@ const Header = () => {
   };
 
   const [onSearch, setOnSearch] = useState(false);
-  //검색버튼 클릭시 검색창 true, 스크롤 숨김처리
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
-    if (boolean) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
   };
 
   const [onModal, setOnModal] = useState(false);
@@ -31,7 +25,7 @@ const Header = () => {
   return (
     <>
       {onSearch ? (
-        <SearchBar />
+        <SearchBar handleClose={handleSearchClick} />
       ) : (
         <Container>
           <Content>
@@ -55,13 +49,13 @@ const Header = () => {
                 </MenuItem>
               </MenuContent>
             </MenuContainer>
-
             <SideContent>
               <div>
                 <SearchIcon onClick={() => handleSearchClick(true)} style={{ stroke: '#242424' }} />
               </div>
+
               <div>
-                <BellIcon onClick={() => handleModalClick(!onModal)} />
+                <BellIcon onClick={() => handleModalClick(true)} />
               </div>
               <div>
                 <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
@@ -74,6 +68,7 @@ const Header = () => {
   );
 };
 export default Header;
+
 const Container = styled.header`
   position: fixed;
   display: block;
