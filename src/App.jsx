@@ -8,6 +8,8 @@ import AdminUser from './pages/AdminUserPage';
 import SearchPage from './pages/SearchPage';
 import OpenProfilePage from './pages/OpenProfilePage';
 import Quiz from './pages/QuizPage';
+import MyPage from './pages/MyPage'
+import MyPageEditPage from './pages/MyPageEditPage'
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/quiz' element={<Quiz />} />
           <Route path='/signin' element={<Signin />} />
+          <Route path='/mypage' element={<MyPage />} />
+          <Route path='/mypage/edit' element={<MyPageEditPage />} />
           <Route path='/admin/users' element={<AdminUser />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/openprofile' element={<OpenProfilePage />} />
