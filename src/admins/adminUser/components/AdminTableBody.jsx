@@ -1,105 +1,5 @@
-import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
-
-const tableBodyData = [
-  {
-    userId: 1,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 2,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 3,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 4,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 5,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 6,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 7,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 8,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 9,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 10,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 11,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 12,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 13,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 14,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
-];
+import { DetailBtn, UserInfo } from '../../adminCommon/styledComponents/tableComponent';
+import tableBodyData from '../data/userData';
 
 const AdminTableBody = ({ toggleModal }) => {
   return (
@@ -107,6 +7,7 @@ const AdminTableBody = ({ toggleModal }) => {
       {tableBodyData.map((info) => {
         return (
           <UserInfo className='user-info' key={info.userId}>
+            {/* 아래애들 컴포넌트로 빼서 prop으로 데이터 넘겨줘서 map 돌릴까? */}
             <span>{info.userId}</span>
             <span>{info.name}</span>
             <span>{info.email}</span>

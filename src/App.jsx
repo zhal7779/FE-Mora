@@ -9,6 +9,8 @@ import Signin from './pages/SignInPage';
 import SearchPage from './pages/SearchPage';
 import OpenProfilePage from './pages/OpenProfilePage';
 import Quiz from './pages/QuizPage';
+import MyPage from './pages/MyPage';
+import MyPageEditPage from './pages/MyPageEditPage';
 import AdminUser from './pages/AdminUserPage';
 import SchedulePage from './pages/SchedulePage';
 import AdminPlanPage from './pages/AdminPlanPage';
@@ -32,6 +34,8 @@ const App = () => {
             <Route path='/search' element={<SearchPage />} />
             <Route path='/schedule' element={<SchedulePage />} />
             <Route path='/openprofile' element={<OpenProfilePage />} />
+            <Route path='/mypage' element={<MyPage />} />
+            <Route path='/mypage/edit' element={<MyPageEditPage />} />
           </Route>
           <Route element={<LoginLayout />}>
             <Route path='/login' element={<Login />} />
