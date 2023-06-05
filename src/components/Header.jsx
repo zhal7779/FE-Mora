@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
@@ -15,6 +15,7 @@ const Header = () => {
   const [onSearch, setOnSearch] = useState(false);
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
+    setMenu(5);
   };
 
   const [onModal, setOnModal] = useState(false);
@@ -25,37 +26,50 @@ const Header = () => {
   return (
     <>
       {onSearch ? (
-        <SearchBar />
+        <SearchBar handleClose={handleSearchClick} />
       ) : (
         <Container>
           <Content>
-            <ModalContent>{onModal && <AlarmModal onClick={handleModalClick} />}</ModalContent>
+            <ModalContent>
+              {onModal ? <AlarmModal handleClose={handleModalClick} /> : ''}
+            </ModalContent>
 
             <MenuContainer>
-              <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+              <Link to='/'>
+                <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+              </Link>
               <MenuContent>
-                <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-                  <Link to='/community'>
+                <Link to='/community'>
+                  <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
                     <p>토끼굴</p>
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-                  <p> 정비소</p>
-                </MenuItem>
-                <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-                  <Link to='/openprofile'>
+                  </MenuItem>
+                </Link>
+                <Link to='/schedule'>
+                  <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+                    <p> 정비소</p>
+                  </MenuItem>
+                </Link>
+                <Link to='/openprofile'>
+                  <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
                     <p> 개발자 오픈 프로필</p>
-                  </Link>
-                </MenuItem>
+                  </MenuItem>
+                </Link>
               </MenuContent>
             </MenuContainer>
-
             <SideContent>
               <div>
-                <SearchIcon onClick={() => handleSearchClick(true)} style={{ stroke: '#242424' }} />
+                {menu === 5 ? (
+                  <SearchIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
+                ) : (
+                  <SearchIcon
+                    onClick={() => handleSearchClick(true)}
+                    style={{ stroke: '#242424' }}
+                  />
+                )}
               </div>
+
               <div>
-                <BellIcon onClick={() => handleModalClick(!onModal)} />
+                <BellIcon onClick={() => handleModalClick(true)} />
               </div>
               <div>
                 <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
@@ -68,6 +82,7 @@ const Header = () => {
   );
 };
 export default Header;
+
 const Container = styled.header`
   position: fixed;
   display: block;
@@ -91,11 +106,13 @@ const MenuContainer = styled.div`
   display: flex;
   align-items: center;
   p {
-    margin: 2.1rem 2rem 2.1rem 2rem;
+    padding: 2.1rem 2rem 2.1rem 2rem;
     font-weight: 700;
     font-size: 1.6rem;
     color: #616161;
-    cursor: pointer;
+    &:hover {
+      color: #242424;
+    }
   }
 `;
 
@@ -106,13 +123,13 @@ const MenuContent = styled.div`
 `;
 
 const MenuItem = styled.div`
+  cursor: pointer;
   height: 100%;
   ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
     font-weight: 700;
     font-size: 1.6rem;
     color: ${(props) => (props.active ? '#242424' : '#616161')};
-    cursor: pointer;
   }
 `;
 

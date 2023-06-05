@@ -19,7 +19,7 @@ const Container = styled.div`
   height: 24px;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0;
+  margin: 8rem 0 2rem 0;
 
   p {
     font-size: 1.4rem;
