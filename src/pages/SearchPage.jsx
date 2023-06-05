@@ -3,7 +3,8 @@ import SearchResultBar from '../search/components/SearchResultBar';
 import { Wrapper } from '../search/styledComponents/pageCommonStyle';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
-import PostList from '../community/CommunityPost';
+import PostList from '../community/PostList';
+
 import { useState } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
 import profileData from '../search/components/searchProfile.json';
@@ -33,7 +34,9 @@ const SearchPage = () => {
           </ProfileWrapper>
         ) : menu === 3 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <PostList style={{ background: '#ffffff' }} />
+            <CommunityPost>
+              <PostList style={{ backgroundColor: '#ffffff' }} />
+            </CommunityPost>
             <RankingContent />
           </Wrapper>
         ) : (
@@ -58,4 +61,12 @@ const ProfileWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
+`;
+
+const CommunityPost = styled.div`
+  width: 66%;
+
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
 `;
