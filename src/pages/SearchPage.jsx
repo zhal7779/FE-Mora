@@ -23,7 +23,6 @@ const SearchPage = () => {
   return (
     <Container>
       <div style={{ position: 'fixed', top: '0' }}>
-        <Header />
         <SearchResultBar receiveMenu={handleMenu} />
       </div>
 
@@ -46,8 +45,6 @@ const SearchPage = () => {
           <RegisterQuestion />
         </Wrapper>
       )}
-
-      <Footer />
     </Container>
   );
 };

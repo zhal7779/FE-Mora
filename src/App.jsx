@@ -8,20 +8,31 @@ import AdminUser from './pages/AdminUserPage';
 import SearchPage from './pages/SearchPage';
 import OpenProfilePage from './pages/OpenProfilePage';
 import Quiz from './pages/QuizPage';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MainLayout from './MainLayout';
+import LoginLayout from './LoginLayout';
+import AdminLayout from './AdminLayout';
 
 const App = () => {
   return (
     <React.StrictMode>
       <Router>
         <Routes>
-          <Route path='/' exact element={<MainPage />} />
-          <Route path='/community' element={<CommunityPage />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/quiz' element={<Quiz />} />
-          <Route path='/signin' element={<Signin />} />
-          <Route path='/admin/users' element={<AdminUser />} />
-          <Route path='/search' element={<SearchPage />} />
-          <Route path='/openprofile' element={<OpenProfilePage />} />
+          <Route element={<MainLayout />}>
+            <Route path='/openprofile' element={<OpenProfilePage />} />
+            <Route path='/' exact element={<MainPage />} />
+            <Route path='/community' element={<CommunityPage />} />
+            <Route path='/search' element={<SearchPage />} />
+          </Route>
+          <Route element={<LoginLayout />}>
+            <Route path='/login' element={<Login />} />
+            <Route path='/quiz' element={<Quiz />} />
+            <Route path='/signin' element={<Signin />} />
+          </Route>
+          <Route element={<AdminLayout />}>
+            <Route path='/admin/users' element={<AdminUser />} />
+          </Route>
         </Routes>
       </Router>
     </React.StrictMode>

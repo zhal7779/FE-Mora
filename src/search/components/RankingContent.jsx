@@ -38,7 +38,7 @@ const TitleContent = styled.div`
   p {
     font-weight: 600;
     font-size: 1.2rem;
-    color: #65758c;
+    color: #605ea0;
     padding-bottom: 0.5rem;
   }
 `;

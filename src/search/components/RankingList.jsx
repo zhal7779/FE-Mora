@@ -57,8 +57,8 @@ const Content = styled.div`
   .text_content {
     display: flex;
     align-items: center;
-    /* Change to a column layout */
-    margin-top: 0.5rem; /* Add margin to separate from the title */
+
+    margin-top: 1rem;
     h5 {
       font-weight: 600;
       font-size: 1.2em;
@@ -68,7 +68,7 @@ const Content = styled.div`
     p {
       font-weight: 700;
       font-size: 1rem;
-      color: #65758c;
+      color: #605ea0;
     }
   }
 `;
