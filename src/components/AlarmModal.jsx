@@ -33,7 +33,13 @@ const AlarmModal = () => {
                 {hiddenContent[index] ? (
                   <UpIcon onClick={() => handleContentClick(index)} />
                 ) : (
-                  <DownIcon onClick={() => handleContentClick(index)} />
+                  <DownIcon
+                    stroke='#616161'
+                    stroke-width='2'
+                    width='22'
+                    height='22'
+                    onClick={() => handleContentClick(index)}
+                  />
                 )}
               </div>
             </ShowContent>
