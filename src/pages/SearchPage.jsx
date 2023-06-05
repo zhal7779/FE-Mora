@@ -1,5 +1,3 @@
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 import styled from 'styled-components';
 import SearchResultBar from '../search/components/SearchResultBar';
 import { Wrapper } from '../search/styledComponents/pageCommonStyle';
@@ -21,31 +19,30 @@ const SearchPage = () => {
   const slicePfofileData = profileData.slice(0, 3);
 
   return (
-    <Container>
-      <div style={{ position: 'fixed', top: '0' }}>
-        <SearchResultBar receiveMenu={handleMenu} />
-      </div>
-
-      {menu === 1 ? (
-        <Wrapper style={{ marginTop: '22rem' }}>
-          <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
-          <RankingContent />
-        </Wrapper>
-      ) : menu === 2 ? (
-        <ProfileWrapper style={{ marginTop: '22rem' }}>
-          <SearchResultProfile data={profileData} />
-        </ProfileWrapper>
-      ) : menu === 3 ? (
-        <Wrapper style={{ marginTop: '22rem' }}>
-          <PostList style={{ background: '#ffffff' }} />
-          <RankingContent />
-        </Wrapper>
-      ) : (
-        <Wrapper style={{ marginTop: '22rem' }}>
-          <RegisterQuestion />
-        </Wrapper>
-      )}
-    </Container>
+    <>
+      <SearchResultBar receiveMenu={handleMenu} />
+      <Container>
+        {menu === 1 ? (
+          <Wrapper style={{ marginTop: '22rem' }}>
+            <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
+            <RankingContent />
+          </Wrapper>
+        ) : menu === 2 ? (
+          <ProfileWrapper style={{ marginTop: '22rem' }}>
+            <SearchResultProfile data={profileData} />
+          </ProfileWrapper>
+        ) : menu === 3 ? (
+          <Wrapper style={{ marginTop: '22rem' }}>
+            <PostList style={{ background: '#ffffff' }} />
+            <RankingContent />
+          </Wrapper>
+        ) : (
+          <Wrapper style={{ marginTop: '22rem' }}>
+            <RegisterQuestion />
+          </Wrapper>
+        )}
+      </Container>
+    </>
   );
 };
 export default SearchPage;

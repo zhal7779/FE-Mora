@@ -15,6 +15,7 @@ const Header = () => {
   const [onSearch, setOnSearch] = useState(false);
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
+    setMenu(5);
   };
 
   const [onModal, setOnModal] = useState(false);
@@ -58,7 +59,14 @@ const Header = () => {
             </MenuContainer>
             <SideContent>
               <div>
-                <SearchIcon onClick={() => handleSearchClick(true)} style={{ stroke: '#242424' }} />
+                {menu === 5 ? (
+                  <SearchIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
+                ) : (
+                  <SearchIcon
+                    onClick={() => handleSearchClick(true)}
+                    style={{ stroke: '#242424' }}
+                  />
+                )}
               </div>
 
               <div>

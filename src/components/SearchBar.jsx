@@ -41,6 +41,7 @@ const SearchBar = ({ handleClose }) => {
             onChange={handleInputChange}
             onKeyPress={(e) => {
               if ('Enter' === e.key) {
+                handleClickOutside();
                 navigate('/search');
               }
             }}
