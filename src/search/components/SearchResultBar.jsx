@@ -8,6 +8,7 @@ const SearchResultBar = ({ receiveMenu }) => {
     setMenu(num);
     receiveMenu(num);
   };
+
   return (
     <Container>
       <MainDiv>
@@ -18,7 +19,7 @@ const SearchResultBar = ({ receiveMenu }) => {
               type='text'
               value={'리액트'}
               placeholder='회사, 사람, 키워드로 검색'
-              readOnly
+              autoFocus
             ></input>
           </SubSearchContent>
         </Content>
