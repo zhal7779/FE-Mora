@@ -1,7 +1,12 @@
 import React from 'react';
+import Notification from '../schedule/components/Notification';
 
 const SchedulePage = () => {
-  return <div>일정관리페이지</div>;
+  return (
+    <div>
+      <Notification />
+    </div>
+  );
 };
 
 export default SchedulePage;
