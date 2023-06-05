@@ -9,7 +9,6 @@ const Notification = () => {
         <p>레이서들이 참고할 만한</p>
         <p>엘리스 공지사항을 모아놨어요.</p>
       </div>
-
       <NotificationList />
     </Container>
   );

@@ -5,14 +5,21 @@ import { ReactComponent as UpIcon } from '../assets/icons/fi_chevron-up.svg';
 import { ReactComponent as PostIcon } from '../assets/icons/post.svg';
 const AlarmModal = ({ handleClose }) => {
   const arr = ['이민영', '이민영', '이성호', '김윤지', '김지우', '이혜정', '연정환', '임지성'];
-  const [hiddenContent, setHiddenContent] = useState(Array(arr.length).fill(false));
+  const [hiddenContent, setHiddenContent] = useState([]);
 
+  //모달 리스트 open, close
   const handleContentClick = (index) => {
-    const newContent = [...hiddenContent]; // 새로운 배열 생성
-    newContent[index] = !newContent[index]; // 클릭한 아이템의 상태를 반전
-
-    setHiddenContent(newContent);
+    setHiddenContent((prevContent) => {
+      // 열려있지 않다면 = 배열에 들어온 인덱스가 없다면 =>  배열에 인덱스 추가
+      if (!prevContent.includes(index)) {
+        return [...prevContent, index];
+        // 열려 있다면 = 배열에 인덱스가 있다면 =>  배열에 들어있는 인덱스 삭제
+      } else {
+        return prevContent.filter((item) => item !== index);
+      }
+    });
   };
+
   const handleClickOutside = () => {
     handleClose(false);
   };
@@ -34,7 +41,7 @@ const AlarmModal = ({ handleClose }) => {
                   <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
                 </div>
                 <div>
-                  {hiddenContent[index] ? (
+                  {hiddenContent.includes(index) ? (
                     <UpIcon onClick={() => handleContentClick(index)} />
                   ) : (
                     <DownIcon
@@ -47,7 +54,7 @@ const AlarmModal = ({ handleClose }) => {
                   )}
                 </div>
               </ShowContent>
-              {hiddenContent[index] ? (
+              {hiddenContent.includes(index) ? (
                 <HiddenContent>
                   <div style={{ border: '1px solid #e0e0e0' }}>
                     <p>
