@@ -27,12 +27,6 @@ export const CommentContainer = styled.div`
         height: 100%;
         min-height: 120px;
         font-size: 1.6rem;
-        resize: none;
-        border: none;
-
-        &:focus {
-          outline: none;
-        }
 
         &::placeholder {
           color: #acb2b9;
