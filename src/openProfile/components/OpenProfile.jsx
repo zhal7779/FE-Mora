@@ -10,9 +10,10 @@ const OpenProfile = () => {
     setMoreView((prevMoreView) => {
       if (!prevMoreView.includes(id)) {
         return [...prevMoreView, id];
-      } else {
-        return prevMoreView.filter((item) => item !== id);
       }
+      // else {
+      //   return prevMoreView.filter((item) => item !== id);
+      // }
     });
   };
   return (
