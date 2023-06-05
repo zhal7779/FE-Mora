@@ -8,7 +8,7 @@ export const SearchBarBlock = styled.div`
   padding: 1.1rem 1.3rem;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
-  margin-bottom: 5rem;
+  margin-bottom: 6rem;
 `;
 export const SearchBarInput = styled.input`
   width: 100%;

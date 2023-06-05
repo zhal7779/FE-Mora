@@ -1,10 +1,6 @@
-import {
-  ManagementListTitle,
-  SideBarBtn,
-  SideBarListSvg,
-} from '../../adminUser/styledComponents/adminSideBar';
+import { SideBarBtn, ManagementListTitle, SideBarListSvg } from '../styledComponents/adminSideBar';
 
-const UserSvg = ({ nowCategory }) => {
+const UserButton = ({ nowCategory, title }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -20,13 +16,13 @@ const UserSvg = ({ nowCategory }) => {
         className='management-list-title'
         style={nowCategory ? { color: 'black' } : null}
       >
-        사용자 관리
+        {title}
       </ManagementListTitle>
     </SideBarBtn>
   );
 };
 
-const ReportSvg = ({ nowCategory }) => {
+const ReportButton = ({ nowCategory }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -48,7 +44,7 @@ const ReportSvg = ({ nowCategory }) => {
   );
 };
 
-const CalendarSvg = ({ nowCategory }) => {
+const PlanButton = ({ nowCategory }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -70,7 +66,7 @@ const CalendarSvg = ({ nowCategory }) => {
   );
 };
 
-const TrackSvg = ({ nowCategory }) => {
+const TrackButton = ({ nowCategory }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -92,7 +88,7 @@ const TrackSvg = ({ nowCategory }) => {
   );
 };
 
-const PostsSvg = ({ nowCategory }) => {
+const PostsButton = ({ nowCategory }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -114,7 +110,7 @@ const PostsSvg = ({ nowCategory }) => {
   );
 };
 
-const NotificationSvg = ({ nowCategory }) => {
+const NotificationButton = ({ nowCategory }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -136,4 +132,4 @@ const NotificationSvg = ({ nowCategory }) => {
   );
 };
 
-export { UserSvg, ReportSvg, CalendarSvg, TrackSvg, PostsSvg, NotificationSvg };
+export { UserButton, ReportButton, PlanButton, TrackButton, PostsButton, NotificationButton };

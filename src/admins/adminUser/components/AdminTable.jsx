@@ -1,5 +1,5 @@
-import { TableTitle } from '../styledComponents/tableComponent';
-import PageNation from './PageNation';
+import { TableTitle } from '../../adminCommon/styledComponents/tableComponent';
+import PageNation from '../../adminCommon/components/PageNation';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
 

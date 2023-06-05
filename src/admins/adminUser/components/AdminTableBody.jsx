@@ -1,4 +1,4 @@
-import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
+import { DetailBtn, UserInfo } from '../../adminCommon/styledComponents/tableComponent';
 import tableBodyData from '../data/userData';
 
 const AdminTableBody = ({ toggleModal }) => {

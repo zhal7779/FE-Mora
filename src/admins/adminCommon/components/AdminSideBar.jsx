@@ -1,19 +1,20 @@
-import { SideBar } from '../../adminUser/styledComponents/adminSideBar';
+import { Link } from 'react-router-dom';
+import { SideBar } from '../styledComponents/adminSideBar';
 import {
-  UserSvg,
-  ReportSvg,
-  CalendarSvg,
-  TrackSvg,
-  PostsSvg,
-  NotificationSvg,
+  UserButton,
+  ReportButton,
+  PlanButton,
+  TrackButton,
+  PostsButton,
+  NotificationButton,
 } from './SideBarSVGs';
 import {
-  USER_SVG,
-  REPORT_SVG,
-  CALENDAR_SVG,
-  TRACK_SVG,
-  POSTS_SVG,
-  NOTIFICATION_SVG,
+  USER_BUTTON,
+  REPORT_BUTTON,
+  PLAN_BUTTON,
+  TRACK_BUTTON,
+  POSTS_BUTTON,
+  NOTIFICATION_BUTTON,
 } from '../constants/sideBarCategory';
 
 const AdminSideBar = ({ nowCategoryName }) => {
@@ -25,13 +26,27 @@ const AdminSideBar = ({ nowCategoryName }) => {
       <div className='management-list'>
         <p>관리 목록</p>
         <div>
-          {/* 나중에 각 컴포넌트를 Link로 감싸기 */}
-          <UserSvg nowCategory={nowCategoryName === USER_SVG && true} />
-          <ReportSvg nowCategory={nowCategoryName === REPORT_SVG && true} />
-          <CalendarSvg nowCategory={nowCategoryName === CALENDAR_SVG && true} />
-          <TrackSvg nowCategory={nowCategoryName === TRACK_SVG && true} />
-          <PostsSvg nowCategory={nowCategoryName === POSTS_SVG && true} />
-          <NotificationSvg nowCategory={nowCategoryName === NOTIFICATION_SVG && true} />
+          <Link to='/admin/users'>
+            <UserButton
+              nowCategory={nowCategoryName === USER_BUTTON && true}
+              title={'사용자 관리'}
+            />
+          </Link>
+          <Link to='/admin/reports'>
+            <ReportButton nowCategory={nowCategoryName === REPORT_BUTTON && true} />
+          </Link>
+          <Link to='/admin/plans'>
+            <PlanButton nowCategory={nowCategoryName === PLAN_BUTTON && true} />
+          </Link>
+          <Link to='/admin/tracks'>
+            <TrackButton nowCategory={nowCategoryName === TRACK_BUTTON && true} />
+          </Link>
+          <Link to='/admin/users'>
+            <PostsButton nowCategory={nowCategoryName === POSTS_BUTTON && true} />
+          </Link>
+          <Link to='/admin/users'>
+            <NotificationButton nowCategory={nowCategoryName === NOTIFICATION_BUTTON && true} />
+          </Link>
         </div>
       </div>
     </SideBar>

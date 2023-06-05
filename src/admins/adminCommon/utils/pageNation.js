@@ -1,4 +1,4 @@
-import { PageNationBlockDiv } from '../../adminUser/styledComponents/tableComponent';
+import { PageNationBlockDiv } from '../styledComponents/tableComponent';
 
 /**
  *

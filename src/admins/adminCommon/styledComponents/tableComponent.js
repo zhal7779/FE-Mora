@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // 테이블 요소들
 export const tableRowSetting = `
 display: grid;
-grid-template-columns: 4.5rem 5.5rem 22rem 12rem 12rem 9rem 7rem;
+grid-template-columns: 4.5rem 5.5rem 22rem 12rem 12rem 9rem 6.5rem;
 grid-template-rows: 4rem;
 justify-items: center;
 align-items: center;
@@ -72,3 +72,15 @@ export const PageNationBlockDiv = styled.div`
     color: #ffffff;
   }
 `;
+
+// // 테이블 요소들
+// export const tableRowSetting = `
+// display: grid;
+// grid-template-columns: 14.5rem 14.5rem 14.5rem 14.5rem 14.5rem;
+// grid-template-rows: 4rem;
+// justify-items: center;
+// align-items: center;
+
+// & > span {
+// 	font-size: 1.4rem;
+// }`;

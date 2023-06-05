@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PageNationBlock } from '../styledComponents/tableComponent';
-import { getPageNumberComponents, getNumberOfPage } from '../../adminCommon/utils/pageNation';
+import { getPageNumberComponents, getNumberOfPage } from '../utils/pageNation';
 
 const PageNation = ({ totalDataNumber, numberByPage }) => {
   const [nowPageNumber, setNowPageNumber] = useState(1);
