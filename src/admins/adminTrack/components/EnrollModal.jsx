@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ModalOverlay,
   ModalContentBlock,
@@ -12,41 +12,32 @@ import {
   ModalButton,
 } from '../styledComponents/modalComponents';
 
-const Modal = ({ 인포, modal, toggleModal }) => {
-  // 밖으로 뺄 거
-  const info = [
-    {
-      type: 'name',
-      subTitle: '이름',
-      contentValue: '임지성',
-    },
-    {
-      type: 'email',
-      subTitle: '이메일',
-      contentValue: 'jisung9105@gmail.com',
-    },
-    {
-      type: 'password',
-      subTitle: '비밀번호',
-      contentValue: 'dkssudgktpdy11334^^&&',
-    },
-    {
-      type: 'createdDate',
-      subTitle: '가입 날짜',
-      contentValue: '2023.06.02',
-    },
-  ];
-  const modalTitle = '사용자 정보';
+// 밖으로 뺄 거
+const info = [
+  {
+    type: 'id',
+    subTitle: '번호',
+    contentValue: '1',
+  },
+  {
+    type: 'name',
+    subTitle: '트랙 이름',
+    contentValue: 'SW',
+  },
+  {
+    type: 'phase',
+    subTitle: '기수',
+    contentValue: '1',
+  },
+];
+
+const EnrollModal = ({ 인포, modal, toggleModal }) => {
+  const modalTitle = '트랙 정보';
   const modalFeature = '수정하기';
 
   const [updatable, setUpdatable] = useState(false);
   const [contents, setContents] = useState(info);
   const firstInput = useRef(null);
-
-  const handleUpdatable = () => {
-    setUpdatable(true);
-    if (!updatable) firstInput.current.focus();
-  };
 
   const handleChangeContents = (e) => {
     const idx = e.target.alt;
@@ -54,6 +45,15 @@ const Modal = ({ 인포, modal, toggleModal }) => {
     newContents[idx].contentValue = e.target.value;
     setContents(newContents);
   };
+
+  const handleModalClose = () => {
+    setUpdatable(false);
+    toggleModal();
+  };
+
+  useEffect(() => {
+    firstInput.current.focus();
+  }, [modal]);
 
   return (
     <>
@@ -63,56 +63,39 @@ const Modal = ({ 인포, modal, toggleModal }) => {
           <ModalContentBlock className='modal-content-block'>
             <ModalHeader className='modal-header'>
               <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
-              <ModalHeaderButton
-                className='modal-button-update'
-                onClick={handleUpdatable}
-                $purple
-                $header
-              >
-                {modalFeature}
-              </ModalHeaderButton>
             </ModalHeader>
             <div>
               {contents.map((content, idx) => {
-                if (content.type !== 'createdDate') {
+                if (content.type !== 'id') {
                   return (
                     <div key={content.type + idx}>
                       <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
                       <ModalContentInput
                         type='text'
-                        value={content.contentValue}
+                        value={''}
                         className='modal-content'
                         onChange={handleChangeContents}
-                        readOnly={!updatable}
                         alt={idx}
-                        ref={idx === 0 ? firstInput : null}
+                        ref={idx === 1 ? firstInput : null}
                       />
                     </div>
                   );
                 } else {
                   return (
                     <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>가입 날짜</ModalSubTitle>
-                      <ModalContentP className='modal-content'>
-                        {content.contentValue}
-                      </ModalContentP>
+                      <ModalSubTitle className='modal-sub-title'>번호</ModalSubTitle>
+                      <ModalContentP className='modal-content'>{13}</ModalContentP>
                     </div>
                   );
                 }
               })}
             </div>
             <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' $purple>
-                {modalFeature.slice(0, 2)}
+              <ModalButton className='modal-button-submit' onClick={handleModalClose}>
+                취소
               </ModalButton>
-              <ModalButton
-                className='modal-button-ok'
-                onClick={() => {
-                  setUpdatable(false);
-                  toggleModal();
-                }}
-              >
-                확인
+              <ModalButton className='modal-button-ok' $purple>
+                등록
               </ModalButton>
             </ModalButtonBlock>
           </ModalContentBlock>
@@ -122,4 +105,4 @@ const Modal = ({ 인포, modal, toggleModal }) => {
   );
 };
 
-export default Modal;
+export default EnrollModal;

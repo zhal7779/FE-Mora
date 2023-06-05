@@ -12,31 +12,27 @@ import {
   ModalButton,
 } from '../styledComponents/modalComponents';
 
-const Modal = ({ 인포, modal, toggleModal }) => {
-  // 밖으로 뺄 거
-  const info = [
-    {
-      type: 'name',
-      subTitle: '이름',
-      contentValue: '임지성',
-    },
-    {
-      type: 'email',
-      subTitle: '이메일',
-      contentValue: 'jisung9105@gmail.com',
-    },
-    {
-      type: 'password',
-      subTitle: '비밀번호',
-      contentValue: 'dkssudgktpdy11334^^&&',
-    },
-    {
-      type: 'createdDate',
-      subTitle: '가입 날짜',
-      contentValue: '2023.06.02',
-    },
-  ];
-  const modalTitle = '사용자 정보';
+// 밖으로 뺄 거
+const info = [
+  {
+    type: 'id',
+    subTitle: '번호',
+    contentValue: '1',
+  },
+  {
+    type: 'name',
+    subTitle: '트랙 이름',
+    contentValue: 'SW',
+  },
+  {
+    type: 'phase',
+    subTitle: '기수',
+    contentValue: '1',
+  },
+];
+
+const UpdateModal = ({ 인포, modal, toggleModal }) => {
+  const modalTitle = '트랙 정보';
   const modalFeature = '수정하기';
 
   const [updatable, setUpdatable] = useState(false);
@@ -74,7 +70,7 @@ const Modal = ({ 인포, modal, toggleModal }) => {
             </ModalHeader>
             <div>
               {contents.map((content, idx) => {
-                if (content.type !== 'createdDate') {
+                if (content.type !== 'id') {
                   return (
                     <div key={content.type + idx}>
                       <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
@@ -85,14 +81,14 @@ const Modal = ({ 인포, modal, toggleModal }) => {
                         onChange={handleChangeContents}
                         readOnly={!updatable}
                         alt={idx}
-                        ref={idx === 0 ? firstInput : null}
+                        ref={idx === 1 ? firstInput : null}
                       />
                     </div>
                   );
                 } else {
                   return (
                     <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>가입 날짜</ModalSubTitle>
+                      <ModalSubTitle className='modal-sub-title'>번호</ModalSubTitle>
                       <ModalContentP className='modal-content'>
                         {content.contentValue}
                       </ModalContentP>
@@ -122,4 +118,4 @@ const Modal = ({ 인포, modal, toggleModal }) => {
   );
 };
 
-export default Modal;
+export default UpdateModal;
