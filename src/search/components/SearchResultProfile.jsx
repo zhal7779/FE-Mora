@@ -48,7 +48,7 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
 
 export default SearchResultProfile;
 const Container = styled.div`
-  width: 634px;
+  width: 66%;
   height: 100%;
   background: #ffffff;
   border: 1px #cbd5e1 solid;

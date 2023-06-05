@@ -34,7 +34,10 @@ const Header = () => {
             </ModalContent>
 
             <MenuContainer>
-              <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+              <Link to='/'>
+                <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+              </Link>
+
               <MenuContent>
                 <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
                   <Link to='/community'>

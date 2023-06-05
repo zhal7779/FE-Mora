@@ -8,8 +8,6 @@ import AdminUser from './pages/AdminUserPage';
 import SearchPage from './pages/SearchPage';
 import OpenProfilePage from './pages/OpenProfilePage';
 import Quiz from './pages/QuizPage';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
