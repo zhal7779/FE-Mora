@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const RecommendContainer = styled.section`
-  padding: 34px 0 60px;
+  padding-top: 34px;
 
   h3 {
     padding-bottom: 10px;

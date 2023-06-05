@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.section`
+  padding-top: 60px;
+
   .filter {
     display: flex;
     padding-bottom: 10px;
