@@ -12,7 +12,10 @@ export const ListContainer = styled.section`
     padding-bottom: 100px;
   }
   li {
-    border-top: 1px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem 1rem 1rem;
 
     &:last-child {
       border-bottom: 1px solid #e0e0e0;
@@ -21,11 +24,12 @@ export const ListContainer = styled.section`
   .button-container {
     display: flex;
     justify-content: space-between;
-    margin: 1.5rem 1rem;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
 
     p {
       font-weight: 400;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       color: #424242;
       cursor: pointer;
     }
@@ -34,7 +38,8 @@ export const ListContainer = styled.section`
   .content-container {
     cursor: pointer;
     h4 {
-      margin: 0 1rem 0 1rem;
+      margin: 1rem;
+      padding-top: 1rem;
       font-weight: 600;
       font-size: 2rem;
     }

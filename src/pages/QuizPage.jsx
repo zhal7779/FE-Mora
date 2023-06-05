@@ -112,10 +112,10 @@ const Quiz = () => {
       />
 
       {showImage && answer === quizAns[randomIndex] && (
-        <AnimatedRabbit src={rabbitImg} style={{ width: '37rem', height: '36rem' }} />
+        <AnimatedRabbit src={rabbitImg} style={{ width: '25rem', height: '27rem' }} />
       )}
       {showImage && answer !== quizAns[randomIndex] && (
-        <AnimatedTurtle src={turtleImg} style={{ width: '40rem', height: '37rem' }} />
+        <AnimatedTurtle src={turtleImg} style={{ width: '25rem', height: '25rem' }} />
       )}
 
       <LoginButton
