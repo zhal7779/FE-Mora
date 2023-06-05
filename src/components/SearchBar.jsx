@@ -53,7 +53,14 @@ const SearchBar = ({ handleClose }) => {
   );
 };
 export default SearchBar;
-
+const Background = styled.div`
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+`;
 const Container = styled.div`
   position: fixed;
   z-index: 2;
@@ -79,14 +86,4 @@ const Input = styled.input`
   ::placeholder {
     color: #94a3b8;
   }
-`;
-
-const Background = styled.div`
-  position: fixed;
-  z-index: 1;
-  top: 12.4rem;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
 `;

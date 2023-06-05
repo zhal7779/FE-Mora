@@ -29,7 +29,9 @@ const Header = () => {
       ) : (
         <Container>
           <Content>
-            <ModalContent>{onModal && <AlarmModal onClick={handleModalClick} />}</ModalContent>
+            <ModalContent>
+              {onModal ? <AlarmModal handleClose={handleModalClick} /> : ''}
+            </ModalContent>
 
             <MenuContainer>
               <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
