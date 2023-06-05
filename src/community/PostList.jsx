@@ -1,7 +1,7 @@
 import * as Style from './styledComponents/PostListStyle';
 import { Link } from 'react-router-dom';
 
-const PostList = () => {
+const PostList = ({ selectedCategory }) => {
   // 선택된 카테고리에 해당하는 게시글 목록을 가져오는 로직 작성
 
   return (
