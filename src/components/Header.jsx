@@ -45,7 +45,9 @@ const Header = () => {
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-                  <p> 정비소</p>
+                  <Link to='/schedule'>
+                    <p> 정비소</p>
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
                   <Link to='/openprofile'>

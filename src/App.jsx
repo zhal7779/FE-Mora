@@ -11,6 +11,7 @@ import Quiz from './pages/QuizPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
+import SchedulePage from './pages/SchedulePage';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/' exact element={<MainPage />} />
             <Route path='/community' element={<CommunityPage />} />
             <Route path='/search' element={<SearchPage />} />
+            <Route path='/schedule' element={<SchedulePage />} />
           </Route>
           <Route element={<LoginLayout />}>
             <Route path='/login' element={<Login />} />
