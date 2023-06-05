@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const CategoryContainer = styled.section`
   position: sticky;
+  top: 60px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;

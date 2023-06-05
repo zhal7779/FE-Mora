@@ -1,0 +1,17 @@
+{
+  "id": "f1892995-9a64-4b35-971e-a0252f9e6ed4",
+  "category": "question",
+  "title": "제목 수정",
+  "content": "내용 수정",
+  "hashtags": ["html", "css", "javascript"],
+  "images": [
+    {
+      "path": "uploads12/REACTS1685894216499.png",
+      "origin_name": "REACTS12.png"
+    },
+    {
+      "path": "uploads12/REACTSS1685894216499.png",
+      "origin_name": "REACTSS12.png"
+    }
+  ]
+}
