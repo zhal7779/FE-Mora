@@ -35,12 +35,12 @@ const App = () => {
             <Route path='/schedule' element={<SchedulePage />} />
             <Route path='/openprofile' element={<OpenProfilePage />} />
             <Route path='/mypage' element={<MyPage />} />
-            <Route path='/mypage/edit' element={<MyPageEditPage />} />
           </Route>
           <Route element={<LoginLayout />}>
             <Route path='/login' element={<Login />} />
             <Route path='/quiz' element={<Quiz />} />
             <Route path='/signin' element={<Signin />} />
+            <Route path='/mypage/edit' element={<MyPageEditPage />} />
           </Route>
           <Route element={<AdminLayout />}>
             <Route path='/admin/users' element={<AdminUser />} />
