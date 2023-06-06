@@ -3,7 +3,7 @@ import AdminSideBar from '../admins/adminCommon/components/AdminSideBar';
 import Header from '../admins/adminCommon/components/Header';
 import SearchBar from '../admins/adminCommon/components/SearchBar';
 import { REPORT_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
-import { AdminMainContainer } from '../admins/adminCommon/styledComponents/adminMainContainer';
+import { AdminMainContainer } from '../admins/adminCommon/styledComponents/AdminMainContainer';
 import AdminTable from '../admins/adminReport/components/AdminTable';
 
 const AdminReportPage = () => {

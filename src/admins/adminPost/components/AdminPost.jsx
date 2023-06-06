@@ -7,7 +7,7 @@ import {
   PostLayout,
   PostImage,
   PostInfoBlock,
-} from '../styledComponents/adminPost';
+} from '../styledComponents/AdminPost';
 
 export const AdminPost = () => {
   return (

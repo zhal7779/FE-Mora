@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SearchBarBlock = styled.div`
+const SearchBarBlock = styled.div`
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -10,7 +10,7 @@ export const SearchBarBlock = styled.div`
   border-radius: 4px;
   margin-bottom: 6rem;
 `;
-export const SearchBarInput = styled.input`
+const SearchBarInput = styled.input`
   width: 100%;
   height: 2rem;
   padding-top: 0.2rem;
@@ -26,3 +26,5 @@ export const SearchBarInput = styled.input`
     outline: none;
   }
 `;
+
+export { SearchBarBlock, SearchBarInput };

@@ -104,35 +104,6 @@ const tableBodyData = [
     reportStatus: 1,
     target_id: 'posts/blah',
   },
-  {
-    fromUser: '임지성',
-    toUser: '김윤지',
-    content: '댓글이 이상해요',
-    reportType: 2,
-    createAt: '2023.06.01',
-    reportStatus: 0,
-  },
-  {
-    fromUser: '손찬규',
-    toUser: '안동현',
-    content: '제목이 이상해요',
-    reportType: 1,
-    createAt: '2023.06.01',
-    reportStatus: 1,
-    target_id: 'posts/blah',
-  },
-  {
-    fromUser: '이채연',
-    toUser: '안동현',
-    content: '자꾸 딱밤 때려요',
-    reportType: 1,
-    createAt: '2023.06.01',
-    reportStatus: 1,
-    target_id: 'posts/blah',
-  },
 ];
 
-const subTitles = ['신고자', '피신고자', '신고 내용', '신고 유형', '처리 상태', '신고 날짜'];
-const objKey = ['fromUser', 'toUser', 'content', 'reportType', 'reportStatus', 'createAt'];
-
-export { tableBodyData, subTitles, objKey };
+export default tableBodyData;

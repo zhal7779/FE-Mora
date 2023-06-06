@@ -1,4 +1,8 @@
-import { SideBarBtn, ManagementListTitle, SideBarListSvg } from '../styledComponents/adminSideBar';
+import {
+  SideBarBtn,
+  ManagementListTitle,
+  SideBarListSvg,
+} from '../styledComponents/AdminSideBarStyle';
 
 const UserButton = ({ nowCategory, title }) => {
   return (
@@ -22,7 +26,7 @@ const UserButton = ({ nowCategory, title }) => {
   );
 };
 
-const ReportButton = ({ nowCategory }) => {
+const ReportButton = ({ nowCategory, title }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -38,13 +42,13 @@ const ReportButton = ({ nowCategory }) => {
         className='management-list-title'
         style={nowCategory ? { color: 'black' } : null}
       >
-        신고 관리
+        {title}
       </ManagementListTitle>
     </SideBarBtn>
   );
 };
 
-const PlanButton = ({ nowCategory }) => {
+const PlanButton = ({ nowCategory, title }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -60,13 +64,13 @@ const PlanButton = ({ nowCategory }) => {
         className='management-list-title'
         style={nowCategory ? { color: 'black' } : null}
       >
-        일정 관리
+        {title}
       </ManagementListTitle>
     </SideBarBtn>
   );
 };
 
-const TrackButton = ({ nowCategory }) => {
+const TrackButton = ({ nowCategory, title }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -82,13 +86,13 @@ const TrackButton = ({ nowCategory }) => {
         className='management-list-title'
         style={nowCategory ? { color: 'black' } : null}
       >
-        트랙 관리
+        {title}
       </ManagementListTitle>
     </SideBarBtn>
   );
 };
 
-const PostsButton = ({ nowCategory }) => {
+const PostsButton = ({ nowCategory, title }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -104,13 +108,13 @@ const PostsButton = ({ nowCategory }) => {
         className='management-list-title'
         style={nowCategory ? { color: 'black' } : null}
       >
-        게시물 관리
+        {title}
       </ManagementListTitle>
     </SideBarBtn>
   );
 };
 
-const NotificationButton = ({ nowCategory }) => {
+const NotificationButton = ({ nowCategory, title }) => {
   return (
     <SideBarBtn className='side-bar-btn'>
       <SideBarListSvg fill='none' xmlns='http://www.w3.org/2000/svg' className='side-bar-list-svg'>
@@ -126,7 +130,7 @@ const NotificationButton = ({ nowCategory }) => {
         className='management-list-title'
         style={nowCategory ? { color: 'black' } : null}
       >
-        공지사항 관리
+        {title}
       </ManagementListTitle>
     </SideBarBtn>
   );

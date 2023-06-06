@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
-import { tableBodyData, subTitles } from '../data/userData';
+import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
+import tableBodyData from '../data/userData';
 import DeleteButton from './DeleteButton';
 import ReportModal from './ReportModal';
 
@@ -21,7 +21,7 @@ const AdminTableBody = () => {
             <span>{info.fromUser}</span>
             <span>→</span>
             <span>{info.toUser}</span>
-            <span>{info.content}</span>
+            <span className='content'>{info.content}</span>
             <span>{info.reportType === 1 ? '게시글' : '댓글'}</span>
             <span>{info.reportStatus === 0 ? '미완' : <u>완료</u>}</span>
             <span>{info.createAt}</span>
@@ -35,13 +35,7 @@ const AdminTableBody = () => {
         );
       })}
       {/* 모달도 페이지처럼 접근하자. 서치파람으로 id 넘겨줘서 api로 받자. 그럼 이건 나중에 */}
-      {detailModal && (
-        <ReportModal
-          infos={tableBodyData}
-          toggleDetailModal={toggleDetailModal}
-          subTitles={subTitles}
-        />
-      )}
+      {detailModal && <ReportModal infos={tableBodyData} toggleDetailModal={toggleDetailModal} />}
     </ul>
   );
 };

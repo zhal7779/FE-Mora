@@ -1,4 +1,4 @@
-import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
+import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 import tableBodyData from '../data/trackData';
 import DeleteButton from './DeleteButton';
 

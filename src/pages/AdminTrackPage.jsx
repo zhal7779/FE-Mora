@@ -5,7 +5,7 @@ import SearchBar from '../admins/adminCommon/components/SearchBar';
 import AdminBlock from '../admins/adminCommon/components/AdminBlock';
 import AdminSideBar from '../admins/adminCommon/components/AdminSideBar';
 import { TRACK_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
-import { AdminMainContainer } from '../admins/adminCommon/styledComponents/adminMainContainer';
+import { AdminMainContainer } from '../admins/adminCommon/styledComponents/AdminMainContainer';
 import TrackModal from '../admins/adminTrack/components/TrackModal';
 import AdminTable from '../admins/adminTrack/components/AdminTable';
 

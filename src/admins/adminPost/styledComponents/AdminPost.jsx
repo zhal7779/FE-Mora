@@ -3,8 +3,8 @@ import styled from 'styled-components';
 const PostGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 24rem);
-  column-gap: 3rem;
-  row-gap: 4rem;
+  column-gap: 4rem;
+  row-gap: 5rem;
   margin-bottom: 20rem;
 `;
 

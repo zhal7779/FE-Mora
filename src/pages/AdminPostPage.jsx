@@ -4,7 +4,7 @@ import Header from '../admins/adminCommon/components/Header';
 import SearchBar from '../admins/adminCommon/components/SearchBar';
 import AdminPost from '../admins/adminPost/components/AdminPost';
 import { POSTS_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
-import { AdminMainContainer } from '../admins/adminCommon/styledComponents/adminMainContainer';
+import { AdminMainContainer } from '../admins/adminCommon/styledComponents/AdminMainContainer';
 
 const AdminPostPage = () => {
   return (

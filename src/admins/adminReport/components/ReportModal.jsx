@@ -7,7 +7,7 @@ import {
   ModalButtonBlock,
   ModalHeader,
   ModalButton,
-} from '../styledComponents/modalComponents';
+} from '../styledComponents/ModalComponents';
 
 const ReportModal = ({ infos, toggleDetailModal }) => {
   const modalTitle = '트랙 정보';

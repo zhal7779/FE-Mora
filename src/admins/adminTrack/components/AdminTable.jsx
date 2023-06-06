@@ -8,7 +8,7 @@ import {
   EnrollButton,
   MainContentHeaderBlock,
   TableTitle,
-} from '../styledComponents/tableComponent';
+} from '../styledComponents/TableComponent';
 
 const AdminTable = ({ toggleDetailModal }) => {
   const [enrollModal, setEnrollModal] = useState(false);

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SideBar = styled.div`
+const SideBar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -24,7 +24,7 @@ export const SideBar = styled.div`
     font-weight: 900;
   }
 `;
-export const SideBarBtn = styled.button`
+const SideBarBtn = styled.button`
   display: flex;
   align-items: center;
   padding: 0;
@@ -37,7 +37,7 @@ export const SideBarBtn = styled.button`
 
   cursor: pointer;
 `;
-export const SideBarListSvg = styled.svg`
+const SideBarListSvg = styled.svg`
   width: 2.4rem;
   height: 2.4rem;
   margin-right: 0.8rem;
@@ -45,9 +45,11 @@ export const SideBarListSvg = styled.svg`
   line-height: 2.4rem;
   vertical-align: middle;
 `;
-export const ManagementListTitle = styled.span`
+const ManagementListTitle = styled.span`
   color: #adadad;
 
   font-size: 1.8rem;
   font-weight: bold;
 `;
+
+export { SideBar, SideBarBtn, SideBarListSvg, ManagementListTitle };

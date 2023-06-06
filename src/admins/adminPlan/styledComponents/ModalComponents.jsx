@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ModalOverlay = styled.div`
+const ModalOverlay = styled.div`
   position: fixed;
 
   top: 0;
@@ -13,7 +13,7 @@ export const ModalOverlay = styled.div`
   z-index: 1;
   opacity: 0.4;
 `;
-export const ModalContentBlock = styled.div`
+const ModalContentBlock = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,14 +27,14 @@ export const ModalContentBlock = styled.div`
 
   z-index: 3;
 `;
-export const ModalTitle = styled.h3`
+const ModalTitle = styled.h3`
   display: block;
   font-size: 2rem;
   font-weight: bold;
 
   color: #424242;
 `;
-export const ModalSubTitle = styled.p`
+const ModalSubTitle = styled.p`
   margin-bottom: 0.8rem;
 
   color: #616161;
@@ -42,7 +42,7 @@ export const ModalSubTitle = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
 `;
-export const ModalContentInput = styled.input`
+const ModalContentInput = styled.input`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -58,7 +58,7 @@ export const ModalContentInput = styled.input`
     outline: none;
   }
 `;
-export const ModalContentP = styled.p`
+const ModalContentP = styled.p`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -70,19 +70,19 @@ export const ModalContentP = styled.p`
 
   font-size: 1.4rem;
 `;
-export const ModalButtonBlock = styled.div`
+const ModalButtonBlock = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
   gap: 1.5rem;
   padding-top: 2rem;
 `;
-export const ModalHeader = styled.div`
+const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5rem;
 `;
-export const ModalHeaderButton = styled.button`
+const ModalHeaderButton = styled.button`
   padding: 0.6rem 1rem;
   border: none;
   border-radius: 4px;
@@ -95,7 +95,7 @@ export const ModalHeaderButton = styled.button`
 
   cursor: pointer;
 `;
-export const ModalButton = styled.button`
+const ModalButton = styled.button`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
@@ -108,3 +108,16 @@ export const ModalButton = styled.button`
 
   cursor: pointer;
 `;
+
+export {
+  ModalButton,
+  ModalButtonBlock,
+  ModalContentBlock,
+  ModalContentInput,
+  ModalContentP,
+  ModalHeader,
+  ModalHeaderButton,
+  ModalOverlay,
+  ModalSubTitle,
+  ModalTitle,
+};
