@@ -4,6 +4,7 @@ import Header from '../admins/adminCommon/components/Header';
 import SearchBar from '../admins/adminCommon/components/SearchBar';
 import { AdminMainContainer } from '../admins/adminCommon/styledComponents/adminMainContainer';
 import { NOTIFICATION_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
+import AdminTable from '../admins/adminNotification/components/AdminTable';
 
 const AdminNotificationPage = () => {
   return (
@@ -13,6 +14,7 @@ const AdminNotificationPage = () => {
         <AdminSideBar nowCategoryName={NOTIFICATION_BUTTON} />
         <AdminMainContainer>
           <SearchBar />
+          <AdminTable />
         </AdminMainContainer>
       </AdminBlock>
     </>
