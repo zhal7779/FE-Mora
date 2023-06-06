@@ -38,6 +38,8 @@ export const DetailBtn = styled.button`
   background-color: #fcfcfe;
 
   font-weight: 500;
+
+  cursor: pointer;
 `;
 
 // 페이지네이션

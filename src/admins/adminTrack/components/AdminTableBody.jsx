@@ -2,7 +2,7 @@ import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
 import tableBodyData from '../data/trackData';
 import DeleteButton from './DeleteButton';
 
-const AdminTableBody = ({ toggleModal }) => {
+const AdminTableBody = ({ toggleDetailModal }) => {
   return (
     <ul className='user-info-list'>
       {tableBodyData.map((info, idx) => {
@@ -13,7 +13,7 @@ const AdminTableBody = ({ toggleModal }) => {
             <span>{info.name}</span>
             <span>{info.phase}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={toggleModal}>
+              <DetailBtn className='detail-btn' onClick={toggleDetailModal}>
                 보기
               </DetailBtn>
             </span>
