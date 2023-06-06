@@ -4,6 +4,7 @@ import Header from '../admins/adminCommon/components/Header';
 import SearchBar from '../admins/adminCommon/components/SearchBar';
 import { PLAN_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
 import { AdminMainContainer } from '../admins/adminCommon/styledComponents/adminMainContainer';
+import AdminTable from '../admins/adminPlan/components/AdminTable';
 
 const AdminPlanPage = () => {
   return (
@@ -13,6 +14,7 @@ const AdminPlanPage = () => {
         <AdminSideBar nowCategoryName={PLAN_BUTTON} />
         <AdminMainContainer>
           <SearchBar />
+          <AdminTable />
         </AdminMainContainer>
       </AdminBlock>
     </>
