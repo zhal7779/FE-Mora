@@ -10,11 +10,11 @@ import {
   TableTitle,
 } from '../styledComponents/tableComponent';
 
-const AdminTable = () => {
-  const [modal, setModal] = useState(false);
+const AdminTable = ({ toggleDetailModal }) => {
+  const [enrollModal, setEnrollModal] = useState(false);
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleEnrollModal = () => {
+    setEnrollModal(!enrollModal);
   };
 
   // 추후 api 받아오는 걸로 변경 예정(얘도 함수로 따로 빼서 객체로 넘긴 다음 구조분해할당으로 값 2개 받아오자!)
@@ -25,14 +25,18 @@ const AdminTable = () => {
     <div>
       <MainContentHeaderBlock>
         <TableTitle className='table-title'>트랙 관리</TableTitle>
-        <EnrollButton className='modal-button-submit' onClick={() => setModal(!modal)} $purple>
+        <EnrollButton
+          className='modal-button-submit'
+          onClick={() => setEnrollModal(!enrollModal)}
+          $purple
+        >
           등록
         </EnrollButton>
-        {modal && <EnrollModal modal={true} toggleModal={toggleModal} />}
+        {enrollModal && <EnrollModal enrollModal={true} toggleEnrollModal={toggleEnrollModal} />}
       </MainContentHeaderBlock>
 
       <AdminTableHead />
-      <AdminTableBody toggleModal={toggleModal} />
+      <AdminTableBody toggleDetailModal={toggleDetailModal} />
       <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} />
     </div>
   );

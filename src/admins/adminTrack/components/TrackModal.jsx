@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   ModalOverlay,
@@ -9,6 +9,7 @@ import {
   ModalContentP,
   ModalButtonBlock,
   ModalHeader,
+  ModalHeaderButton,
   ModalButton,
 } from '../styledComponents/modalComponents';
 
@@ -31,11 +32,18 @@ const info = [
   },
 ];
 
-const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
+const TrackModal = ({ 인포, detailModal, toggleDetailModal }) => {
   const modalTitle = '트랙 정보';
+  const modalFeature = '수정하기';
 
+  const [updatable, setUpdatable] = useState(false);
   const [contents, setContents] = useState(info);
   const firstInput = useRef(null);
+
+  const handleUpdatable = () => {
+    setUpdatable(true);
+    if (!updatable) firstInput.current.focus();
+  };
 
   const handleChangeContents = (e) => {
     const idx = e.target.alt;
@@ -44,22 +52,22 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
     setContents(newContents);
   };
 
-  const handleModalClose = () => {
-    toggleEnrollModal();
-  };
-
-  useEffect(() => {
-    firstInput.current.focus();
-  }, [enrollModal]);
-
   return (
     <>
-      {enrollModal && (
+      {detailModal && (
         <>
-          <ModalOverlay onClick={toggleEnrollModal} />
+          <ModalOverlay onClick={toggleDetailModal} />
           <ModalContentBlock className='modal-content-block'>
             <ModalHeader className='modal-header'>
               <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
+              <ModalHeaderButton
+                className='modal-button-update'
+                onClick={handleUpdatable}
+                $purple
+                $header
+              >
+                {modalFeature}
+              </ModalHeaderButton>
             </ModalHeader>
             <div>
               {contents.map((content, idx) => {
@@ -69,9 +77,10 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
                       <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
                       <ModalContentInput
                         type='text'
-                        value={''}
+                        value={content.contentValue}
                         className='modal-content'
                         onChange={handleChangeContents}
+                        readOnly={!updatable}
                         alt={idx}
                         ref={idx === 1 ? firstInput : null}
                       />
@@ -88,11 +97,17 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
               })}
             </div>
             <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' onClick={handleModalClose}>
-                취소
+              <ModalButton className='modal-button-submit' $purple>
+                {modalFeature.slice(0, 2)}
               </ModalButton>
-              <ModalButton className='modal-button-ok' $purple>
-                등록
+              <ModalButton
+                className='modal-button-ok'
+                onClick={() => {
+                  setUpdatable(false);
+                  toggleDetailModal();
+                }}
+              >
+                확인
               </ModalButton>
             </ModalButtonBlock>
           </ModalContentBlock>
@@ -102,4 +117,4 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
   );
 };
 
-export default EnrollModal;
+export default TrackModal;
