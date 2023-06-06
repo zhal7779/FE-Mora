@@ -11,6 +11,10 @@ import OpenProfilePage from './pages/OpenProfilePage';
 import Quiz from './pages/QuizPage';
 import MyPage from './pages/MyPage';
 import MyPageEditPage from './pages/MyPageEditPage';
+import MyPageSkillPage from './pages/MyPageSkillPage';
+import MyPageCareerPage from './pages/MyPageCareerPage';
+import MyPageEduPage from './pages/MyPageEduPage';
+import MyPageLinkPage from './pages/MyPageLinkPage';
 import AdminUser from './pages/AdminUserPage';
 import SchedulePage from './pages/SchedulePage';
 import AdminPlanPage from './pages/AdminPlanPage';
@@ -41,6 +45,10 @@ const App = () => {
             <Route path='/quiz' element={<Quiz />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/mypage/edit' element={<MyPageEditPage />} />
+            <Route path='/mypage/skill' element={<MyPageSkillPage />} />
+            <Route path='/mypage/career' element={<MyPageCareerPage />} />
+            <Route path='/mypage/education' element={<MyPageEduPage />} />
+            <Route path='/mypage/link' element={<MyPageLinkPage />} />
           </Route>
           <Route element={<AdminLayout />}>
             <Route path='/admin/users' element={<AdminUser />} />
