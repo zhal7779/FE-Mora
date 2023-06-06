@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { ModalButton } from './modalComponents';
 
 // 테이블 요소들
 export const tableRowSetting = `
 display: grid;
-grid-template-columns: 4.5rem 5.5rem 22rem 12rem 12rem 9rem 7rem;
+grid-template-columns: 9rem 2rem 9rem 13rem 9rem 9rem 12rem 8rem 8rem;
 grid-template-rows: 4rem;
 justify-items: center;
 align-items: center;
@@ -26,8 +27,6 @@ export const UserInfo = styled.li`
   }
 `;
 export const TableTitle = styled.h2`
-  margin-bottom: 2rem;
-
   font-size: 1.8rem;
   font-weight: bold;
 `;
@@ -39,6 +38,8 @@ export const DetailBtn = styled.button`
   background-color: #fcfcfe;
 
   font-weight: 500;
+
+  cursor: pointer;
 `;
 
 // 페이지네이션
@@ -71,4 +72,13 @@ export const PageNationBlockDiv = styled.div`
   &.now-page > p {
     color: #ffffff;
   }
+`;
+export const MainContentHeaderBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+`;
+export const EnrollButton = styled(ModalButton)`
+  padding: 0.7rem 1.5rem;
 `;
