@@ -20,11 +20,12 @@ export const introContainer = styled.section`
     align-items: center;
   }
   .modal-buttons-container {
+    width: 14.5rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 
     button {
-      margin: 1rem;
+      margin-top: 1rem;
     }
   }
 

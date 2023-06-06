@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/MyPageProfileStyle';
 import profile from '../assets/images/profile.png';
 import Button from '../components/Button';
@@ -68,6 +69,7 @@ const MainProfile = () => {
 };
 
 const ProfileList = () => {
+  const navigate = useNavigate();
   const profileListData = [
     {
       title: '스킬',
@@ -93,13 +95,17 @@ const ProfileList = () => {
 
   return (
     <Style.ListContainer>
-      {/* 게시글 목록을 렌더링하는 로직 작성 */}
       <ul>
         {profileListData.map((item, index) => (
           <li key={index}>
             <h4>{item.title}</h4>
             <p className='list-content'>{item.content}</p>
-            <button className='list-button'>{`+ ${item.title} 추가`}</button>
+            <button
+              className='list-button'
+              onClick={() => {
+                navigate(`${item.url}`);
+              }}
+            >{`+ ${item.title} 추가`}</button>
           </li>
         ))}
       </ul>
