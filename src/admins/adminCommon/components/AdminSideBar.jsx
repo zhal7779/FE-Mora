@@ -41,10 +41,10 @@ const AdminSideBar = ({ nowCategoryName }) => {
           <Link to='/admin/tracks'>
             <TrackButton nowCategory={nowCategoryName === TRACK_BUTTON && true} />
           </Link>
-          <Link to='/admin/users'>
+          <Link to='/admin/posts'>
             <PostsButton nowCategory={nowCategoryName === POSTS_BUTTON && true} />
           </Link>
-          <Link to='/admin/users'>
+          <Link to='/admin/notifications'>
             <NotificationButton nowCategory={nowCategoryName === NOTIFICATION_BUTTON && true} />
           </Link>
         </div>
