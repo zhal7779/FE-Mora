@@ -1,11 +1,11 @@
 import React from 'react';
-import Notification from '../schedule/components/Notification';
-
+import ScheduleCategory from '../schedule/components/ScheduleCategory';
+import { Wrapper } from '../search/styledComponents/pageCommonStyle';
 const SchedulePage = () => {
   return (
-    <div>
-      <Notification />
-    </div>
+    <Wrapper>
+      <ScheduleCategory />
+    </Wrapper>
   );
 };
 
