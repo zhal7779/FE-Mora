@@ -10,7 +10,7 @@ const Category = ({ selectedCategoryId, setSelectedCategoryId }) => {
 
   return (
     <Style.CategoryContainer>
-      <h2>토끼굴</h2>
+      <h2>토끼굴🐰</h2>
       <Link to="/write">
         <Button value="글 작성하기" color="darkPurple" />
       </Link>
