@@ -84,6 +84,7 @@ export const WriteContainer = styled.div`
 
   textarea {
     width: 100%;
+    overflow-y: hidden;
 
     &#title {
       min-height: 36px;
@@ -97,6 +98,7 @@ export const WriteContainer = styled.div`
       font-weight: 500;
       font-size: 18px;
       border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 20px;
     }
 
     &::placeholder {
