@@ -1,8 +1,17 @@
+import { useState } from 'react';
+
 import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 import tableBodyData from '../data/trackData';
 import DeleteButton from './DeleteButton';
+import TrackModal from './TrackModal';
 
-const AdminTableBody = ({ toggleDetailModal }) => {
+const AdminTableBody = () => {
+  const [detailModal, setDetailModal] = useState(false);
+
+  const toggleDetailModal = () => {
+    setDetailModal(!detailModal);
+  };
+
   return (
     <ul className='user-info-list'>
       {tableBodyData.map((info, idx) => {
@@ -21,6 +30,7 @@ const AdminTableBody = ({ toggleDetailModal }) => {
           </UserInfo>
         );
       })}
+      <TrackModal detailModal={detailModal} toggleDetailModal={toggleDetailModal} />
     </ul>
   );
 };
