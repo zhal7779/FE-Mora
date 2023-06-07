@@ -2,7 +2,10 @@ import React from 'react';
 import { ReactComponent as LeftIcon } from '../../assets/icons/fi_chevron-left.svg';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import * as Style from '../styleComponents/CalendarModal';
-const CalendarModal = () => {
+const CalendarModal = ({ onModal }) => {
+  const handleClickClose = () => {
+    onModal(false);
+  };
   const data = [
     {
       title: '직무멘토링 강의 자료 업로드 안내 & 만족도 조사',
@@ -40,7 +43,9 @@ const CalendarModal = () => {
             <RightIcon stroke='#616161' />
           </span>
         </div>
-        <span className='close_btn'>&times;</span>
+        <span className='close_btn' onClick={handleClickClose}>
+          &times;
+        </span>
       </Style.Content>
       <Style.Main>
         <div className='scroll'>

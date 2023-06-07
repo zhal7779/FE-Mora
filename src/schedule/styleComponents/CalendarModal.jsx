@@ -2,8 +2,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 60%;
+  transform: translate(-50%, -60%);
   width: 82.4rem;
   height: 50.4rem;
   border-radius: 4px;
@@ -44,6 +44,7 @@ export const Content = styled.div`
     margin: 0.5rem 1rem;
     color: #d9d9d9;
     font-size: 2.4rem;
+    cursor: pointer;
   }
 `;
 export const Main = styled.div`
