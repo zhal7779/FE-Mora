@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 import tableBodyData from '../data/userData';
 import DeleteButton from './DeleteButton';
-import Modal from '../../adminCommon/components/Modal';
+import UserModal from './UserModal';
 
 const AdminTableBody = () => {
   const [modal, setModal] = useState(false);
@@ -24,13 +24,15 @@ const AdminTableBody = () => {
             <span className='password'>{info.password}</span>
             <span>{info.createdDate}</span>
             <span>
-              <DetailBtn className='detail-btn'>보기</DetailBtn>
+              <DetailBtn className='detail-btn' onClick={toggleModal}>
+                보기
+              </DetailBtn>
             </span>
             <DeleteButton />
           </UserInfo>
         );
       })}
-      <Modal modal={modal} toggleModal={toggleModal} />
+      <UserModal modal={modal} toggleModal={toggleModal} />
     </ul>
   );
 };

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
 import PageNation from '../../adminCommon/components/PageNation';
+import EnrollModal from './EnrollModal copy';
 import {
   EnrollButton,
   MainContentHeaderBlock,
