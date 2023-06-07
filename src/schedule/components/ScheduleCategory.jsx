@@ -4,10 +4,11 @@ import { CategoryContainer } from '../../community/styledComponents/CategoryStyl
 import { ReactComponent as MegaphoneIcon } from '../../assets/icons/u_megaphone.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/u_calendar-alt.svg';
 
-const ScheduleCategory = () => {
-  const [selectedCategory, setSelectedCategory] = useState('공지사항');
+const ScheduleCategory = ({ setMenu }) => {
+  const [selectedCategory, setSelectedCategory] = useState(0);
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+    setMenu(category);
   };
 
   return (
@@ -21,10 +22,10 @@ const ScheduleCategory = () => {
         <p className='category-list-title'>토픽</p>
         <ul>
           <li
-            onClick={() => handleCategorySelect('공지사항')}
-            className={selectedCategory === '공지사항' ? 'active' : ''}
+            onClick={() => handleCategorySelect(0)}
+            className={selectedCategory === 0 ? 'active' : ''}
           >
-            {selectedCategory === '공지사항' ? (
+            {selectedCategory === 0 ? (
               <MegaphoneIcon fill='#7353EA' />
             ) : (
               <MegaphoneIcon fill='#bdbdbd' />
@@ -32,10 +33,10 @@ const ScheduleCategory = () => {
             <p>공지사항</p>
           </li>
           <li
-            onClick={() => handleCategorySelect('일정표')}
-            className={selectedCategory === '일정표' ? 'active' : ''}
+            onClick={() => handleCategorySelect(1)}
+            className={selectedCategory === 1 ? 'active' : ''}
           >
-            {selectedCategory === '일정표' ? (
+            {selectedCategory === 1 ? (
               <CalendarIcon fill='#7353EA' />
             ) : (
               <CalendarIcon fill='#bdbdbd' />
