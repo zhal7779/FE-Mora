@@ -9,7 +9,7 @@ import {
   TableTitle,
 } from '../styledComponents/TableComponent';
 
-const AdminTable = ({ toggleModal }) => {
+const AdminTable = () => {
   const [enrollModal, setEnrollModal] = useState(false);
 
   const toggleEnrollModal = () => {
@@ -31,7 +31,7 @@ const AdminTable = ({ toggleModal }) => {
       </MainContentHeaderBlock>
 
       <AdminTableHead />
-      <AdminTableBody toggleModal={toggleModal} />
+      <AdminTableBody />
       <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} />
     </div>
   );
