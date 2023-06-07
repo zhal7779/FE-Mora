@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PageNationBlock } from '../styledComponents/tableComponent';
+import { PageNationBlock } from '../styledComponents/TableComponent';
 import { getPageNumberComponents, getNumberOfPage } from '../utils/pageNation';
 
 const PageNation = ({ totalDataNumber, numberByPage }) => {

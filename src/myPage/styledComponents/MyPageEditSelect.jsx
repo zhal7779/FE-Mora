@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-const MyPageEditSelect = ({ title, options, name, onChange, value }) => {
+const MyPageEditSelect = ({ title, options, name, onChange, value, disabled }) => {
   return (
     <MyPageEditSelectContainer>
       <MyPageEditSelectText>{title}</MyPageEditSelectText>
       <SelectContainer>
-        <Select name={name} onChange={onChange} value={value}>
+        <Select name={name} onChange={onChange} value={value} disabled={disabled}>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

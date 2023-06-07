@@ -17,7 +17,7 @@ const StyledLoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  height: calc(100vh - 60px);
   top: 60px;
   background: #ffffff;
   border-width: 0px 1px;

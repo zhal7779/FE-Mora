@@ -47,10 +47,6 @@ const tableBodyData = [
     name: 'IOT',
     phase: '2',
   },
-  {
-    name: 'IOT',
-    phase: '3',
-  },
 ];
 
 export default tableBodyData;
