@@ -7,17 +7,13 @@ import ToggleHeader from '../openProfile/components/ToggleHeader';
 import OpenProfile from '../openProfile/components/OpenProfile';
 const OpenProfilePage = () => {
   return (
-    <>
-      <Header />
-      <Wrapper>
-        <ResigterProfile />
-        <div>
-          <ToggleHeader />
-          <OpenProfile />
-        </div>
-      </Wrapper>
-      <Footer />
-    </>
+    <Wrapper>
+      <ResigterProfile />
+      <div>
+        <ToggleHeader />
+        <OpenProfile />
+      </div>
+    </Wrapper>
   );
 };
 export default OpenProfilePage;

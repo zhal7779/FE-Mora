@@ -6,14 +6,14 @@ const StyledLittleText = styled.p`
   font-weight: 350;
   font-size: 1.5rem;
   line-height: 1.8rem;
-  margin-top: 5rem;
+  margin-top: 3rem;
   &:hover {
     cursor: pointer;
   }
 `;
 
-const LittleText = ({ text }) => {
-  return <StyledLittleText>{text}</StyledLittleText>;
+const LittleText = ({ text, onClick }) => {
+  return <StyledLittleText onClick={onClick}>{text}</StyledLittleText>;
 };
 
 export default LittleText;

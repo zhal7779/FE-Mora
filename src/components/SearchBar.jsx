@@ -1,20 +1,67 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
-const SearchBar = () => {
+import { useNavigate } from 'react-router-dom';
+// import { useOutClcik } from './OutClickClose';
+
+const SearchBar = ({ handleClose }) => {
+  const navigate = useNavigate();
+  //input 처리
+  const [input, setInput] = useState('');
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+  // closeRef(검색창 외부) 클릭시 검색창 닫힘
+  // const closeRef = useRef();
+
+  // const handleClickOutside = ({ target }) => {
+  //   if (closeRef.current.contains(target)) {
+  //     handleClose(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   window.addEventListener('click', handleClickOutside);
+
+  //   return () => {
+  //     window.removeEventListener('click', handleClickOutside);
+  //   };
+  // }, []);
+
+  const handleClickOutside = () => {
+    handleClose(false);
+  };
   return (
-    <Background>
+    <>
       <Container>
         <Content>
           <SearchIcon style={{ width: '3rem', height: '3rem', stroke: '#94a3b8' }} />
-          <Input type='text' placeholder='회사, 사람, 키워드로 검색'></Input>
+          <Input
+            type='text'
+            value={input}
+            onChange={handleInputChange}
+            onKeyPress={(e) => {
+              if ('Enter' === e.key) {
+                handleClickOutside();
+                navigate('/search');
+              }
+            }}
+            placeholder='회사, 사람, 키워드로 검색'
+          ></Input>
         </Content>
       </Container>
-    </Background>
+      <Background onClick={handleClickOutside} />
+    </>
   );
 };
 export default SearchBar;
-
+const Background = styled.div`
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+`;
 const Container = styled.div`
   position: fixed;
   z-index: 2;
@@ -40,11 +87,4 @@ const Input = styled.input`
   ::placeholder {
     color: #94a3b8;
   }
-`;
-const Background = styled.div`
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
 `;
