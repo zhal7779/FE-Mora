@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useState } from 'react';
 import HeaderWrite from '../postWrite/HeaderWrite';
 import PostWrite from '../postWrite/PostWrite';
@@ -17,5 +16,3 @@ const PostWritePage = () => {
 };
 
 export default PostWritePage;
-
-const WriteContainer = styled.div``;

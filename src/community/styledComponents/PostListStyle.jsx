@@ -52,8 +52,16 @@ export const PostContainer = styled.section`
       border-bottom: 1px solid #e0e0e0;
     }
 
+    .list-time {
+      padding-top: 24px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      color: rgba(54, 78, 117, 0.5);
+    }
+
     h2 {
-      padding: 24px 0 20px;
+      padding: 8px 0 20px;
       font-weight: 600;
       font-size: 1.9rem;
       line-height: 2.3rem;

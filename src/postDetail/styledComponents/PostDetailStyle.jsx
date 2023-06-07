@@ -1,17 +1,73 @@
 import styled from 'styled-components';
 
 export const DetailContainer = styled.section`
-  padding-top: 60px;
+  padding: 60px 20px 0;
   max-width: 1024px;
   margin: 0 auto;
 
-  .title {
-    h2 {
-      padding-top: 70px;
+  .post-head {
+    .title {
+      position: relative;
 
-      font-weight: 700;
-      font-size: 2.4rem;
-      line-height: 3.5rem;
+      h2 {
+        padding-top: 70px;
+
+        font-weight: 700;
+        font-size: 2.4rem;
+        line-height: 3.5rem;
+      }
+
+      .post-option {
+        position: absolute;
+        top: 72px;
+        right: 0px;
+
+        button {
+          border-radius: 4px;
+          background: none;
+          cursor: pointer;
+          transition: 0.2s;
+
+          &:hover {
+            background: rgba(203, 213, 225, 0.4);
+          }
+        }
+
+        &-list {
+          position: absolute;
+          left: -80px;
+          top: 28px;
+
+          display: none;
+          flex-direction: column;
+
+          padding: 8px 0;
+          background: #ffffff;
+          border: 1px solid #d8e0e9;
+          box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.1);
+          border-radius: 4px;
+
+          &.show {
+            display: flex;
+          }
+
+          li {
+            width: 100%;
+            padding: 4px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 22px;
+            color: #acacac;
+            cursor: pointer;
+            transition: 0.2s;
+
+            &.active,
+            &:hover {
+              color: #424242;
+            }
+          }
+        }
+      }
     }
 
     .view {
@@ -59,7 +115,7 @@ export const DetailContainer = styled.section`
       &-time {
         margin-top: 4px;
         font-size: 1.4rem;
-        color: #bdbdbd;
+        color: rgba(54, 78, 117, 0.5);
       }
 
       &-time {

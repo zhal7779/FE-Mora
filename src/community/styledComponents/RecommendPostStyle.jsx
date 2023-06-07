@@ -27,6 +27,10 @@ export const RecommendContainer = styled.section`
       &:hover {
         background: #fafbfc;
       }
+
+      & > a {
+        display: block;
+      }
     }
   }
 

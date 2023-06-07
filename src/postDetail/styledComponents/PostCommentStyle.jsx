@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CommentContainer = styled.div`
   max-width: 1024px;
+  padding: 0 20px;
   margin: 0 auto;
 
   h3 {
@@ -87,7 +88,7 @@ export const CommentContainer = styled.div`
             &-time {
               margin-top: 4px;
               font-size: 1.4rem;
-              color: #bdbdbd;
+              color: rgba(54, 78, 117, 0.5);
             }
 
             &-time {
