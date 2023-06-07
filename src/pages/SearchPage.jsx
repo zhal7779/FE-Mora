@@ -4,7 +4,6 @@ import { Wrapper } from '../search/styledComponents/pageCommonStyle';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
 import PostList from '../community/PostList';
-
 import { useState } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
 import profileData from '../search/components/searchProfile.json';
