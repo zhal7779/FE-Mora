@@ -10,6 +10,10 @@ const WriteHeader = ({ showPostImage, setShowPostImage }) => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
+    const check = window.confirm(
+      '작성을 취소하고 게시글 페이지로 이동하시겠습니까?'
+    );
+    if (!check) return;
     navigate(-1);
   };
 
