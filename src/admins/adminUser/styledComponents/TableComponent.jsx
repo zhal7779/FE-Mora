@@ -69,8 +69,6 @@ const PageNationBlockDiv = styled.div`
   text-align: center;
   line-height: 3rem;
 
-  cursor: pointer;
-
   &.now-page {
     border: none;
 

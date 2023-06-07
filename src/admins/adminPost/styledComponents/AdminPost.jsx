@@ -30,8 +30,6 @@ const EnrollButton = styled.button`
 
   font-size: 1.5rem;
   font-weight: bold;
-
-  cursor: pointer;
 `;
 
 const PostLayout = styled.div`
@@ -95,8 +93,6 @@ const PostInfoBlock = styled.div`
 
     background-color: #f45757;
     color: #fff;
-
-    cursor: pointer;
   }
 `;
 

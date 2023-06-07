@@ -34,8 +34,6 @@ const SideBarBtn = styled.button`
   margin: 0;
 
   background-color: #fff;
-
-  cursor: pointer;
 `;
 const SideBarListSvg = styled.svg`
   width: 2.4rem;

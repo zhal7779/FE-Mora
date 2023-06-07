@@ -47,8 +47,6 @@ const DetailBtn = styled.button`
   background-color: #fcfcfe;
 
   font-weight: 500;
-
-  cursor: pointer;
 `;
 
 // 페이지네이션
@@ -70,8 +68,6 @@ const PageNationBlockDiv = styled.div`
   font-size: 1.4rem;
   text-align: center;
   line-height: 3rem;
-
-  cursor: pointer;
 
   &.now-page {
     border: none;

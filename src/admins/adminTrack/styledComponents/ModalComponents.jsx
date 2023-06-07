@@ -92,8 +92,6 @@ const ModalHeaderButton = styled.button`
 
   font-size: 1.2rem;
   font-weight: bold;
-
-  cursor: pointer;
 `;
 const ModalButton = styled.button`
   padding: 1rem 2rem;
@@ -105,8 +103,6 @@ const ModalButton = styled.button`
 
   font-size: 1.5rem;
   font-weight: bold;
-
-  cursor: pointer;
 `;
 
 export {
