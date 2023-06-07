@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const ListContainer = styled.section`
   h2 {
-    padding-bottom: 20px;
+    padding: 3.75rem 0;
     font-weight: 600;
     font-size: 2.4rem;
     line-height: 2.9rem;
@@ -16,15 +16,12 @@ export const ListContainer = styled.section`
     border-radius: 1rem;
     margin-bottom: 2rem;
     padding: 0 1rem 1rem 1rem;
-
-    &:last-child {
-      border-bottom: 1px solid #e0e0e0;
-    }
   }
   .button-container {
     display: flex;
     justify-content: space-between;
-    padding: 1.5rem 1rem;
+    padding: 1.6rem 1rem;
+    margin-bottom: 1.5rem;
     border-bottom: 1px solid #e0e0e0;
 
     p {
@@ -38,8 +35,7 @@ export const ListContainer = styled.section`
   .content-container {
     cursor: pointer;
     h4 {
-      margin: 1rem;
-      padding-top: 1rem;
+      margin: 0 1rem 0 1rem;
       font-weight: 600;
       font-size: 2rem;
     }

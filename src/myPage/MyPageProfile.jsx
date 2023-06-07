@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/MyPageProfileStyle';
 import profile from '../assets/images/profile.png';
 import Button from '../components/Button';
@@ -12,6 +13,8 @@ const MainProfile = () => {
   const mainProfileData = {
     img: profile,
     name: '지우쓰',
+    track: 'SW 엔지니어 트랙',
+    phase: '4기',
     position: '당근마켓 프론트엔드 개발자',
     intro:
       'JavaScript를 이용한 개발 업무를 능숙히 처리할 수 있으며, 웹 표준 및 웹 접근성, 최적화에 대한 이해와 경험을 가지고 있는 프론트엔드 개발자입니다. 현재는 React, Next.js, Typescript를 활용한 개발 업무에 집중하고 있습니다. ',
@@ -37,7 +40,8 @@ const MainProfile = () => {
         </div>
       </div>
       <h3>{mainProfileData.name}</h3>
-      <h4>{mainProfileData.position}</h4>
+      <h4>{`${mainProfileData.track} ${mainProfileData.phase}`}</h4>
+      <h5>{mainProfileData.position}</h5>
       <div className='intro-container'>
         <p className='intro'>{mainProfileData.intro || ''}</p>
       </div>
@@ -68,6 +72,7 @@ const MainProfile = () => {
 };
 
 const ProfileList = () => {
+  const navigate = useNavigate();
   const profileListData = [
     {
       title: '스킬',
@@ -93,13 +98,17 @@ const ProfileList = () => {
 
   return (
     <Style.ListContainer>
-      {/* 게시글 목록을 렌더링하는 로직 작성 */}
       <ul>
         {profileListData.map((item, index) => (
           <li key={index}>
             <h4>{item.title}</h4>
             <p className='list-content'>{item.content}</p>
-            <button className='list-button'>{`+ ${item.title} 추가`}</button>
+            <button
+              className='list-button'
+              onClick={() => {
+                navigate(`${item.url}`);
+              }}
+            >{`+ ${item.title} 추가`}</button>
           </li>
         ))}
       </ul>
