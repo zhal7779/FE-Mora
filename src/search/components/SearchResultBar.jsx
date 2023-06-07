@@ -55,6 +55,7 @@ const SearchResultBar = ({ receiveMenu }) => {
 export default SearchResultBar;
 const Container = styled.div`
   position: fixed;
+  z-index: 1;
   width: 100%;
   top: 6rem;
   left: 0;
