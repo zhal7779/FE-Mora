@@ -4,7 +4,7 @@ import IconLike from '../assets/icons/icon-like.svg';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import data from './data/getResData';
-import formatTime from '../utils/formatTime';
+import formatTime from '../community/utils/formatTime';
 import IconMore from '../assets/icons/icon-more.svg';
 
 const PostDetail = () => {
