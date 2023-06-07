@@ -4,7 +4,14 @@ import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.s
 import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
 import rabbitImg from '../../assets/images/eliceRabbit-removebg-preview.png';
 import data from './notice.json';
+import Input from '../../components/Input';
 const Notification = () => {
+  //검색창 인풋
+  const [inputValue, setValue] = useState('');
+  const handleOnchange = (e) => {
+    setValue(e.target.value);
+  };
+
   const [view, setView] = useState([]);
   //view Open, close
   const handleClickView = (index) => {
@@ -20,10 +27,10 @@ const Notification = () => {
   return (
     <Style.Container>
       <div className='header_title'>
-        <h4>이번 달 엘리스에 올라온 중요 공지사항이에요!</h4>
+        <h4>엘리스에 올라온 중요한 공지사항이에요!</h4>
         <img src={rabbitImg} />
       </div>
-
+      <Input width='100%' onChange={handleOnchange} value={inputValue} />
       {data.map((item, index) => (
         <Style.Content key={index}>
           <div className='title' onClick={() => handleClickView(index)}>

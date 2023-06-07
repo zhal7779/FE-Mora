@@ -9,11 +9,11 @@ export const Container = styled.section`
   .header_title {
     display: flex;
     justify-content: space-between;
-    border: #e2e8f0 solid 1px;
+    border: #d8e0e9 solid 1px;
     border-radius: 4px;
     background: #fdfdff;
     h4 {
-      padding: 4rem 0 0 2rem;
+      padding: 4rem 0 0 3rem;
       font-size: 2rem;
       font-weight: 600;
       margin-bottom: 1rem;
