@@ -83,20 +83,6 @@ const tableBodyData = [
     password: 'sksmsdbswl1234^^',
     createdDate: '2023.06.01',
   },
-  {
-    userId: 13,
-    name: '임지성',
-    email: 'jisung9105@gmail.com',
-    password: 'ahdufpdltj1234^^',
-    createdDate: '2023.06.01',
-  },
-  {
-    userId: 14,
-    name: '김윤지',
-    email: 'yunji9105@gmail.com',
-    password: 'sksmsdbswl1234^^',
-    createdDate: '2023.06.01',
-  },
 ];
 
 export default tableBodyData;

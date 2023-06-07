@@ -1,4 +1,4 @@
-import { Container, InnerContainer } from '../styledComponents/adminBlock';
+import { Container, InnerContainer } from '../styledComponents/AdminBlockStyle';
 
 const AdminBlock = ({ children }) => {
   return (
