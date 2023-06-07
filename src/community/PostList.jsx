@@ -2,7 +2,9 @@ import * as Style from './styledComponents/PostListStyle';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import data from './data/getResData';
-import formatTime from './../utils/formatTime';
+import formatTime from './utils/formatTime';
+
+const REACT_APP_URL = process.env.REACT_APP_URL;
 
 const filterByLatest = '최신순';
 const filterByViews = '조회순';

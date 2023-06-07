@@ -3,10 +3,14 @@ import Button from '../components/Button';
 import IconMore from '../assets/icons/icon-more.svg';
 import { useState } from 'react';
 
+const REACT_APP_URL = process.env.REACT_APP_URL;
+const url = `${REACT_APP_URL}/api/v1/comment`;
+const token =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBhY2JlMzAwLTI5YWYtNDY2MS05MDQxLTBlMmM3ZjgyYjA0ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg2MTQ3MjM2LCJleHAiOjE2ODYxNTA4MzZ9.k-UYKqeoHK1Q6Lg91M0sdUKdaUqhzVHWYeY7joOtOAE';
+
 const PostComment = () => {
   const [commentOption, setCommentOption] = useState(false);
 
-  // utils로 빼기
   const handleChange = e => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
