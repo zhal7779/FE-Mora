@@ -7,33 +7,28 @@ import PostList from '../community/PostList';
 import { categories } from '../community/categoryData';
 
 const CommunityPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState(categories[0].name);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(
+    categories[0].id
+  );
   const [searchInput, setSearchInput] = useState('');
 
   return (
     <>
       <CommunityContainer>
         <Category
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          selectedCategoryId={selectedCategoryId}
+          setSelectedCategoryId={setSelectedCategoryId}
         />
         <div>
           <SearchBar
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            selectedCategoryId={selectedCategoryId}
             searchInput={searchInput}
             setSearchInput={setSearchInput}
           />
           {searchInput === '' && (
-            <RecommendPost
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-            />
+            <RecommendPost selectedCategoryId={selectedCategoryId} />
           )}
-          <PostList
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
+          <PostList selectedCategoryId={selectedCategoryId} />
         </div>
       </CommunityContainer>
     </>

@@ -1,12 +1,31 @@
+import { React } from 'react';
 import * as Style from './styledComponents/PostDetailStyle';
 import IconLike from '../assets/icons/icon-like.svg';
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import data from './data/getResData';
+import formatTime from '../utils/formatTime';
+import IconMore from '../assets/icons/icon-more.svg';
 
 const PostDetail = () => {
+  const [postOption, setPostOption] = useState(false);
   return (
     <Style.DetailContainer>
-      <div className="title">
-        <h2>코딩할 때 듣는 노동요</h2>
-        <p className="view">조회 7</p>
+      <div className="post-head">
+        {/* <p className="category">{data.category}</p> */}
+        <div className="title">
+          <h2>{data.title}</h2>
+          <div className="post-option">
+            <button onClick={() => setPostOption(!postOption)}>
+              <img src={IconMore} alt="열기" />
+            </button>
+            <ul className={`post-option-list ${postOption ? 'show' : ''}`}>
+              <li>수정하기</li>
+              <li>삭제하기</li>
+            </ul>
+          </div>
+        </div>
+        <p className="view">조회 {data.view_cnt}</p>
       </div>
       <div className="writer">
         <div className="writer-img">{/* <img src={} alt=""/> */}</div>
@@ -14,20 +33,22 @@ const PostDetail = () => {
           <p className="writer-info-name">김코딩</p>
           <div>
             <p className="writer-info-position">레이서</p>
-            <p className="writer-info-time">5분전</p>
+            <p className="writer-info-time">{formatTime(data.created_at)}</p>
           </div>
         </div>
       </div>
       <div className="content">
-        <div className="content-img">{/* <img src={} alt=''></img> */}</div>
-        <div className="content-text">
-          혼자 코딩할 때 주로 드라마 OST를 듣습니다. 선율이 편안해서 코딩에
-          방해가 되지 않고, 가사가 있어서 혼자 있는 느낌이 들지 않거든요. 다른
-          개발자분들은 코딩할 때 어떤 음악을 들으시나요?
-        </div>
+        <ul className="content-img">
+          {data.images.map((image, index) => (
+            <li>
+              <img src={image.path} alt={image.origin_name} key={index} />
+            </li>
+          ))}
+        </ul>
+        <div className="content-text">{data.content}</div>
         <button className="like-btn">
           <img src={IconLike} alt="좋아요" />
-          72
+          {data.like_cnt}
         </button>
       </div>
     </Style.DetailContainer>
