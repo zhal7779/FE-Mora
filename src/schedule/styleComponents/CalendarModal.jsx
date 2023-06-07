@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 export const Container = styled.div`
   position: fixed;
+  z-index: 2;
   top: 50%;
   left: 60%;
   transform: translate(-50%, -60%);
