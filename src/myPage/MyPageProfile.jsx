@@ -13,6 +13,8 @@ const MainProfile = () => {
   const mainProfileData = {
     img: profile,
     name: '지우쓰',
+    track: 'SW 엔지니어 트랙',
+    phase: '4기',
     position: '당근마켓 프론트엔드 개발자',
     intro:
       'JavaScript를 이용한 개발 업무를 능숙히 처리할 수 있으며, 웹 표준 및 웹 접근성, 최적화에 대한 이해와 경험을 가지고 있는 프론트엔드 개발자입니다. 현재는 React, Next.js, Typescript를 활용한 개발 업무에 집중하고 있습니다. ',
@@ -38,7 +40,8 @@ const MainProfile = () => {
         </div>
       </div>
       <h3>{mainProfileData.name}</h3>
-      <h4>{mainProfileData.position}</h4>
+      <h4>{`${mainProfileData.track} ${mainProfileData.phase}`}</h4>
+      <h5>{mainProfileData.position}</h5>
       <div className='intro-container'>
         <p className='intro'>{mainProfileData.intro || ''}</p>
       </div>
