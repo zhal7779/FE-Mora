@@ -14,14 +14,16 @@ const RegisterQuestion = () => {
 };
 
 export default RegisterQuestion;
-
 const Container = styled.div`
+  position: sticky;
+  top: 260px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2.4rem 1.6rem;
   border-radius: 4px;
-  border: 1px solid #65758c;
+  border: 1px solid #cbd5e1;
   background: #ffffff;
   font-size: 1.6rem;
   gap: 1rem;

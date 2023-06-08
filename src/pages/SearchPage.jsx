@@ -3,10 +3,10 @@ import SearchResultBar from '../search/components/SearchResultBar';
 import { Wrapper } from '../search/styledComponents/pageCommonStyle';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
-import PostList from '../community/PostList';
 import { useState } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
 import profileData from '../search/components/searchProfile.json';
+import SearchResultQnA from '../search/components/SearchResultQnA';
 const SearchPage = () => {
   const [menu, setMenu] = useState(1);
   const handleMenu = (menu) => {
@@ -33,13 +33,11 @@ const SearchPage = () => {
           </ProfileWrapper>
         ) : menu === 3 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <CommunityPost>
-              <PostList style={{ backgroundColor: '#ffffff' }} />
-            </CommunityPost>
             <RankingContent />
           </Wrapper>
         ) : (
           <Wrapper style={{ marginTop: '22rem' }}>
+            <SearchResultQnA />
             <RegisterQuestion />
           </Wrapper>
         )}
@@ -52,6 +50,7 @@ const Container = styled.div`
   width: 100%;
   background: #f0f1f3;
 `;
+
 const ProfileWrapper = styled.div`
   width: 1024px;
   height: 100%;
@@ -60,12 +59,4 @@ const ProfileWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
-`;
-
-const CommunityPost = styled.div`
-  width: 66%;
-
-  border-radius: 4px;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
 `;
