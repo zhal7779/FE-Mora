@@ -18,7 +18,7 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
           </div>
           <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
             <p className='all_view'>모두 보기</p>
-            <RightIcon />
+            <RightIcon stroke='#242424' />
           </div>
         </AddView>
       )}

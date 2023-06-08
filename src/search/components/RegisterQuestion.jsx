@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import rabbitImg from '../../assets/images/eliceRabbit.png';
+import helpImg from '../../assets/images/help.png';
 import Button from '../../components/Button';
 const RegisterQuestion = () => {
   return (
     <Container>
-      <Image src={rabbitImg} />
+      <Image src={helpImg} />
       <strong>궁금한 내용을 해결하지 못했나요?</strong>
       <p>레이서 Q&A에서 빠른 답변을 드려요.</p>
       <Button value={'질문하러 가기'} color='darkPurple' />
@@ -39,6 +39,6 @@ const Container = styled.div`
 
 const Image = styled.img`
   width: 16rem;
-  background: #eeeafe;
+
   border-radius: 4px;
 `;

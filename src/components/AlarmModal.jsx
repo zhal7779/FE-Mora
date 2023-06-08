@@ -46,7 +46,7 @@ const AlarmModal = ({ handleClose }) => {
                   ) : (
                     <DownIcon
                       stroke='#616161'
-                      stroke-width='2'
+                      strokeWidth='2'
                       width='22'
                       height='22'
                       onClick={() => handleContentClick(index)}

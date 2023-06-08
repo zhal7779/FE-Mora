@@ -1,35 +1,57 @@
-import React from 'react';
-import NotificationList from './NotificationList';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import * as Style from '../styleComponents/NotificationStyle';
+import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
+import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
+import rabbitImg from '../../assets/images/eliceRabbit-removebg-preview.png';
+import data from './notice.json';
+import Input from '../../components/Input';
 const Notification = () => {
+  //검색창 인풋
+  const [inputValue, setValue] = useState('');
+  const handleOnchange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const [view, setView] = useState([]);
+  //view Open, close
+  const handleClickView = (index) => {
+    setView((prevContent) => {
+      if (!prevContent.includes(index)) {
+        return [...prevContent, index];
+      } else {
+        return prevContent.filter((idx) => idx !== index);
+      }
+    });
+  };
+
   return (
-    <Container>
-      <div>
-        <h2>📢레이서 공지사항</h2>
-        <p>레이서들이 참고할 만한</p>
-        <p>엘리스 공지사항을 모아놨어요.</p>
+    <Style.Container>
+      <div className='header_title'>
+        <h4>엘리스에 올라온 중요한 공지사항이에요!</h4>
+        <img src={rabbitImg} />
       </div>
-      <NotificationList />
-    </Container>
+      <Input width='100%' onChange={handleOnchange} value={inputValue} />
+      {data.map((item, index) => (
+        <Style.Content key={index}>
+          <div className='title' onClick={() => handleClickView(index)}>
+            <h5>📢 [{item.title}]</h5>
+            {view.includes(index) ? (
+              <UpIcon stroke='#616161' strokeWidth='2' width='26' height='26' />
+            ) : (
+              <DownIcon stroke='#616161' strokeWidth='2' width='26' height='26' />
+            )}
+          </div>
+          {view.includes(index) ? (
+            <div className='main_text'>
+              <p>{item.text}</p>
+            </div>
+          ) : (
+            ''
+          )}
+        </Style.Content>
+      ))}
+    </Style.Container>
   );
 };
 
 export default Notification;
-
-const Container = styled.div`
-  display: flex;
-  padding: 3.8rem 2.4rem;
-
-  h2 {
-    margin-top: 6rem;
-    font-size: 2.4rem;
-    color: #242424;
-    font-weight: 600;
-    padding-bottom: 2rem;
-  }
-  p {
-    font-size: 1.6rem;
-    color: #605ea0;
-    padding: 0 0 0.5rem 3.6rem;
-  }
-`;

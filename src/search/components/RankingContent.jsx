@@ -18,7 +18,7 @@ const RankingContent = () => {
 export default RankingContent;
 
 const Container = styled.section`
-  /* position: sticky; */
+  position: sticky;
   width: 27%;
   padding: 2rem 1.6rem;
   background: #ffffff;
