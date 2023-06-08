@@ -21,28 +21,32 @@ const ScheduleCategory = ({ setMenu }) => {
       <div className='category-list'>
         <p className='category-list-title'>토픽</p>
         <ul>
-          <li
-            onClick={() => handleCategorySelect(0)}
-            className={selectedCategory === 0 ? 'active' : ''}
-          >
-            {selectedCategory === 0 ? (
-              <MegaphoneIcon fill='#7353EA' />
-            ) : (
-              <MegaphoneIcon fill='#bdbdbd' />
-            )}
-            <p>공지사항</p>
+          <li>
+            <a
+              onClick={() => handleCategorySelect(0)}
+              className={selectedCategory === 0 ? 'active' : ''}
+            >
+              {selectedCategory === 0 ? (
+                <MegaphoneIcon fill='#7353EA' />
+              ) : (
+                <MegaphoneIcon fill='#bdbdbd' />
+              )}
+              <p>공지사항</p>
+            </a>
           </li>
-          <li
-            onClick={() => handleCategorySelect(1)}
-            className={selectedCategory === 1 ? 'active' : ''}
-          >
-            {selectedCategory === 1 ? (
-              <CalendarIcon fill='#7353EA' />
-            ) : (
-              <CalendarIcon fill='#bdbdbd' />
-            )}
+          <li>
+            <a
+              onClick={() => handleCategorySelect(1)}
+              className={selectedCategory === 1 ? 'active' : ''}
+            >
+              {selectedCategory === 1 ? (
+                <CalendarIcon fill='#7353EA' />
+              ) : (
+                <CalendarIcon fill='#bdbdbd' />
+              )}
 
-            <p>일정표</p>
+              <p>일정표</p>
+            </a>
           </li>
         </ul>
       </div>
