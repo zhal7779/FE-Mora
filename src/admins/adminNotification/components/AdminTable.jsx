@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useGetNotificationInfo } from '../apis/postApi';
 
 import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
@@ -11,18 +11,18 @@ import {
   TableTitle,
 } from '../styledComponents/TableComponent';
 
-// 추후 api 받아오는 걸로 변경 예정(얘도 함수로 따로 빼서 객체로 넘긴 다음 구조분해할당으로 값 2개 받아오자!)
-const totalNumber = 30,
-  numberByPage = 14;
-
 const AdminTable = () => {
   const [enrollModal, setEnrollModal] = useState(false);
+  const [nowPage, setNowPage] = useState(0);
 
   const toggleEnrollModal = () => {
     setEnrollModal(!enrollModal);
   };
 
-  // const mutation = useMutation(['notification'], createNotification);
+  const { isLoading, data, error } = useGetNotificationInfo(0, 12);
+
+  if (isLoading) return <span>로딩중...</span>;
+  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <div>
@@ -31,12 +31,23 @@ const AdminTable = () => {
         <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
           등록
         </EnrollButton>
-        {enrollModal && <EnrollModal enrollModal={true} toggleEnrollModal={toggleEnrollModal} />}
+        {enrollModal && (
+          <EnrollModal
+            title={'공지 등록'}
+            enrollModal={enrollModal}
+            toggleEnrollModal={toggleEnrollModal}
+          />
+        )}
       </MainContentHeaderBlock>
 
       <AdminTableHead />
-      <AdminTableBody />
-      <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} />
+      <AdminTableBody notifications={data.objArr} />
+      <PageNation
+        totalDataNumber={30}
+        numberByPage={12}
+        nowPage={nowPage}
+        setNowPage={setNowPage}
+      />
     </div>
   );
 };

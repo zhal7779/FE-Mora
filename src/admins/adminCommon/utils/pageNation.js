@@ -1,4 +1,4 @@
-import { PageNationBlockDiv } from '../styledComponents/TableComponent';
+import { PageNationBlockBtn } from '../styledComponents/TableComponent';
 
 /**
  *
@@ -12,7 +12,7 @@ export const getNumberOfPage = (totalNumber, numberByPage) => {
   if (totalNumber % numberByPage === 0) {
     count = totalNumber / numberByPage;
   } else {
-    count = totalNumber / numberByPage + 1;
+    count = Math.floor(totalNumber / numberByPage + 1);
   }
   return count;
 };
@@ -24,18 +24,22 @@ export const getNumberOfPage = (totalNumber, numberByPage) => {
  * @param {*} setNowPageNumber 각 버튼 컴포넌트 클릭 시 스테이트를 현재 페이지로 바꾸는 함수
  * @returns 현재 페이지에 css가 적용된 전체 페이지 버튼
  */
-export const getPageNumberComponents = (nowPageNumber, numberOfPage, setNowPageNumber) => {
+export const getPageNumberComponents = (
+  nowPageNumber,
+  numberOfPage,
+  setNowPageNumber
+) => {
   const pageNumberComponents = [];
 
-  for (let index = 1; index <= numberOfPage; index++) {
+  for (let index = 0; index < numberOfPage; index++) {
     pageNumberComponents.push(
-      <PageNationBlockDiv
+      <PageNationBlockBtn
         className={index === nowPageNumber ? 'now-page page' : 'page'}
         onClick={() => setNowPageNumber(index)}
         key={index}
       >
-        <p>{index}</p>
-      </PageNationBlockDiv>
+        <p>{index + 1}</p>
+      </PageNationBlockBtn>
     );
   }
   return pageNumberComponents;

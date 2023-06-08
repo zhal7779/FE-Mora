@@ -18,7 +18,7 @@ const TableRowInfo = styled.div`
 
   font-weight: 'bold';
 `;
-const UserInfo = styled.li`
+const NotificationInfo = styled.li`
   ${tableRowSetting}
   border-bottom: 1px solid #d6c9ff;
 
@@ -91,7 +91,7 @@ const EnrollButton = styled(ModalButton)`
 export {
   TableRowInfo,
   TableTitle,
-  UserInfo,
+  NotificationInfo,
   DetailBtn,
   PageNationBlock,
   PageNationBlockDiv,

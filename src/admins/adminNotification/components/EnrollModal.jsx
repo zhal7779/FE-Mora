@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useCreateNotification } from '../apis/postApi';
 
 import {
   ModalOverlay,
@@ -10,46 +11,44 @@ import {
   ModalButtonBlock,
   ModalHeader,
   ModalButton,
+  ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
-const info = [
-  {
-    type: 'admin_id',
-    subTitle: '관리자 이름',
-    contentValue: '임지성',
-  },
-  {
-    type: 'title',
-    subTitle: '공지 제목',
-    contentValue: '',
-  },
-  {
-    type: 'content',
-    subTitle: '공지 내용',
-    contentValue: '',
-  },
-];
+const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+  const [contents, setContents] = useState({ title: '', content: '' });
+  const titleInput = useRef(null);
 
-const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
-  const modalTitle = '공지 정보';
+  // 모달 열면 default focus 지정
+  useEffect(() => {
+    titleInput.current.focus();
+  }, [enrollModal]);
 
-  const [contents, setContents] = useState(info);
-  const firstInput = useRef(null);
+  // form data state 업데이트
+  const handleFormChange = (e) => {
+    const changedValue = e.target.name;
+    const newContents = {
+      ...contents,
+    };
+    newContents[changedValue] = e.target.value;
+    console.log(newContents);
 
-  const handleChangeContents = (e) => {
-    const idx = e.target.alt;
-    const newContents = [...contents];
-    newContents[idx].contentValue = e.target.value;
     setContents(newContents);
   };
 
-  const handleModalClose = () => {
-    toggleEnrollModal();
+  // useMutate 쿼리 사용
+  const { mutate, isLoading, error } = useCreateNotification(contents);
+  const handleSubmit = () => {
+    mutate(contents);
+    // 어쩔 수 없다. reload를 시켜야 하니까 새로고침 해야겠다.
+    // 새로고침 안하고 게시물이 등록되었을 때 api를 다시 호출할 순 없나?
+    const result = confirm('공지를 등록하시겠습니까?');
+    if (result) {
+      window.location.reload();
+    }
   };
 
-  useEffect(() => {
-    firstInput.current.focus();
-  }, [enrollModal]);
+  // useMutate return value에 따른 처리
+  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>
@@ -58,42 +57,44 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
           <ModalOverlay onClick={toggleEnrollModal} />
           <ModalContentBlock className='modal-content-block'>
             <ModalHeader className='modal-header'>
-              <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
+              <ModalTitle className='modal-title'>{title}</ModalTitle>
             </ModalHeader>
-            <div>
-              {contents.map((content, idx) => {
-                if (content.type !== 'admin_id') {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
-                      <ModalContentInput
-                        type='text'
-                        value={''}
-                        className='modal-content'
-                        onChange={handleChangeContents}
-                        alt={idx}
-                        ref={idx === 1 ? firstInput : null}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>관리자 이름</ModalSubTitle>
-                      <ModalContentP className='modal-content'>{'임지성'}</ModalContentP>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-            <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' onClick={handleModalClose}>
-                취소
-              </ModalButton>
-              <ModalButton className='modal-button-ok' $purple>
-                등록
-              </ModalButton>
-            </ModalButtonBlock>
+
+            <>
+              <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
+              <ModalContentP className='modal-content'>{'임지성'}</ModalContentP>
+              <ModalSubTitle className='modal-sub-title'>제목</ModalSubTitle>
+              <ModalContentInput
+                type='text'
+                name='title'
+                value={contents.title}
+                ref={titleInput}
+                className='modal-content'
+                onChange={handleFormChange}
+              />
+              <ModalSubTitle className='modal-sub-title'>내용</ModalSubTitle>
+              <ModalContentTextarea
+                type='text'
+                name='content'
+                value={contents.content}
+                className='modal-content'
+                onChange={handleFormChange}
+              />
+
+              <ModalButtonBlock className='modal-button-block'>
+                <ModalButton className='modal-button-submit' onClick={toggleEnrollModal}>
+                  취소
+                </ModalButton>
+                <ModalButton
+                  type='submit'
+                  className='modal-button-ok'
+                  onClick={handleSubmit}
+                  $purple
+                >
+                  등록
+                </ModalButton>
+              </ModalButtonBlock>
+            </>
           </ModalContentBlock>
         </>
       )}
