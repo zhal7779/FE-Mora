@@ -1,35 +1,59 @@
 import * as Style from './styledComponents/PostWriteStyle';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { categories } from '../community/categoryData';
-import IconDown from '../assets/icons/fi_chevron-down.svg';
-import IconUp from '../assets/icons/fi_chevron-up.svg';
+import IconDown from '../assets/icons/icon-down.svg';
+import IconUp from '../assets/icons/icon-up.svg';
 import IconImageDelete from '../assets/icons/icon-delete-image.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 
+const REACT_APP_URL = process.env.REACT_APP_URL;
+
 const PostWrite = ({ showPostImage }) => {
   const [showCategory, setShowCategory] = useState(false);
-  const [selectCategory, setSelectCategory] = useState('카테고리 선택');
+  const [formData, setFormData] = useState({
+    category: '카테고리 선택',
+    title: '',
+    content: ''
+  });
+  const [imageData, setImageData] = useState([]);
 
-  // utils로 빼기
   const handleChange = e => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   const handleSelectCategory = e => {
-    setSelectCategory(e.target.innerText);
+    setFormData({ ...formData, category: e.target.innerText });
     setShowCategory(false);
   };
 
-  // 이미지 삭제 함수
-  // const handleImageDelete = (imageName) => {
-  //   setImageData((prevImageData) => {
-  //     const updatedImageData = prevImageData.filter(
-  //       (image) => image.name !== imageName
-  //     );
-  //     return updatedImageData;
-  //   });
-  // };
+  const handleAddImage = e => {
+    const files = e.target.files;
+    const selectedImages = [...files];
+
+    // const existingCheck = selectedImages.filter(selectedImage => {
+    //   imageData.some(
+    //     existingImage => existingImage.name === selectedImage.name
+    //   );
+    // });
+
+    // if (existingCheck.length > 0) {
+    //   alert('이미 선택한 이미지입니다!');
+    //   return;
+    // }
+
+    setImageData(prevImageData => [...prevImageData, ...selectedImages]);
+  };
+
+  const handleImageDelete = imageName => {
+    setImageData(prevImageData => {
+      const updatedImageData = prevImageData.filter(
+        image => image.name !== imageName
+      );
+      return [...updatedImageData];
+    });
+  };
 
   return (
     <Style.WriteContainer>
@@ -39,7 +63,7 @@ const PostWrite = ({ showPostImage }) => {
             className="select-category-btn"
             onClick={() => setShowCategory(!showCategory)}
           >
-            {selectCategory}
+            {formData.category}
             {showCategory ? (
               <img src={IconUp} alt="카테고리 목록보기" />
             ) : (
@@ -51,7 +75,7 @@ const PostWrite = ({ showPostImage }) => {
               <li
                 key={category.name}
                 onClick={handleSelectCategory}
-                className={selectCategory === category.name ? 'active' : ''}
+                className={formData.category === category.name ? 'active' : ''}
               >
                 <img src={category.icon} alt="카테고리 아이콘" />
                 {category.name}
@@ -75,25 +99,21 @@ const PostWrite = ({ showPostImage }) => {
       ></textarea>
       {showPostImage && (
         <div className="file-upload">
-          {/* {imageData.length > 0 && (
-              imageData.map((image) => (
-                <div className="file-upload-preview" key={image.name + image.size}>
-                  <img src={URL.createObjectURL(image)} alt={image.name} />
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleImageDelete(image.name)}
-                  >
-                    <img src={IconImageDelete} alt="이미지 삭제" />
-                  </button>
-                </div>
-              ))
-            )} */}
-          <div className="file-upload-preview">
-            <img src="" alt="file.name" />
-            <button className="delete-btn">
-              <img src={IconImageDelete} alt="이미지 삭제" />
-            </button>
-          </div>
+          {imageData.length > 0 &&
+            imageData.map(image => (
+              <div
+                className="file-upload-preview"
+                key={image.name + image.size}
+              >
+                <img src={URL.createObjectURL(image)} alt={image.name} />
+                <button
+                  className="delete-btn"
+                  onClick={() => handleImageDelete(image.name)}
+                >
+                  <img src={IconImageDelete} alt="이미지 삭제" />
+                </button>
+              </div>
+            ))}
           <label htmlFor="file" className="file-upload-btn">
             <input
               type="file"
@@ -101,6 +121,7 @@ const PostWrite = ({ showPostImage }) => {
               id="file"
               multiple
               accept="image/*"
+              onChange={handleAddImage}
             />
             <img src={IconAddImage} alt="" />
             사진 추가

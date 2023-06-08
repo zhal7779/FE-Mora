@@ -1,4 +1,4 @@
-import { TableRowInfo } from '../styledComponents/tableComponent';
+import { TableRowInfo } from '../styledComponents/TableComponent';
 import tableColumnData from '../data/tableColumnData';
 
 const AdminTableHead = () => {

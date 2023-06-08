@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
@@ -8,11 +9,12 @@ import profile from '../assets/images/profile.png';
 import userPlusIcon from '../assets/icons/u_user-plus.svg';
 
 const MyPageEdit = () => {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [track, setTrack] = useState('');
   const [phase, setPhase] = useState('');
   const [position, setPosition] = useState('');
   const [intro, setIntro] = useState('');
+  const navigate = useNavigate();
 
   const mainProfileData = {
     img: profile,
@@ -23,10 +25,12 @@ const MyPageEdit = () => {
   };
 
   const trackOptions = [
+    { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
     { value: 'SW 엔지니어 트랙', label: 'SW 엔지니어 트랙' },
     { value: 'AI 트랙', label: 'AI 트랙' },
   ];
   const phaseOptions = [
+    { value: '기수', label: '기수' },
     { value: '1기', label: '1기' },
     { value: '2기', label: '2기' },
     { value: '3기', label: '3기' },
@@ -37,6 +41,20 @@ const MyPageEdit = () => {
     { value: '8기', label: '8기' },
   ];
 
+  const handleTrackChange = (e) => {
+    e.preventDefault();
+    const selectedTrack = e.target.value;
+    setTrack(selectedTrack);
+    console.log(selectedTrack);
+  };
+
+  const handlePhaseChange = (e) => {
+    e.preventDefault();
+    const selectedPhase = e.target.value;
+    setPhase(selectedPhase);
+    console.log(selectedPhase);
+  };
+
   return (
     <LoginContainer>
       <ImageContainer>
@@ -46,13 +64,13 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='이름'
         type='text'
-        placeholder='새 이름을 입력하세요'
+        placeholder={`${mainProfileData.name}`}
         name='userName'
         onChange={(e) => {
           e.preventDefault();
-          setEmail(e.target.value);
+          setUserName(e.target.value);
         }}
-        value={email}
+        value={userName}
       />
       <TrackPhaseContainer>
         <div className='track-container'>
@@ -60,10 +78,7 @@ const MyPageEdit = () => {
             title='트랙'
             options={trackOptions}
             name='track'
-            onChange={(e) => {
-              e.preventDefault();
-              setTrack(e.target.value);
-            }}
+            onChange={handleTrackChange}
             value={track}
           />
         </div>
@@ -72,10 +87,7 @@ const MyPageEdit = () => {
             title='기수'
             options={phaseOptions}
             name='phase'
-            onChange={(e) => {
-              e.preventDefault();
-              setPhase(e.target.value);
-            }}
+            onChange={handlePhaseChange}
             value={phase}
           />
         </div>
@@ -83,7 +95,7 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='직함'
         type='text'
-        placeholder='새 직함을 입력하세요'
+        placeholder={`${mainProfileData.position}`}
         name='position'
         onChange={(e) => {
           e.preventDefault();
@@ -99,11 +111,23 @@ const MyPageEdit = () => {
         value={intro}
       >
         <h3>자기소개</h3>
-        <textarea></textarea>
+        <textarea placeholder='간단히 자신을 소개해주세요'></textarea>
       </IntroTextContainter>
       <ButtonContainer>
-        <Button color='darkPurple' value='수정완료' />
-        <Button color='white' value='수정취소' />
+        <Button
+          color='darkPurple'
+          value='수정완료'
+          onClick={() => {
+            navigate('/mypage');
+          }}
+        />
+        <Button
+          color='white'
+          value='수정취소'
+          onClick={() => {
+            navigate('/mypage');
+          }}
+        />
       </ButtonContainer>
     </LoginContainer>
   );
@@ -132,10 +156,10 @@ const ImageContainer = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  width: 30%;
+  width: 20rem;
   display: flex;
-  justify-content: space-around;
-  margin: 2rem;
+  justify-content: space-between;
+  margin-top: 2rem;
 `;
 
 const ProfileImg = styled.img`
@@ -183,5 +207,12 @@ const IntroTextContainter = styled.div`
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
+
+    ::placeholder {
+      padding-top: 0.3rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+      opacity: 0.35;
+    }
   }
 `;

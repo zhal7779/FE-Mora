@@ -1,8 +1,17 @@
-import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
+import { useState } from 'react';
+
+import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 import tableBodyData from '../data/trackData';
 import DeleteButton from './DeleteButton';
+import TrackModal from './TrackModal';
 
-const AdminTableBody = ({ toggleModal }) => {
+const AdminTableBody = () => {
+  const [detailModal, setDetailModal] = useState(false);
+
+  const toggleDetailModal = () => {
+    setDetailModal(!detailModal);
+  };
+
   return (
     <ul className='user-info-list'>
       {tableBodyData.map((info, idx) => {
@@ -13,7 +22,7 @@ const AdminTableBody = ({ toggleModal }) => {
             <span>{info.name}</span>
             <span>{info.phase}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={toggleModal}>
+              <DetailBtn className='detail-btn' onClick={toggleDetailModal}>
                 보기
               </DetailBtn>
             </span>
@@ -21,6 +30,7 @@ const AdminTableBody = ({ toggleModal }) => {
           </UserInfo>
         );
       })}
+      <TrackModal detailModal={detailModal} toggleDetailModal={toggleDetailModal} />
     </ul>
   );
 };

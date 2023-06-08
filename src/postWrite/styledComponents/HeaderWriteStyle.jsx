@@ -18,6 +18,7 @@ export const HeaderContainer = styled.header`
     justify-content: space-between;
     align-items: center;
     width: 1280px;
+    padding: 0 20px;
     margin: 0 auto;
   }
 

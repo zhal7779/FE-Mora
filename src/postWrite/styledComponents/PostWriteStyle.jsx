@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const WriteContainer = styled.div`
   max-width: 1024px;
   margin: 0 auto;
-  padding: 60px 0 400px 0;
+  padding: 60px 20px 400px;
 
   .write-top {
     padding-top: 36px;
@@ -84,6 +84,7 @@ export const WriteContainer = styled.div`
 
   textarea {
     width: 100%;
+    overflow-y: hidden;
 
     &#title {
       min-height: 36px;
@@ -97,6 +98,7 @@ export const WriteContainer = styled.div`
       font-weight: 500;
       font-size: 18px;
       border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 20px;
     }
 
     &::placeholder {

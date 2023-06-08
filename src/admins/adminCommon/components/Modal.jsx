@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ModalHeaderButton,
   ModalButton,
-} from '../styledComponents/modalComponents';
+} from '../styledComponents/ModalComponents';
 
 const Modal = ({ 인포, modal, toggleModal }) => {
   // 밖으로 뺄 거

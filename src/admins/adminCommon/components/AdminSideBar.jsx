@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SideBar } from '../styledComponents/adminSideBar';
+import { SideBar } from '../styledComponents/AdminSideBarStyle';
 import {
   UserButton,
   ReportButton,
@@ -33,19 +33,31 @@ const AdminSideBar = ({ nowCategoryName }) => {
             />
           </Link>
           <Link to='/admin/reports'>
-            <ReportButton nowCategory={nowCategoryName === REPORT_BUTTON && true} />
+            <ReportButton
+              nowCategory={nowCategoryName === REPORT_BUTTON && true}
+              title={'신고 관리'}
+            />
+          </Link>
+          <Link to='/admin/posts'>
+            <PostsButton
+              nowCategory={nowCategoryName === POSTS_BUTTON && true}
+              title={'게시물 관리'}
+            />
+          </Link>
+          <Link to='/admin/notifications'>
+            <NotificationButton
+              nowCategory={nowCategoryName === NOTIFICATION_BUTTON && true}
+              title={'공지사항 관리'}
+            />
           </Link>
           <Link to='/admin/plans'>
-            <PlanButton nowCategory={nowCategoryName === PLAN_BUTTON && true} />
+            <PlanButton nowCategory={nowCategoryName === PLAN_BUTTON && true} title={'일정 관리'} />
           </Link>
           <Link to='/admin/tracks'>
-            <TrackButton nowCategory={nowCategoryName === TRACK_BUTTON && true} />
-          </Link>
-          <Link to='/admin/users'>
-            <PostsButton nowCategory={nowCategoryName === POSTS_BUTTON && true} />
-          </Link>
-          <Link to='/admin/users'>
-            <NotificationButton nowCategory={nowCategoryName === NOTIFICATION_BUTTON && true} />
+            <TrackButton
+              nowCategory={nowCategoryName === TRACK_BUTTON && true}
+              title={'트랙 관리'}
+            />
           </Link>
         </div>
       </div>

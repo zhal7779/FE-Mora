@@ -1,4 +1,4 @@
-import { SearchBarBlock, SearchBarInput } from '../styledComponents/searchBar';
+import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
 
 const SearchBar = () => {
   return (

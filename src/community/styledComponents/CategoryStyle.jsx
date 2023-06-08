@@ -34,7 +34,7 @@ export const CategoryContainer = styled.section`
       color: #616161;
     }
 
-    li {
+    li > a {
       display: flex;
       align-items: center;
 

@@ -23,6 +23,7 @@ export const BannerContainer = styled.section`
 
     height: 100%;
     max-width: 1280px;
+    padding: 0 20px;
     margin: 0 auto;
 
     &-side {
@@ -32,14 +33,14 @@ export const BannerContainer = styled.section`
       font-size: 4.8rem;
       font-weight: 700;
       color: #fff;
-      line-height: 6.3rem;
+      line-height: 6.2rem;
 
       z-index: 1;
 
       span {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
         line-height: 2.4rem;
-        font-weight: 400;
+        font-weight: 500;
         color: #fff;
       }
     }
