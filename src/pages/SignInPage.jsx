@@ -14,6 +14,32 @@ const Signin = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const handleSignin = async () => {
+    const url = 'http://15.164.221.244:5000/api/v1/user/register';
+    const data = {
+      name: userName,
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+      // Handle the response data here
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle any error that occurred during the request
+    }
+  };
+
   return (
     <LoginContainer>
       <Headline title='엘리스 갱스터 회원 가입 🕶️' />
@@ -38,13 +64,13 @@ const Signin = () => {
         />
         <LoginInput
           title='비밀번호'
-          type='text'
+          type='password'
           placeholder='영문, 숫자 포함 8자 이상'
           name='password'
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <LoginButton color='darkPurple' value='회원가입' />
+        <LoginButton color='darkPurple' value='회원가입' onClick={handleSignin} />
       </SigninAccordion>
 
       <LittleText
