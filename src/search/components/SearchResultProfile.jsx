@@ -60,6 +60,7 @@ const Content = styled.div`
   padding: 1.6rem;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
   div {
     display: flex;
   }

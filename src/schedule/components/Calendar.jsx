@@ -10,7 +10,6 @@ const MyCalendar = () => {
   //한국어 설정
   moment.locale('ko');
   const views = {};
-
   //이벤트 컬러 변경 함수
   const renderEventContent = (eventInfo) => {
     return (

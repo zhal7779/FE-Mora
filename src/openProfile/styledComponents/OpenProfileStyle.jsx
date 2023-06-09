@@ -113,6 +113,6 @@ export const MoreViewButton = styled.div`
   color: #acacb0;
   &:hover {
     background: rgba(233, 233, 238, 0.4);
-    transition: 0.2s ease-out;
+    transition: 0.1s ease-out;
   }
 `;

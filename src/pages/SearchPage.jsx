@@ -7,6 +7,7 @@ import { useState } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
 import profileData from '../search/components/searchProfile.json';
 import SearchResultQnA from '../search/components/SearchResultQnA';
+import SearchResultPost from '../search/components/SearchResultPost';
 const SearchPage = () => {
   const [menu, setMenu] = useState(1);
   const handleMenu = (menu) => {
@@ -33,6 +34,7 @@ const SearchPage = () => {
           </ProfileWrapper>
         ) : menu === 3 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
+            <SearchResultPost />
             <RankingContent />
           </Wrapper>
         ) : (

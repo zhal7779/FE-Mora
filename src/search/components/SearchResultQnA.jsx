@@ -7,7 +7,10 @@ const SearchResultQnA = () => {
       {data.map((item) => (
         <Content key={item.id}>
           <div className='main_content'>
-            <h2>{item.title}</h2>
+            <div>
+              <strong>Q</strong>
+              <h2> {item.title}</h2>
+            </div>
             <p>{item.content}</p>
           </div>
           <div className='hashtags'>
@@ -48,13 +51,29 @@ const Content = styled.div`
   background: #ffffff;
   border-radius: 4px;
   color: #242424;
+  background: #ffffff;
+  cursor: pointer;
+  &:hover {
+    background: rgba(233, 233, 238, 0.1);
+    transition: 0.2s ease-out;
+  }
 
   .main_content {
-    h2 {
+    div {
+      display: flex;
+      align-items: center;
       font-size: 1.8rem;
       margin: 1rem 0 2rem 0;
       font-weight: 600;
+      strong {
+        margin-right: 1rem;
+        color: #7353ea;
+      }
+      h2 {
+        color: #242424;
+      }
     }
+
     p {
       font-size: 1.3rem;
       margin-bottom: 2rem;
