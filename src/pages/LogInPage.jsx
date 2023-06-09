@@ -11,43 +11,50 @@ import LittleText from '../logIn/LittleText';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     if (sessionStorage.getItem('userToken')) {
-      //navigate('/community/post/free');
-      navigate('/mypage');
+      navigate('/community/post/free');
     }
-  }, []);
+  }, [navigate]);
 
-  const loginMutation = useMutation(async () => {
-    const url = 'http://15.164.221.244:5000/api/v1/user/login';
-    const data = {
-      email: email,
-      password: password,
-    };
+  const loginMutation = useMutation(
+    async () => {
+      const url = 'http://15.164.221.244:5000/api/users/login';
+      const data = {
+        email: email,
+        password: password,
+      };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      return responseData; // 토큰 반환
+    },
+    {
+      onSuccess: (data) => {
+        const { token, message: responseMessage } = data;
+        if (responseMessage === '로그인에 성공하셨습니다!') {
+          sessionStorage.setItem('userToken', token);
+          navigate('/community/post/free');
+        } else {
+          setMessage(responseMessage);
+        }
       },
-      body: JSON.stringify(data),
-    });
-
-    const responseData = await response.json();
-    return responseData; // 토큰 반환
-  });
+    }
+  );
 
   const handleLogin = async () => {
     await loginMutation.mutateAsync();
   };
-
-  if (loginMutation.isSuccess) {
-    const token = loginMutation.data;
-    sessionStorage.setItem('userToken', token);
-    navigate('/mypage');
-  }
 
   return (
     <LoginContainer>
@@ -74,6 +81,7 @@ const Login = () => {
         }}
         value={password}
       />
+      <LittleText text={message} />
       <LoginButton color='darkPurple' value='이메일로 계속하기' onClick={handleLogin} />
       <OrLineText text='또는' />
       <LoginButton color='white' value='구글계정으로 로그인' />

@@ -5,42 +5,18 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+import optionsData from '../myPage/optionsData';
 
 const MyPageEdit = () => {
   const [companyName, setCompanyName] = useState('');
+  const [position, setPosition] = useState('');
   const [startYear, setStartYear] = useState('');
   const [startMonth, setStartMonth] = useState('');
   const [endYear, setEndYear] = useState('');
   const [endMonth, setEndMonth] = useState('');
-  const [position, setPosition] = useState('');
-  const [intro, setIntro] = useState('');
+  const [intro, setIntro] = useState(''); // 삭제 고려중
   const [isCurrentlyEmployed, setIsCurrentlyEmployed] = useState(false);
   const navigate = useNavigate();
-
-  const StartYearOptions = [
-    { value: '년도를 선택해주세요', label: '년도를 선택해주세요' },
-    { value: '2022년', label: '2022년' },
-    { value: '2023년', label: '2023년' },
-    { value: '2024년', label: '2024년' },
-  ];
-  const StartMonthOptions = [
-    { value: '월을 선택해주세요', label: '월을 선택해주세요' },
-    { value: '1월', label: '1월' },
-    { value: '2월', label: '2월' },
-    { value: '3월', label: '3월' },
-  ];
-  const EndYearOptions = [
-    { value: '년도를 선택해주세요', label: '년도를 선택해주세요' },
-    { value: '2024년', label: '2024년' },
-    { value: '2025년', label: '2025년' },
-    { value: '2026년', label: '2026년' },
-  ];
-  const EndMonthOptions = [
-    { value: '월을 선택해주세요', label: '월을 선택해주세요' },
-    { value: '5월', label: '5월' },
-    { value: '6월', label: '6월' },
-    { value: '7월', label: '7월' },
-  ];
 
   const handleStartYearChange = (e) => {
     e.preventDefault();
@@ -104,14 +80,14 @@ const MyPageEdit = () => {
         <div className='startDateContainer'>
           <MyPageEditSelect
             title='시작년도'
-            options={StartYearOptions}
+            options={optionsData.StartYearOptions}
             name='시작년도'
             onChange={handleStartYearChange}
             value={startYear}
           />
           <MyPageEditSelect
             title='시작월'
-            options={StartMonthOptions}
+            options={optionsData.StartMonthOptions}
             name='시작월'
             onChange={handleStartMonthChange}
             value={startMonth}
@@ -120,7 +96,7 @@ const MyPageEdit = () => {
         <div className='endDateContainer'>
           <MyPageEditSelect
             title='종료년도'
-            options={EndYearOptions}
+            options={optionsData.EndYearOptions}
             name='종료년도'
             onChange={handleEndYearChange}
             value={endYear}
@@ -128,7 +104,7 @@ const MyPageEdit = () => {
           />
           <MyPageEditSelect
             title='종료월'
-            options={EndMonthOptions}
+            options={optionsData.EndMonthOptions}
             name='종료월'
             onChange={handleEndMonthChange}
             value={endMonth}

@@ -32,7 +32,7 @@ const MyPageEdit = () => {
   };
 
   useEffect(() => {
-    // 디바운싱 여러 이벤트를 한번에 묶어서 처리 쓰로틀링은 setInterval
+    // 디바운싱은 여러 이벤트를 한번에 묶어서 처리 쓰로틀링은 setInterval
     const delayDebounceFn = setTimeout(() => {
       if (skill !== '') {
         fetchSkillList();
@@ -45,7 +45,7 @@ const MyPageEdit = () => {
   const fetchSkillList = async () => {
     try {
       const userToken = sessionStorage.getItem('userToken');
-      const response = await fetch(`http://15.164.221.244:5000/api/skill?keyword=${skill}`, {
+      const response = await fetch(`http://15.164.221.244:5000/api/skills?keyword=${skill}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
