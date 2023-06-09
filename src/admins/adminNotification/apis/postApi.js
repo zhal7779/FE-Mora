@@ -15,30 +15,9 @@ const fetchNotificationInfo = async (page, size, keyword) => {
 
   return data;
 };
-const useGetNotificationInfo = (page, size = 12, keyword = '') => {
-  // 위험한 코드. 순수 함수
-  // 훅은 컨디셔널하게 사용하면 안된다.
-  // 훅이 jsx안에 들어가면 위험하다.
-  // 그럼 컴포넌트 최상단에서 쓰는 게 바람직한 건가요?
-  if (page === null || page === undefined) {
-    console.error('page is not defined');
-    return;
-  }
-  const { data, isLoading, error, refetch } = useQuery(
-    ['admin', 'notification', 'get'],
-    () => fetchNotificationInfo(page, size, keyword),
-    {
-      enabled: false,
-      staleTime: Infinity,
-    }
-  );
-
-  return { data, isLoading, error };
-};
 
 // POST
 const fetchCreateNotification = async (newNotification) => {
-  console.log(newNotification);
   const response = await fetch(`${domain}/api/notices`, {
     method: 'POST',
     headers: {
@@ -50,16 +29,6 @@ const fetchCreateNotification = async (newNotification) => {
 
   const data = await response.json();
   return data;
-};
-const useCreateNotification = (newNotification) => {
-  if (!newNotification) {
-    console.error('newNotification is not defined');
-    return;
-  }
-
-  const { mutate, data, error } = useMutation(() => fetchCreateNotification(newNotification));
-
-  return { mutate, data, error };
 };
 
 // UPDATE
@@ -73,25 +42,7 @@ const fetchDeleteNotification = async (id) => {
     },
   });
 
-  const data = await response.json();
-  return data;
-};
-const useDeleteNotification = (id) => {
-  if (!id) {
-    console.error('Notification id is not defined');
-    return;
-  }
-  console.log(id);
-
-  const { mutate, data, error } = useMutation(() => {
-    fetchDeleteNotification(id);
-  });
-  return { mutate, data, error };
+  return response.status;
 };
 
-export {
-  useGetNotificationInfo,
-  useCreateNotification,
-  useDeleteNotification,
-  fetchNotificationInfo,
-};
+export { fetchNotificationInfo, fetchCreateNotification, fetchDeleteNotification };
