@@ -13,7 +13,6 @@ const SearchBar = ({ placeholder, setNotification }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await fetchNotificationInfo(0, 12, keyword);
-    console.log(data);
     setNotification(() => [...data.objArr]);
   };
 
