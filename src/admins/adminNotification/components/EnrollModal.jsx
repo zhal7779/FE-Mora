@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useCreateNotification } from '../apis/postApi';
+import { useMutation, useQueryClient } from 'react-query';
+import { fetchCreateNotification } from '../apis/postApi';
 
 import {
   ModalOverlay,
@@ -17,6 +18,20 @@ import {
 const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   const [contents, setContents] = useState({ title: '', content: '' });
   const titleInput = useRef(null);
+  const queryClient = useQueryClient();
+
+  // useMutate 쿼리 사용
+  const { mutate: createNotification, error } = useMutation(
+    () => fetchCreateNotification(contents),
+    {
+      onSuccess() {
+        queryClient.invalidateQueries(['admin', 'notification', 'get']);
+      },
+      onError(error) {
+        console.log(error);
+      },
+    }
+  );
 
   // 모달 열면 default focus 지정
   useEffect(() => {
@@ -30,21 +45,17 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
       ...contents,
     };
     newContents[changedValue] = e.target.value;
-    console.log(newContents);
 
     setContents(newContents);
   };
 
-  // useMutate 쿼리 사용
-  const { mutate, error } = useCreateNotification(contents);
-
-  const handleSubmit = async () => {
-    await mutate(contents);
+  const handleSubmit = () => {
     // 어쩔 수 없다. reload를 시켜야 하니까 새로고침 해야겠다.
     // 새로고침 안하고 게시물이 등록되었을 때 api를 다시 호출할 순 없나?
     const result = confirm('공지를 등록하시겠습니까?');
     if (result) {
-      window.location.reload();
+      createNotification(contents);
+      toggleEnrollModal();
     }
   };
 
