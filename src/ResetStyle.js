@@ -139,6 +139,7 @@ input {
 -webkit-appearance : none;
 -moz-appearance:none;
 appearance:none;
+border: none;
 }
 
 input::-ms-clear { display:none;}
@@ -167,6 +168,16 @@ input[type=number] {
 -moz-appearance:textfield; 
 }
 
+input:focus,
+textarea {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  border: none;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -179,6 +190,14 @@ input[type=number] {
 body {
   line-height: 1;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+input, textarea {
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+button {
+  cursor: pointer;
 }
 
 // rem 단위설정 (1rem = 10px)

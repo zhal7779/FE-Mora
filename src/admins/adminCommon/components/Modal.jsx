@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ModalHeaderButton,
   ModalButton,
-} from '../styledComponents/modalComponents';
+} from '../styledComponents/ModalComponents';
 
 const Modal = ({ 인포, modal, toggleModal }) => {
   // 밖으로 뺄 거
@@ -74,7 +74,7 @@ const Modal = ({ 인포, modal, toggleModal }) => {
             </ModalHeader>
             <div>
               {contents.map((content, idx) => {
-                if (content.type !== 'createdDate')
+                if (content.type !== 'createdDate') {
                   return (
                     <div key={content.type + idx}>
                       <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
@@ -89,7 +89,7 @@ const Modal = ({ 인포, modal, toggleModal }) => {
                       />
                     </div>
                   );
-                else
+                } else {
                   return (
                     <div key={content.type + idx}>
                       <ModalSubTitle className='modal-sub-title'>가입 날짜</ModalSubTitle>
@@ -98,6 +98,7 @@ const Modal = ({ 인포, modal, toggleModal }) => {
                       </ModalContentP>
                     </div>
                   );
+                }
               })}
             </div>
             <ModalButtonBlock className='modal-button-block'>

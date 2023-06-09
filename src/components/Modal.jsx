@@ -28,11 +28,10 @@ const ModalContainer = styled.div`
 `;
 
 const ModalBg = styled.div`
-  position: absolute;
+  position: fixed; /* 수정된 부분 */
   top: 0;
   left: 0;
-
-  width: 100%;
+  width: 100vw; /* 수정된 부분 */
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
 
