@@ -62,6 +62,10 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  &:hover {
+    background: rgba(233, 233, 238, 0.4);
+    transition: 0.2s ease-out;
+  }
   div {
     display: flex;
   }

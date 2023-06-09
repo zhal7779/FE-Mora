@@ -12,8 +12,8 @@ export const Container = styled.div`
   position: fixed;
   z-index: 100;
   top: 50%;
-  left: 60%;
-  transform: translate(-50%, -60%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 82.4rem;
   height: 50.4rem;
   border-radius: 4px;

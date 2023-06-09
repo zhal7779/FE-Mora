@@ -1,9 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import data from '../../community/data/getResData';
-const SearchResultQnA = () => {
+import * as Style from '../styledComponents/AddView';
+import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
+
+const SearchResultQnA = ({ data, receiveMenu }) => {
+  const handleAllView = () => {
+    receiveMenu(4);
+  };
   return (
     <Container>
+      {data.length <= 5 && (
+        <Style.AddView>
+          <div>
+            <p className='title'>레이서 Q&A</p>
+            <p className='total_count'>18</p>
+          </div>
+          <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
+            <p className='all_view'>모두 보기</p>
+            <RightIcon stroke='#242424' />
+          </div>
+        </Style.AddView>
+      )}
       {data.map((item) => (
         <Content key={item.id}>
           <div className='main_content'>
@@ -34,11 +51,10 @@ const SearchResultQnA = () => {
 export default SearchResultQnA;
 
 const Container = styled.section`
-  display: flex;
-  flex-direction: column;
   margin: 4rem 0;
   width: 700px;
-  gap: 2rem;
+  border: 1px #cbd5e1 solid;
+  background: #ffffff;
 `;
 const Content = styled.div`
   width: 100%;
@@ -47,7 +63,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px #cbd5e1 solid;
+  border-bottom: 1px #cbd5e1 solid;
   padding: 2rem 1.6rem;
   background: #ffffff;
   border-radius: 4px;
@@ -55,7 +71,7 @@ const Content = styled.div`
   background: #ffffff;
   cursor: pointer;
   &:hover {
-    background: rgba(233, 233, 238, 0.1);
+    background: rgba(233, 233, 238, 0.4);
     transition: 0.2s ease-out;
   }
 
