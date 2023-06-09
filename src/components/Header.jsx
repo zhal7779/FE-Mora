@@ -90,7 +90,7 @@ const Container = styled.header`
   left: 0;
   right: 0;
   top: 0;
-  z-index: 100;
+  z-index: 90;
   background: #ffffff;
   border-bottom: #cbd5e1 1px solid;
   height: 6rem;

@@ -1,7 +1,16 @@
 import styled from 'styled-components';
+export const Background = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+`;
 export const Container = styled.div`
   position: fixed;
-  z-index: 2;
+  z-index: 100;
   top: 50%;
   left: 60%;
   transform: translate(-50%, -60%);
@@ -15,11 +24,12 @@ export const Container = styled.div`
 export const Content = styled.div`
   .date {
     position: fixed;
+    border-radius: 4px;
     top: 0;
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 2rem 3rem;
+    padding: 3rem;
     background: #fdfdff;
     h5 {
       color: #616161;
