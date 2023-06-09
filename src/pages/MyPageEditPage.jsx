@@ -10,6 +10,7 @@ import userPlusIcon from '../assets/icons/u_user-plus.svg';
 
 const MyPageEdit = () => {
   const [userName, setUserName] = useState('');
+
   const [track, setTrack] = useState('');
   const [phase, setPhase] = useState('');
   const [position, setPosition] = useState('');

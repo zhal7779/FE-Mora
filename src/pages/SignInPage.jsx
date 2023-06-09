@@ -7,6 +7,7 @@ import LoginButton from '../logIn/LogInButton';
 import OrLineText from '../logIn/OrLine';
 import LittleText from '../logIn/LittleText';
 import SigninAccordion from '../signIn/SignInAccordion';
+import { useMutation } from 'react-query';
 
 const Signin = () => {
   const [userName, setUserName] = useState('');
@@ -14,31 +15,36 @@ const Signin = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSignin = async () => {
-    const url = 'http://15.164.221.244:5000/api/v1/user/register';
+  const signinMutation = useMutation(async () => {
+    const url = 'http://15.164.221.244:5000/api/users/register';
     const data = {
       name: userName,
       email: email,
       password: password,
     };
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-      const responseData = await response.json();
-      console.log(responseData);
-      // Handle the response data here
-    } catch (error) {
-      console.error('Error:', error);
-      // Handle any error that occurred during the request
-    }
+    const responseData = await response.json();
+    console.log(responseData);
+  });
+
+  const handleSignin = async () => {
+    await signinMutation.mutateAsync();
   };
+
+  if (signinMutation.isSuccess) {
+    navigate('/login');
+  }
+  if (signinMutation.isError) {
+    console.log(signinMutation.error);
+  }
 
   return (
     <LoginContainer>
