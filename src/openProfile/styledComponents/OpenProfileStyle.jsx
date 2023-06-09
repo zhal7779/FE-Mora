@@ -66,12 +66,13 @@ export const SkillContent = styled.div`
   div {
     display: inline-block;
     padding: 0.4rem 0.8rem;
-    background: #ffffff;
+    background: #fdfdff;
     border: 1px solid #cbd5e1;
     border-radius: 4px;
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 120%;
     font-size: 1.4rem;
-    color: #616161;
+    color: #94a3b8;
   }
 `;
 

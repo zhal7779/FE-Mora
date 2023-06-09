@@ -53,6 +53,7 @@ export const Content = styled.div`
       font-weight: 400;
       font-size: 15px;
       color: #242424;
+      line-height: 120%;
     }
   }
 `;

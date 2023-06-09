@@ -33,7 +33,7 @@ const AlarmModal = ({ handleClose }) => {
         <Scroll>
           {arr.map((item, index) => (
             <Content key={index}>
-              <ShowContent>
+              <ShowContent onClick={() => handleContentClick(index)}>
                 <div>
                   <span></span>
                   <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
@@ -42,15 +42,9 @@ const AlarmModal = ({ handleClose }) => {
                 </div>
                 <div>
                   {hiddenContent.includes(index) ? (
-                    <UpIcon onClick={() => handleContentClick(index)} />
+                    <UpIcon />
                   ) : (
-                    <DownIcon
-                      stroke='#616161'
-                      strokeWidth='2'
-                      width='22'
-                      height='22'
-                      onClick={() => handleContentClick(index)}
-                    />
+                    <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
                   )}
                 </div>
               </ShowContent>
@@ -174,6 +168,7 @@ const HiddenContent = styled.div`
     font-weight: 400;
     font-size: 1.4rem;
     color: #242424;
+    line-height: 120%;
   }
   h5 {
     margin-left: 1rem;

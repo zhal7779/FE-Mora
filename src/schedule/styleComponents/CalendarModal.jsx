@@ -24,7 +24,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   .date {
     position: fixed;
-    border-radius: 4px;
+    border-radius: 4px 4px 0 0;
     top: 0;
     width: 100%;
     display: flex;
@@ -60,7 +60,7 @@ export const Content = styled.div`
 `;
 export const Main = styled.div`
   height: 100%;
-  padding: 8rem 0 0 0;
+  padding: 9rem 0 0 0;
   .main {
     background: #eeeafe;
     border-radius: 10px;
@@ -89,6 +89,7 @@ export const Main = styled.div`
         p {
           color: #242424;
           font-size: 1.4rem;
+          line-height: 140%;
         }
       }
     }
