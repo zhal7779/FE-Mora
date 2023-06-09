@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useGetNotificationInfo } from '../apis/postApi';
+import { useQuery } from 'react-query';
+import { fetchNotificationInfo } from '../apis/postApi';
 
+import SearchBar from './SearchBar';
 import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
@@ -10,7 +12,6 @@ import {
   MainContentHeaderBlock,
   TableTitle,
 } from '../styledComponents/TableComponent';
-import SearchBar from './SearchBar';
 
 const AdminTable = () => {
   const [enrollModal, setEnrollModal] = useState(false);
@@ -21,11 +22,18 @@ const AdminTable = () => {
     setEnrollModal(!enrollModal);
   };
 
-  const { isLoading, data, error } = useGetNotificationInfo(0, 12);
+  // const { isLoading, data, error } = useGetNotificationInfo(0, 12);
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'notification', 'get'],
+    () => fetchNotificationInfo(0, 12, ''),
+    {
+      staleTime: Infinity,
+    }
+  );
 
   if (isLoading) return <span>로딩중...</span>;
   if (error) return <span>An error has occurred: {error.message}</span>;
-  if (data) console.log(data);
+
   return (
     <>
       <SearchBar placeholder={'공지 제목 검색'} setNotification={setNotification} />
