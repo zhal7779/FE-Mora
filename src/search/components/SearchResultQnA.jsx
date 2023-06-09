@@ -37,12 +37,13 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   margin: 4rem 0;
-  width: 67%;
+  width: 700px;
   gap: 2rem;
 `;
 const Content = styled.div`
-  height: 20rem;
   width: 100%;
+  height: 20rem;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,6 +60,7 @@ const Content = styled.div`
   }
 
   .main_content {
+    width: 100%;
     div {
       display: flex;
       align-items: center;
@@ -77,6 +79,7 @@ const Content = styled.div`
     p {
       font-size: 1.3rem;
       margin-bottom: 2rem;
+      line-height: 140%;
     }
   }
   .hashtags {

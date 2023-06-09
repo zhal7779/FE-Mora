@@ -16,6 +16,8 @@ const RegisterQuestion = () => {
 export default RegisterQuestion;
 const Container = styled.div`
   position: sticky;
+  width: 30%;
+
   top: 260px;
   height: 100%;
   display: flex;
@@ -41,6 +43,5 @@ const Container = styled.div`
 
 const Image = styled.img`
   width: 16rem;
-
   border-radius: 4px;
 `;

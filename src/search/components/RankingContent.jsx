@@ -20,7 +20,7 @@ export default RankingContent;
 const Container = styled.section`
   position: sticky;
   top: 100px;
-  width: 27%;
+  width: 272px;
   padding: 2rem 1.6rem;
   background: #ffffff;
   border: 1px #cbd5e1 solid;
@@ -30,6 +30,7 @@ const Container = styled.section`
 `;
 const TitleContent = styled.div`
   padding-bottom: 0.5rem;
+  width: 100%;
   h5 {
     font-weight: 700;
     font-size: 1.8rem;

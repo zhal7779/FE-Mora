@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SearchResultBar from '../search/components/SearchResultBar';
-import { Wrapper } from '../search/styledComponents/pageCommonStyle';
+import { Wrapper, AllViewWrapper } from '../search/styledComponents/pageCommonStyle';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import RegisterQuestion from '../search/components/RegisterQuestion';
 import profileData from '../search/components/searchProfile.json';
 import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
+import postData from '../community/data/getResData';
 const SearchPage = () => {
   const [menu, setMenu] = useState(1);
   const handleMenu = (menu) => {
@@ -18,6 +19,7 @@ const SearchPage = () => {
   //menu === 3? 게시물
   //menu === 4? 레이서 Q&A
   const slicePfofileData = profileData.slice(0, 3);
+  const slicePostData = profileData.slice(0, 5);
 
   return (
     <>
@@ -25,7 +27,10 @@ const SearchPage = () => {
       <Container>
         {menu === 1 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
+            <div>
+              <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
+              <SearchResultPost data={slicePostData} receiveMenu={handleMenu} />
+            </div>
             <RankingContent />
           </Wrapper>
         ) : menu === 2 ? (
@@ -34,7 +39,7 @@ const SearchPage = () => {
           </ProfileWrapper>
         ) : menu === 3 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultPost />
+            <SearchResultPost data={postData} />
             <RankingContent />
           </Wrapper>
         ) : (
