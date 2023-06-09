@@ -32,7 +32,7 @@ const info = [
   },
 ];
 
-const TrackModal = ({ 인포, detailModal, toggleDetailModal }) => {
+const TrackModal = ({ modal, toggleModal }) => {
   const modalTitle = '트랙 정보';
   const modalFeature = '수정하기';
 

@@ -1,17 +1,9 @@
 import React from 'react';
 
-const DeleteButton = () => {
+const DeleteButton = ({ onClick }) => {
   return (
     <span style={{ cursor: 'pointer' }}>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        width='22'
-        height='22'
-        fill='none'
-        onClick={() => {
-          const response = confirm('삭제하시겠습니까?');
-        }}
-      >
+      <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none' onClick={onClick}>
         <path
           stroke='#FF1300'
           strokeLinecap='round'

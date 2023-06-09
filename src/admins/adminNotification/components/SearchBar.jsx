@@ -1,16 +1,24 @@
 import { useState } from 'react';
 
 import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
+import { fetchNotificationInfo } from '../apis/postApi';
 
-const SearchBar = ({ placeholder }) => {
+const SearchBar = ({ placeholder, setNotification }) => {
   const [keyword, setKeyword] = useState('');
 
   const handleKeyDown = (e) => {
     setKeyword(e.target.value);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = await fetchNotificationInfo(0, 12, keyword);
+    console.log(data);
+    setNotification(() => [...data.objArr]);
+  };
+
   return (
-    <SearchBarBlock onSubmit={() => {}}>
+    <SearchBarBlock onSubmit={handleSubmit}>
       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'>
         <path
           fill='#94A3B8'
