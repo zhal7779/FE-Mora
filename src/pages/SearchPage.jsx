@@ -1,5 +1,5 @@
 import * as Style from '../search/styledComponents/SearchPageStyle';
-import { Wrapper } from '../search/styledComponents/pageCommonStyle';
+import { SearchPageWrapper } from '../search/styledComponents/pageCommonStyle';
 import SearchResultBar from '../search/components/SearchResultBar';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
@@ -58,28 +58,28 @@ const SearchPage = () => {
         <SearchResultBar handleSubSearch={handleSubSearch} />
         <Style.Container>
           {menu === 1 ? (
-            <Wrapper style={{ marginTop: '22rem', padding: '6rem 0' }}>
+            <SearchPageWrapper>
               <div>
                 <SearchResultProfile data={slicePfofileData} receiveMenu={setMenu} />
                 <SearchResultPost data={slicePostData} receiveMenu={setMenu} />
                 <SearchResultQnA data={slicePostData} receiveMenu={setMenu} />
               </div>
               <RankingContent />
-            </Wrapper>
+            </SearchPageWrapper>
           ) : menu === 2 ? (
             <Style.ProfileWrapper>
               <SearchResultProfile data={profileData} />
             </Style.ProfileWrapper>
           ) : menu === 3 ? (
-            <Wrapper style={{ marginTop: '22rem', padding: '6rem 0' }}>
+            <SearchPageWrapper>
               <SearchResultPost data={postData} />
               <RankingContent />
-            </Wrapper>
+            </SearchPageWrapper>
           ) : (
-            <Wrapper style={{ marginTop: '22rem', padding: '6rem 0' }}>
+            <SearchPageWrapper>
               <SearchResultQnA data={postData} />
               <RegisterQuestion />
-            </Wrapper>
+            </SearchPageWrapper>
           )}
         </Style.Container>
       </SearchContext.Provider>

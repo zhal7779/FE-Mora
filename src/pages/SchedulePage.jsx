@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ScheduleCategory from '../schedule/components/ScheduleCategory';
-import { Wrapper } from '../search/styledComponents/pageCommonStyle';
+import { SchedulePageWrapper } from '../search/styledComponents/pageCommonStyle';
 import Notification from '../schedule/components/Notification';
 
 import Calendar from '../schedule/components/Calendar';
@@ -13,10 +13,10 @@ const SchedulePage = () => {
     setMenu(category);
   };
   return (
-    <Wrapper>
+    <SchedulePageWrapper>
       <ScheduleCategory setMenu={handleClickMenu} />
       {menu === 0 ? <Notification /> : menu === 1 ? <Calendar /> : ''}
-    </Wrapper>
+    </SchedulePageWrapper>
   );
 };
 
