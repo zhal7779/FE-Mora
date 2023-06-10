@@ -1,10 +1,19 @@
 import styled from 'styled-components';
+export const Background = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+`;
 export const Container = styled.div`
   position: fixed;
-  z-index: 2;
+  z-index: 100;
   top: 50%;
-  left: 60%;
-  transform: translate(-50%, -60%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 82.4rem;
   height: 50.4rem;
   border-radius: 4px;
@@ -15,11 +24,12 @@ export const Container = styled.div`
 export const Content = styled.div`
   .date {
     position: fixed;
+    border-radius: 4px 4px 0 0;
     top: 0;
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 2rem 3rem;
+    padding: 3rem;
     background: #fdfdff;
     h5 {
       color: #616161;
@@ -50,7 +60,7 @@ export const Content = styled.div`
 `;
 export const Main = styled.div`
   height: 100%;
-  padding: 8rem 0 0 0;
+  padding: 9rem 0 0 0;
   .main {
     background: #eeeafe;
     border-radius: 10px;
@@ -79,6 +89,7 @@ export const Main = styled.div`
         p {
           color: #242424;
           font-size: 1.4rem;
+          line-height: 140%;
         }
       }
     }

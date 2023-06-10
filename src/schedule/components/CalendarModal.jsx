@@ -32,39 +32,42 @@ const CalendarModal = ({ onModal }) => {
   ];
 
   return (
-    <Style.Container>
-      <Style.Content>
-        <div className='date'>
-          <span>
-            <LeftIcon stroke='#616161' />
+    <>
+      <Style.Background onClick={handleClickClose} />
+      <Style.Container>
+        <Style.Content>
+          <div className='date'>
+            <span>
+              <LeftIcon stroke='#616161' />
+            </span>
+            <h5>2023년 6월 7일</h5>
+            <span>
+              <RightIcon stroke='#616161' />
+            </span>
+          </div>
+          <span className='close_btn' onClick={handleClickClose}>
+            &times;
           </span>
-          <h5>2023년 6월 7일</h5>
-          <span>
-            <RightIcon stroke='#616161' />
-          </span>
-        </div>
-        <span className='close_btn' onClick={handleClickClose}>
-          &times;
-        </span>
-      </Style.Content>
-      <Style.Main>
-        <div className='scroll'>
-          {data.map((item, index) => (
-            <div className='main' key={index}>
-              <span className='header_span'></span>
-              <div className='main_text'>
-                <h5>📆 [{item.title}]</h5>
-                <div>
-                  <p>기간: {item.term}</p>
-                  <p>내용: {item.contnet}</p>
-                  <p>관련 링크: {item.link}</p>
+        </Style.Content>
+        <Style.Main>
+          <div className='scroll'>
+            {data.map((item, index) => (
+              <div className='main' key={index}>
+                <span className='header_span'></span>
+                <div className='main_text'>
+                  <h5>📆 [{item.title}]</h5>
+                  <div>
+                    <p>기간: {item.term}</p>
+                    <p>내용: {item.contnet}</p>
+                    <p>관련 링크: {item.link}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </Style.Main>
-    </Style.Container>
+            ))}
+          </div>
+        </Style.Main>
+      </Style.Container>
+    </>
   );
 };
 

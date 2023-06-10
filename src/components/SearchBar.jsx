@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { useNavigate } from 'react-router-dom';
-// import { useOutClcik } from './OutClickClose';
 
 const SearchBar = ({ handleClose }) => {
   const navigate = useNavigate();
@@ -11,21 +10,6 @@ const SearchBar = ({ handleClose }) => {
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
-  // closeRef(검색창 외부) 클릭시 검색창 닫힘
-  // const closeRef = useRef();
-
-  // const handleClickOutside = ({ target }) => {
-  //   if (closeRef.current.contains(target)) {
-  //     handleClose(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   window.addEventListener('click', handleClickOutside);
-
-  //   return () => {
-  //     window.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, []);
 
   const handleClickOutside = () => {
     handleClose(false);
@@ -42,7 +26,7 @@ const SearchBar = ({ handleClose }) => {
             onKeyPress={(e) => {
               if ('Enter' === e.key) {
                 handleClickOutside();
-                navigate('/search');
+                navigate('/search', { state: input });
               }
             }}
             placeholder='회사, 사람, 키워드로 검색'
