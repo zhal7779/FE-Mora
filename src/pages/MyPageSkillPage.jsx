@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginContainer from '../logIn/LogInContainer';
@@ -8,14 +8,10 @@ import Button from '../components/Button';
 
 const MyPageEdit = () => {
   const [skill, setSkill] = useState('');
-  const [skillList, setSkillList] = useState([
-    { value: '스킬을 선택해 주세요', label: '스킬을 선택해 주세요' },
-    { value: 'Node.js', label: 'Node.js' },
-    { value: 'Next.js', label: 'Next.js' },
-    { value: 'Nest.js', label: 'Next.js' },
-  ]);
   const [selectedSkill, setSelectedSkill] = useState('');
   const [mySkillList, setMySkillList] = useState(['React', 'JavaScript', 'TypeScript']);
+  const [skillList, setSkillList] = useState([]);
+
   const navigate = useNavigate();
 
   const handleSkillChange = (e) => {
@@ -33,6 +29,42 @@ const MyPageEdit = () => {
   const handleRemoveSkill = (removedSkill) => {
     const updatedSkillList = mySkillList.filter((skill) => skill !== removedSkill);
     setMySkillList(updatedSkillList);
+  };
+
+  useEffect(() => {
+    // 디바운싱은 여러 이벤트를 한번에 묶어서 처리 쓰로틀링은 setInterval
+    const delayDebounceFn = setTimeout(() => {
+      if (skill !== '') {
+        fetchSkillList();
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [skill]);
+
+  const fetchSkillList = async () => {
+    try {
+      const userToken = sessionStorage.getItem('userToken');
+      const response = await fetch(`http://15.164.221.244:5000/api/skills?keyword=${skill}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (response) {
+        const data = await response.json();
+        if (data && data.length > 0) {
+          const updatedList = data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }));
+          setSkillList(updatedList);
+        } else {
+          setSkillList([]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
