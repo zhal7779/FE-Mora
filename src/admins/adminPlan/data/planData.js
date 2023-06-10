@@ -1,0 +1,88 @@
+const tableBodyData = [
+  {
+    adminId: '임지성',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.06.06',
+    endDate: '2023.06.06',
+    createdAt: '2023.06.06',
+  },
+  {
+    adminId: '따라란',
+    title: '짜라짜짜',
+    startDate: '2023.06.01',
+    endDate: '2023.06.01',
+    createdAt: '2023.06.01',
+  },
+  {
+    adminId: '짜라짜짜',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.05.22',
+    endDate: '2023.05.22',
+    createdAt: '2023.05.22',
+  },
+  {
+    adminId: '임지성',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.06.06',
+    endDate: '2023.06.06',
+    createdAt: '2023.06.06',
+  },
+  {
+    adminId: '따라란',
+    title: '짜라짜짜',
+    startDate: '2023.06.01',
+    endDate: '2023.06.01',
+    createdAt: '2023.06.01',
+  },
+  {
+    adminId: '짜라짜짜',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.05.22',
+    endDate: '2023.05.22',
+    createdAt: '2023.05.22',
+  },
+  {
+    adminId: '임지성',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.06.06',
+    endDate: '2023.06.06',
+    createdAt: '2023.06.06',
+  },
+  {
+    adminId: '따라란',
+    title: '짜라짜짜',
+    startDate: '2023.06.01',
+    endDate: '2023.06.01',
+    createdAt: '2023.06.01',
+  },
+  {
+    adminId: '짜라짜짜',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.05.22',
+    endDate: '2023.05.22',
+    createdAt: '2023.05.22',
+  },
+  {
+    adminId: '임지성',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.06.06',
+    endDate: '2023.06.06',
+    createdAt: '2023.06.06',
+  },
+  {
+    adminId: '따라란',
+    title: '짜라짜짜',
+    startDate: '2023.06.01',
+    endDate: '2023.06.01',
+    createdAt: '2023.06.01',
+  },
+  {
+    adminId: '짜라짜짜',
+    title: '만족도 조사 관련 공지',
+    startDate: '2023.05.22',
+    endDate: '2023.05.22',
+    createdAt: '2023.05.22',
+  },
+];
+
+export default tableBodyData;

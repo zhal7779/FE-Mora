@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Button = ({ value, color }) => {
+const Button = ({ value, color, onClick }) => {
   let ButtonComponent;
 
   switch (color) {
@@ -24,7 +24,9 @@ const Button = ({ value, color }) => {
 
   return (
     <div>
-      <ButtonComponent color={color}>{value}</ButtonComponent>
+      <ButtonComponent onClick={onClick} color={color}>
+        {value}
+      </ButtonComponent>
     </div>
   );
 };
@@ -36,7 +38,7 @@ const BaseButton = styled.button`
   width: auto;
   height: 3.8rem;
   padding: 9px 21px 9px 21px;
-  border-radius: 4px;
+  border-radius: 7px;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
@@ -44,14 +46,20 @@ const BaseButton = styled.button`
   line-height: 2.2rem;
   text-align: center;
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
-
+  box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
   background: ${({ color }) =>
     color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};
 
   &:hover {
     background: ${({ color }) =>
       color === 'darkPurple' ? '#5e3de4' : color === 'lightPurple' ? '#c5b4fc' : '#f1f1f1'};
-    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:not(:hover) {
+    background: ${({ color }) =>
+      color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};
+    transition: all 0.2s ease-in-out;
   }
 
   &:active {
@@ -63,6 +71,6 @@ const BaseButton = styled.button`
 const DarkPurpleButton = styled(BaseButton)``;
 const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
-  border: 1px solid #424242;
-  padding: 8px 21px 9px 21px;
+  border: 1px solid #b9b9b9;
+  padding: 8px 20px 9px 20px;
 `;

@@ -1,33 +1,24 @@
-import { useState } from 'react';
-
-import AdminBlock from '../admins/adminUser/components/AdminBlock';
-import AdminSideBar from '../admins/adminUser/components/AdminSideBar';
-import SearchBar from '../admins/adminUser/components/SearchBar';
-import Header from '../admins/adminUser/components/Header';
+import Header from '../admins/adminCommon/components/Header';
+import SearchBar from '../admins/adminCommon/components/SearchBar';
 import AdminTable from '../admins/adminUser/components/AdminTable';
-import Modal from '../admins/adminCommon/components/Modal';
-import { AdminMainContainer } from '../admins/adminUser/styledComponents/adminMainContainer.js';
+import AdminBlock from '../admins/adminCommon/components/AdminBlock';
+import AdminSideBar from '../admins/adminCommon/components/AdminSideBar';
+import { USER_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
+import { AdminMainContainer } from '../admins/adminCommon/styledComponents/AdminMainContainer';
 
-const AdminUser = () => {
-  const [modal, setModal] = useState(false);
-
-  const toggleModal = () => {
-    setModal(!modal);
-  };
-
+const AdminUserPage = () => {
   return (
     <>
       <Header />
       <AdminBlock>
-        <AdminSideBar />
+        <AdminSideBar nowCategoryName={USER_BUTTON} />
         <AdminMainContainer>
           <SearchBar />
-          <AdminTable toggleModal={toggleModal} />
+          <AdminTable />
         </AdminMainContainer>
       </AdminBlock>
-      <Modal modal={modal} toggleModal={toggleModal} />
     </>
   );
 };
 
-export default AdminUser;
+export default AdminUserPage;

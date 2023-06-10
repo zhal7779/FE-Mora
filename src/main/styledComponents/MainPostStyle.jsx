@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PostContainer = styled.section`
   max-width: 1024px;
-  padding-top: 180px;
+  padding: 180px 20px 0;
   margin: 0 auto;
 
   .post-title {

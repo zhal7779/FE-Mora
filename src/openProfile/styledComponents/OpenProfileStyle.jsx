@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 export const Container = styled.div`
-  width: 634px;
+  width: 100%;
   height: auto;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
@@ -41,20 +41,21 @@ export const ProfileContent = styled.div`
     border-radius: 50%;
     margin-right: 2rem;
   }
-  .chat_button {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #3c21a0;
-    background: #d6c9ff;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    cursor: pointer;
-    &:hover {
-      background: #bda8ff;
-    }
-    &:active {
-      background: #aa8fff;
-    }
+`;
+
+export const ChatButton = styled.button`
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #3c21a0;
+  background: #d6c9ff;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  &:hover {
+    background: #bda8ff;
+  }
+  &:active {
+    background: #aa8fff;
   }
 `;
 
@@ -65,12 +66,13 @@ export const SkillContent = styled.div`
   div {
     display: inline-block;
     padding: 0.4rem 0.8rem;
-    background: #ffffff;
+    background: #fdfdff;
     border: 1px solid #cbd5e1;
     border-radius: 4px;
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 120%;
     font-size: 1.4rem;
-    color: #616161;
+    color: #94a3b8;
   }
 `;
 
@@ -112,6 +114,6 @@ export const MoreViewButton = styled.div`
   color: #acacb0;
   &:hover {
     background: rgba(233, 233, 238, 0.4);
-    transition: 0.2s ease-out;
+    transition: 0.1s ease-out;
   }
 `;

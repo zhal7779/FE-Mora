@@ -39,16 +39,21 @@ const BaseButton = styled.button`
   font-size: 20px;
   line-height: 24px;
   text-align: center;
-
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
-
+  box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
   background: ${({ color }) =>
     color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};
 
   &:hover {
     background: ${({ color }) =>
       color === 'darkPurple' ? '#5e3de4' : color === 'lightPurple' ? '#c5b4fc' : '#f1f1f1'};
-    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:not(:hover) {
+    background: ${({ color }) =>
+      color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};
+    transition: all 0.2s ease-in-out;
   }
 
   &:active {
@@ -61,4 +66,5 @@ const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
   border: 1px solid #424242;
   padding: 10px 21px 9px 21px;
+  margin-bottom: 1.5rem;
 `;
