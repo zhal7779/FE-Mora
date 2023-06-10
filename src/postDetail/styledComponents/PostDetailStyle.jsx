@@ -91,6 +91,7 @@ export const DetailContainer = styled.section`
       height: 36px;
       border-radius: 50%;
       background-color: #eee;
+      overflow: hidden;
 
       img {
         width: 100%;
@@ -177,4 +178,13 @@ export const DetailContainer = styled.section`
       background: #4222bc;
     }
   }
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 20px 0;
+  font-size: 1.6rem;
 `;

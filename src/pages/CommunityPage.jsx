@@ -1,37 +1,48 @@
+import * as Style from '../community/styledComponents/PostListStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { categories } from '../community/categoryData';
 import Category from '../community/Category';
 import SearchBar from '../community/SearchBar';
-import RecommendPost from '../community/RecommendPost';
 import PostList from '../community/PostList';
-import { categories } from '../community/categoryData';
+import RecommendPost from '../community/RecommendPost';
+import { getPosts } from '../community/service/postListService';
+import { useQuery } from 'react-query';
 
 const CommunityPage = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(
     categories[0].id
   );
-  const [searchInput, setSearchInput] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const { status, data, error } = useQuery(['posts', selectedCategoryId], () =>
+    getPosts(selectedCategoryId)
+  );
+
+  if (status === 'loading') {
+    return <Style.Status>Loading...⏳</Style.Status>;
+  }
+
+  if (status === 'error') {
+    return <Style.Status>{error.message}⚠️</Style.Status>;
+  }
 
   return (
-    <>
-      <CommunityContainer>
-        <Category
+    <CommunityContainer>
+      <Category
+        selectedCategoryId={selectedCategoryId}
+        setSelectedCategoryId={setSelectedCategoryId}
+      />
+      <PostContainer>
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <RecommendPost selectedCategoryId={selectedCategoryId} data={data} />
+        <PostList
           selectedCategoryId={selectedCategoryId}
-          setSelectedCategoryId={setSelectedCategoryId}
+          data={data}
+          searchTerm={searchTerm}
         />
-        <div>
-          <SearchBar
-            selectedCategoryId={selectedCategoryId}
-            searchInput={searchInput}
-            setSearchInput={setSearchInput}
-          />
-          {searchInput === '' && (
-            <RecommendPost selectedCategoryId={selectedCategoryId} />
-          )}
-          <PostList selectedCategoryId={selectedCategoryId} />
-        </div>
-      </CommunityContainer>
-    </>
+      </PostContainer>
+    </CommunityContainer>
   );
 };
 
@@ -45,12 +56,13 @@ const CommunityContainer = styled.div`
   max-width: 1024px;
   padding-top: 60px;
   margin: 0 auto;
+`;
 
-  & > div {
-    display: flex;
-    flex-direction: column;
+const PostContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 
-    padding-top: 38px;
-    max-width: 738px;
-  }
+  padding: 38px 20px 0;
+  max-width: 738px;
+  width: 100%;
 `;

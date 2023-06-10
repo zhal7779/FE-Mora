@@ -96,4 +96,24 @@ export const PostContainer = styled.section`
       }
     }
   }
+  .no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 80px 0 100px;
+    font-size: 1.6rem;
+    color: #616161;
+    border-radius: 6px;
+  }
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 20px 0;
+  font-size: 1.6rem;
 `;
