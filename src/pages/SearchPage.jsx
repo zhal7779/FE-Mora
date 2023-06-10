@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import SearchResultBar from '../search/components/SearchResultBar';
+import * as Style from '../search/styledComponents/SearchPageStyle';
 import { Wrapper } from '../search/styledComponents/pageCommonStyle';
+import SearchResultBar from '../search/components/SearchResultBar';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
 import { useState } from 'react';
@@ -11,6 +11,7 @@ import SearchResultPost from '../search/components/SearchResultPost';
 import postData from '../community/data/getResData';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
+
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
   const { state } = useLocation();
@@ -25,8 +26,8 @@ const SearchPage = () => {
   //menu === 3? 게시물
   //menu === 4? 레이서 Q&A
   const [menu, setMenu] = useState(1);
-  const handleMenu = (menu) => {
-    setMenu(menu);
+  const handleMenuClick = (num) => {
+    setMenu(num);
   };
 
   //전달할 데이터 슬라이스
@@ -34,49 +35,55 @@ const SearchPage = () => {
   const slicePostData = postData.slice(0, 5);
 
   return (
-    <SearchContext.Provider value={searchKeyword}>
-      <SearchResultBar receiveMenu={handleMenu} handleSubSearch={handleSubSearch} />
-      <Container>
-        {menu === 1 ? (
-          <Wrapper style={{ marginTop: '22rem' }}>
-            <div>
-              <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
-              <SearchResultPost data={slicePostData} receiveMenu={handleMenu} />
-              <SearchResultQnA data={slicePostData} receiveMenu={handleMenu} />
-            </div>
-            <RankingContent />
-          </Wrapper>
-        ) : menu === 2 ? (
-          <ProfileWrapper style={{ marginTop: '22rem' }}>
-            <SearchResultProfile data={profileData} />
-          </ProfileWrapper>
-        ) : menu === 3 ? (
-          <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultPost data={postData} />
-            <RankingContent />
-          </Wrapper>
-        ) : (
-          <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultQnA data={postData} />
-            <RegisterQuestion />
-          </Wrapper>
-        )}
-      </Container>
-    </SearchContext.Provider>
+    <>
+      <Style.NavContainer>
+        <Style.Content>
+          <Style.SearchNav>
+            <Style.SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+              <p>전체</p>
+            </Style.SearchNavItem>
+            <Style.SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+              <p>프로필</p>
+            </Style.SearchNavItem>
+            <Style.SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+              <p>게시물</p>
+            </Style.SearchNavItem>
+            <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
+              <p>레이서 Q&A</p>
+            </Style.SearchNavItem>
+          </Style.SearchNav>
+        </Style.Content>
+      </Style.NavContainer>
+      <SearchContext.Provider value={searchKeyword}>
+        <SearchResultBar handleSubSearch={handleSubSearch} />
+        <Style.Container>
+          {menu === 1 ? (
+            <Wrapper style={{ marginTop: '22rem' }}>
+              <div>
+                <SearchResultProfile data={slicePfofileData} receiveMenu={setMenu} />
+                <SearchResultPost data={slicePostData} receiveMenu={setMenu} />
+                <SearchResultQnA data={slicePostData} receiveMenu={setMenu} />
+              </div>
+              <RankingContent />
+            </Wrapper>
+          ) : menu === 2 ? (
+            <Style.ProfileWrapper style={{ marginTop: '22rem' }}>
+              <SearchResultProfile data={profileData} />
+            </Style.ProfileWrapper>
+          ) : menu === 3 ? (
+            <Wrapper style={{ marginTop: '22rem' }}>
+              <SearchResultPost data={postData} />
+              <RankingContent />
+            </Wrapper>
+          ) : (
+            <Wrapper style={{ marginTop: '22rem' }}>
+              <SearchResultQnA data={postData} />
+              <RegisterQuestion />
+            </Wrapper>
+          )}
+        </Style.Container>
+      </SearchContext.Provider>
+    </>
   );
 };
 export default SearchPage;
-const Container = styled.div`
-  width: 100%;
-  background: #f0f1f3;
-`;
-
-const ProfileWrapper = styled.div`
-  width: 1024px;
-  height: 100%;
-  display: flex;
-  margin-top: 6rem;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-`;

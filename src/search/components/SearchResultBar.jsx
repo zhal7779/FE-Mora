@@ -4,7 +4,7 @@ import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 import { SearchContext } from '../context/SearchContext';
 import { useContext } from 'react';
 
-const SearchResultBar = ({ receiveMenu, handleSubSearch }) => {
+const SearchResultBar = ({ handleSubSearch }) => {
   const keyword = useContext(SearchContext);
   //검색창 input
   const [input, setInput] = useState(keyword);
@@ -15,12 +15,6 @@ const SearchResultBar = ({ receiveMenu, handleSubSearch }) => {
     setInput(e.target.value);
   };
 
-  // 메뉴 번호 전달
-  const [menu, setMenu] = useState(1);
-  const handleMenuClick = (num) => {
-    setMenu(num);
-    receiveMenu(num);
-  };
   // 검색 결과 전달
   const handleSearchResult = (e) => {
     if ('Enter' === e.key) {
@@ -51,24 +45,6 @@ const SearchResultBar = ({ receiveMenu, handleSubSearch }) => {
           <ResultTextContent>
             <p>{resultKeyword} 검색결과 0건</p>
           </ResultTextContent>
-        </Content>
-      </MainDiv>
-      <MainDiv>
-        <Content>
-          <SearchNav>
-            <SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-              <p>전체</p>
-            </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-              <p>프로필</p>
-            </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-              <p>게시물</p>
-            </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
-              <p>레이서 Q&A</p>
-            </SearchNavItem>
-          </SearchNav>
         </Content>
       </MainDiv>
     </Container>
@@ -117,19 +93,5 @@ const ResultTextContent = styled.div`
     display: flex;
     align-items: center;
     color: #242424;
-  }
-`;
-const SearchNav = styled.div`
-  display: flex;
-  gap: 0.8rem;
-`;
-const SearchNavItem = styled.div`
-  ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
-  p {
-    font-size: 1.6rem;
-    font-weight: 700;
-    padding: 1.6rem;
-    cursor: pointer;
-    color: ${(props) => (props.active ? '#242424' : '#bdbdbd')};
   }
 `;
