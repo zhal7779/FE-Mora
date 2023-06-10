@@ -2,11 +2,28 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 
-const SearchResultBar = ({ receiveMenu }) => {
+const SearchResultBar = ({ receiveMenu, handleSubSearch, keyword }) => {
+  //검색창 input
+  const [input, setInput] = useState(keyword);
+  //검색결과
+  const [resultKeyword, setResultKeyword] = useState(keyword);
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  // 메뉴 번호 전달
   const [menu, setMenu] = useState(1);
   const handleMenuClick = (num) => {
     setMenu(num);
     receiveMenu(num);
+  };
+  // 검색 결과 전달
+  const handleSearchResult = (e) => {
+    if ('Enter' === e.key) {
+      setResultKeyword(input);
+      handleSubSearch(input);
+    }
   };
 
   return (
@@ -17,8 +34,10 @@ const SearchResultBar = ({ receiveMenu }) => {
             <SearchIcon style={{ width: '2.4rem', height: '2.4rem', stroke: '#94a3b8' }} />
             <input
               type='text'
-              value={'리액트'}
+              value={input}
+              onChange={handleInputChange}
               placeholder='회사, 사람, 키워드로 검색'
+              onKeyDown={handleSearchResult}
               autoFocus
             ></input>
           </SubSearchContent>
@@ -27,7 +46,7 @@ const SearchResultBar = ({ receiveMenu }) => {
       <MainDiv>
         <Content>
           <ResultTextContent>
-            <p>리액트 검색결과 0건</p>
+            <p>{resultKeyword} 검색결과 0건</p>
           </ResultTextContent>
         </Content>
       </MainDiv>
@@ -71,6 +90,7 @@ const Content = styled.div`
   margin-right: auto;
 `;
 const SubSearchContent = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   input {

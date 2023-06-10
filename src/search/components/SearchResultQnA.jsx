@@ -32,13 +32,12 @@ const SearchResultQnA = ({ data, receiveMenu, keyword }) => {
               </h2>
             </div>
             <p>
-              {' '}
               <KeywordHighlight content={item.content} keyword={keyword} />
             </p>
           </div>
           <div className='hashtags'>
-            {item.hashtags.map((hashtag) => (
-              <h3>#{hashtag}</h3>
+            {item.hashtags.map((hashtag, index) => (
+              <h3 key={index}>#{hashtag}</h3>
             ))}
           </div>
           <div className='sub_content'>

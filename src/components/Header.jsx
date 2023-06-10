@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
@@ -8,6 +8,12 @@ import SearchBar from './SearchBar';
 import AlarmModal from './AlarmModal';
 import DefaultImg from '../assets/images/rabbitProfile.png';
 const Header = () => {
+  //menu === 0 ? 로고
+  //menu === 1 ? 토끼굴
+  //menu === 2 ? 정비소
+  //menu === 3 ?오픈프로필
+  //menu === 4 ? 검색창
+
   const [menu, setMenu] = useState(0);
   const handleMenuClick = (num) => {
     setMenu(num);
@@ -59,7 +65,7 @@ const Header = () => {
             </MenuContainer>
             <SideContent>
               <div>
-                {menu === 5 ? (
+                {menu === 4 ? (
                   <SearchIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
                 ) : (
                   <SearchIcon
