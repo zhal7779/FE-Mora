@@ -1,90 +1,5 @@
 import styled from 'styled-components';
 
-export const CommunityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  padding: 38px 20px 0;
-  max-width: 738px;
-  width: 100%;
-`;
-
-export const RecommendContainer = styled.section`
-  padding-top: 34px;
-
-  h3 {
-    padding-bottom: 10px;
-    font-weight: 600;
-    font-size: 2rem;
-    line-height: 2.4rem;
-  }
-
-  ul {
-    display: flex;
-
-    li {
-      width: 50%;
-      padding: 16px;
-      background: #ffffff;
-      border: 1px solid #d8e0e9;
-      border-radius: 8px;
-
-      &:first-of-type {
-        margin-right: 14px;
-      }
-
-      &:hover {
-        background: #fafbfc;
-      }
-
-      & > a {
-        display: block;
-      }
-    }
-  }
-
-  .recommend-tag {
-    display: inline-block;
-    margin-bottom: 16px;
-    padding: 4px 6px;
-
-    font-weight: 600;
-    font-size: 1.3rem;
-    line-height: 1.5rem;
-    color: #ed6653;
-    background: #ffedee;
-    border-radius: 5px;
-  }
-
-  .recommend-title {
-    margin-bottom: 32px;
-    font-weight: 600;
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-  }
-
-  .recommend-info {
-    display: flex;
-    justify-content: space-between;
-
-    font-weight: 600;
-    font-size: 1.2rem;
-    line-height: 1.5rem;
-
-    & > div {
-      display: flex;
-
-      p {
-        color: #616161;
-      }
-
-      p:first-of-type {
-        margin-right: 10px;
-      }
-    }
-  }
-`;
-
 export const PostContainer = styled.section`
   padding-top: 60px;
 
@@ -192,4 +107,13 @@ export const PostContainer = styled.section`
     color: #616161;
     border-radius: 6px;
   }
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 20px 0;
+  font-size: 1.6rem;
 `;
