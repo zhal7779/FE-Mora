@@ -2,25 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 import { ChatButton } from '../../openProfile/styledComponents/OpenProfileStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
+import * as Style from '../styledComponents/AddView';
+import { KeywordHighlight } from './KeywordHighlight';
+import { useContext } from 'react';
+import { SearchContext } from '../context/SearchContext';
 const SearchResultProfile = ({ data, receiveMenu }) => {
+  //검색후 데이터에 키워드 하이라이트 줄 변수
+  const keyword = useContext(SearchContext);
+
   //모두보기 클릭시 메뉴 2번 프로필 보기로 이동
   //모두보기 클릭시 메뉴에 보더가 2번으로 이동을 안함, 로직이 복잡할거 같으니 리덕스로 해야될듯
   const handleAllView = () => {
     receiveMenu(2);
   };
+
   return (
     <Container>
-      {data.length === 3 && (
-        <AddView>
+      {data.length <= 3 && (
+        <Style.AddView>
           <div>
             <p className='title'>프로필</p>
             <p className='total_count'>108</p>
           </div>
           <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
             <p className='all_view'>모두 보기</p>
-            <RightIcon />
+            <RightIcon stroke='#242424' />
           </div>
-        </AddView>
+        </Style.AddView>
       )}
       {data.map((item, index) => (
         <Content key={index}>
@@ -33,8 +41,12 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
             </div>
             <div className='text_content'>
               <h4>{item.name}</h4>
-              <h5>{item.currentJob}</h5>
-              <p>경력: {item.career}</p>
+              <h5>
+                <KeywordHighlight content={item.currentJob} keyword={keyword} />
+              </h5>
+              <p>
+                경력: <KeywordHighlight content={item.career} keyword={keyword} />
+              </p>
             </div>
           </div>
           <div className='button_content'>
@@ -48,18 +60,22 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
 
 export default SearchResultProfile;
 const Container = styled.div`
-  width: 66%;
+  width: 700px;
   height: 100%;
   background: #ffffff;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
-  margin: 4rem 0;
 `;
 
 const Content = styled.div`
   padding: 1.6rem;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+  &:hover {
+    background: rgba(233, 233, 238, 0.4);
+    transition: 0.2s ease-out;
+  }
   div {
     display: flex;
   }
@@ -96,27 +112,4 @@ const Content = styled.div`
     color: #94a3b8;
   }
   border-bottom: 1px #cbd5e1 solid;
-`;
-
-const AddView = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #242424;
-  padding: 2rem;
-  div {
-    display: flex;
-    align-items: center;
-  }
-  .title {
-    padding-right: 0.5rem;
-  }
-  .total_count {
-    color: #94a3b8;
-  }
-  .all_view {
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
 `;

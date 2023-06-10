@@ -46,7 +46,6 @@ const BaseButton = styled.button`
   line-height: 2.2rem;
   text-align: center;
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
-  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
   background: ${({ color }) =>
     color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};

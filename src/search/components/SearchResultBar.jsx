@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
+import { SearchContext } from '../context/SearchContext';
+import { useContext } from 'react';
 
-const SearchResultBar = ({ receiveMenu }) => {
-  const [menu, setMenu] = useState(1);
-  const handleMenuClick = (num) => {
-    setMenu(num);
-    receiveMenu(num);
+const SearchResultBar = ({ handleSubSearch }) => {
+  const keyword = useContext(SearchContext);
+  //검색창 input
+  const [input, setInput] = useState(keyword);
+  //검색결과
+  const [resultKeyword, setResultKeyword] = useState(keyword);
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  // 검색 결과 전달
+  const handleSearchResult = (e) => {
+    if ('Enter' === e.key) {
+      setResultKeyword(input);
+      handleSubSearch(input);
+    }
   };
 
   return (
@@ -17,8 +31,10 @@ const SearchResultBar = ({ receiveMenu }) => {
             <SearchIcon style={{ width: '2.4rem', height: '2.4rem', stroke: '#94a3b8' }} />
             <input
               type='text'
-              value={'리액트'}
+              value={input}
+              onChange={handleInputChange}
               placeholder='회사, 사람, 키워드로 검색'
+              onKeyDown={handleSearchResult}
               autoFocus
             ></input>
           </SubSearchContent>
@@ -27,26 +43,8 @@ const SearchResultBar = ({ receiveMenu }) => {
       <MainDiv>
         <Content>
           <ResultTextContent>
-            <p>리액트 검색결과 0건</p>
+            <p>{resultKeyword} 검색결과 0건</p>
           </ResultTextContent>
-        </Content>
-      </MainDiv>
-      <MainDiv>
-        <Content>
-          <SearchNav>
-            <SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
-              <p>전체</p>
-            </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-              <p>프로필</p>
-            </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-              <p>게시물</p>
-            </SearchNavItem>
-            <SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
-              <p>레이서 Q&A</p>
-            </SearchNavItem>
-          </SearchNav>
         </Content>
       </MainDiv>
     </Container>
@@ -55,6 +53,7 @@ const SearchResultBar = ({ receiveMenu }) => {
 export default SearchResultBar;
 const Container = styled.div`
   position: fixed;
+  z-index: 1;
   width: 100%;
   top: 6rem;
   left: 0;
@@ -70,6 +69,7 @@ const Content = styled.div`
   margin-right: auto;
 `;
 const SubSearchContent = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   input {
@@ -93,19 +93,5 @@ const ResultTextContent = styled.div`
     display: flex;
     align-items: center;
     color: #242424;
-  }
-`;
-const SearchNav = styled.div`
-  display: flex;
-  gap: 0.8rem;
-`;
-const SearchNavItem = styled.div`
-  ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
-  p {
-    font-size: 1.6rem;
-    font-weight: 700;
-    padding: 1.6rem;
-    cursor: pointer;
-    color: ${(props) => (props.active ? '#242424' : '#bdbdbd')};
   }
 `;

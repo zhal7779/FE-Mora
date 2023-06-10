@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginContainer from '../logIn/LogInContainer';
@@ -8,15 +8,70 @@ import Button from '../components/Button';
 
 const MyPageEdit = () => {
   const [skill, setSkill] = useState('');
-  const [skillList, setSkillList] = useState([
-    { value: '스킬을 선택해 주세요', label: '스킬을 선택해 주세요' },
-    { value: 'Node.js', label: 'Node.js' },
-    { value: 'Next.js', label: 'Next.js' },
-    { value: 'Nest.js', label: 'Next.js' },
-  ]);
   const [selectedSkill, setSelectedSkill] = useState('');
-  const [mySkillList, setMySkillList] = useState(['React', 'JavaScript', 'TypeScript']);
+  const [mySkillList, setMySkillList] = useState([]);
+  const [skillList, setSkillList] = useState([]); // 검색된 스킬 목록
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchMySkillList();
+  }, []);
+
+  useEffect(() => {
+    // 디바운싱은 여러 이벤트를 한번에 묶어서 처리 쓰로틀링은 setInterval
+    const delayDebounceFn = setTimeout(() => {
+      if (skill !== '') {
+        fetchSkillList();
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [skill]);
+
+  const fetchMySkillList = async () => {
+    try {
+      const userToken = sessionStorage.getItem('userToken');
+      const response = await fetch('http://15.164.221.244:5000/api/skills/myskill', {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (response) {
+        const data = await response.json();
+        setMySkillList(data);
+      } else {
+        throw new Error('Failed to fetch mySkillList');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchSkillList = async () => {
+    try {
+      const userToken = sessionStorage.getItem('userToken');
+      const response = await fetch(`http://15.164.221.244:5000/api/skills?keyword=${skill}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (response) {
+        const data = await response.json();
+        if (data && data.length > 0) {
+          const updatedList = data.map((item) => ({
+            value: item.name,
+            label: item.name,
+          }));
+          setSkillList(updatedList);
+        } else {
+          setSkillList([]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSkillChange = (e) => {
     const selectedOption = e.target.value;
@@ -24,7 +79,7 @@ const MyPageEdit = () => {
   };
 
   const handleAddSkill = () => {
-    if (selectedSkill) {
+    if (selectedSkill !== '') {
       setMySkillList([...mySkillList, selectedSkill]);
       setSelectedSkill('');
     }
@@ -33,6 +88,28 @@ const MyPageEdit = () => {
   const handleRemoveSkill = (removedSkill) => {
     const updatedSkillList = mySkillList.filter((skill) => skill !== removedSkill);
     setMySkillList(updatedSkillList);
+  };
+
+  const handleUpdateSkill = async () => {
+    try {
+      const userToken = sessionStorage.getItem('userToken');
+      const response = await fetch('http://15.164.221.244:5000/api/skills/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify(mySkillList),
+      });
+
+      if (response) {
+        console.log('스킬 수정이 완료되었습니다.');
+      } else {
+        throw new Error('Failed to update skills');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -58,7 +135,7 @@ const MyPageEdit = () => {
       />
       <Button color='darkPurple' value='추가하기' onClick={handleAddSkill} />
 
-      <SubTitle>내 현재 스킬</SubTitle>
+      <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
       <SkillButtonContainer>
         {mySkillList.map((mySkill, index) => (
           <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
@@ -73,6 +150,7 @@ const MyPageEdit = () => {
           color='darkPurple'
           value='수정완료'
           onClick={() => {
+            handleUpdateSkill();
             navigate('/mypage');
           }}
         />

@@ -1,75 +1,132 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
-import profile from '../assets/images/profile.png';
-import userPlusIcon from '../assets/icons/u_user-plus.svg';
 
 const MyPageEdit = () => {
   const [userName, setUserName] = useState('');
-  const [track, setTrack] = useState('');
-  const [phase, setPhase] = useState('');
+  const [userImg, setUserImg] = useState('');
   const [position, setPosition] = useState('');
   const [intro, setIntro] = useState('');
+  const [phase, setPhase] = useState('');
+  const [track, setTrack] = useState('');
+
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const mainProfileData = {
-    img: profile,
-    name: '지우쓰',
-    position: '당근마켓 프론트엔드 개발자',
-    intro:
-      'JavaScript를 이용한 개발 업무를 능숙히 처리할 수 있으며, 웹 표준 및 웹 접근성, 최적화에 대한 이해와 경험을 가지고 있는 프론트엔드 개발자입니다. 현재는 React, Next.js, Typescript를 활용한 개발 업무에 집중하고 있습니다. ',
-  };
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch('http://15.164.221.244:5000/api/users/mypage', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
+  );
 
-  const trackOptions = [
-    { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
-    { value: 'SW 엔지니어 트랙', label: 'SW 엔지니어 트랙' },
-    { value: 'AI 트랙', label: 'AI 트랙' },
-  ];
-  const phaseOptions = [
-    { value: '기수', label: '기수' },
-    { value: '1기', label: '1기' },
-    { value: '2기', label: '2기' },
-    { value: '3기', label: '3기' },
-    { value: '4기', label: '4기' },
-    { value: '5기', label: '5기' },
-    { value: '6기', label: '6기' },
-    { value: '7기', label: '7기' },
-    { value: '8기', label: '8기' },
-  ];
+  const updateProfileMutation = useMutation((updatedData) =>
+    fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(updatedData),
+    }).then((response) => response.json())
+  );
 
   const handleTrackChange = (e) => {
-    e.preventDefault();
     const selectedTrack = e.target.value;
     setTrack(selectedTrack);
-    console.log(selectedTrack);
   };
 
   const handlePhaseChange = (e) => {
-    e.preventDefault();
     const selectedPhase = e.target.value;
     setPhase(selectedPhase);
-    console.log(selectedPhase);
   };
+
+  const uploadImageMutation = useMutation((formData) =>
+    fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
+      method: 'POST',
+      body: formData,
+    }).then((response) => response.json())
+  );
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('img', file);
+
+    try {
+      const data = await uploadImageMutation.mutateAsync(formData);
+
+      if (data) {
+        const imageUrl = 'http://15.164.221.244:5000/' + data.file_name;
+        setUserImg(imageUrl);
+      } else {
+        console.log('이미지 업로드 실패');
+      }
+    } catch (error) {
+      console.error('이미지 업로드 오류:', error);
+    }
+  };
+
+  const handleSubmit = () => {
+    const updatedData = {
+      userName,
+      userImg,
+      position,
+      intro,
+      phase,
+      track,
+    };
+
+    updateProfileMutation.mutate(updatedData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('mainProfileData');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('프로필 수정 오류:', error);
+      },
+    });
+  };
+
+  if (mainProfileDataQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (mainProfileDataQuery.isError) {
+    return <div>Error: {mainProfileDataQuery.error.message}</div>;
+  }
+
+  const { data: mainProfileData } = mainProfileDataQuery;
 
   return (
     <LoginContainer>
       <ImageContainer>
-        <ProfileImg src={mainProfileData.img} alt='프로필'></ProfileImg>
-        <img src={userPlusIcon}></img>
+        <ProfileImg src={userImg || mainProfileData.userProfile.img_path} alt='프로필'></ProfileImg>
+        {userImg === '' ? (
+          <>
+            <label htmlFor='imageUpload'>
+              <input
+                onChange={handleImageChange}
+                id='imageUpload'
+                type='file'
+                style={{ display: 'none' }}
+              />
+            </label>
+          </>
+        ) : null}
       </ImageContainer>
       <MyPageEditInput
         title='이름'
         type='text'
-        placeholder={`${mainProfileData.name}`}
+        placeholder={mainProfileData.userName.name}
         name='userName'
-        onChange={(e) => {
-          e.preventDefault();
-          setUserName(e.target.value);
-        }}
+        onChange={(e) => setUserName(e.target.value)}
         value={userName}
       />
       <TrackPhaseContainer>
@@ -95,39 +152,20 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='직함'
         type='text'
-        placeholder={`${mainProfileData.position}`}
+        placeholder={mainProfileData.userProfile.position}
         name='position'
-        onChange={(e) => {
-          e.preventDefault();
-          setPosition(e.target.value);
-        }}
+        onChange={(e) => setPosition(e.target.value)}
         value={position}
       />
-      <IntroTextContainter
-        onChange={(e) => {
-          e.preventDefault();
-          setIntro(e.target.value);
-        }}
-        value={intro}
-      >
+      <IntroTextContainter onChange={(e) => setIntro(e.target.value)} value={intro}>
         <h3>자기소개</h3>
-        <textarea placeholder='간단히 자신을 소개해주세요'></textarea>
+        <textarea
+          placeholder={mainProfileData.userProfile.comment || '자기소개를 입력해주세요.'}
+        ></textarea>
       </IntroTextContainter>
       <ButtonContainer>
-        <Button
-          color='darkPurple'
-          value='수정완료'
-          onClick={() => {
-            navigate('/mypage');
-          }}
-        />
-        <Button
-          color='white'
-          value='수정취소'
-          onClick={() => {
-            navigate('/mypage');
-          }}
-        />
+        <Button color='darkPurple' value='수정완료' onClick={handleSubmit} />
+        <Button color='white' value='수정취소' onClick={() => navigate('/mypage')} />
       </ButtonContainer>
     </LoginContainer>
   );
@@ -137,24 +175,43 @@ export default MyPageEdit;
 
 const ImageContainer = styled.div`
   position: relative;
-  img:nth-child(2) {
-    top: 46%;
-    left: 52%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    opacity: 0;
-    filter: grayscale(0.3) brightness(300%);
+  margin-bottom: 2rem;
+
+  img {
+    width: 10rem;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
   }
-  &:hover {
+
+  label {
+    position: absolute;
+    top: 41%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 10rem;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    filter: grayscale(0.2) brightness(90%);
-    transition: all 0.2s ease-in-out;
-    img:nth-child(2) {
-      opacity: 1;
+    opacity: 0;
+
+    &:hover {
+      filter: grayscale(0.3) brightness(110%);
       transition: all 0.2s ease-in-out;
+      opacity: 0.5;
+    }
+
+    input[type='file'] {
+      display: none;
     }
   }
 `;
+
 const ButtonContainer = styled.div`
   width: 20rem;
   display: flex;
@@ -188,6 +245,7 @@ const IntroTextContainter = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+
   h3 {
     font-family: 'Noto Sans KR';
     font-weight: 400;
@@ -216,3 +274,20 @@ const IntroTextContainter = styled.div`
     }
   }
 `;
+
+const trackOptions = [
+  { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
+  { value: 'SW 엔지니어 트랙', label: 'SW 엔지니어 트랙' },
+  { value: 'AI 트랙', label: 'AI 트랙' },
+];
+const phaseOptions = [
+  { value: '기수', label: '기수' },
+  { value: '1기', label: '1기' },
+  { value: '2기', label: '2기' },
+  { value: '3기', label: '3기' },
+  { value: '4기', label: '4기' },
+  { value: '5기', label: '5기' },
+  { value: '6기', label: '6기' },
+  { value: '7기', label: '7기' },
+  { value: '8기', label: '8기' },
+];
