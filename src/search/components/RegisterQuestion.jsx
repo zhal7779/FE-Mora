@@ -14,10 +14,10 @@ const RegisterQuestion = () => {
 };
 
 export default RegisterQuestion;
-const Container = styled.div`
+const Container = styled.span`
   position: sticky;
+  display: flex;
   width: 30%;
-
   top: 260px;
   height: 100%;
   display: flex;
@@ -29,7 +29,6 @@ const Container = styled.div`
   background: #ffffff;
   font-size: 1.6rem;
   gap: 1rem;
-  margin: 4rem 0;
   strong {
     color: #242424;
     font-weight: 600;

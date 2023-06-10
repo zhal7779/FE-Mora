@@ -65,7 +65,6 @@ const Container = styled.div`
   background: #ffffff;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
-  margin: 4rem 0;
 `;
 
 const Content = styled.div`

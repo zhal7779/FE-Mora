@@ -58,7 +58,7 @@ const SearchPage = () => {
         <SearchResultBar handleSubSearch={handleSubSearch} />
         <Style.Container>
           {menu === 1 ? (
-            <Wrapper style={{ marginTop: '22rem' }}>
+            <Wrapper style={{ marginTop: '22rem', padding: '6rem 0' }}>
               <div>
                 <SearchResultProfile data={slicePfofileData} receiveMenu={setMenu} />
                 <SearchResultPost data={slicePostData} receiveMenu={setMenu} />
@@ -67,16 +67,16 @@ const SearchPage = () => {
               <RankingContent />
             </Wrapper>
           ) : menu === 2 ? (
-            <Style.ProfileWrapper style={{ marginTop: '22rem' }}>
+            <Style.ProfileWrapper>
               <SearchResultProfile data={profileData} />
             </Style.ProfileWrapper>
           ) : menu === 3 ? (
-            <Wrapper style={{ marginTop: '22rem' }}>
+            <Wrapper style={{ marginTop: '22rem', padding: '6rem 0' }}>
               <SearchResultPost data={postData} />
               <RankingContent />
             </Wrapper>
           ) : (
-            <Wrapper style={{ marginTop: '22rem' }}>
+            <Wrapper style={{ marginTop: '22rem', padding: '6rem 0' }}>
               <SearchResultQnA data={postData} />
               <RegisterQuestion />
             </Wrapper>

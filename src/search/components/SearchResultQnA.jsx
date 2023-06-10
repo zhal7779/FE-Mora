@@ -59,24 +59,20 @@ const SearchResultQnA = ({ data, receiveMenu }) => {
 export default SearchResultQnA;
 
 const Container = styled.section`
-  margin: 4rem 0;
   width: 700px;
   border: 1px #cbd5e1 solid;
+  border-radius: 4px;
   background: #ffffff;
 `;
 const Content = styled.div`
   width: 100%;
   height: 20rem;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px #cbd5e1 solid;
   padding: 2rem 1.6rem;
-  background: #ffffff;
-  border-radius: 4px;
   color: #242424;
-  background: #ffffff;
   cursor: pointer;
   &:hover {
     background: rgba(233, 233, 238, 0.4);

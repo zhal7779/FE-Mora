@@ -25,7 +25,6 @@ const Container = styled.section`
   background: #ffffff;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
-  margin: 4rem 0;
   height: 100%;
 `;
 const TitleContent = styled.div`

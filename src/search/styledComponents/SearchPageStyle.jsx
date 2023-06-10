@@ -8,7 +8,8 @@ export const ProfileWrapper = styled.div`
   width: 1024px;
   height: 100%;
   display: flex;
-  margin-top: 6rem;
+  margin-top: 22rem;
+  padding: 4rem 0;
   margin-left: auto;
   margin-right: auto;
   justify-content: center;

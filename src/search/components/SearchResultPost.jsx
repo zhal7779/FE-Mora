@@ -46,7 +46,6 @@ const SearchResultPost = ({ data, receiveMenu }) => {
 export default SearchResultPost;
 
 const Container = styled.section`
-  margin: 4rem 0;
   width: 700px;
   border-radius: 4px;
   border: 1px #cbd5e1 solid;
