@@ -78,9 +78,11 @@ const Header = () => {
               <div>
                 <BellIcon onClick={() => handleModalClick(true)} />
               </div>
-              <div>
-                <ImageIcon src={DefaultImg}></ImageIcon>
-              </div>
+              <Link to='/mypage'>
+                <div>
+                  <ImageIcon src={DefaultImg}></ImageIcon>
+                </div>
+              </Link>
             </SideContent>
           </Content>
         </Container>
