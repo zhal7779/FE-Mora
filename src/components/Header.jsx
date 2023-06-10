@@ -13,6 +13,7 @@ const Header = () => {
   //menu === 2 ? 정비소
   //menu === 3 ?오픈프로필
   //menu === 4 ? 검색창
+  //menu === 5 ? 마이페이지
 
   const [menu, setMenu] = useState(0);
   const handleMenuClick = (num) => {
@@ -79,7 +80,7 @@ const Header = () => {
                 <BellIcon onClick={() => handleModalClick(true)} />
               </div>
               <Link to='/mypage'>
-                <div>
+                <div onClick={() => handleMenuClick(5)}>
                   <ImageIcon src={DefaultImg}></ImageIcon>
                 </div>
               </Link>
