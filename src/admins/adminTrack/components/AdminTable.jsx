@@ -17,7 +17,6 @@ const AdminTable = () => {
     setEnrollModal(!enrollModal);
   };
 
-  // 추후 api 받아오는 걸로 변경 예정(얘도 함수로 따로 빼서 객체로 넘긴 다음 구조분해할당으로 값 2개 받아오자!)
   const totalNumber = 30,
     numberByPage = 14;
 

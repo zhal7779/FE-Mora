@@ -1,43 +1,24 @@
 import { useRef, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
 
 import {
   ModalOverlay,
   ModalContentBlock,
   ModalTitle,
   ModalSubTitle,
-  ModalContentInput,
   ModalContentP,
+  ModalContentInput,
+  ModalContentTextarea,
   ModalButtonBlock,
   ModalHeader,
   ModalHeaderButton,
   ModalButton,
 } from '../styledComponents/ModalComponents';
+import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/postApi';
 
-// 밖으로 뺄 거
-const info = [
-  {
-    type: 'id',
-    subTitle: '번호',
-    contentValue: '1',
-  },
-  {
-    type: 'name',
-    subTitle: '트랙 이름',
-    contentValue: 'SW',
-  },
-  {
-    type: 'phase',
-    subTitle: '기수',
-    contentValue: '1',
-  },
-];
-
-const TrackModal = ({ 인포, detailModal, toggleDetailModal }) => {
-  const modalTitle = '트랙 정보';
-  const modalFeature = '수정하기';
-
+const NotificationModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState(info);
+  const [contents, setContents] = useState({ title: '', content: '' });
   const firstInput = useRef(null);
 
   const handleUpdatable = () => {
@@ -46,75 +27,103 @@ const TrackModal = ({ 인포, detailModal, toggleDetailModal }) => {
   };
 
   const handleChangeContents = (e) => {
-    const idx = e.target.alt;
-    const newContents = [...contents];
-    newContents[idx].contentValue = e.target.value;
-    setContents(newContents);
+    const newContent = { ...contents };
+    newContent[e.target.name] = e.target.value;
+    setContents(() => newContent);
   };
+
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'notification', 'detail', 'get'],
+    () => fetchReadNotificationInfoDetail(id),
+    {
+      onSuccess(data) {
+        setContents({ title: data.title, content: data.content });
+      },
+    }
+  );
+
+  const { mutate: updateNotification, error: updateError } = useMutation(
+    async (id) => await fetchUpdateNotification(id, contents),
+    {
+      onError(updateError) {
+        console.log(updateError);
+      },
+    }
+  );
+
+  if (isLoading) return <span>로딩중...</span>;
+  if (error) return <span>An error has occurred: {error.message}</span>;
+
+  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
   return (
     <>
-      {detailModal && (
+      <ModalOverlay
+        onClick={() => {
+          handleModalCancelClick();
+        }}
+      />
+      <ModalContentBlock className='modal-content-block'>
+        <ModalHeader className='modal-header'>
+          <ModalTitle className='modal-title'>공지 정보</ModalTitle>
+          <ModalHeaderButton
+            className='modal-button-update'
+            onClick={handleUpdatable}
+            $purple
+            $header
+          >
+            수정하기
+          </ModalHeaderButton>
+        </ModalHeader>
+
         <>
-          <ModalOverlay onClick={toggleDetailModal} />
-          <ModalContentBlock className='modal-content-block'>
-            <ModalHeader className='modal-header'>
-              <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
-              <ModalHeaderButton
-                className='modal-button-update'
-                onClick={handleUpdatable}
-                $purple
-                $header
-              >
-                {modalFeature}
-              </ModalHeaderButton>
-            </ModalHeader>
-            <div>
-              {contents.map((content, idx) => {
-                if (content.type !== 'id') {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
-                      <ModalContentInput
-                        type='text'
-                        value={content.contentValue}
-                        className='modal-content'
-                        onChange={handleChangeContents}
-                        readOnly={!updatable}
-                        alt={idx}
-                        ref={idx === 1 ? firstInput : null}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>번호</ModalSubTitle>
-                      <ModalContentP className='modal-content'>{13}</ModalContentP>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-            <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' $purple>
-                {modalFeature.slice(0, 2)}
-              </ModalButton>
-              <ModalButton
-                className='modal-button-ok'
-                onClick={() => {
-                  setUpdatable(false);
-                  toggleDetailModal();
-                }}
-              >
-                확인
-              </ModalButton>
-            </ModalButtonBlock>
-          </ModalContentBlock>
+          <ModalSubTitle>관리자</ModalSubTitle>
+          <ModalContentP>{data.Admin.name}</ModalContentP>
+          <ModalSubTitle>제목</ModalSubTitle>
+          <ModalContentInput
+            value={contents.title}
+            onChange={handleChangeContents}
+            name='title'
+            readOnly={!updatable}
+            ref={firstInput}
+          />
+          <ModalSubTitle>내용</ModalSubTitle>
+          <ModalContentTextarea
+            value={contents.content}
+            onChange={handleChangeContents}
+            name='content'
+            readOnly={!updatable}
+          />
         </>
-      )}
+
+        <ModalButtonBlock className='modal-button-block'>
+          <ModalButton
+            className='modal-button-submit'
+            onClick={() => {
+              const result = confirm('수정하시겠습니까?');
+              if (result) {
+                updateNotification(id, contents);
+                handleUpdatable();
+                handleModalCancelClick();
+              }
+            }}
+            $purple
+          >
+            수정
+          </ModalButton>
+          <ModalButton
+            className='modal-button-ok'
+            onClick={() => {
+              handleModalCancelClick();
+              setUpdatable(false);
+            }}
+          >
+            확인
+          </ModalButton>
+        </ModalButtonBlock>
+      </ModalContentBlock>
     </>
   );
 };
 
-export default TrackModal;
+export default NotificationModal;

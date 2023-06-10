@@ -58,6 +58,23 @@ const ModalContentInput = styled.input`
     outline: none;
   }
 `;
+const ModalContentTextarea = styled.textarea`
+  width: 100%;
+  height: 10rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 0.4rem;
+  margin-bottom: 2.2rem;
+
+  background-color: #fefefe;
+  color: #424242;
+
+  font-size: 1.4rem;
+
+  &:focus {
+    outline: none;
+  }
+`;
 const ModalContentP = styled.p`
   width: 100%;
   padding: 1rem 1.5rem;
@@ -110,6 +127,7 @@ export {
   ModalButtonBlock,
   ModalContentBlock,
   ModalContentInput,
+  ModalContentTextarea,
   ModalContentP,
   ModalHeader,
   ModalHeaderButton,

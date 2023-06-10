@@ -28,6 +28,7 @@ import AdminReportPage from './pages/AdminReportPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
+import NotificationModal from './admins/adminNotification/components/NotificationModal';
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const App = () => {
                 <Route path='/admin/tracks' element={<AdminTrackPage />} />
                 <Route path='/admin/notifications' element={<AdminNotificationPage />} />
                 <Route path='/write' element={<PostWritePage />} />
+                <Route path='/admin/notifications/detail' element={<NotificationModal />} />
               </Route>
             </Routes>
           </Router>

@@ -41,7 +41,6 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
   const [contents, setContents] = useState(info);
 
   const handleChangeContents = (e) => {
-    console.log(e.target.value);
     const idx = e.target.alt;
     const newContents = [...contents];
     newContents[idx].contentValue = e.target.value;

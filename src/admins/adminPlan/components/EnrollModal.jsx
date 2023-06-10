@@ -42,7 +42,6 @@ const EnrollModal = ({ 인포, enrollModal, toggleEnrollModal }) => {
   const firstInput = useRef(null);
 
   const handleChangeContents = (e) => {
-    console.log(e.target.value);
     const idx = e.target.alt;
     const newContents = [...contents];
     newContents[idx].contentValue = e.target.value;
