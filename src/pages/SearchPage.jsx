@@ -21,6 +21,8 @@ const SearchPage = () => {
   const slicePfofileData = profileData.slice(0, 3);
   const slicePostData = postData.slice(0, 5);
 
+  //검색후 키워드 하이라이팅 줄 변수
+  const keyword = '리액트';
   return (
     <>
       <SearchResultBar receiveMenu={handleMenu} />
@@ -28,24 +30,28 @@ const SearchPage = () => {
         {menu === 1 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
             <div>
-              <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
-              <SearchResultPost data={slicePostData} receiveMenu={handleMenu} />
-              <SearchResultQnA data={slicePostData} receiveMenu={handleMenu} />
+              <SearchResultProfile
+                data={slicePfofileData}
+                receiveMenu={handleMenu}
+                keyword={keyword}
+              />
+              <SearchResultPost data={slicePostData} receiveMenu={handleMenu} keyword={keyword} />
+              <SearchResultQnA data={slicePostData} receiveMenu={handleMenu} keyword={keyword} />
             </div>
             <RankingContent />
           </Wrapper>
         ) : menu === 2 ? (
           <ProfileWrapper style={{ marginTop: '22rem' }}>
-            <SearchResultProfile data={profileData} />
+            <SearchResultProfile data={profileData} keyword={keyword} />
           </ProfileWrapper>
         ) : menu === 3 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultPost data={postData} />
+            <SearchResultPost data={postData} keyword={keyword} />
             <RankingContent />
           </Wrapper>
         ) : (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultQnA data={postData} />
+            <SearchResultQnA data={postData} keyword={keyword} />
             <RegisterQuestion />
           </Wrapper>
         )}

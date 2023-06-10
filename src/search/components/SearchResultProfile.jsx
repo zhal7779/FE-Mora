@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { ChatButton } from '../../openProfile/styledComponents/OpenProfileStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import * as Style from '../styledComponents/AddView';
-const SearchResultProfile = ({ data, receiveMenu }) => {
+import { KeywordHighlight } from './KeywordHighlight';
+const SearchResultProfile = ({ data, receiveMenu, keyword }) => {
   //모두보기 클릭시 메뉴 2번 프로필 보기로 이동
   //모두보기 클릭시 메뉴에 보더가 2번으로 이동을 안함, 로직이 복잡할거 같으니 리덕스로 해야될듯
   const handleAllView = () => {
     receiveMenu(2);
   };
+  //검색후 데이터에 키워드 하이라이트 줄 변수
+
   return (
     <Container>
       {data.length <= 3 && (
@@ -34,8 +37,12 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
             </div>
             <div className='text_content'>
               <h4>{item.name}</h4>
-              <h5>{item.currentJob}</h5>
-              <p>경력: {item.career}</p>
+              <h5>
+                <KeywordHighlight content={item.currentJob} keyword={keyword} />
+              </h5>
+              <p>
+                경력: <KeywordHighlight content={item.career} keyword={keyword} />
+              </p>
             </div>
           </div>
           <div className='button_content'>

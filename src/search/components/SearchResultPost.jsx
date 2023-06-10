@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import * as Style from '../styledComponents/AddView';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
-const SearchResultPost = ({ data, receiveMenu }) => {
+import { KeywordHighlight } from './KeywordHighlight';
+const SearchResultPost = ({ data, receiveMenu, keyword }) => {
   const handleAllView = () => {
     receiveMenu(3);
   };
@@ -22,8 +23,12 @@ const SearchResultPost = ({ data, receiveMenu }) => {
       )}
       {data.map((item) => (
         <Content key={item.id}>
-          <h3>{item.title}</h3>
-          <p>{item.content}</p>
+          <h3>
+            <KeywordHighlight content={item.title} keyword={keyword} />
+          </h3>
+          <p>
+            <KeywordHighlight content={item.content} keyword={keyword} />
+          </p>
           <div>
             <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF8bkStA_NWmRIUeISz6lRnrar6tzQ0v0uCg&usqp=CAU'></img>
             <h4>민영(min_young)</h4>

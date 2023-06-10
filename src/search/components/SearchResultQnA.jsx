@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import * as Style from '../styledComponents/AddView';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
+import { KeywordHighlight } from './KeywordHighlight';
 
-const SearchResultQnA = ({ data, receiveMenu }) => {
+const SearchResultQnA = ({ data, receiveMenu, keyword }) => {
   const handleAllView = () => {
     receiveMenu(4);
   };
@@ -26,9 +27,14 @@ const SearchResultQnA = ({ data, receiveMenu }) => {
           <div className='main_content'>
             <div>
               <strong>Q</strong>
-              <h2> {item.title}</h2>
+              <h2>
+                <KeywordHighlight content={item.title} keyword={keyword} />
+              </h2>
             </div>
-            <p>{item.content}</p>
+            <p>
+              {' '}
+              <KeywordHighlight content={item.content} keyword={keyword} />
+            </p>
           </div>
           <div className='hashtags'>
             {item.hashtags.map((hashtag) => (
