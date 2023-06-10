@@ -20,9 +20,8 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   const titleInput = useRef(null);
   const queryClient = useQueryClient();
 
-  // useMutate 쿼리 사용
   const { mutate: createNotification, error } = useMutation(
-    () => fetchCreateNotification(contents),
+    async () => await fetchCreateNotification(contents),
     {
       onSuccess() {
         queryClient.invalidateQueries(['admin', 'notification', 'get']);
@@ -33,12 +32,10 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   );
 
-  // 모달 열면 default focus 지정
   useEffect(() => {
     titleInput.current.focus();
   }, [enrollModal]);
 
-  // form data state 업데이트
   const handleFormChange = (e) => {
     const changedValue = e.target.name;
     const newContents = {
@@ -50,8 +47,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   };
 
   const handleSubmit = () => {
-    // 어쩔 수 없다. reload를 시켜야 하니까 새로고침 해야겠다.
-    // 새로고침 안하고 게시물이 등록되었을 때 api를 다시 호출할 순 없나?
     const result = confirm('공지를 등록하시겠습니까?');
     if (result) {
       createNotification(contents);
@@ -59,7 +54,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   };
 
-  // useMutate return value에 따른 처리
   if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (

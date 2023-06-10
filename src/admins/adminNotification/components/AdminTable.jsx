@@ -22,13 +22,8 @@ const AdminTable = () => {
     setEnrollModal(!enrollModal);
   };
 
-  // const { isLoading, data, error } = useGetNotificationInfo(0, 12);
-  const { data, isLoading, error } = useQuery(
-    ['admin', 'notification', 'get'],
-    () => fetchReadNotificationInfo(0, 12, ''),
-    {
-      staleTime: Infinity,
-    }
+  const { data, isLoading, error } = useQuery(['admin', 'notification', 'get'], () =>
+    fetchReadNotificationInfo(0, 12, '')
   );
 
   if (isLoading) return <span>로딩중...</span>;
