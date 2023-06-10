@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { fetchNotificationInfo } from '../apis/postApi';
+import { fetchReadNotificationInfo } from '../apis/postApi';
 
 import SearchBar from './SearchBar';
 import EnrollModal from './EnrollModal';
@@ -25,7 +25,7 @@ const AdminTable = () => {
   // const { isLoading, data, error } = useGetNotificationInfo(0, 12);
   const { data, isLoading, error } = useQuery(
     ['admin', 'notification', 'get'],
-    () => fetchNotificationInfo(0, 12, ''),
+    () => fetchReadNotificationInfo(0, 12, ''),
     {
       staleTime: Infinity,
     }
@@ -55,10 +55,11 @@ const AdminTable = () => {
         <AdminTableHead />
         <AdminTableBody notifications={notification.length ? notification : data.objArr} />
         <PageNation
-          totalDataNumber={notification.length ? notification.length : data.totalItems}
+          totalDataNumber={notification.length || data.totalItems}
           numberByPage={12}
           nowPage={nowPage}
           setNowPage={setNowPage}
+          keyword={notification || ''}
         />
       </div>
     </>

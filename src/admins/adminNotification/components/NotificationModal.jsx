@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   ModalOverlay,
@@ -12,109 +14,69 @@ import {
   ModalHeaderButton,
   ModalButton,
 } from '../styledComponents/ModalComponents';
+import { fetchReadNotificationInfoDetail } from '../apis/postApi';
 
-// 밖으로 뺄 거
-const info = [
-  {
-    type: 'id',
-    subTitle: '번호',
-    contentValue: '1',
-  },
-  {
-    type: 'name',
-    subTitle: '트랙 이름',
-    contentValue: 'SW',
-  },
-  {
-    type: 'phase',
-    subTitle: '기수',
-    contentValue: '1',
-  },
-];
-
-const TrackModal = ({ modal, toggleModal }) => {
-  const modalTitle = '트랙 정보';
-  const modalFeature = '수정하기';
-
+const NotificationModal = () => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState(info);
+  const [contents, setContents] = useState({ title: '', content: '' });
   const firstInput = useRef(null);
+  let [searchParams] = useSearchParams();
 
   const handleUpdatable = () => {
     setUpdatable(true);
     if (!updatable) firstInput.current.focus();
   };
 
-  const handleChangeContents = (e) => {
-    const idx = e.target.alt;
-    const newContents = [...contents];
-    newContents[idx].contentValue = e.target.value;
-    setContents(newContents);
-  };
+  const handleChangeContents = () => {};
+
+  const id = searchParams.get('id');
+
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'notification', , 'detail', 'get'],
+    () => fetchReadNotificationInfoDetail(id),
+    {
+      staleTime: Infinity,
+    }
+  );
+
+  if (isLoading) return <span>로딩중...</span>;
+  if (error) return <span>An error has occurred: {error.message}</span>;
+  if (data) console.log(data);
 
   return (
     <>
-      {detailModal && (
-        <>
-          <ModalOverlay onClick={toggleDetailModal} />
-          <ModalContentBlock className='modal-content-block'>
-            <ModalHeader className='modal-header'>
-              <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
-              <ModalHeaderButton
-                className='modal-button-update'
-                onClick={handleUpdatable}
-                $purple
-                $header
-              >
-                {modalFeature}
-              </ModalHeaderButton>
-            </ModalHeader>
-            <div>
-              {contents.map((content, idx) => {
-                if (content.type !== 'id') {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
-                      <ModalContentInput
-                        type='text'
-                        value={content.contentValue}
-                        className='modal-content'
-                        onChange={handleChangeContents}
-                        readOnly={!updatable}
-                        alt={idx}
-                        ref={idx === 1 ? firstInput : null}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>번호</ModalSubTitle>
-                      <ModalContentP className='modal-content'>{13}</ModalContentP>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-            <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' $purple>
-                {modalFeature.slice(0, 2)}
-              </ModalButton>
-              <ModalButton
-                className='modal-button-ok'
-                onClick={() => {
-                  setUpdatable(false);
-                  toggleDetailModal();
-                }}
-              >
-                확인
-              </ModalButton>
-            </ModalButtonBlock>
-          </ModalContentBlock>
-        </>
-      )}
+      <ModalOverlay />
+      <ModalContentBlock className='modal-content-block'>
+        <ModalHeader className='modal-header'>
+          <ModalTitle className='modal-title'>공지 정보</ModalTitle>
+          <ModalHeaderButton
+            className='modal-button-update'
+            onClick={handleUpdatable}
+            $purple
+            $header
+          >
+            수정하기
+          </ModalHeaderButton>
+        </ModalHeader>
+
+        <div></div>
+
+        <ModalButtonBlock className='modal-button-block'>
+          <ModalButton className='modal-button-submit' $purple>
+            수정
+          </ModalButton>
+          <ModalButton
+            className='modal-button-ok'
+            onClick={() => {
+              setUpdatable(false);
+            }}
+          >
+            확인
+          </ModalButton>
+        </ModalButtonBlock>
+      </ModalContentBlock>
     </>
   );
 };
 
-export default TrackModal;
+export default NotificationModal;

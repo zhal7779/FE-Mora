@@ -1,17 +1,12 @@
-import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { fetchDeleteNotification } from '../apis/postApi';
+import { Link } from 'react-router-dom';
 
-import { DetailBtn, NotificationInfo } from '../styledComponents/TableComponent';
 import DeleteButton from './DeleteButton';
+import { DetailBtn, NotificationInfo } from '../styledComponents/TableComponent';
 
 const AdminTableBody = ({ notifications }) => {
-  const [modal, setModal] = useState(false);
   const queryClient = useQueryClient();
-
-  const toggleModal = () => {
-    setModal(!modal);
-  };
 
   const { mutate: deleteNotification, error } = useMutation(
     (id) => {
@@ -50,11 +45,10 @@ const AdminTableBody = ({ notifications }) => {
             <span className='content'>{data.content}</span>
             <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' modal={modal} toggleModal={toggleModal}>
-                보기
-              </DetailBtn>
+              <Link to={`/admin/notifications/detail?id=${data.id}`}>
+                <DetailBtn className='detail-btn'>보기</DetailBtn>
+              </Link>
             </span>
-            {/* 삭제 함수에 id 실어서 보내기 */}
             <DeleteButton
               onClick={() => {
                 handleDelete(data.id);
