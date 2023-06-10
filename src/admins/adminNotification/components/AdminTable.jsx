@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
-import PageNation from '../../adminCommon/components/PageNation';
+import PageNation from './PageNation';
 import {
   EnrollButton,
   MainContentHeaderBlock,
@@ -15,15 +15,17 @@ import {
 
 const AdminTable = () => {
   const [enrollModal, setEnrollModal] = useState(false);
-  const [nowPage, setNowPage] = useState(0);
-  const [notification, setNotification] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [searchResult, setSearchResult] = useState([]);
+  const [keyword, setKeyword] = useState('');
 
   const toggleEnrollModal = () => {
     setEnrollModal(!enrollModal);
   };
 
-  const { data, isLoading, error } = useQuery(['admin', 'notification', 'get'], () =>
-    fetchReadNotificationInfo(0, 12, '')
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'notification', 'get'],
+    async () => await fetchReadNotificationInfo(currentPage, 12, keyword)
   );
 
   if (isLoading) return <span>로딩중...</span>;
@@ -31,7 +33,12 @@ const AdminTable = () => {
 
   return (
     <>
-      <SearchBar placeholder={'공지 제목 검색'} setNotification={setNotification} />
+      <SearchBar
+        placeholder={'공지 제목 검색'}
+        setSearchResult={setSearchResult}
+        keyword={keyword}
+        setKeyword={setKeyword}
+      />
       <div>
         <MainContentHeaderBlock>
           <TableTitle className='table-title'>공지 관리</TableTitle>
@@ -48,13 +55,11 @@ const AdminTable = () => {
         </MainContentHeaderBlock>
 
         <AdminTableHead />
-        <AdminTableBody notifications={notification.length ? notification : data.objArr} />
+        <AdminTableBody notifications={searchResult.length ? searchResult : data.objArr} />
         <PageNation
-          totalDataNumber={notification.length || data.totalItems}
-          numberByPage={12}
-          nowPage={nowPage}
-          setNowPage={setNowPage}
-          keyword={notification || ''}
+          totalPages={data.totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </>

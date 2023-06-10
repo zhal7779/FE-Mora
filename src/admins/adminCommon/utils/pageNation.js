@@ -24,11 +24,7 @@ export const getNumberOfPage = (totalNumber, numberByPage) => {
  * @param {*} setNowPageNumber 각 버튼 컴포넌트 클릭 시 스테이트를 현재 페이지로 바꾸는 함수
  * @returns 현재 페이지에 css가 적용된 전체 페이지 버튼
  */
-export const getPageNumberComponents = (
-  nowPageNumber,
-  numberOfPage,
-  setNowPageNumber
-) => {
+export const getPageNumberComponents = (nowPageNumber, numberOfPage, setNowPageNumber) => {
   const pageNumberComponents = [];
 
   for (let index = 0; index < numberOfPage; index++) {

@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
 import { fetchReadNotificationInfo } from '../apis/postApi';
 
-const SearchBar = ({ placeholder, setNotification }) => {
-  const [keyword, setKeyword] = useState('');
-
+const SearchBar = ({ placeholder, setSearchResult, keyword, setKeyword }) => {
   const handleKeyDown = (e) => {
     setKeyword(e.target.value);
   };
@@ -13,7 +11,7 @@ const SearchBar = ({ placeholder, setNotification }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await fetchReadNotificationInfo(0, 12, keyword);
-    setNotification(() => [...data.objArr]);
+    setSearchResult(() => [...data.objArr]);
   };
 
   return (

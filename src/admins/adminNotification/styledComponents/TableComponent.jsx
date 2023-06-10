@@ -57,17 +57,20 @@ const PageNationBlock = styled.div`
   margin-top: 6rem;
   margin-bottom: 10rem;
 `;
-const PageNationBlockDiv = styled.div`
+const PageNationBlockBtn = styled.button`
   width: 3rem;
   height: 3rem;
   padding-left: 0.1rem;
-
   border: 1px solid gray;
   border-radius: 0.4rem;
+
+  background-color: #fff;
 
   font-size: 1.4rem;
   text-align: center;
   line-height: 3rem;
+
+  cursor: pointer;
 
   &.now-page {
     border: none;
@@ -94,7 +97,7 @@ export {
   NotificationInfo,
   DetailBtn,
   PageNationBlock,
-  PageNationBlockDiv,
+  PageNationBlockBtn,
   MainContentHeaderBlock,
   EnrollButton,
 };

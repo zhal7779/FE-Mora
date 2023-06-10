@@ -15,8 +15,6 @@ const AdminTableBody = ({ notifications }) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteNotification(id);
-      // 얘는 그냥 컴포넌트 리렌더링 하기 위한 코드. 의미 없다.
-      // 근데 이렇게 쓰는 게 맞나?
       setModal(false);
     }
   };
