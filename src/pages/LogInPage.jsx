@@ -12,6 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [showLittleText, setShowLittleText] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +20,21 @@ const Login = () => {
       navigate('/community/post/free');
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (message) {
+      setShowLittleText(true);
+      const timer = setTimeout(() => {
+        setMessage('');
+        setShowLittleText(false);
+      }, 1500);
+      return () => {
+        clearTimeout(timer);
+      };
+    } else {
+      setShowLittleText(false);
+    }
+  }, [message]);
 
   const loginMutation = useMutation(
     async () => {
@@ -81,13 +97,16 @@ const Login = () => {
         }}
         value={password}
       />
-      <LittleText text={message} />
       <LoginButton color='darkPurple' value='이메일로 계속하기' onClick={handleLogin} />
       <OrLineText text='또는' />
       <LoginButton color='white' value='구글계정으로 로그인' />
-      <Link to='/quiz'>
-        <LittleText text='아직 회원이 아니신가요? 3초 만에 가입하기' />
-      </Link>
+      {showLittleText ? (
+        <LittleText wiggle text={message} />
+      ) : (
+        <Link to='/quiz'>
+          <LittleText wiggle text='아직 회원이 아니신가요? 3초 만에 가입하기' />
+        </Link>
+      )}
     </LoginContainer>
   );
 };

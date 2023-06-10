@@ -66,4 +66,5 @@ const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
   border: 1px solid #424242;
   padding: 10px 21px 9px 21px;
+  margin-bottom: 1.5rem;
 `;
