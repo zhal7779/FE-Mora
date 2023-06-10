@@ -8,7 +8,7 @@ import RegisterQuestion from '../search/components/RegisterQuestion';
 import profileData from '../search/components/searchProfile.json';
 import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
-import postData from '../community/data/getResData';
+// import postData from '../community/data/getResData';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
 
@@ -17,7 +17,7 @@ const SearchPage = () => {
   const { state } = useLocation();
   const [searchKeyword, setSearchKeyword] = useState(state);
 
-  const handleSubSearch = (subResult) => {
+  const handleSubSearch = subResult => {
     setSearchKeyword(subResult);
   };
 
@@ -26,7 +26,7 @@ const SearchPage = () => {
   //menu === 3? 게시물
   //menu === 4? 레이서 Q&A
   const [menu, setMenu] = useState(1);
-  const handleMenuClick = (num) => {
+  const handleMenuClick = num => {
     setMenu(num);
   };
 
@@ -39,16 +39,28 @@ const SearchPage = () => {
       <Style.NavContainer>
         <Style.Content>
           <Style.SearchNav>
-            <Style.SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+            <Style.SearchNavItem
+              onClick={() => handleMenuClick(1)}
+              active={menu === 1}
+            >
               <p>전체</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+            <Style.SearchNavItem
+              onClick={() => handleMenuClick(2)}
+              active={menu === 2}
+            >
               <p>프로필</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+            <Style.SearchNavItem
+              onClick={() => handleMenuClick(3)}
+              active={menu === 3}
+            >
               <p>게시물</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
+            <Style.SearchNavItem
+              onClick={() => handleMenuClick(4)}
+              active={menu === 4}
+            >
               <p>레이서 Q&A</p>
             </Style.SearchNavItem>
           </Style.SearchNav>
@@ -60,7 +72,10 @@ const SearchPage = () => {
           {menu === 1 ? (
             <SearchPageWrapper>
               <div>
-                <SearchResultProfile data={slicePfofileData} receiveMenu={setMenu} />
+                <SearchResultProfile
+                  data={slicePfofileData}
+                  receiveMenu={setMenu}
+                />
                 <SearchResultPost data={slicePostData} receiveMenu={setMenu} />
                 <SearchResultQnA data={slicePostData} receiveMenu={setMenu} />
               </div>
