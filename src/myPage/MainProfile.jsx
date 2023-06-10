@@ -23,7 +23,7 @@ const MainProfile = ({ mainProfileData }) => {
     const url = 'http://15.164.221.244:5000/api/users/delete';
 
     const response = await fetch(url, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
@@ -45,11 +45,11 @@ const MainProfile = ({ mainProfileData }) => {
       console.log(error);
     }
   };
-
+  console.log(mainProfileData);
   return (
     <Style.introContainer>
       <div className='imgAndButtons'>
-        <img src={mainProfileData.img} alt='프로필'></img>
+        <img src={mainProfileData.userProfile.img_path} alt='프로필'></img>
         <div className='buttons-container'>
           <Style.ButtonLink to='/mypage/edit'>
             <Button color='darkPurple' value='수정하기' />
@@ -57,11 +57,18 @@ const MainProfile = ({ mainProfileData }) => {
           <Button color='white' value='탈퇴하기' onClick={openModal} />
         </div>
       </div>
-      <h3>{mainProfileData.name}</h3>
-      <h4>{`${mainProfileData.track} ${mainProfileData.phase}`}</h4>
-      <h5>{mainProfileData.position}</h5>
+      <h3>{mainProfileData.userName.name}</h3>
+      <h4>
+        {`${mainProfileData.userProfile.generation_id.split(' ')[0]} ${
+          mainProfileData.userProfile.generation_id.split(' ')[1]
+        }`}
+      </h4>
+      <h5>{mainProfileData.userProfile.position}</h5>
       <div className='intro-container'>
-        <p className='intro'>{mainProfileData.intro || ''}</p>
+        <p className='intro'>
+          {mainProfileData.userProfile.comment ||
+            '수정하기 버튼을 눌러 간단한 자기소개를 입력해주세요!'}
+        </p>
       </div>
 
       {showModal && (
