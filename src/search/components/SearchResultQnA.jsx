@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import * as Style from '../styledComponents/AddView';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import { KeywordHighlight } from './KeywordHighlight';
+import { useContext } from 'react';
+import { SearchContext } from '../context/SearchContext';
 
-const SearchResultQnA = ({ data, receiveMenu, keyword }) => {
+const SearchResultQnA = ({ data, receiveMenu }) => {
+  const keyword = useContext(SearchContext);
   const handleAllView = () => {
     receiveMenu(4);
   };

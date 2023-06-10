@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
+import { SearchContext } from '../context/SearchContext';
+import { useContext } from 'react';
 
-const SearchResultBar = ({ receiveMenu, handleSubSearch, keyword }) => {
+const SearchResultBar = ({ receiveMenu, handleSubSearch }) => {
+  const keyword = useContext(SearchContext);
   //검색창 input
   const [input, setInput] = useState(keyword);
   //검색결과

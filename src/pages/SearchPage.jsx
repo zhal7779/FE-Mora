@@ -10,6 +10,7 @@ import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
 import postData from '../community/data/getResData';
 import { useLocation } from 'react-router-dom';
+import { SearchContext } from '../search/context/SearchContext';
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
   const { state } = useLocation();
@@ -33,51 +34,35 @@ const SearchPage = () => {
   const slicePostData = postData.slice(0, 5);
 
   return (
-    <>
-      <SearchResultBar
-        receiveMenu={handleMenu}
-        handleSubSearch={handleSubSearch}
-        keyword={searchKeyword}
-      />
+    <SearchContext.Provider value={searchKeyword}>
+      <SearchResultBar receiveMenu={handleMenu} handleSubSearch={handleSubSearch} />
       <Container>
         {menu === 1 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
             <div>
-              <SearchResultProfile
-                data={slicePfofileData}
-                receiveMenu={handleMenu}
-                keyword={searchKeyword}
-              />
-              <SearchResultPost
-                data={slicePostData}
-                receiveMenu={handleMenu}
-                keyword={searchKeyword}
-              />
-              <SearchResultQnA
-                data={slicePostData}
-                receiveMenu={handleMenu}
-                keyword={searchKeyword}
-              />
+              <SearchResultProfile data={slicePfofileData} receiveMenu={handleMenu} />
+              <SearchResultPost data={slicePostData} receiveMenu={handleMenu} />
+              <SearchResultQnA data={slicePostData} receiveMenu={handleMenu} />
             </div>
             <RankingContent />
           </Wrapper>
         ) : menu === 2 ? (
           <ProfileWrapper style={{ marginTop: '22rem' }}>
-            <SearchResultProfile data={profileData} keyword={searchKeyword} />
+            <SearchResultProfile data={profileData} />
           </ProfileWrapper>
         ) : menu === 3 ? (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultPost data={postData} keyword={searchKeyword} />
+            <SearchResultPost data={postData} />
             <RankingContent />
           </Wrapper>
         ) : (
           <Wrapper style={{ marginTop: '22rem' }}>
-            <SearchResultQnA data={postData} keyword={searchKeyword} />
+            <SearchResultQnA data={postData} />
             <RegisterQuestion />
           </Wrapper>
         )}
       </Container>
-    </>
+    </SearchContext.Provider>
   );
 };
 export default SearchPage;
