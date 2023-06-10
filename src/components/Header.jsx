@@ -22,7 +22,7 @@ const Header = () => {
   const [onSearch, setOnSearch] = useState(false);
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
-    setMenu(5);
+    setMenu(4);
   };
 
   const [onModal, setOnModal] = useState(false);
