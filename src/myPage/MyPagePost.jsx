@@ -8,10 +8,10 @@ const MyPostList = ({ mainProfileData }) => {
         {myPostListData.map((item, index) => (
           <li key={index}>
             <div className='profile-container'>
-              <img src={mainProfileData.userProfile.img_path} alt='프로필'></img>
+              <img src={mainProfileData.UserDetail.img_path} alt='프로필'></img>
               <div className='profile-info'>
-                <h3>{mainProfileData.userName.name}</h3>
-                <p>{mainProfileData.userProfile.position}</p>
+                <h3>{mainProfileData.name}</h3>
+                <p>{mainProfileData.UserDetail.position}</p>
               </div>
             </div>
             <div className='content-container'>

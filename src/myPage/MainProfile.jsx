@@ -19,6 +19,7 @@ const MainProfile = ({ mainProfileData }) => {
     setShowModal(false);
   };
 
+  // 유저 탈퇴 DELETE 뮤테이션 선언
   const deleteAccountMutation = useMutation(async () => {
     const url = 'http://15.164.221.244:5000/api/users/delete';
 
@@ -35,6 +36,7 @@ const MainProfile = ({ mainProfileData }) => {
     return responseData;
   });
 
+  // 위에 선언한 DELETE 뮤테이션 실행
   const handleDeleteAccount = async () => {
     try {
       await deleteAccountMutation.mutateAsync();
@@ -46,22 +48,24 @@ const MainProfile = ({ mainProfileData }) => {
     }
   };
 
+  // 유저 토큰이 없으면 로그인 페이지로
   useEffect(() => {
     if (!sessionStorage.getItem('userToken')) {
       navigate('/login');
     }
   }, []);
 
+  console.log(mainProfileData);
+
+  // 유저 데이터를 늦게 가져오면 생기는 이미지 없음 에러 방지
   if (!mainProfileData) {
     return null;
   }
 
-  console.log(mainProfileData);
-
   return (
     <Style.introContainer>
       <div className='imgAndButtons'>
-        <img src={mainProfileData.userProfile.img_path} alt='프로필'></img>
+        <img src={mainProfileData.UserDetail.img_path} alt='프로필'></img>
         <div className='buttons-container'>
           <Style.ButtonLink to='/mypage/edit'>
             <Button color='darkPurple' value='수정하기' />
@@ -69,16 +73,16 @@ const MainProfile = ({ mainProfileData }) => {
           <Button color='white' value='탈퇴하기' onClick={openModal} />
         </div>
       </div>
-      <h3>{mainProfileData.userName.name}</h3>
+      <h3>{mainProfileData.name}</h3>
       <h4>
-        {`${mainProfileData.userProfile.generation_id.split(' ')[0]} ${
-          mainProfileData.userProfile.generation_id.split(' ')[1]
+        {`${mainProfileData.UserDetail.generation_id.split(' ')[1]} ${
+          mainProfileData.UserDetail.generation_id.split(' ')[0]
         }`}
       </h4>
-      <h5>{mainProfileData.userProfile.position}</h5>
+      <h5>{mainProfileData.UserDetail.position}</h5>
       <div className='intro-container'>
         <p className='intro'>
-          {mainProfileData.userProfile.comment ||
+          {mainProfileData.UserDetail.comment ||
             '수정하기 버튼을 눌러 간단한 자기소개를 입력해주세요!'}
         </p>
       </div>

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
-import optionsData from '../myPage/optionsData';
+import optionsData from '../myPage/data/optionsData';
 
 const MyPageEdit = () => {
   const [companyName, setCompanyName] = useState('');
@@ -14,9 +15,21 @@ const MyPageEdit = () => {
   const [startMonth, setStartMonth] = useState('');
   const [endYear, setEndYear] = useState('');
   const [endMonth, setEndMonth] = useState('');
-  const [intro, setIntro] = useState(''); // 삭제 고려중
+  const [content, setContent] = useState('');
   const [isCurrentlyEmployed, setIsCurrentlyEmployed] = useState(false);
   const navigate = useNavigate();
+
+  // useMutation POST 요청 선언
+  const createCareerMutation = useMutation((careerData) =>
+    fetch('http://15.164.221.244:5000/api/careers/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(careerData),
+    })
+  );
 
   const handleStartYearChange = (e) => {
     e.preventDefault();
@@ -48,6 +61,28 @@ const MyPageEdit = () => {
       setEndYear('');
       setEndMonth('');
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const hireDate = `${startYear.replace('년', '')}-${startMonth
+      .replace('월', '')
+      .padStart(2, '0')}`;
+
+    let resignDate = '';
+    if (!isCurrentlyEmployed) {
+      resignDate = `${endYear.replace('년', '')}-${endMonth.replace('월', '').padStart(2, '0')}`;
+    }
+
+    const careerData = {
+      company_name: companyName,
+      position,
+      hire_date: hireDate,
+      resign_date: resignDate,
+      content,
+    };
+    console.log(careerData);
+    createCareerMutation.mutate(careerData);
   };
 
   return (
@@ -125,9 +160,9 @@ const MyPageEdit = () => {
       <IntroTextContainter
         onChange={(e) => {
           e.preventDefault();
-          setIntro(e.target.value);
+          setContent(e.target.value);
         }}
-        value={intro}
+        value={content}
       >
         <h3>어떤 일을 했나요?</h3>
         <textarea placeholder='담당한 업무, 프로젝트 등을 소개해주세요'></textarea>
@@ -137,8 +172,10 @@ const MyPageEdit = () => {
         <Button
           color='darkPurple'
           value='수정완료'
-          onClick={() => {
-            navigate('/mypage');
+          onClick={(e) => {
+            handleSubmit(e);
+            console.log();
+            // navigate('/mypage');
           }}
         />
         <Button

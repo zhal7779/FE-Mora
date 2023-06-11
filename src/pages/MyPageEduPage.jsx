@@ -5,7 +5,7 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
-import optionsData from '../myPage/optionsData';
+import optionsData from '../myPage/data/optionsData';
 
 const MyPageEdit = () => {
   const [eduName, setEduName] = useState('');
@@ -14,7 +14,7 @@ const MyPageEdit = () => {
   const [startMonth, setStartMonth] = useState('');
   const [endYear, setEndYear] = useState('');
   const [endMonth, setEndMonth] = useState('');
-  const [intro, setIntro] = useState(''); // 삭제 고려중
+  const [intro, setIntro] = useState('');
   const [isCurrentlyStudying, setIsCurrentlyStudying] = useState(false);
   const navigate = useNavigate();
 

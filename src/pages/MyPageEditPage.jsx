@@ -14,28 +14,8 @@ const MyPageEdit = () => {
   const [intro, setIntro] = useState('');
   const [phase, setPhase] = useState('');
   const [track, setTrack] = useState('');
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
-  );
-
-  const updateProfileMutation = useMutation((updatedData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-      body: JSON.stringify(updatedData),
-    }).then((response) => response.json())
-  );
 
   const handleTrackChange = (e) => {
     const selectedTrack = e.target.value;
@@ -47,6 +27,16 @@ const MyPageEdit = () => {
     setPhase(selectedPhase);
   };
 
+  // 기존 내 정보 가져오기
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch('http://15.164.221.244:5000/api/users/mypage', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
+  );
+
+  // 프로필 이미지 POST 뮤테이션 선언
   const uploadImageMutation = useMutation((formData) =>
     fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
       method: 'POST',
@@ -54,6 +44,19 @@ const MyPageEdit = () => {
     }).then((response) => response.json())
   );
 
+  // 내 정보 updatedData 로 수정하기
+  const updateProfileMutation = useMutation((updatedData) =>
+    fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(updatedData),
+    }).then((response) => response.json())
+  );
+
+  // formData 로 이미지 업로드하고 이미지 링크 받기
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -73,6 +76,7 @@ const MyPageEdit = () => {
     }
   };
 
+  // 입력값이 담긴 state 를 모두 updatedData 객체에 담아 post 요청 보내기
   const handleSubmit = () => {
     const updatedData = {
       userName,
@@ -107,7 +111,7 @@ const MyPageEdit = () => {
   return (
     <LoginContainer>
       <ImageContainer>
-        <ProfileImg src={userImg || mainProfileData.userProfile.img_path} alt='프로필'></ProfileImg>
+        <ProfileImg src={userImg || mainProfileData.UserDetail.img_path} alt='프로필'></ProfileImg>
         {userImg === '' ? (
           <>
             <label htmlFor='imageUpload'>
@@ -124,7 +128,7 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='이름'
         type='text'
-        placeholder={mainProfileData.userName.name}
+        placeholder={mainProfileData.name}
         name='userName'
         onChange={(e) => setUserName(e.target.value)}
         value={userName}
@@ -152,7 +156,7 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='직함'
         type='text'
-        placeholder={mainProfileData.userProfile.position}
+        placeholder={mainProfileData.UserDetail.position}
         name='position'
         onChange={(e) => setPosition(e.target.value)}
         value={position}
@@ -160,7 +164,7 @@ const MyPageEdit = () => {
       <IntroTextContainter onChange={(e) => setIntro(e.target.value)} value={intro}>
         <h3>자기소개</h3>
         <textarea
-          placeholder={mainProfileData.userProfile.comment || '자기소개를 입력해주세요.'}
+          placeholder={mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'}
         ></textarea>
       </IntroTextContainter>
       <ButtonContainer>
