@@ -7,6 +7,17 @@ import moment from 'moment';
 import 'moment/locale/ko';
 
 const MyCalendar = () => {
+  useEffect(() => {
+    fetch('http://15.164.221.244:5000/api/plans/ym/2023-06', {
+      headers: {
+        'Content-Type': 'Application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    })
+      .then((res) => console.log(res.json()))
+      .catch((err) => console.log(err));
+  }, []);
+
   //한국어 설정
   moment.locale('ko');
   const views = {};

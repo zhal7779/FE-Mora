@@ -14,7 +14,7 @@ const MyPage = () => {
   };
 
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
+    fetch(`${process.env.REACT_APP_URL}/api/users/mypage`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
