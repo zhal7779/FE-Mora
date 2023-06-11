@@ -8,6 +8,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import { useQuery } from 'react-query';
 import { fetchSchedule } from '../api/scheduleApi';
+import scheduleData from './schedule.json';
 
 const MyCalendar = () => {
   //모달 open,close
@@ -72,14 +73,21 @@ const MyCalendar = () => {
   };
 
   const { data, isLoading, isError } = useQuery('schedule', () => fetchSchedule(selectedYearMonth));
-  console.log(data);
-  // if (isLoading) {
-  //   return <span>Loading...</span>;
-  // }
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
 
-  // if (isError) {
-  //   return <span>Error: {isError.message}</span>;
-  // }
+  if (isError) {
+    return <span>Error: {isError.message}</span>;
+  }
+
+  // 받아온 데이터 풀캘린더 event 형식으로 변환
+  const eventData = scheduleData.map((item) => ({
+    title: item.title,
+    start: item.start_date,
+    end: item.end_date,
+  }));
+  console.log(eventData);
 
   //한국어 설정
   moment.locale('ko');
@@ -104,10 +112,7 @@ const MyCalendar = () => {
         locale='ko'
         views={views}
         eventContent={renderEventContent}
-        events={[
-          { title: '2차 프로젝트 마감일', date: '2023-06-16' },
-          { title: '2차 프로젝트 발표일', date: '2023-06-17' },
-        ]}
+        events={eventData}
         customButtons={{
           prev: {
             click: () => handleButtonClick('prev'),
