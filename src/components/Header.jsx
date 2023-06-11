@@ -79,7 +79,7 @@ const Header = () => {
               <div>
                 <BellIcon onClick={() => handleModalClick(true)} />
               </div>
-              <Link to='/mypage'>
+              <Link to={sessionStorage.getItem('userToken') ? '/mypage' : '/login'}>
                 <div onClick={() => handleMenuClick(5)}>
                   <ImageIcon src={DefaultImg}></ImageIcon>
                 </div>
