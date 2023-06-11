@@ -44,7 +44,6 @@ const MyCalendar = () => {
   const handleButtonClick = (buttonType) => {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
-
       switch (buttonType) {
         case 'prev':
           calendarApi.prev();
