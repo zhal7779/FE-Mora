@@ -70,6 +70,7 @@ const MyCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
+    handleClickOpen();
   };
 
   const { data, isLoading, isError } = useQuery('schedule', () => fetchSchedule(selectedYearMonth));
@@ -87,7 +88,6 @@ const MyCalendar = () => {
     start: item.start_date,
     end: item.end_date,
   }));
-  console.log(eventData);
 
   //한국어 설정
   moment.locale('ko');
@@ -95,7 +95,7 @@ const MyCalendar = () => {
   //이벤트 컬러 변경 함수
   const renderEventContent = (eventInfo) => {
     return (
-      <Style.EventColor onClick={handleClickOpen}>
+      <Style.EventColor>
         <i className='event_text'>{eventInfo.event.title}</i>
       </Style.EventColor>
     );
@@ -103,7 +103,7 @@ const MyCalendar = () => {
 
   return (
     <Style.Container>
-      {onModal ? <CalendarModal onModal={setOnModal} /> : ''}
+      {onModal ? <CalendarModal onModal={setOnModal} date={selectedDate} /> : ''}
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         ref={calendarRef}

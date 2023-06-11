@@ -2,10 +2,14 @@ import React from 'react';
 import { ReactComponent as LeftIcon } from '../../assets/icons/fi_chevron-left.svg';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import * as Style from '../styleComponents/CalendarModal';
-const CalendarModal = ({ onModal }) => {
+const CalendarModal = ({ onModal, date }) => {
   const handleClickClose = () => {
     onModal(false);
   };
+  const year = date.slice(0, 4);
+  const month = date.slice(5, 7);
+  const day = date.slice(8, 10);
+
   const data = [
     {
       title: '직무멘토링 강의 자료 업로드 안내 & 만족도 조사',
@@ -40,7 +44,9 @@ const CalendarModal = ({ onModal }) => {
             <span>
               <LeftIcon stroke='#616161' />
             </span>
-            <h5>2023년 6월 7일</h5>
+            <h5>
+              {year}년 {month}월 {day}일
+            </h5>
             <span>
               <RightIcon stroke='#616161' />
             </span>
