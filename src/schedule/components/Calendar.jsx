@@ -107,6 +107,8 @@ const MyCalendar = () => {
         plugins={[dayGridPlugin, interactionPlugin]}
         ref={calendarRef}
         initialView='dayGridMonth'
+        //한글 변환시 1일, 2일,3일 => 1,2,3으로 바꿈
+        dayCellContent={({ date }) => <a className='fc-daygrid-day-number'>{date.getDate()}</a>}
         dateClick={handleDateClick}
         locale='ko'
         views={views}

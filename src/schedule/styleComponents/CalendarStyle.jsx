@@ -49,6 +49,14 @@ export const Container = styled.section`
       color: #616161;
     }
   }
+  //cell 커서
+  .fc .fc-daygrid-day-frame {
+    cursor: pointer;
+  }
+  //cell 폰트 사이즈 변경
+  .fc-daygrid-day-number {
+    font-size: 1.05rem;
+  }
 
   //이벤트
   .fc-event {
@@ -56,7 +64,6 @@ export const Container = styled.section`
   }
 `;
 export const EventColor = styled.div`
-  cursor: pointer;
   background: #7353ea;
   font-weight: 500;
   padding: 0.5rem 0;
