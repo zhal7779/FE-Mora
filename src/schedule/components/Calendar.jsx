@@ -16,13 +16,6 @@ const MyCalendar = () => {
     setOnModal(true);
   };
 
-  // 날짜 클릭 이벤트 핸들러, date cell에서 클릭한 날짜를 가져온다.
-  // ex) 2023-06-12
-  const [selectedDate, setSelectedDate] = useState(null);
-  const handleDateClick = (info) => {
-    setSelectedDate(info.dateStr);
-  };
-
   const [selectedYearMonth, setSelectedYearMonth] = useState(null);
 
   //prev,next 클릭시 추출한 날짜 변환 함수
@@ -35,6 +28,14 @@ const MyCalendar = () => {
     return resultDate;
     // console.log(resultDate);
   };
+
+  // 처음 렌더링시 현재 날짜 추출
+  useEffect(() => {
+    const currentDate = new Date();
+    console.log(currentDate);
+    const resultDate = dateConversion(currentDate);
+    setSelectedYearMonth(resultDate);
+  }, []);
 
   //prev 버튼 날짜 추출
   const calendarRef = useRef();
@@ -65,6 +66,14 @@ const MyCalendar = () => {
     }
   };
   console.log(selectedYearMonth);
+
+  // 날짜 클릭 이벤트 핸들러, date cell에서 클릭한 날짜를 가져온다.
+  // ex) 2023-06-12
+  const [selectedDate, setSelectedDate] = useState(null);
+  const handleDateClick = (info) => {
+    setSelectedDate(info.dateStr);
+  };
+
   const { data, isLoading, isError } = useQuery('schedule', fetchSchedule);
 
   if (isLoading) {
