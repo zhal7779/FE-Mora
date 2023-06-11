@@ -3,22 +3,12 @@ import * as Style from '../styleComponents/CalendarStyle';
 import CalendarModal from './CalendarModal';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useQuery } from 'react-query';
-import interactionPlugin from '@fullcalendar/interaction';
+import { fetchSchedule } from '../api/scheduleApi';
 
-const fetchSchedule = async () => {
-  const response = await fetch(`${process.env.REACT_APP_URL}/api/plans/ym/2023-06`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-    },
-  });
-  const data = await response.json();
-  return data;
-};
 const MyCalendar = () => {
   //모달 open,close
   const [onModal, setOnModal] = useState(false);
@@ -26,28 +16,55 @@ const MyCalendar = () => {
     setOnModal(true);
   };
 
-  // 날짜 클릭 이벤트 핸들러, 클릭한 날짜를 가져온다.
+  // 날짜 클릭 이벤트 핸들러, date cell에서 클릭한 날짜를 가져온다.
   // ex) 2023-06-12
   const [selectedDate, setSelectedDate] = useState(null);
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
   };
-  // console.log(selectedDate);
+
+  const [selectedYearMonth, setSelectedYearMonth] = useState(null);
+
+  //prev,next 클릭시 추출한 날짜 변환 함수
+  // return  => 2023-06
+  const dateConversion = (currentDate) => {
+    const year = new Date(currentDate).getFullYear();
+    let month = new Date(currentDate).getMonth() + 1;
+    month = month <= 9 ? '0' + month : month;
+    const resultDate = `${year}-${month}`;
+    return resultDate;
+    // console.log(resultDate);
+  };
+
+  //prev 버튼 날짜 추출
   const calendarRef = useRef();
-  const handlePrevButtonClick = () => {
-    const calendarApi = calendarRef.current.getApi();
-    calendarApi.prev();
-    const currentDate = calendarApi.getDate();
-    console.log(currentDate);
-  };
+  // buttonType === prev => 이전달, 이전달 date 추출
+  // buttonType === next 버튼 => 다음달, 다음달 date 추출
+  // buttonType === today 버튼 => 현재달, 오늘 date 추출
+  const handleButtonClick = (buttonType) => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
 
-  const handleNextButtonClick = () => {
-    const calendarApi = calendarRef.current.getApi();
-    calendarApi.next();
-    const currentDate = calendarApi.getDate();
-    console.log(currentDate);
+      switch (buttonType) {
+        case 'prev':
+          calendarApi.prev();
+          break;
+        case 'next':
+          calendarApi.next();
+          break;
+        case 'today':
+          calendarApi.today();
+          break;
+        default:
+          break;
+      }
+      // 추출한 날짜를 dateConversion 함수에 담아 date 변환
+      const currentDate = calendarApi.getDate();
+      const resultDate = dateConversion(currentDate);
+      setSelectedYearMonth(resultDate);
+    }
   };
-
+  console.log(selectedYearMonth);
   const { data, isLoading, isError } = useQuery('schedule', fetchSchedule);
 
   if (isLoading) {
@@ -87,12 +104,14 @@ const MyCalendar = () => {
         ]}
         customButtons={{
           prev: {
-            text: '이전',
-            click: handlePrevButtonClick,
+            click: () => handleButtonClick('prev'),
           },
           next: {
-            text: '다음',
-            click: handleNextButtonClick,
+            click: () => handleButtonClick('next'),
+          },
+          today: {
+            text: 'Today',
+            click: () => handleButtonClick('today'),
           },
         }}
       />
