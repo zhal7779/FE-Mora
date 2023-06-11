@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginContainer from '../logIn/LogInContainer';
 import Headline from '../logIn/Headline';
 import LoginInput from '../logIn/LogInInput';
@@ -108,13 +108,9 @@ const Signin = () => {
       {showLittleText ? (
         <LittleText wiggle text={errorMessage} />
       ) : (
-        <LittleText
-          wiggle
-          text='이미 회원이신가요? 로그인하기'
-          onClick={() => {
-            navigate('/login');
-          }}
-        />
+        <Link to='/login'>
+          <LittleText wiggle text='이미 회원이신가요? 로그인하기' />
+        </Link>
       )}
     </LoginContainer>
   );
