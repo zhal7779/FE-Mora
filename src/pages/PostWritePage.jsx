@@ -8,8 +8,10 @@ const PostWritePage = () => {
     category: '',
     title: '',
     content: '',
-    hashtags: []
+    hashtags: [],
+    images: []
   });
+  const [previewImg, setPreviewImg] = useState([]);
 
   return (
     <>
@@ -17,11 +19,14 @@ const PostWritePage = () => {
         formData={formData}
         showPostImage={showPostImage}
         setShowPostImage={setShowPostImage}
+        previewImg={previewImg}
       />
       <PostWrite
         formData={formData}
         setFormData={setFormData}
         showPostImage={showPostImage}
+        previewImg={previewImg}
+        setPreviewImg={setPreviewImg}
       />
     </>
   );

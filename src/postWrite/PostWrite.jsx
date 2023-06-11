@@ -1,5 +1,5 @@
 import * as Style from './styledComponents/PostWriteStyle';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { categories } from '../community/categoryData';
 import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
@@ -7,11 +7,17 @@ import IconImageDelete from '../assets/icons/icon-delete-image.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 import { useMutation } from 'react-query';
 import { registerPostImg } from './service/postWriteService';
+const BASE_URL = process.env.REACT_APP_URL;
 
-const PostWrite = ({ showPostImage, formData, setFormData }) => {
+const PostWrite = ({
+  showPostImage,
+  formData,
+  setFormData,
+  previewImg,
+  setPreviewImg
+}) => {
   const [showCategory, setShowCategory] = useState(false);
   const [imageData, setImageData] = useState([]);
-  const [previewImg, setPreviewImg] = useState([]);
 
   // 카테고리 선택
   const handleSelectCategory = e => {
@@ -47,8 +53,13 @@ const PostWrite = ({ showPostImage, formData, setFormData }) => {
 
   // 이미지 등록
   const { mutate } = useMutation(registerPostImg, {
-    onSuccess: () => {
+    onSuccess: data => {
       console.log('게시글 이미지 등록에 성공했습니다.');
+      console.log(data.file_name);
+      setPreviewImg(prevImages => {
+        const newImages = [...prevImages, data.file_name];
+        return newImages;
+      });
     },
     onError: error => {
       console.error(error);
@@ -57,16 +68,18 @@ const PostWrite = ({ showPostImage, formData, setFormData }) => {
 
   const handleAddImage = e => {
     const file = e.target.files;
-    const newImages = Array.from(file);
     setImageData(file[0]);
-    setPreviewImg(prevImages => [...prevImages, ...newImages]);
-
-    try {
-      mutate(imageData);
-    } catch (error) {
-      console.error(error);
-    }
   };
+
+  useEffect(() => {
+    if (imageData) {
+      try {
+        mutate(imageData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [imageData]);
 
   // 이미지 삭제
   const handleImageDelete = index => {
@@ -133,7 +146,10 @@ const PostWrite = ({ showPostImage, formData, setFormData }) => {
           {previewImg.length > 0 &&
             previewImg.map((image, index) => (
               <div className="file-upload-preview" key={index}>
-                <img src={URL.createObjectURL(image)} alt={image.name} />
+                <img
+                  src={`${BASE_URL}${image.file_name}`}
+                  alt={image.origin_name}
+                />
                 <button
                   className="delete-btn"
                   onClick={() => handleImageDelete(index)}

@@ -1,8 +1,8 @@
 import { createPost, createPostImg } from '../api/apis';
 
-export const registerPost = async (postData) => {
+export const registerPost = async (postData, previewImg) => {
   try {
-    const data = await createPost(postData);
+    const data = await createPost(postData, previewImg);
     return data;
   } catch (error) {
     throw new Error(`${error.message}`);

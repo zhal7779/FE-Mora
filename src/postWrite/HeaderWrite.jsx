@@ -6,7 +6,12 @@ import Button from '../components/Button';
 import { useMutation, useQueryClient } from 'react-query';
 import { registerPost } from './service/postWriteService';
 
-const WriteHeader = ({ showPostImage, setShowPostImage, formData }) => {
+const WriteHeader = ({
+  showPostImage,
+  setShowPostImage,
+  formData,
+  previewImg
+}) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -22,9 +27,10 @@ const WriteHeader = ({ showPostImage, setShowPostImage, formData }) => {
     showPostImage ? setShowPostImage(false) : setShowPostImage(true);
   };
 
-  const { mutate } = useMutation(registerPost, {
-    onSuccess: () => {
+  const { mutate } = useMutation(data => registerPost(data, previewImg), {
+    onSuccess: data => {
       queryClient.invalidateQueries('posts');
+      console.log(data);
       console.log('게시글 내용 등록에 성공했습니다.');
     },
     onError: error => {
@@ -32,7 +38,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, formData }) => {
     }
   });
 
-  const handleRegisterPost = async () => {
+  const handleRegisterPost = () => {
     const { category, title, content } = formData;
 
     try {
@@ -49,10 +55,11 @@ const WriteHeader = ({ showPostImage, setShowPostImage, formData }) => {
         const check = window.confirm('게시글을 등록하시겠습니까?');
         if (!check) return;
       }
+      console.log(previewImg);
 
-      const data = await mutate(formData);
-      console.log(data);
-      navigate(`/community/${data.id}`);
+      mutate(formData);
+      // console.log(data);
+      // navigate(`/community/${data.id}`);
     } catch (error) {
       console.error(error);
     }
