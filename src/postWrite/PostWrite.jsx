@@ -1,57 +1,84 @@
 import * as Style from './styledComponents/PostWriteStyle';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { categories } from '../community/categoryData';
 import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
 import IconImageDelete from '../assets/icons/icon-delete-image.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
+import { useMutation } from 'react-query';
+import { registerPostImg } from './service/postWriteService';
 
-const REACT_APP_URL = process.env.REACT_APP_URL;
-
-const PostWrite = ({ showPostImage }) => {
+const PostWrite = ({ showPostImage, formData, setFormData }) => {
   const [showCategory, setShowCategory] = useState(false);
-  const [formData, setFormData] = useState({
-    category: '카테고리 선택',
-    title: '',
-    content: ''
-  });
   const [imageData, setImageData] = useState([]);
+  const [previewImg, setPreviewImg] = useState([]);
 
+  // 카테고리 선택
+  const handleSelectCategory = e => {
+    setFormData({ ...formData, category: e.target.getAttribute('name') });
+    setShowCategory(false);
+  };
+
+  // 제목 작성
+  const handleWriteTitle = e => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 100) {
+      setFormData({ ...formData, title: inputValue });
+    } else {
+      alert('제목을 100자 이하로 작성해주세요!');
+    }
+  };
+
+  // 본문 작성
+  const handleWriteContent = e => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 500) {
+      setFormData({ ...formData, content: inputValue });
+    } else {
+      alert('본문을 500자 이하로 작성해주세요!');
+    }
+  };
+
+  // textarea 높이 변경
   const handleChange = e => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
-  const handleSelectCategory = e => {
-    setFormData({ ...formData, category: e.target.innerText });
-    setShowCategory(false);
-  };
+  // 이미지 등록
+  const { mutate } = useMutation(registerPostImg, {
+    onSuccess: () => {
+      console.log('게시글 이미지 등록에 성공했습니다.');
+    },
+    onError: error => {
+      console.error(error);
+    }
+  });
 
   const handleAddImage = e => {
-    const files = e.target.files;
-    const selectedImages = [...files];
+    const file = e.target.files;
+    const newImages = Array.from(file);
+    setImageData(file[0]);
+    setPreviewImg(prevImages => [...prevImages, ...newImages]);
 
-    // const existingCheck = selectedImages.filter(selectedImage => {
-    //   imageData.some(
-    //     existingImage => existingImage.name === selectedImage.name
-    //   );
-    // });
-
-    // if (existingCheck.length > 0) {
-    //   alert('이미 선택한 이미지입니다!');
-    //   return;
-    // }
-
-    setImageData(prevImageData => [...prevImageData, ...selectedImages]);
+    try {
+      mutate(imageData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleImageDelete = imageName => {
+  // 이미지 삭제
+  const handleImageDelete = index => {
+    setPreviewImg(prevImages => {
+      const updatedImages = [...prevImages];
+      updatedImages.splice(index, 1);
+      return updatedImages;
+    });
     setImageData(prevImageData => {
-      const updatedImageData = prevImageData.filter(
-        image => image.name !== imageName
-      );
-      return [...updatedImageData];
+      const updatedImageData = [...prevImageData];
+      updatedImageData.splice(index, 1);
+      return updatedImageData;
     });
   };
 
@@ -63,7 +90,10 @@ const PostWrite = ({ showPostImage }) => {
             className="select-category-btn"
             onClick={() => setShowCategory(!showCategory)}
           >
-            {formData.category}
+            {formData.category
+              ? categories.find(category => category.id === formData.category)
+                  .name
+              : '카테고리 선택'}
             {showCategory ? (
               <img src={IconUp} alt="카테고리 목록보기" />
             ) : (
@@ -75,6 +105,7 @@ const PostWrite = ({ showPostImage }) => {
               <li
                 key={category.name}
                 onClick={handleSelectCategory}
+                name={category.id}
                 className={formData.category === category.name ? 'active' : ''}
               >
                 <img src={category.icon} alt="카테고리 아이콘" />
@@ -88,27 +119,24 @@ const PostWrite = ({ showPostImage }) => {
           id="title"
           rows="1"
           placeholder="제목을 입력해주세요"
-          onChange={handleChange}
+          onChange={(handleChange, handleWriteTitle)}
         ></textarea>
       </div>
       <textarea
         name="content"
         id="content"
         placeholder="글을 작성해서 레이서 동료들과 생각을 공유해보세요! "
-        onChange={handleChange}
+        onChange={(handleChange, handleWriteContent)}
       ></textarea>
       {showPostImage && (
         <div className="file-upload">
-          {imageData.length > 0 &&
-            imageData.map(image => (
-              <div
-                className="file-upload-preview"
-                key={image.name + image.size}
-              >
+          {previewImg.length > 0 &&
+            previewImg.map((image, index) => (
+              <div className="file-upload-preview" key={index}>
                 <img src={URL.createObjectURL(image)} alt={image.name} />
                 <button
                   className="delete-btn"
-                  onClick={() => handleImageDelete(image.name)}
+                  onClick={() => handleImageDelete(index)}
                 >
                   <img src={IconImageDelete} alt="이미지 삭제" />
                 </button>
@@ -121,7 +149,7 @@ const PostWrite = ({ showPostImage }) => {
               id="file"
               multiple
               accept="image/*"
-              onChange={handleAddImage}
+              onChange={e => handleAddImage(e)}
             />
             <img src={IconAddImage} alt="" />
             사진 추가

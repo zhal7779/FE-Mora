@@ -3,7 +3,7 @@ const getUser = async () => {
   return data;
 };
 
-const response = await fetch('http://15.164.221.244:5000/api/notice', {
+const response = await fetch('http://15.164.221.244:5000/api/Notification', {
   method: 'POST',
   headers: {
     Authorization:

@@ -50,6 +50,7 @@ export const CommentContainer = styled.div`
         position: relative;
 
         padding: 0 16px 16px;
+        margin-bottom: 20px;
         background-color: #d7e1ee24;
         border-radius: 4px;
 
@@ -64,6 +65,7 @@ export const CommentContainer = styled.div`
             height: 36px;
             border-radius: 50%;
             background-color: #eee;
+            overflow: hidden;
 
             img {
               width: 100%;
@@ -169,5 +171,25 @@ export const CommentContainer = styled.div`
         }
       }
     }
+
+    .no-comment {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-height: 120px;
+      font-size: 1.5rem;
+      color: #616161;
+      background-color: #d7e1ee24;
+    }
   }
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 20px 0;
+  font-size: 1.6rem;
 `;

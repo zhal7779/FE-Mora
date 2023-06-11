@@ -1,19 +1,52 @@
 import * as Style from './styledComponents/PostCommentStyle';
 import Button from '../components/Button';
 import IconMore from '../assets/icons/icon-more.svg';
+import formatTime from '../community/utils/formatTime';
 import { useState } from 'react';
+import { getComment } from './service/postDetailService';
+import { useQuery, useMutation } from 'react-query';
+import { registerComment } from './service/postDetailService';
 
-const REACT_APP_URL = process.env.REACT_APP_URL;
-const url = `${REACT_APP_URL}/api/v1/comment`;
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBhY2JlMzAwLTI5YWYtNDY2MS05MDQxLTBlMmM3ZjgyYjA0ZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg2MTQ3MjM2LCJleHAiOjE2ODYxNTA4MzZ9.k-UYKqeoHK1Q6Lg91M0sdUKdaUqhzVHWYeY7joOtOAE';
+const PostComment = ({ postId }) => {
+  const [commentOption, setCommentOption] = useState(null);
+  const { status, data, error } = useQuery(['comment', postId], () =>
+    getComment(postId)
+  );
+  const [commentData, setCommentData] = useState('');
 
-const PostComment = () => {
-  const [commentOption, setCommentOption] = useState(false);
+  const { mutate } = useMutation(registerComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+      console.log('댓글 등록에 성공했습니다.');
+    },
+    onError: error => {
+      console.error(error);
+    }
+  });
+
+  if (status === 'loading') {
+    return <Style.Status>Loading...⏳</Style.Status>;
+  }
+
+  if (status === 'error') {
+    return <Style.Status>{error.message}⚠️</Style.Status>;
+  }
 
   const handleChange = e => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
+  const handleWriteComment = e => {
+    setCommentData(e.target.value);
+  };
+
+  const handleRegisterComment = async () => {
+    try {
+      await mutate(postId, commentData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -25,42 +58,64 @@ const PostComment = () => {
             name="comment"
             id="comment"
             placeholder="댓글을 남겨주세요."
-            onChange={handleChange}
+            onChange={(handleChange, handleWriteComment)}
           ></textarea>
-          <Button value="등록" color="darkPurple" />
+          <Button
+            value="등록"
+            color="darkPurple"
+            onClick={handleRegisterComment}
+          />
         </div>
       </div>
       <div className="comment-content">
         <h3>댓글👀</h3>
-        <ul className="comment-content-list">
-          <li>
-            <div className="writer">
-              <div className="writer-img">{/* <img src={} alt=""/> */}</div>
-              <div className="writer-info">
-                <p className="writer-info-name">김코딩</p>
-                <div>
-                  <p className="writer-info-position">레이서</p>
-                  <p className="writer-info-time">5분전</p>
+        {data.length > 0 ? (
+          <ul className="comment-content-list">
+            {data.map((comment, index) => (
+              <li key={index}>
+                <div className="writer">
+                  <div className="writer-img">
+                    <img
+                      src={comment.user_detail.img_path}
+                      alt="사용자 프로필 이미지"
+                    />
+                  </div>
+                  <div className="writer-info">
+                    <p className="writer-info-name">{comment.User.name}</p>
+                    <div>
+                      <p className="writer-info-position">
+                        {comment.user_detail.position}
+                      </p>
+                      <p className="writer-info-time">
+                        {formatTime(comment.createdAt)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <p className="comment-content">
-              전 걸그룹 노래 주로 듣습니다. 기분이 좋아지고 신이 납니다.
-              뉴진스의 하입보이 추천하고 갑니다~ 💃
-            </p>
-            <div className="comment-option">
-              <button onClick={() => setCommentOption(!commentOption)}>
-                <img src={IconMore} alt="열기" />
-              </button>
-              <ul
-                className={`comment-option-list ${commentOption ? 'show' : ''}`}
-              >
-                <li>신고하기</li>
-                <li>삭제하기</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+                <p className="comment-content">{comment.content}</p>
+                <div className="comment-option">
+                  <button
+                    onClick={() =>
+                      setCommentOption(index === commentOption ? 'null' : index)
+                    }
+                  >
+                    <img src={IconMore} alt="열기" />
+                  </button>
+                  <ul
+                    className={`comment-option-list ${
+                      index === commentOption ? 'show' : ''
+                    }`}
+                  >
+                    <li>신고하기</li>
+                    <li>삭제하기</li>
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="no-comment">댓글이 없습니다.</div>
+        )}
       </div>
     </Style.CommentContainer>
   );

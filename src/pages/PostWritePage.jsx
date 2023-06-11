@@ -4,13 +4,25 @@ import PostWrite from '../postWrite/PostWrite';
 
 const PostWritePage = () => {
   const [showPostImage, setShowPostImage] = useState(false);
+  const [formData, setFormData] = useState({
+    category: '',
+    title: '',
+    content: '',
+    hashtags: []
+  });
+
   return (
     <>
       <HeaderWrite
+        formData={formData}
         showPostImage={showPostImage}
         setShowPostImage={setShowPostImage}
       />
-      <PostWrite showPostImage={showPostImage} />
+      <PostWrite
+        formData={formData}
+        setFormData={setFormData}
+        showPostImage={showPostImage}
+      />
     </>
   );
 };
