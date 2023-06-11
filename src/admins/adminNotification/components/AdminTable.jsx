@@ -3,10 +3,10 @@ import { useQuery } from 'react-query';
 import { fetchReadNotificationInfo } from '../apis/postApi';
 
 import SearchBar from './SearchBar';
+import PageNation from './PageNation';
 import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
-import PageNation from './PageNation';
 import {
   EnrollButton,
   MainContentHeaderBlock,
@@ -24,7 +24,7 @@ const AdminTable = () => {
   };
 
   const { data, isLoading, error } = useQuery(
-    ['admin', 'notification', 'get'],
+    ['admin', 'notification', 'get', currentPage],
     async () => await fetchReadNotificationInfo(currentPage, 12, keyword)
   );
 
@@ -39,29 +39,28 @@ const AdminTable = () => {
         keyword={keyword}
         setKeyword={setKeyword}
       />
-      <div>
-        <MainContentHeaderBlock>
-          <TableTitle className='table-title'>공지 관리</TableTitle>
-          <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
-            등록
-          </EnrollButton>
-          {enrollModal && (
-            <EnrollModal
-              title={'공지 등록'}
-              enrollModal={enrollModal}
-              toggleEnrollModal={toggleEnrollModal}
-            />
-          )}
-        </MainContentHeaderBlock>
 
-        <AdminTableHead />
-        <AdminTableBody notifications={searchResult.length ? searchResult : data.objArr} />
-        <PageNation
-          totalPages={data.totalPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      <MainContentHeaderBlock>
+        <TableTitle className='table-title'>공지 관리</TableTitle>
+        <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
+          등록
+        </EnrollButton>
+        {enrollModal && (
+          <EnrollModal
+            title={'공지 등록'}
+            enrollModal={enrollModal}
+            toggleEnrollModal={toggleEnrollModal}
+          />
+        )}
+      </MainContentHeaderBlock>
+
+      <AdminTableHead />
+      <AdminTableBody notifications={searchResult.length ? searchResult : data.objArr} />
+      <PageNation
+        totalPages={data.totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 };

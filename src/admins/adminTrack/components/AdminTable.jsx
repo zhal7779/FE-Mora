@@ -36,7 +36,7 @@ const AdminTable = () => {
 
       <AdminTableHead />
       <AdminTableBody />
-      <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} />
+      {/* <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} /> */}
     </div>
   );
 };

@@ -66,41 +66,34 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
               <ModalTitle className='modal-title'>{title}</ModalTitle>
             </ModalHeader>
 
-            <>
-              <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
-              <ModalContentP className='modal-content'>{'임지성'}</ModalContentP>
-              <ModalSubTitle className='modal-sub-title'>제목</ModalSubTitle>
-              <ModalContentInput
-                type='text'
-                name='title'
-                value={contents.title}
-                ref={titleInput}
-                className='modal-content'
-                onChange={handleFormChange}
-              />
-              <ModalSubTitle className='modal-sub-title'>내용</ModalSubTitle>
-              <ModalContentTextarea
-                type='text'
-                name='content'
-                value={contents.content}
-                className='modal-content'
-                onChange={handleFormChange}
-              />
+            <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
+            <ModalContentP className='modal-content'>{'엘리스 토낑'}</ModalContentP>
+            <ModalSubTitle className='modal-sub-title'>제목</ModalSubTitle>
+            <ModalContentInput
+              type='text'
+              name='title'
+              value={contents.title}
+              ref={titleInput}
+              className='modal-content'
+              onChange={handleFormChange}
+            />
+            <ModalSubTitle className='modal-sub-title'>내용</ModalSubTitle>
+            <ModalContentTextarea
+              type='text'
+              name='content'
+              value={contents.content}
+              className='modal-content'
+              onChange={handleFormChange}
+            />
 
-              <ModalButtonBlock className='modal-button-block'>
-                <ModalButton className='modal-button-submit' onClick={toggleEnrollModal}>
-                  취소
-                </ModalButton>
-                <ModalButton
-                  type='submit'
-                  className='modal-button-ok'
-                  onClick={handleSubmit}
-                  $purple
-                >
-                  등록
-                </ModalButton>
-              </ModalButtonBlock>
-            </>
+            <ModalButtonBlock className='modal-button-block'>
+              <ModalButton className='modal-button-submit' onClick={toggleEnrollModal}>
+                취소
+              </ModalButton>
+              <ModalButton type='submit' className='modal-button-ok' onClick={handleSubmit} $purple>
+                등록
+              </ModalButton>
+            </ModalButtonBlock>
           </ModalContentBlock>
         </>
       )}

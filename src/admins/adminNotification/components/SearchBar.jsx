@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
 import { fetchReadNotificationInfo } from '../apis/postApi';
 

@@ -12,7 +12,7 @@ const PageNation = ({ totalPages, currentPage, setCurrentPage }) => {
           className={index === currentPage ? 'now-page page' : 'page'}
           onClick={() => {
             setCurrentPage(index);
-            queryClient.invalidateQueries(['admin', 'notification', 'get']);
+            queryClient.invalidateQueries(['admin', 'notification', 'get', currentPage]);
           }}
           key={index}
         >

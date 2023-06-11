@@ -15,7 +15,7 @@ const AdminTableBody = ({ notifications }) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteNotification(id);
-      setModal(false);
+      setIsModalOpen(false);
     }
   };
 

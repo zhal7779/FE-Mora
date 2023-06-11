@@ -76,25 +76,23 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
           </ModalHeaderButton>
         </ModalHeader>
 
-        <>
-          <ModalSubTitle>관리자</ModalSubTitle>
-          <ModalContentP>{data.Admin.name}</ModalContentP>
-          <ModalSubTitle>제목</ModalSubTitle>
-          <ModalContentInput
-            value={contents.title}
-            onChange={handleChangeContents}
-            name='title'
-            readOnly={!updatable}
-            ref={firstInput}
-          />
-          <ModalSubTitle>내용</ModalSubTitle>
-          <ModalContentTextarea
-            value={contents.content}
-            onChange={handleChangeContents}
-            name='content'
-            readOnly={!updatable}
-          />
-        </>
+        <ModalSubTitle>관리자</ModalSubTitle>
+        <ModalContentP>{data.Admin.name}</ModalContentP>
+        <ModalSubTitle>제목</ModalSubTitle>
+        <ModalContentInput
+          value={contents.title}
+          onChange={handleChangeContents}
+          name='title'
+          readOnly={!updatable}
+          ref={firstInput}
+        />
+        <ModalSubTitle>내용</ModalSubTitle>
+        <ModalContentTextarea
+          value={contents.content}
+          onChange={handleChangeContents}
+          name='content'
+          readOnly={!updatable}
+        />
 
         <ModalButtonBlock className='modal-button-block'>
           <ModalButton

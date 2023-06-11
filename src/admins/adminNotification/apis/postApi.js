@@ -1,10 +1,11 @@
 const domainPort = 'http://15.164.221.244:5000';
-const adminToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1ZDI4M2Q2LTU1ZmUtNGI0Yi1iMGFjLTI5MGFlMGZlM2I1ZCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjI4OTMwN30.U9rOuWLMkoYjPqVK8pGqwlEt1Kcu21o6IGjHzIUah4Y`;
+const adminToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4NDA0NGZhLTBmNjYtNDRjMS04NWNmLTkwYWVjYzJiMGVmOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjUwMDc2MH0.4d0OOG0jogLlfTzxi2VAFTvOgvBg6N-SJwDiHAc1Pdg';
 
 // READ
 const fetchReadNotificationInfo = async (page, size, keyword) => {
   const response = await fetch(
-    `${domainPort}/api/notices/admin?page=${page}&size=${size}&keyword=${keyword}`,
+    `${domainPort}/api/notices?page=${page}&size=${size}&keyword=${keyword}`,
     {
       headers: { Authorization: `Bearer ${adminToken}` },
     }
