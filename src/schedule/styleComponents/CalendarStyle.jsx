@@ -52,6 +52,9 @@ export const Container = styled.section`
   //cell 커서
   .fc .fc-daygrid-day-frame {
     cursor: pointer;
+    &:hover {
+      background: #f2effb;
+    }
   }
   //cell 폰트 사이즈 변경
   .fc-daygrid-day-number {
