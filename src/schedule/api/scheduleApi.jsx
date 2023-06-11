@@ -1,5 +1,5 @@
-export const fetchSchedule = async () => {
-  const response = await fetch(`${process.env.REACT_APP_URL}/api/plans/ym/2023-06`, {
+export const fetchSchedule = async (yearMonth) => {
+  const response = await fetch(`${process.env.REACT_APP_URL}/api/plans/ym/${yearMonth}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -26,13 +26,11 @@ const MyCalendar = () => {
     month = month <= 9 ? '0' + month : month;
     const resultDate = `${year}-${month}`;
     return resultDate;
-    // console.log(resultDate);
   };
 
   // 처음 렌더링시 현재 날짜 추출
   useEffect(() => {
     const currentDate = new Date();
-    console.log(currentDate);
     const resultDate = dateConversion(currentDate);
     setSelectedYearMonth(resultDate);
   }, []);
@@ -65,7 +63,6 @@ const MyCalendar = () => {
       setSelectedYearMonth(resultDate);
     }
   };
-  console.log(selectedYearMonth);
 
   // 날짜 클릭 이벤트 핸들러, date cell에서 클릭한 날짜를 가져온다.
   // ex) 2023-06-12
@@ -74,15 +71,15 @@ const MyCalendar = () => {
     setSelectedDate(info.dateStr);
   };
 
-  const { data, isLoading, isError } = useQuery('schedule', fetchSchedule);
+  const { data, isLoading, isError } = useQuery('schedule', () => fetchSchedule(selectedYearMonth));
+  console.log(data);
+  // if (isLoading) {
+  //   return <span>Loading...</span>;
+  // }
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {isError.message}</span>;
-  }
+  // if (isError) {
+  //   return <span>Error: {isError.message}</span>;
+  // }
 
   //한국어 설정
   moment.locale('ko');
