@@ -1,11 +1,10 @@
 const BASE_URL = process.env.REACT_APP_URL;
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMGZjY2Q3LWJhNzgtNGMyOS05MzIwLTA2ODQwY2EwMzg4MiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjg2Mzc3NDMyfQ.-IZvyq6xDUcN2yDJA1dVCK7nBs4SQ5B0SZb1StgyDOE';
 
 export const fetchPostDetail = async (postId) => {
-  const response = await fetch(`${BASE_URL}/api/boards/detail/${postId}`, {
+  const storedToken = sessionStorage.getItem('userToken');
+  const response = await fetch(`${BASE_URL}api/boards/detail/${postId}`, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${storedToken}`,
     },
   });
   if (!response.ok) {
@@ -16,9 +15,10 @@ export const fetchPostDetail = async (postId) => {
 };
 
 export const fetchPostComment = async (postId) => {
-  const response = await fetch(`${BASE_URL}/api/boards/detail/${postId}/comments`, {
+  const storedToken = sessionStorage.getItem('userToken');
+  const response = await fetch(`${BASE_URL}api/boards/detail/${postId}/comments`, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${storedToken}`,
     },
   });
   if (!response.ok) {
@@ -29,10 +29,11 @@ export const fetchPostComment = async (postId) => {
 };
 
 export const fetchPostDelete = async (postId) => {
-  const response = await fetch(`${BASE_URL}/api/boards/${postId}`, {
+  const storedToken = sessionStorage.getItem('userToken');
+  const response = await fetch(`${BASE_URL}api/boards/${postId}`, {
     method: 'DELETE',
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${storedToken}`,
     },
   });
   if (!response.ok) {
@@ -41,15 +42,16 @@ export const fetchPostDelete = async (postId) => {
 };
 
 export const createComment = async (postId, commentData) => {
+  const storedToken = sessionStorage.getItem('userToken');
   const formData = new FormData();
   formData.append('board_id', postId);
   formData.append('content', commentData);
 
-  const response = await fetch(`${BASE_URL}/api/comments`, {
+  const response = await fetch(`${BASE_URL}api/comments`, {
     method: 'POST',
     body: formData,
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${storedToken}`,
     },
   });
 
@@ -63,9 +65,10 @@ export const createComment = async (postId, commentData) => {
 };
 
 export const fetchLike = async (postId) => {
-  const response = await fetch(`${BASE_URL}/api/likes/${postId}`, {
+  const storedToken = sessionStorage.getItem('userToken');
+  const response = await fetch(`${BASE_URL}api/likes/${postId}`, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${storedToken}`,
     },
   });
   if (!response.ok) {
