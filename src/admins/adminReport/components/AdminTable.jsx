@@ -1,6 +1,6 @@
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
-import PageNation from '../../adminCommon/components/PageNation';
+// import PageNation from '../../adminCommon/components/PageNation';
 import { MainContentHeaderBlock, TableTitle } from '../styledComponents/TableComponent';
 
 const AdminTable = () => {
