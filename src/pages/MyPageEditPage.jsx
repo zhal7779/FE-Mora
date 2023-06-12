@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
@@ -17,6 +17,17 @@ const MyPageEdit = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  // 수정하지 않고 넘길 때는 이전 값 넣어주기
+  useEffect(() => {
+    setUserName(mainProfileData.name);
+    setUserImg(mainProfileData.img_path);
+    setPosition(mainProfileData.UserDetail.position);
+    setIntro(mainProfileData.UserDetail.comment);
+    setPhase(mainProfileData.UserDetail.phase);
+    setTrack(mainProfileData.UserDetail.track);
+  }, []);
+
+  // 트랙과 기수 이벤트 핸들러
   const handleTrackChange = (e) => {
     const selectedTrack = e.target.value;
     setTrack(selectedTrack);
@@ -35,6 +46,8 @@ const MyPageEdit = () => {
       },
     }).then((response) => response.json())
   );
+
+  const { data: mainProfileData } = mainProfileDataQuery;
 
   // 프로필 이미지 POST 뮤테이션 선언
   const uploadImageMutation = useMutation((formData) =>
@@ -76,7 +89,7 @@ const MyPageEdit = () => {
     }
   };
 
-  // 입력값이 담긴 state 를 모두 updatedData 객체에 담아 post 요청 보내기
+  // 수정한 값이 담긴 state 를 모두 updatedData 객체에 담아 post 요청 보내기
   const handleSubmit = () => {
     const updatedData = {
       userName,
@@ -97,16 +110,6 @@ const MyPageEdit = () => {
       },
     });
   };
-
-  if (mainProfileDataQuery.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (mainProfileDataQuery.isError) {
-    return <div>Error: {mainProfileDataQuery.error.message}</div>;
-  }
-
-  const { data: mainProfileData } = mainProfileDataQuery;
 
   return (
     <LoginContainer>

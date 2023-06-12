@@ -57,7 +57,11 @@ const MainProfile = ({ mainProfileData }) => {
 
   console.log(mainProfileData);
 
-  // 유저 데이터를 늦게 가져오면 생기는 이미지 없음 에러 방지
+  // mainProfileData(유저 상세 정보)를 늦게 가져오면 생기는 이미지 없음 에러 방지
+  // if (!mainProfileData || !mainProfileData.UserDetail || !mainProfileData.UserDetail.img_path) {
+  //   return null;
+  // }
+
   if (!mainProfileData) {
     return null;
   }
@@ -74,11 +78,7 @@ const MainProfile = ({ mainProfileData }) => {
         </div>
       </div>
       <h3>{mainProfileData.name}</h3>
-      <h4>
-        {`${mainProfileData.UserDetail.generation_id.split(' ')[1]} ${
-          mainProfileData.UserDetail.generation_id.split(' ')[0]
-        }`}
-      </h4>
+      <h4>{mainProfileData.UserDetail.generation}</h4>
       <h5>{mainProfileData.UserDetail.position}</h5>
       <div className='intro-container'>
         <p className='intro'>
@@ -103,7 +103,14 @@ const MainProfile = ({ mainProfileData }) => {
             />
             <div className='modal-buttons-container'>
               <Button color='white' value='취소' onClick={closeModal} />
-              <Button color='darkPurple' value='탈퇴' onClick={handleDeleteAccount} />
+              <Button
+                color='darkPurple'
+                value='탈퇴'
+                onClick={() => {
+                  handleDeleteAccount();
+                  navigate('/');
+                }}
+              />
             </div>
           </div>
         </Modal>

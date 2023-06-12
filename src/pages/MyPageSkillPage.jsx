@@ -9,17 +9,18 @@ import Button from '../components/Button';
 const MyPageEdit = () => {
   const [skill, setSkill] = useState('');
   const [selectedSkill, setSelectedSkill] = useState('');
-  const [mySkillList, setMySkillList] = useState(['123', '235']);
+  const [mySkillList, setMySkillList] = useState([]);
   const [skillList, setSkillList] = useState([]); // 검색된 스킬 목록
-
   const navigate = useNavigate();
 
+  // 기존 서버에 등록된 내 스킬 불러오기
   useEffect(() => {
     fetchMySkillList();
   }, []);
 
+  // 디바운싱으로 요청 수 줄이기
+  // 디바운싱은 여러 이벤트를 한번에 묶어서 처리, 쓰로틀링은 setInterval
   useEffect(() => {
-    // 디바운싱은 여러 이벤트를 한번에 묶어서 처리 쓰로틀링은 setInterval
     const delayDebounceFn = setTimeout(() => {
       if (skill !== '') {
         fetchSkillList();
@@ -29,6 +30,7 @@ const MyPageEdit = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [skill]);
 
+  // 기존 서버에 등록된 내 스킬 불러오기
   const fetchMySkillList = async () => {
     try {
       const response = await fetch('http://15.164.221.244:5000/api/skills/myskill', {
@@ -48,6 +50,7 @@ const MyPageEdit = () => {
     }
   };
 
+  // 검색되는 스킬 리스트 불러오기
   const fetchSkillList = async () => {
     try {
       const response = await fetch(`http://15.164.221.244:5000/api/skills?keyword=${skill}`, {
@@ -74,6 +77,7 @@ const MyPageEdit = () => {
     }
   };
 
+  // 검색결괴 중 선택된 스킬로 바꾸는 핸들러
   const handleSkillChange = (e) => {
     console.log(e.target);
     const selectedOption = e.target.value;

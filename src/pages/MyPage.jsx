@@ -13,6 +13,7 @@ const MyPage = () => {
     setSelectedCategory(category);
   };
 
+  // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch('http://15.164.221.244:5000/api/users/mypage', {
       headers: {

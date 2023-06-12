@@ -31,6 +31,7 @@ const MyPageEdit = () => {
     })
   );
 
+  // input 이벤트로 state 변경하는 핸들러
   const handleStartYearChange = (e) => {
     e.preventDefault();
     const selectedYear = e.target.value;
@@ -63,6 +64,7 @@ const MyPageEdit = () => {
     }
   };
 
+  // 년 월 빼고 사이에 대쉬 넣기, 6월 => 06 으로 바꾸기
   const handleSubmit = (e) => {
     e.preventDefault();
     const hireDate = `${startYear.replace('년', '')}-${startMonth
@@ -73,7 +75,7 @@ const MyPageEdit = () => {
     if (!isCurrentlyEmployed) {
       resignDate = `${endYear.replace('년', '')}-${endMonth.replace('월', '').padStart(2, '0')}`;
     }
-
+    // careerData에 최종 값을 넣어주기
     const careerData = {
       company_name: companyName,
       position,
@@ -81,7 +83,9 @@ const MyPageEdit = () => {
       resign_date: resignDate,
       content,
     };
-    console.log(careerData);
+    // console.log(careerData);
+
+    // Mutation POST 요청
     createCareerMutation.mutate(careerData);
   };
 

@@ -14,6 +14,7 @@ const ProfileList = () => {
     fetchMyCareerList();
   }, []);
 
+  // 현재 나의 스킬 불러오기
   const fetchMySkillList = async () => {
     try {
       const response = await fetch('http://15.164.221.244:5000/api/skills/myskill', {
@@ -33,6 +34,7 @@ const ProfileList = () => {
     }
   };
 
+  // 현재 나의 커리어 불러오기
   const fetchMyCareerList = async () => {
     try {
       const response = await fetch('http://15.164.221.244:5000/api/careers', {
@@ -92,9 +94,11 @@ const ProfileList = () => {
                 {myCareerList.map((myCareer, index) => (
                   <div className='careerinfo' key={index}>
                     {myCareer.isCurrentlyEmployed ? (
-                      <H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.startYear} ${myCareer.startMonth} ~ 재직중 ㅣ ${myCareer.content}`}</H5>
+                      <H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}</H5>
                     ) : (
-                      <H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.startYear} ${myCareer.startMonth} ~ ${myCareer.endYear} ${myCareer.endMonth} ㅣ ${myCareer.content}`}</H5>
+                      <H5>
+                        {`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}
+                      </H5>
                     )}
                   </div>
                 ))}
