@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { fetchDeleteNotification } from '../apis/notificationApis';
 
-import UserModal from '../../adminUser/components/UserModal';
+import NotificationModal from './NotificationModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
 import {
   DetailBtn,
@@ -53,7 +53,7 @@ const AdminTableBody = ({ notifications }) => {
             <span className='content'>{data.content}</span>
             <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.email)}>
+              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
                 보기
               </DetailBtn>
             </span>
@@ -62,7 +62,10 @@ const AdminTableBody = ({ notifications }) => {
         );
       })}
       {isModalOpen && (
-        <UserModal id={modalNotificationId} handleModalCancelClick={handleModalCancelClick} />
+        <NotificationModal
+          id={modalNotificationId}
+          handleModalCancelClick={handleModalCancelClick}
+        />
       )}
     </NotificationListBlock>
   );
