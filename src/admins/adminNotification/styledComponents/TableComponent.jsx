@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ModalButton } from './ModalComponents';
 
 // 테이블 요소들
-export const tableRowSetting = `
+const tableRowSetting = `
 display: grid;
 grid-template-columns: 9rem 20rem 20rem 13rem 9rem 9rem;
 grid-template-rows: 5rem;
@@ -17,6 +17,9 @@ export const TableRowInfo = styled.div`
   border-bottom: 1px solid #000;
 
   font-weight: 'bold';
+`;
+export const NotificationListBlock = styled.ul`
+  min-height: 61.5rem;
 `;
 export const NotificationInfo = styled.li`
   ${tableRowSetting}
@@ -65,7 +68,7 @@ export const PageNationBlock = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 6rem;
+  margin-top: 5.5rem;
   margin-bottom: 10rem;
 `;
 export const PageNationBlockBtn = styled.button`

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
+import { SearchBarBlock, SearchBarInput } from '../../adminCommon/styledComponents/SearchBarStyle';
 
 const SearchBar = ({ placeholder, setKeyword }) => {
   const [searchTerm, setSearchTerm] = useState('');

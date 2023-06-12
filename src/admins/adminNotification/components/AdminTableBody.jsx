@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { fetchDeleteNotification } from '../apis/notificationApis';
 
-import NotificationModal from './NotificationModal';
+import UserModal from '../../adminUser/components/UserModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
-import { DetailBtn, NotificationInfo } from '../styledComponents/TableComponent';
+import {
+  DetailBtn,
+  NotificationInfo,
+  NotificationListBlock,
+} from '../styledComponents/TableComponent';
 
 const AdminTableBody = ({ notifications }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,7 +44,7 @@ const AdminTableBody = ({ notifications }) => {
   if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
-    <ul className='user-info-list'>
+    <NotificationListBlock className='user-info-list'>
       {notifications.map((data, idx) => {
         return (
           <NotificationInfo className='user-info' key={idx}>
@@ -49,7 +53,7 @@ const AdminTableBody = ({ notifications }) => {
             <span className='content'>{data.content}</span>
             <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
+              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.email)}>
                 보기
               </DetailBtn>
             </span>
@@ -58,12 +62,9 @@ const AdminTableBody = ({ notifications }) => {
         );
       })}
       {isModalOpen && (
-        <NotificationModal
-          id={modalNotificationId}
-          handleModalCancelClick={handleModalCancelClick}
-        />
+        <UserModal id={modalNotificationId} handleModalCancelClick={handleModalCancelClick} />
       )}
-    </ul>
+    </NotificationListBlock>
   );
 };
 

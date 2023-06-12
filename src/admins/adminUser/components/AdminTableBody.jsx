@@ -1,38 +1,65 @@
 import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { fetchDeleteUser } from '../apis/userApis';
 
-import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
-import tableBodyData from '../data/userData';
-import DeleteButton from './DeleteButton';
 import UserModal from './UserModal';
+import DeleteButton from '../../adminCommon/components/DeleteButton';
+import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 
-const AdminTableBody = () => {
-  const [modal, setModal] = useState(false);
+const AdminTableBody = ({ users }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalUserId, setModalUserId] = useState('');
+  const queryClient = useQueryClient();
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const handleDelete = (email) => {
+    const response = confirm('삭제하시겠습니까?');
+    if (response) {
+      deleteUser(email);
+      setIsModalOpen(false);
+    }
   };
+
+  const handleDetailClick = (id) => {
+    setModalUserId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleModalCancelClick = () => {
+    setIsModalOpen(false);
+  };
+
+  const { mutate: deleteUser, error } = useMutation((email) => fetchDeleteUser(email), {
+    onSuccess() {
+      queryClient.invalidateQueries(['admin', 'user', 'get']);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <ul className='user-info-list'>
-      {tableBodyData.map((info) => {
+      {users.map((data, idx) => {
         return (
-          <UserInfo className='user-info' key={info.userId}>
-            {/* 아래애들 컴포넌트로 빼서 prop으로 데이터 넘겨줘서 map 돌릴까? */}
-            <span>{info.userId}</span>
-            <span>{info.name}</span>
-            <span className='email'>{info.email}</span>
-            <span className='password'>{info.password}</span>
-            <span>{info.createdDate}</span>
+          <UserInfo className='user-info' key={idx}>
+            <span>{data.name}</span>
+            <span className='email'>{data.email}</span>
+            <span className='password'>{data.password}</span>
+            <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={toggleModal}>
+              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.email)}>
                 보기
               </DetailBtn>
             </span>
-            <DeleteButton />
+            <DeleteButton onClick={() => handleDelete(data.email)} />
           </UserInfo>
         );
       })}
-      <UserModal modal={modal} toggleModal={toggleModal} />
+      {isModalOpen && (
+        <UserModal id={modalUserId} handleModalCancelClick={handleModalCancelClick} />
+      )}
     </ul>
   );
 };

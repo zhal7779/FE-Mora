@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
+import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/notificationApis';
 
 import {
   ModalTitle,
@@ -14,7 +15,6 @@ import {
   ModalHeaderButton,
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
-import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/notificationApis';
 
 const NotificationModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);

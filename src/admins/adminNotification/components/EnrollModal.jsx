@@ -46,7 +46,7 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     async () => await fetchCreateNotification(contents),
     {
       onSuccess() {
-        queryClient.invalidateQueries(['admin', 'notification', 'get']);
+        queryClient.invalidateQueries(['admin', 'notification', 'create']);
       },
       onError(error) {
         console.log(error);

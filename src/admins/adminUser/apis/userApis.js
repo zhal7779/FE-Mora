@@ -1,11 +1,11 @@
 const domainPort = 'http://15.164.221.244:5000';
 const adminToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmMDhlYWIzLTNhNmEtNDBmMS05ZjliLWQwMDk0ZDA0MjAxMyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjU2NzcyN30.4ZHO-wsodQBk9yHsCJ5w_b0kzJgqYkN5oM69Owa94P4';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyZmRmNDZhLTU5ZTMtNDFlYy1hMjJhLTVhMWIxNDQwZjQ3ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjU0OTgzMH0.f2ua7qUhQFwqnIaz53D7wT0m1kkyBx3xQMEjzElL8tI';
 
 // READ
-export const fetchReadNotificationInfo = async (page, size, keyword) => {
+export const fetchReadUserInfo = async (page, size, keyword) => {
   const response = await fetch(
-    `${domainPort}/api/notices?page=${page}&size=${size}&keyword=${keyword}`,
+    `${domainPort}/api/adminUsers?page=${page}&size=${size}&keyword=${keyword}`,
     {
       headers: { Authorization: `Bearer ${adminToken}` },
     }
@@ -15,7 +15,7 @@ export const fetchReadNotificationInfo = async (page, size, keyword) => {
   return data;
 };
 
-export const fetchReadNotificationInfoDetail = async (id) => {
+export const fetchReadUserInfoDetail = async (id) => {
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -25,8 +25,8 @@ export const fetchReadNotificationInfoDetail = async (id) => {
 };
 
 // CREATE
-export const fetchCreateNotification = async (newNotification) => {
-  const response = await fetch(`${domainPort}/api/notices`, {
+export const fetchCreateUser = async (newNotification) => {
+  const response = await fetch(`${domainPort}/api/adminUsers`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${adminToken}`,
@@ -40,7 +40,7 @@ export const fetchCreateNotification = async (newNotification) => {
 };
 
 // UPDATE
-export const fetchUpdateNotification = async (id, newNotification) => {
+export const fetchUpdateUser = async (id, newNotification) => {
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     method: 'PATCH',
     headers: {
@@ -56,8 +56,8 @@ export const fetchUpdateNotification = async (id, newNotification) => {
 };
 
 // DELETE
-export const fetchDeleteNotification = async (id) => {
-  const response = fetch(`${domainPort}/api/notices/${id}`, {
+export const fetchDeleteUser = async (email) => {
+  const response = fetch(`${domainPort}/api/adminUsers/${email}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${adminToken}`,
