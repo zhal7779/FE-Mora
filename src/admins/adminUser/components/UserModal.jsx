@@ -13,7 +13,6 @@ import {
   ModalContentInput,
   ModalContentBlock,
   ModalHeaderButton,
-  ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
 const UserModal = ({ id, handleModalCancelClick }) => {
@@ -97,7 +96,7 @@ const UserModal = ({ id, handleModalCancelClick }) => {
           ref={firstInput}
         />
         <ModalSubTitle>내용</ModalSubTitle>
-        <ModalContentTextarea
+        <ModalContentInput
           value={contents.content}
           onChange={handleChangeContents}
           name='content'
