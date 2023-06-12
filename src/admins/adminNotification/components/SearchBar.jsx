@@ -1,15 +1,18 @@
-import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
-import { fetchReadNotificationInfo } from '../apis/postApi';
+import { useState } from 'react';
 
-const SearchBar = ({ placeholder, setSearchResult, keyword, setKeyword }) => {
-  const handleKeyDown = (e) => {
-    setKeyword(e.target.value);
+import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
+
+const SearchBar = ({ placeholder, setKeyword }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await fetchReadNotificationInfo(0, 12, keyword);
-    setSearchResult(() => [...data.objArr]);
+    console.log('submit');
+    setKeyword(searchTerm);
   };
 
   return (
@@ -24,8 +27,8 @@ const SearchBar = ({ placeholder, setSearchResult, keyword, setKeyword }) => {
       <SearchBarInput
         type='text'
         placeholder={placeholder}
-        value={keyword}
-        onChange={handleKeyDown}
+        value={searchTerm}
+        onChange={handleChange}
       />
     </SearchBarBlock>
   );

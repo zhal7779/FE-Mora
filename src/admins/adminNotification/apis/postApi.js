@@ -1,6 +1,6 @@
 const domainPort = 'http://15.164.221.244:5000';
 const adminToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4NDA0NGZhLTBmNjYtNDRjMS04NWNmLTkwYWVjYzJiMGVmOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjUwMDc2MH0.4d0OOG0jogLlfTzxi2VAFTvOgvBg6N-SJwDiHAc1Pdg';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyZmRmNDZhLTU5ZTMtNDFlYy1hMjJhLTVhMWIxNDQwZjQ3ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjU0OTgzMH0.f2ua7qUhQFwqnIaz53D7wT0m1kkyBx3xQMEjzElL8tI';
 
 // READ
 const fetchReadNotificationInfo = async (page, size, keyword) => {

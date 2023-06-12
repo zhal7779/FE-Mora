@@ -3,15 +3,15 @@ import { useMutation, useQueryClient } from 'react-query';
 import { fetchCreateNotification } from '../apis/postApi';
 
 import {
-  ModalOverlay,
-  ModalContentBlock,
   ModalTitle,
-  ModalSubTitle,
-  ModalContentInput,
-  ModalContentP,
-  ModalButtonBlock,
   ModalHeader,
   ModalButton,
+  ModalOverlay,
+  ModalSubTitle,
+  ModalContentP,
+  ModalButtonBlock,
+  ModalContentBlock,
+  ModalContentInput,
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
@@ -19,22 +19,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   const [contents, setContents] = useState({ title: '', content: '' });
   const titleInput = useRef(null);
   const queryClient = useQueryClient();
-
-  const { mutate: createNotification, error } = useMutation(
-    async () => await fetchCreateNotification(contents),
-    {
-      onSuccess() {
-        queryClient.invalidateQueries(['admin', 'notification', 'get']);
-      },
-      onError(error) {
-        console.log(error);
-      },
-    }
-  );
-
-  useEffect(() => {
-    titleInput.current.focus();
-  }, [enrollModal]);
 
   const handleFormChange = (e) => {
     const changedValue = e.target.name;
@@ -53,6 +37,22 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
       toggleEnrollModal();
     }
   };
+
+  useEffect(() => {
+    titleInput.current.focus();
+  }, [enrollModal]);
+
+  const { mutate: createNotification, error } = useMutation(
+    async () => await fetchCreateNotification(contents),
+    {
+      onSuccess() {
+        queryClient.invalidateQueries(['admin', 'notification', 'get']);
+      },
+      onError(error) {
+        console.log(error);
+      },
+    }
+  );
 
   if (error) return <span>An error has occurred: {error.message}</span>;
 

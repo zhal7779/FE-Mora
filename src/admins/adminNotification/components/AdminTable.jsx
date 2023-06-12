@@ -10,13 +10,14 @@ import AdminTableBody from './AdminTableBody';
 import {
   EnrollButton,
   MainContentHeaderBlock,
+  TableSearchResult,
   TableTitle,
+  TableTitleBlock,
 } from '../styledComponents/TableComponent';
 
 const AdminTable = () => {
   const [enrollModal, setEnrollModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [searchResult, setSearchResult] = useState([]);
   const [keyword, setKeyword] = useState('');
 
   const toggleEnrollModal = () => {
@@ -24,7 +25,7 @@ const AdminTable = () => {
   };
 
   const { data, isLoading, error } = useQuery(
-    ['admin', 'notification', 'get', currentPage],
+    ['admin', 'notification', 'get', currentPage, keyword],
     async () => await fetchReadNotificationInfo(currentPage, 12, keyword)
   );
 
@@ -33,15 +34,13 @@ const AdminTable = () => {
 
   return (
     <>
-      <SearchBar
-        placeholder={'공지 제목 검색'}
-        setSearchResult={setSearchResult}
-        keyword={keyword}
-        setKeyword={setKeyword}
-      />
+      <SearchBar placeholder={'공지 제목 검색'} setKeyword={setKeyword} />
 
       <MainContentHeaderBlock>
-        <TableTitle className='table-title'>공지 관리</TableTitle>
+        <TableTitleBlock>
+          <TableTitle className='table-title'>공지 관리</TableTitle>
+          {keyword && <TableSearchResult>'{keyword}' 검색결과</TableSearchResult>}
+        </TableTitleBlock>
         <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
           등록
         </EnrollButton>
@@ -55,7 +54,8 @@ const AdminTable = () => {
       </MainContentHeaderBlock>
 
       <AdminTableHead />
-      <AdminTableBody notifications={searchResult.length ? searchResult : data.objArr} />
+      <AdminTableBody notifications={data.objArr} />
+
       <PageNation
         totalPages={data.totalPages}
         currentPage={currentPage}

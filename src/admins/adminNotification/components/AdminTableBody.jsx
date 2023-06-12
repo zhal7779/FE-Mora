@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { fetchDeleteNotification } from '../apis/postApi';
 
-import DeleteButton from './DeleteButton';
 import NotificationModal from './NotificationModal';
+import DeleteButton from '../../adminCommon/components/DeleteButton';
 import { DetailBtn, NotificationInfo } from '../styledComponents/TableComponent';
 
 const AdminTableBody = ({ notifications }) => {
@@ -53,11 +53,7 @@ const AdminTableBody = ({ notifications }) => {
                 보기
               </DetailBtn>
             </span>
-            <DeleteButton
-              onClick={() => {
-                handleDelete(data.id);
-              }}
-            />
+            <DeleteButton onClick={() => handleDelete(data.id)} />
           </NotificationInfo>
         );
       })}

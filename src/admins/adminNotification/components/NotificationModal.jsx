@@ -2,17 +2,17 @@ import { useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 
 import {
-  ModalOverlay,
-  ModalContentBlock,
   ModalTitle,
+  ModalHeader,
+  ModalButton,
+  ModalOverlay,
   ModalSubTitle,
   ModalContentP,
-  ModalContentInput,
-  ModalContentTextarea,
   ModalButtonBlock,
-  ModalHeader,
+  ModalContentInput,
+  ModalContentBlock,
   ModalHeaderButton,
-  ModalButton,
+  ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/postApi';
 
@@ -30,6 +30,20 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
     const newContent = { ...contents };
     newContent[e.target.name] = e.target.value;
     setContents(() => newContent);
+  };
+
+  const handleUpdate = () => {
+    const result = confirm('수정하시겠습니까?');
+    if (result) {
+      updateNotification(id, contents);
+      handleUpdatable();
+      handleModalCancelClick();
+    }
+  };
+
+  const handleCloseModal = () => {
+    handleModalCancelClick();
+    setUpdatable(false);
   };
 
   const { data, isLoading, error } = useQuery(
@@ -58,11 +72,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
 
   return (
     <>
-      <ModalOverlay
-        onClick={() => {
-          handleModalCancelClick();
-        }}
-      />
+      <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
           <ModalTitle className='modal-title'>공지 정보</ModalTitle>
@@ -95,27 +105,10 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
         />
 
         <ModalButtonBlock className='modal-button-block'>
-          <ModalButton
-            className='modal-button-submit'
-            onClick={() => {
-              const result = confirm('수정하시겠습니까?');
-              if (result) {
-                updateNotification(id, contents);
-                handleUpdatable();
-                handleModalCancelClick();
-              }
-            }}
-            $purple
-          >
+          <ModalButton className='modal-button-submit' onClick={handleUpdate} $purple>
             수정
           </ModalButton>
-          <ModalButton
-            className='modal-button-ok'
-            onClick={() => {
-              handleModalCancelClick();
-              setUpdatable(false);
-            }}
-          >
+          <ModalButton className='modal-button-ok' onClick={handleCloseModal}>
             확인
           </ModalButton>
         </ModalButtonBlock>
