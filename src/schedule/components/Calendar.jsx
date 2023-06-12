@@ -72,13 +72,13 @@ const MyCalendar = () => {
   if (isError) {
     return <span>Error: {isError.message}</span>;
   }
-
   // 받아온 데이터 풀캘린더 event 형식으로 변환
 
   const eventData = data.map((item) => ({
     title: item.title,
     start: item.start_date,
     end: item.end_date,
+    sortIdx: item._id,
   }));
 
   //한국어 설정
@@ -92,34 +92,36 @@ const MyCalendar = () => {
       </Style.EventColor>
     );
   };
-
   return (
     <Style.Container>
       {onModal ? <CalendarModal onModal={setOnModal} date={selectedDate} /> : ''}
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        ref={calendarRef}
-        initialView='dayGridMonth'
-        //한글 변환시 1일, 2일,3일 => 1,2,3으로 바꿈
-        dayCellContent={({ date }) => <a className='fc-daygrid-day-number'>{date.getDate()}</a>}
-        dateClick={handleDateClick}
-        locale='ko'
-        views={views}
-        eventContent={renderEventContent}
-        events={eventData}
-        customButtons={{
-          prev: {
-            click: () => handleButtonClick('prev'),
-          },
-          next: {
-            click: () => handleButtonClick('next'),
-          },
-          today: {
-            text: 'Today',
-            click: () => handleButtonClick('today'),
-          },
-        }}
-      />
+      <div>
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          ref={calendarRef}
+          initialView='dayGridMonth'
+          //한글 변환시 1일, 2일,3일 => 1,2,3으로 바꿈
+          dayCellContent={({ date }) => <a className='fc-daygrid-day-number'>{date.getDate()}</a>}
+          dateClick={handleDateClick}
+          locale='ko'
+          views={views}
+          eventContent={renderEventContent}
+          events={eventData}
+          eventOverlap={false}
+          customButtons={{
+            prev: {
+              click: () => handleButtonClick('prev'),
+            },
+            next: {
+              click: () => handleButtonClick('next'),
+            },
+            today: {
+              text: 'Today',
+              click: () => handleButtonClick('today'),
+            },
+          }}
+        />
+      </div>
     </Style.Container>
   );
 };

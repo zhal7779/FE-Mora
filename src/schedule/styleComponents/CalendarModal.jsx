@@ -101,18 +101,25 @@ export const Main = styled.div`
         flex-direction: column;
         padding: 0 3rem;
         gap: 1rem;
-        a {
-          /* margin-left: 7.6rem; */
-          color: #4700a8;
-          &:hover {
-            color: #ffffff;
-            background-color: #824bff;
-          }
-        }
+
         p {
           color: #242424;
           font-size: 1.4rem;
           line-height: 140%;
+          .link_box {
+            background: #f1f0f7;
+            border-radius: 4px;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            a {
+              display: inline;
+              color: #4700a8;
+
+              &:hover {
+                color: #6700eb;
+              }
+            }
+          }
         }
       }
     }

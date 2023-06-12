@@ -82,14 +82,16 @@ const CalendarModal = ({ onModal, date }) => {
                         </p>
                         <p>내용: {item.content}</p>
                         <p>
-                          관련 링크:
+                          관련 링크
                           <br />
-                          {item.PlanLinks.map((link) => (
-                            <a href={link.url} target='_blank'>
-                              {link.url}
-                              <br />
-                            </a>
-                          ))}
+                          <div className='link_box'>
+                            {item.PlanLinks.map((link) => (
+                              <a href={link.url} target='_blank'>
+                                {link.url}
+                                <br />
+                              </a>
+                            ))}
+                          </div>
                         </p>
                       </div>
                     </div>
