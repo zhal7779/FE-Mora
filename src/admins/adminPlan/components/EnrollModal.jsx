@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { fetchCreatePlan } from '../apis/planApis';
 
 import {
@@ -24,7 +24,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     links: '',
   });
   const titleInput = useRef(null);
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     titleInput.current.focus();
@@ -41,9 +40,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   };
 
   const { mutate: createPlan, error } = useMutation(async () => await fetchCreatePlan(contents), {
-    onSuccess() {
-      queryClient.invalidateQueries(['admin', 'plan', 'create']);
-    },
     onError(error) {
       console.log(error);
     },

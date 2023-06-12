@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { fetchDeleteUser } from '../apis/userApis';
 
 import UserModal from './UserModal';
@@ -9,7 +9,6 @@ import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 const AdminTableBody = ({ users }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalUserId, setModalUserId] = useState('');
-  const queryClient = useQueryClient();
 
   const handleDelete = (email) => {
     const response = confirm('삭제하시겠습니까?');
@@ -29,9 +28,6 @@ const AdminTableBody = ({ users }) => {
   };
 
   const { mutate: deleteUser, error } = useMutation((email) => fetchDeleteUser(email), {
-    onSuccess() {
-      queryClient.invalidateQueries(['admin', 'user', 'get']);
-    },
     onError(error) {
       console.log(error);
     },

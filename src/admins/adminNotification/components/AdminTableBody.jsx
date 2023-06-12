@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { fetchDeleteNotification } from '../apis/notificationApis';
 
 import NotificationModal from './NotificationModal';
@@ -13,7 +13,6 @@ import {
 const AdminTableBody = ({ notifications }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalNotificationId, setModalNotificationId] = useState('');
-  const queryClient = useQueryClient();
 
   const handleDelete = (id) => {
     const response = confirm('삭제하시겠습니까?');
@@ -33,9 +32,6 @@ const AdminTableBody = ({ notifications }) => {
   };
 
   const { mutate: deleteNotification, error } = useMutation((id) => fetchDeleteNotification(id), {
-    onSuccess() {
-      queryClient.invalidateQueries(['admin', 'notification', 'get']);
-    },
     onError(error) {
       console.log(error);
     },

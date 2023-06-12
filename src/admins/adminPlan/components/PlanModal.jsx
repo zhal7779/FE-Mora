@@ -18,7 +18,13 @@ import {
 
 const PlanModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ title: '', content: '' });
+  const [contents, setContents] = useState({
+    title: '',
+    content: '',
+    startDate: '',
+    endDate: '',
+    links: '',
+  });
   const firstInput = useRef(null);
 
   const handleUpdatable = () => {
