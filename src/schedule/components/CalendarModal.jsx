@@ -12,10 +12,8 @@ const CalendarModal = ({ onModal, date }) => {
   const handleClickClose = () => {
     onModal(false);
   };
-  const queryClient = useQueryClient();
-  const { data } = useQuery('scheduleYMD', () => fetchScheduleYMD(dateChanged), {
-    enabled: false, // 초기에 쿼리가 자동으로 실행되지 않게 설정
-  });
+  const [dateChanged, setDateChaged] = useState(date);
+  const { data } = useQuery(['scheduleYMD', dateChanged], () => fetchScheduleYMD(dateChanged));
 
   const [formatDate, setFormatDate] = useState(date);
   //날짜 포맷터 함수 ex) 2023-06-13 =>  2023년 06월 13일
@@ -27,12 +25,8 @@ const CalendarModal = ({ onModal, date }) => {
     return setFormatDate(newDate);
   };
 
-  const [dateChanged, setDateChaged] = useState(date);
-
   useEffect(() => {
     dateFormatter(date);
-    // 첫 렌더링 시 데이터를 가져오기 위해 비동기적으로 fetchScheduleYMD 함수 호출
-    queryClient.prefetchQuery('scheduleYMD');
   }, []);
 
   //prev, next 버튼 클릭시 날짜 변경 함수
@@ -52,11 +46,6 @@ const CalendarModal = ({ onModal, date }) => {
     const formmaterDate = format(newDate, 'yyyy-MM-dd');
     //쿼리에 넣어줄 dateChanged state, formmaterDate로 변경
     setDateChaged(formmaterDate);
-    // 기존 캐시된 데이터를 리셋
-    queryClient.resetQueries('scheduleYMD', { exact: true });
-    // 비동기적으로 변경된 날짜에 새로운 데이터 요청
-    queryClient.prefetchQuery('scheduleYMD', () => fetchScheduleYMD(formmaterDate));
-
     dateFormatter(formmaterDate);
   };
 
@@ -89,7 +78,7 @@ const CalendarModal = ({ onModal, date }) => {
                       <h5>📆 [{item.title}]</h5>
                       <div>
                         <p>
-                          기간: {item.start_date} ~ {item.end_date}
+                          기간: {item.start_date.slice(0, 10)} ~ {item.end_date.slice(0, 10)}
                         </p>
                         <p>내용: {item.content}</p>
                         <p>
@@ -113,7 +102,7 @@ const CalendarModal = ({ onModal, date }) => {
                 </div>
               )
             ) : (
-              <p>Loading...</p>
+              ''
             )}
           </div>
         </Style.Main>

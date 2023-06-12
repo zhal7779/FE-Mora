@@ -101,7 +101,14 @@ export const Main = styled.div`
         flex-direction: column;
         padding: 0 3rem;
         gap: 1rem;
-
+        a {
+          /* margin-left: 7.6rem; */
+          color: #4700a8;
+          &:hover {
+            color: #ffffff;
+            background-color: #824bff;
+          }
+        }
         p {
           color: #242424;
           font-size: 1.4rem;
