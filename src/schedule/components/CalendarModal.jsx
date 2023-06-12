@@ -1,40 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as LeftIcon } from '../../assets/icons/fi_chevron-left.svg';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import * as Style from '../styleComponents/CalendarModal';
 import rabbitImg from '../../assets/images/rabbitStudyng.png';
+import { addDays, subDays, format } from 'date-fns';
+
 const CalendarModal = ({ onModal, date }) => {
   const handleClickClose = () => {
     onModal(false);
   };
-  const year = date.slice(0, 4);
-  const month = date.slice(5, 7);
-  const day = date.slice(8, 10);
 
-  const data = [
-    // {
-    //   title: '직무멘토링 강의 자료 업로드 안내 & 만족도 조사',
-    //   term: '5월 26일 (금) 밤 12시까지',
-    //   contnet:
-    //     '지난주 5/24, 5/26 진행된 직무멘토링 강의자료가 업로드 되었습니다. 참여하신 분들은 만족도 조사 진행해주세요!',
-    //   link: 'https://uuu/miyoung',
-    // },
-    // {
-    //   title:
-    //     '커리어 빌드업 로드맵 과목 - <직무 멘토링> 받고, 멘토링 받은 내용 정리하고 이력서 점검 및 보완하기',
-    //   term: '5월 26일 (금) 밤 12시까지',
-    //   contnet:
-    //     '지난주 수요일(5/24), 금요일(5/25) 직무멘토링에 참여하신 분들은, 멘토링에서 아래 로드맵 과제를 통해 기록해주세요! 멘토링에 참여하지 않은 분들은, 취업매니저님께 받은 피드백을 기록해주시기 바랍니다.',
-    //   link: 'https://uuu/miyoung',
-    // },
-    // {
-    //   title: '직무멘토링 강의 자료 업로드 안내 & 만족도 조사',
-    //   term: '5월 26일 (금) 밤 12시까지',
-    //   contnet:
-    //     '지난주 5/24, 5/26 진행된 직무멘토링 강의자료가 업로드 되었습니다. 참여하신 분들은 만족도 조사 진행해주세요!',
-    //   link: 'https://uuu/miyoung',
-    // },
-  ];
+  const [formatDate, setFormatDate] = useState('');
+  //날짜 포맷터 함수
+  const dateFormatter = (date) => {
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7);
+    const day = date.slice(8, 10);
+    const newDate = `${year}년 ${month}월 ${day}일`;
+    return setFormatDate(newDate);
+  };
+
+  useEffect(() => {
+    dateFormatter(date);
+  }, []);
+  const [dateChanged, setDateChaged] = useState(date);
+
+  //prev, next 버튼 클릭시 날짜 변경 함수
+  const handleDateChange = (type) => {
+    const count = 1;
+    //현재 날짜
+    const currentDate = new Date(dateChanged);
+    let newDate = '';
+
+    if (type === 'add') {
+      newDate = addDays(currentDate, count);
+    } else if (type === 'sub') {
+      newDate = subDays(currentDate, count);
+    }
+    const formmaterDate = format(newDate, 'yyyy-MM-dd');
+    setDateChaged(formmaterDate);
+    dateFormatter(formmaterDate);
+  };
+
+  const data = [];
 
   return (
     <>
@@ -42,13 +50,11 @@ const CalendarModal = ({ onModal, date }) => {
       <Style.Container>
         <Style.Content>
           <div className='date'>
-            <span>
+            <span onClick={() => handleDateChange('sub')}>
               <LeftIcon stroke='#616161' />
             </span>
-            <h5>
-              {year}년 {month}월 {day}일
-            </h5>
-            <span>
+            <h5>{formatDate}</h5>
+            <span onClick={() => handleDateChange('add')}>
               <RightIcon stroke='#616161' />
             </span>
           </div>

@@ -6,10 +6,12 @@ export const Container = styled.section`
   height: 100%;
   //토,일 색상 변경
   .fc-day-sat a {
-    color: #9169ff;
+    /* color: #9169ff; */
+    color: #6d94d6;
   }
   .fc-day-sun a {
-    color: #6700e6;
+    /* color: #6700e6; */
+    color: #d66d97;
   }
   // 요일 헤더 셀
   .fc .fc-col-header-cell-cushion {

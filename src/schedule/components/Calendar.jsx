@@ -9,6 +9,7 @@ import 'moment/locale/ko';
 import { useQuery } from 'react-query';
 import { fetchSchedule } from '../api/scheduleApi';
 import scheduleData from './schedule.json';
+import { format } from 'date-fns';
 
 const MyCalendar = () => {
   //모달 open,close
@@ -22,10 +23,7 @@ const MyCalendar = () => {
   //prev,next 클릭시 추출한 날짜 변환 함수
   // return  => 2023-06
   const dateConversion = (currentDate) => {
-    const year = new Date(currentDate).getFullYear();
-    let month = new Date(currentDate).getMonth() + 1;
-    month = month <= 9 ? '0' + month : month;
-    const resultDate = `${year}-${month}`;
+    const resultDate = format(currentDate, 'yyyy-MM');
     return resultDate;
   };
 
