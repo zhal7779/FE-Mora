@@ -61,6 +61,7 @@ export const Content = styled.div`
 export const Main = styled.div`
   height: 100%;
   padding: 9rem 0 0 0;
+
   .no_schedule {
     display: flex;
     flex-direction: column;

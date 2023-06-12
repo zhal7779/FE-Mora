@@ -17,8 +17,8 @@ const MyCalendar = () => {
   const handleClickOpen = () => {
     setOnModal(true);
   };
-
-  const [selectedYearMonth, setSelectedYearMonth] = useState(null);
+  //처음 렌더링시 현재 날짜 추출
+  const [selectedYearMonth, setSelectedYearMonth] = useState(format(new Date(), 'yyyy-MM'));
 
   //prev,next 클릭시 추출한 날짜 변환 함수
   // return  => 2023-06
@@ -26,13 +26,6 @@ const MyCalendar = () => {
     const resultDate = format(currentDate, 'yyyy-MM');
     return resultDate;
   };
-
-  // 처음 렌더링시 현재 날짜 추출
-  useEffect(() => {
-    const currentDate = new Date();
-    const resultDate = dateConversion(currentDate);
-    setSelectedYearMonth(resultDate);
-  }, []);
 
   //prev 버튼 날짜 추출
   const calendarRef = useRef();
@@ -71,6 +64,7 @@ const MyCalendar = () => {
   };
 
   const { data, isLoading, isError } = useQuery('schedule', () => fetchSchedule(selectedYearMonth));
+
   if (isLoading) {
     return <span>Loading...</span>;
   }
@@ -80,7 +74,8 @@ const MyCalendar = () => {
   }
 
   // 받아온 데이터 풀캘린더 event 형식으로 변환
-  const eventData = scheduleData.map((item) => ({
+
+  const eventData = data.map((item) => ({
     title: item.title,
     start: item.start_date,
     end: item.end_date,
