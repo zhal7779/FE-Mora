@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { fetchCreateNotification } from '../apis/postApi';
+import { fetchCreateNotification } from '../apis/notificationApis';
 
 import {
   ModalTitle,

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { fetchReadNotificationInfo } from '../apis/postApi';
+import { fetchReadNotificationInfo } from '../apis/notificationApis';
 
 import SearchBar from './SearchBar';
 import PageNation from './PageNation';

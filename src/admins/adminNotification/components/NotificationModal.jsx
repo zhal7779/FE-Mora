@@ -14,7 +14,7 @@ import {
   ModalHeaderButton,
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
-import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/postApi';
+import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/notificationApis';
 
 const NotificationModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);

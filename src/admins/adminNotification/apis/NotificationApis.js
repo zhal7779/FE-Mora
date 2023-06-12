@@ -3,7 +3,7 @@ const adminToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIyZmRmNDZhLTU5ZTMtNDFlYy1hMjJhLTVhMWIxNDQwZjQ3ZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjU0OTgzMH0.f2ua7qUhQFwqnIaz53D7wT0m1kkyBx3xQMEjzElL8tI';
 
 // READ
-const fetchReadNotificationInfo = async (page, size, keyword) => {
+export const fetchReadNotificationInfo = async (page, size, keyword) => {
   const response = await fetch(
     `${domainPort}/api/notices?page=${page}&size=${size}&keyword=${keyword}`,
     {
@@ -15,7 +15,7 @@ const fetchReadNotificationInfo = async (page, size, keyword) => {
   return data;
 };
 
-const fetchReadNotificationInfoDetail = async (id) => {
+export const fetchReadNotificationInfoDetail = async (id) => {
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -25,7 +25,7 @@ const fetchReadNotificationInfoDetail = async (id) => {
 };
 
 // CREATE
-const fetchCreateNotification = async (newNotification) => {
+export const fetchCreateNotification = async (newNotification) => {
   const response = await fetch(`${domainPort}/api/notices`, {
     method: 'POST',
     headers: {
@@ -40,7 +40,7 @@ const fetchCreateNotification = async (newNotification) => {
 };
 
 // UPDATE
-const fetchUpdateNotification = async (id, newNotification) => {
+export const fetchUpdateNotification = async (id, newNotification) => {
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     method: 'PATCH',
     headers: {
@@ -56,7 +56,7 @@ const fetchUpdateNotification = async (id, newNotification) => {
 };
 
 // DELETE
-const fetchDeleteNotification = async (id) => {
+export const fetchDeleteNotification = async (id) => {
   const response = fetch(`${domainPort}/api/notices/${id}`, {
     method: 'DELETE',
     headers: {
@@ -65,12 +65,4 @@ const fetchDeleteNotification = async (id) => {
   });
 
   return response.status;
-};
-
-export {
-  fetchReadNotificationInfo,
-  fetchReadNotificationInfoDetail,
-  fetchCreateNotification,
-  fetchUpdateNotification,
-  fetchDeleteNotification,
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { fetchDeleteNotification } from '../apis/postApi';
+import { fetchDeleteNotification } from '../apis/notificationApis';
 
 import NotificationModal from './NotificationModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
