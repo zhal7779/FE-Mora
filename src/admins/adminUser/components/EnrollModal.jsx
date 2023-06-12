@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { fetchCreateUser } from '../apis/userApis';
 
 import {
@@ -17,7 +17,6 @@ import {
 const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   const [contents, setContents] = useState({ email: '', password: '', name: '' });
   const titleInput = useRef(null);
-  const queryClient = useQueryClient();
 
   const handleFormChange = (e) => {
     const changedValue = e.target.name;
@@ -42,9 +41,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   }, [enrollModal]);
 
   const { mutate: createUser, error } = useMutation(async () => await fetchCreateUser(contents), {
-    onSuccess() {
-      queryClient.invalidateQueries(['admin', 'user', 'create']);
-    },
     onError(error) {
       console.log(error);
     },

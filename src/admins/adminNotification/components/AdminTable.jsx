@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { fetchReadNotificationInfo } from '../apis/notificationApis';
 
-import PageNation from './PageNation';
 import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
 import SearchBar from '../../adminCommon/components/SearchBar';
+import PageNation from '../../adminCommon/components/PageNation';
 import {
   EnrollButton,
   MainContentHeaderBlock,

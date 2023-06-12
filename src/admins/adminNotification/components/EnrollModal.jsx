@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { fetchCreateNotification } from '../apis/notificationApis';
 
 import {
@@ -18,7 +18,10 @@ import {
 const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
   const [contents, setContents] = useState({ title: '', content: '' });
   const titleInput = useRef(null);
-  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    titleInput.current.focus();
+  }, [enrollModal]);
 
   const handleFormChange = (e) => {
     const changedValue = e.target.name;
@@ -38,16 +41,9 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   };
 
-  useEffect(() => {
-    titleInput.current.focus();
-  }, [enrollModal]);
-
   const { mutate: createNotification, error } = useMutation(
     async () => await fetchCreateNotification(contents),
     {
-      onSuccess() {
-        queryClient.invalidateQueries(['admin', 'notification', 'create']);
-      },
       onError(error) {
         console.log(error);
       },
