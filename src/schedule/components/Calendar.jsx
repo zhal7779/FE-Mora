@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import * as Style from '../styleComponents/CalendarStyle';
 import CalendarModal from './CalendarModal';
 import FullCalendar from '@fullcalendar/react';
@@ -8,7 +8,6 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import { useQuery } from 'react-query';
 import { fetchSchedule } from '../api/scheduleApi';
-import scheduleData from './schedule.json';
 import { format } from 'date-fns';
 
 const MyCalendar = () => {

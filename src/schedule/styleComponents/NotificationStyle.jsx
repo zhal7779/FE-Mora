@@ -6,6 +6,7 @@ export const Container = styled.section`
   margin-top: 6rem;
   padding: 3.8rem 0;
   gap: 2rem;
+
   .header_title {
     display: flex;
     justify-content: space-between;
@@ -22,6 +23,13 @@ export const Container = styled.section`
       width: 12rem;
       margin-right: 2rem;
     }
+  }
+  .no_data {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 export const Content = styled.div`

@@ -21,3 +21,18 @@ export const fetchScheduleYMD = async (yearMonthDay) => {
   const data = await response.json();
   return data;
 };
+
+export const fetchNotice = async (keyword) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_URL}/api/notices?page=0&size=10&keyword=${keyword}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+};
