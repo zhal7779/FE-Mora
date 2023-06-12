@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/notificationApis';
+import { fetchReadPlanInfoDetail, fetchUpdatePlan } from '../apis/planApis';
 
 import {
   ModalTitle,
@@ -33,9 +33,13 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
   };
 
   const handleChangeContents = (e) => {
-    const newContent = { ...contents };
-    newContent[e.target.name] = e.target.value;
-    setContents(() => newContent);
+    const changedValue = e.target.name;
+    const newContents = {
+      ...contents,
+    };
+    newContents[changedValue] = e.target.value;
+
+    setContents(newContents);
   };
 
   const handleUpdate = () => {
@@ -54,22 +58,37 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
 
   const { data, isLoading, error } = useQuery(
     ['admin', 'notification', 'detail', 'get'],
-    () => fetchReadNotificationInfoDetail(id),
+    () => fetchReadPlanInfoDetail(id),
     {
       onSuccess(data) {
-        setContents({ title: data.title, content: data.content });
+        let newLinks = '';
+        data.PlanLinks.map((link) => {
+          newLinks += `${link.url}\n`;
+        });
+        setContents({
+          title: data.title,
+          content: data.content,
+          startDate: data.start_date.slice(0, 10),
+          endDate: data.end_date.slice(0, 10),
+          links: newLinks,
+        });
       },
     }
   );
 
   const { mutate: updateNotification, error: updateError } = useMutation(
-    async (id) => await fetchUpdateNotification(id, contents),
+    async (id) => await fetchUpdatePlan(id, contents),
     {
       onError(updateError) {
         console.log(updateError);
       },
     }
   );
+
+  if (isLoading) return <span>로딩중...</span>;
+  if (error) return <span>An error has occurred: {error.message}</span>;
+
+  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
   return (
     <>
@@ -102,6 +121,29 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
           value={contents.content}
           onChange={handleChangeContents}
           name='content'
+          readOnly={!updatable}
+        />
+        <ModalSubTitle>시작일</ModalSubTitle>
+        <ModalContentInput
+          type='date'
+          value={contents.startDate}
+          onChange={handleChangeContents}
+          name='startDate'
+          readOnly={!updatable}
+        />
+        <ModalSubTitle>종료일</ModalSubTitle>
+        <ModalContentInput
+          type='date'
+          value={contents.endDate}
+          onChange={handleChangeContents}
+          name='endDate'
+          readOnly={!updatable}
+        />
+        <ModalSubTitle>링크</ModalSubTitle>
+        <ModalContentTextarea
+          value={contents.links}
+          onChange={handleChangeContents}
+          name='links'
           readOnly={!updatable}
         />
 

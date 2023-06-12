@@ -15,7 +15,7 @@ export const fetchReadPlanInfo = async (yearMonth) => {
 };
 
 export const fetchReadPlanInfoDetail = async (id) => {
-  const response = await fetch(`${domainPort}/api/plans/${id}`, {
+  const response = await fetch(`${domainPort}/api/plans/detail/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
   const data = await response.json();
