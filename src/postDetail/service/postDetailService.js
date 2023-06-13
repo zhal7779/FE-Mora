@@ -15,31 +15,31 @@ export const getDetail = async (postId) => {
   }
 };
 
-export const getComment = async (postId) => {
-  try {
-    const data = await fetchPostComment(postId);
-    return data;
-  } catch (error) {
-    throw new Error(`${error.message}`);
-  }
-};
+// export const getComment = async (postId) => {
+//   try {
+//     const data = await fetchPostComment(postId);
+//     return data;
+//   } catch (error) {
+//     throw new Error(`${error.message}`);
+//   }
+// };
 
-export const deletePost = async (postId) => {
-  try {
-    await fetchPostDelete(postId);
-  } catch (error) {
-    throw new Error(`${error.message}`);
-  }
-};
+// export const deletePost = async (postId) => {
+//   try {
+//     await fetchPostDelete(postId);
+//   } catch (error) {
+//     throw new Error(`${error.message}`);
+//   }
+// };
 
-export const registerComment = async (commentData) => {
-  try {
-    const data = await createComment(commentData);
-    return data;
-  } catch (error) {
-    throw new Error(`${error.message}`);
-  }
-};
+// export const registerComment = async (postId, commentData) => {
+//   try {
+//     const data = await createComment(postId, commentData);
+//     return data;
+//   } catch (error) {
+//     throw new Error(`${error.message}`);
+//   }
+// };
 
 export const likePost = async (postId) => {
   try {
