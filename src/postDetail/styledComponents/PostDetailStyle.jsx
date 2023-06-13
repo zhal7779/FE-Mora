@@ -199,7 +199,9 @@ export const Status = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  margin: 20px 0;
+  flex-direction: column;
+  height: 100vh;
   font-size: 1.6rem;
+  color: #424242;
+  background-color: #f2f0fa;
 `;
