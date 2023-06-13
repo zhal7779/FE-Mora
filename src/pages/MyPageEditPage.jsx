@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
@@ -14,10 +14,39 @@ const MyPageEdit = () => {
   const [intro, setIntro] = useState('');
   const [phase, setPhase] = useState('');
   const [track, setTrack] = useState('');
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  // 수정하지 않고 넘길 때는 이전 값 넣어주기
+  useEffect(() => {
+    setUserName(mainProfileData.name);
+    setUserImg(mainProfileData.img_path);
+    setPosition(
+      mainProfileData.UserDetail.position === '직책을 입력해주세요.'
+        ? ''
+        : mainProfileData.UserDetail.position
+    );
+    setIntro(mainProfileData.UserDetail.comment);
+    setPhase(mainProfileData.UserDetail.generation.split(' ')[2]);
+    setTrack(
+      mainProfileData.UserDetail.generation.split(' ')[0] +
+        ' ' +
+        mainProfileData.UserDetail.generation.split(' ')[1]
+    );
+  }, []);
+
+  // 트랙과 기수 이벤트 핸들러
+  const handleTrackChange = (e) => {
+    const selectedTrack = e.target.value;
+    setTrack(selectedTrack);
+  };
+
+  const handlePhaseChange = (e) => {
+    const selectedPhase = e.target.value;
+    setPhase(selectedPhase);
+  };
+
+  // 기존 내 정보 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch('http://15.164.221.244:5000/api/users/mypage', {
       headers: {
@@ -26,6 +55,17 @@ const MyPageEdit = () => {
     }).then((response) => response.json())
   );
 
+  const { data: mainProfileData } = mainProfileDataQuery;
+
+  // 프로필 이미지 POST 뮤테이션 선언
+  const uploadImageMutation = useMutation((formData) =>
+    fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
+      method: 'POST',
+      body: formData,
+    }).then((response) => response.json())
+  );
+
+  // 내 정보 updatedData 로 수정하기
   const updateProfileMutation = useMutation((updatedData) =>
     fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
       method: 'PUT',
@@ -37,23 +77,7 @@ const MyPageEdit = () => {
     }).then((response) => response.json())
   );
 
-  const handleTrackChange = (e) => {
-    const selectedTrack = e.target.value;
-    setTrack(selectedTrack);
-  };
-
-  const handlePhaseChange = (e) => {
-    const selectedPhase = e.target.value;
-    setPhase(selectedPhase);
-  };
-
-  const uploadImageMutation = useMutation((formData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
-      method: 'POST',
-      body: formData,
-    }).then((response) => response.json())
-  );
-
+  // formData 로 이미지 업로드하고 이미지 링크 받기
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -73,6 +97,7 @@ const MyPageEdit = () => {
     }
   };
 
+  // 수정한 값이 담긴 state 를 모두 updatedData 객체에 담아 post 요청 보내기
   const handleSubmit = () => {
     const updatedData = {
       userName,
@@ -94,37 +119,23 @@ const MyPageEdit = () => {
     });
   };
 
-  if (mainProfileDataQuery.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (mainProfileDataQuery.isError) {
-    return <div>Error: {mainProfileDataQuery.error.message}</div>;
-  }
-
-  const { data: mainProfileData } = mainProfileDataQuery;
-
   return (
     <LoginContainer>
       <ImageContainer>
-        <ProfileImg src={userImg || mainProfileData.userProfile.img_path} alt='프로필'></ProfileImg>
-        {userImg === '' ? (
-          <>
-            <label htmlFor='imageUpload'>
-              <input
-                onChange={handleImageChange}
-                id='imageUpload'
-                type='file'
-                style={{ display: 'none' }}
-              />
-            </label>
-          </>
-        ) : null}
+        <ProfileImg src={userImg || mainProfileData.UserDetail.img_path} alt='프로필'></ProfileImg>
+        <label htmlFor='imageUpload'>
+          <input
+            onChange={handleImageChange}
+            id='imageUpload'
+            type='file'
+            style={{ display: 'none' }}
+          />
+        </label>
       </ImageContainer>
       <MyPageEditInput
         title='이름'
         type='text'
-        placeholder={mainProfileData.userName.name}
+        placeholder={mainProfileData.name}
         name='userName'
         onChange={(e) => setUserName(e.target.value)}
         value={userName}
@@ -152,7 +163,7 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='직함'
         type='text'
-        placeholder={mainProfileData.userProfile.position}
+        placeholder={mainProfileData.UserDetail.position}
         name='position'
         onChange={(e) => setPosition(e.target.value)}
         value={position}
@@ -160,11 +171,18 @@ const MyPageEdit = () => {
       <IntroTextContainter onChange={(e) => setIntro(e.target.value)} value={intro}>
         <h3>자기소개</h3>
         <textarea
-          placeholder={mainProfileData.userProfile.comment || '자기소개를 입력해주세요.'}
+          placeholder={mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'}
         ></textarea>
       </IntroTextContainter>
       <ButtonContainer>
-        <Button color='darkPurple' value='수정완료' onClick={handleSubmit} />
+        <Button
+          color='darkPurple'
+          value='수정완료'
+          onClick={() => {
+            handleSubmit();
+            navigate('/mypage');
+          }}
+        />
         <Button color='white' value='수정취소' onClick={() => navigate('/mypage')} />
       </ButtonContainer>
     </LoginContainer>
@@ -277,7 +295,7 @@ const IntroTextContainter = styled.div`
 
 const trackOptions = [
   { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
-  { value: 'SW 엔지니어 트랙', label: 'SW 엔지니어 트랙' },
+  { value: 'SW 트랙', label: 'SW 트랙' },
   { value: 'AI 트랙', label: 'AI 트랙' },
 ];
 const phaseOptions = [
