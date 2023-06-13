@@ -17,7 +17,7 @@ import {
 
 const UserModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ title: '', content: '' });
+  const [contents, setContents] = useState({ name: '', email: '', password: '' });
   const firstInput = useRef(null);
 
   const handleUpdatable = () => {
@@ -31,10 +31,10 @@ const UserModal = ({ id, handleModalCancelClick }) => {
     setContents(() => newContent);
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = (email) => {
     const result = confirm('수정하시겠습니까?');
     if (result) {
-      updateNotification(id, contents);
+      updateNotification(email);
       handleUpdatable();
       handleModalCancelClick();
     }
@@ -50,13 +50,13 @@ const UserModal = ({ id, handleModalCancelClick }) => {
     () => fetchReadUserInfoDetail(id),
     {
       onSuccess(data) {
-        setContents({ title: data.title, content: data.content });
+        setContents({ name: data.name, email: data.email, password: '' });
       },
     }
   );
 
   const { mutate: updateNotification, error: updateError } = useMutation(
-    async (id) => await fetchUpdateUser(id, contents),
+    async (email) => await fetchUpdateUser(email, contents),
     {
       onError(updateError) {
         console.error(updateError);
@@ -74,7 +74,7 @@ const UserModal = ({ id, handleModalCancelClick }) => {
       <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
-          <ModalTitle className='modal-title'>공지 정보</ModalTitle>
+          <ModalTitle className='modal-title'>사용자 정보</ModalTitle>
           <ModalHeaderButton
             className='modal-button-update'
             onClick={handleUpdatable}
@@ -85,26 +85,35 @@ const UserModal = ({ id, handleModalCancelClick }) => {
           </ModalHeaderButton>
         </ModalHeader>
 
-        <ModalSubTitle>관리자</ModalSubTitle>
-        <ModalContentP>{data.Admin.name}</ModalContentP>
-        <ModalSubTitle>제목</ModalSubTitle>
+        <ModalSubTitle>이메일</ModalSubTitle>
         <ModalContentInput
-          value={contents.title}
+          value={contents.email}
           onChange={handleChangeContents}
-          name='title'
+          name='email'
           readOnly={!updatable}
           ref={firstInput}
         />
-        <ModalSubTitle>내용</ModalSubTitle>
+        <ModalSubTitle>이름</ModalSubTitle>
         <ModalContentInput
-          value={contents.content}
+          value={contents.name}
           onChange={handleChangeContents}
-          name='content'
+          name='name'
+          readOnly={!updatable}
+        />
+        <ModalSubTitle>비밀번호</ModalSubTitle>
+        <ModalContentInput
+          value={contents.password}
+          onChange={handleChangeContents}
+          name='password'
           readOnly={!updatable}
         />
 
         <ModalButtonBlock className='modal-button-block'>
-          <ModalButton className='modal-button-submit' onClick={handleUpdate} $purple>
+          <ModalButton
+            className='modal-button-submit'
+            onClick={() => handleUpdate(contents.email)}
+            $purple
+          >
             수정
           </ModalButton>
           <ModalButton className='modal-button-ok' onClick={handleCloseModal}>

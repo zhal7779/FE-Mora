@@ -16,8 +16,9 @@ import {
 } from '../styledComponents/ModalComponents';
 
 const TrackModal = ({ trackData, handleModalCancelClick }) => {
+  console.log(trackData);
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ name: '', phase: '' });
+  const [contents, setContents] = useState({ name: trackData.name, phase: trackData.phase });
   const firstInput = useRef(null);
 
   const handleUpdatable = () => {
@@ -34,7 +35,7 @@ const TrackModal = ({ trackData, handleModalCancelClick }) => {
   const handleUpdate = () => {
     const result = confirm('수정하시겠습니까?');
     if (result) {
-      updateTrack(id, contents);
+      updateTrack();
       handleUpdatable();
       handleModalCancelClick();
     }
@@ -45,27 +46,14 @@ const TrackModal = ({ trackData, handleModalCancelClick }) => {
     setUpdatable(false);
   };
 
-  const { data, isLoading, error } = useQuery(
-    ['admin', 'track', 'detail', 'get'],
-    () => fetchReadTrackInfoDetail(id),
-    {
-      onSuccess(data) {
-        setContents({ title: data.title, content: data.content });
-      },
-    }
-  );
-
   const { mutate: updateTrack, error: updateError } = useMutation(
-    async (id) => await fetchUpdateTrack(id, contents),
+    async () => await fetchUpdateTrack(trackData.id, contents),
     {
       onError(updateError) {
         console.error(updateError);
       },
     }
   );
-
-  if (isLoading) return <span>로딩중...</span>;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
@@ -85,13 +73,11 @@ const TrackModal = ({ trackData, handleModalCancelClick }) => {
           </ModalHeaderButton>
         </ModalHeader>
 
-        <ModalSubTitle>관리자</ModalSubTitle>
-        <ModalContentP>{data.Admin.name}</ModalContentP>
         <ModalSubTitle>트랙명</ModalSubTitle>
         <ModalContentInput
           value={contents.name}
           onChange={handleChangeContents}
-          name='title'
+          name='name'
           readOnly={!updatable}
           ref={firstInput}
         />
@@ -99,9 +85,8 @@ const TrackModal = ({ trackData, handleModalCancelClick }) => {
         <ModalContentInput
           value={contents.phase}
           onChange={handleChangeContents}
-          name='title'
+          name='phase'
           readOnly={!updatable}
-          ref={firstInput}
         />
 
         <ModalButtonBlock className='modal-button-block'>
