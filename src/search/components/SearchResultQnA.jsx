@@ -6,10 +6,10 @@ import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 
-const SearchResultQnA = ({ data, receiveMenu }) => {
+const SearchResultQnA = ({ data, count, receiveMenu }) => {
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
-    receiveMenu(4);
+    receiveMenu(6);
   };
   return (
     <Container>
@@ -17,7 +17,7 @@ const SearchResultQnA = ({ data, receiveMenu }) => {
         <Style.AddView>
           <div>
             <p className='title'>레이서 Q&A</p>
-            <p className='total_count'>18</p>
+            <p className='total_count'>{count}</p>
           </div>
           <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
             <p className='all_view'>모두 보기</p>
@@ -40,11 +40,11 @@ const SearchResultQnA = ({ data, receiveMenu }) => {
           </div>
           <div className='hashtags'>
             {item.hashtags.map((hashtag, index) => (
-              <h3 key={index}>#{hashtag}</h3>
+              <h3 key={index}>#{hashtag.title}</h3>
             ))}
           </div>
           <div className='sub_content'>
-            <p>댓글 {item.view_cnt}</p>
+            <p>댓글 {item.comment_cnt}</p>
             <div>
               <p>좋아요 {item.like_cnt}</p>
               <p>조회 {item.view_cnt}</p>
@@ -62,6 +62,7 @@ const Container = styled.section`
   width: 700px;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
+  height: 100%;
   background: #ffffff;
 `;
 const Content = styled.div`
