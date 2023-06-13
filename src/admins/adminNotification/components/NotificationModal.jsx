@@ -1,20 +1,20 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
+import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/notificationApis';
 
 import {
-  ModalOverlay,
-  ModalContentBlock,
   ModalTitle,
+  ModalHeader,
+  ModalButton,
+  ModalOverlay,
   ModalSubTitle,
   ModalContentP,
-  ModalContentInput,
-  ModalContentTextarea,
   ModalButtonBlock,
-  ModalHeader,
+  ModalContentInput,
+  ModalContentBlock,
   ModalHeaderButton,
-  ModalButton,
+  ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
-import { fetchReadNotificationInfoDetail, fetchUpdateNotification } from '../apis/postApi';
 
 const NotificationModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
@@ -32,6 +32,20 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
     setContents(() => newContent);
   };
 
+  const handleUpdate = () => {
+    const result = confirm('수정하시겠습니까?');
+    if (result) {
+      updateNotification(id, contents);
+      handleUpdatable();
+      handleModalCancelClick();
+    }
+  };
+
+  const handleCloseModal = () => {
+    handleModalCancelClick();
+    setUpdatable(false);
+  };
+
   const { data, isLoading, error } = useQuery(
     ['admin', 'notification', 'detail', 'get'],
     () => fetchReadNotificationInfoDetail(id),
@@ -46,7 +60,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
     async (id) => await fetchUpdateNotification(id, contents),
     {
       onError(updateError) {
-        console.log(updateError);
+        console.error(updateError);
       },
     }
   );
@@ -58,11 +72,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
 
   return (
     <>
-      <ModalOverlay
-        onClick={() => {
-          handleModalCancelClick();
-        }}
-      />
+      <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
           <ModalTitle className='modal-title'>공지 정보</ModalTitle>
@@ -76,48 +86,29 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
           </ModalHeaderButton>
         </ModalHeader>
 
-        <>
-          <ModalSubTitle>관리자</ModalSubTitle>
-          <ModalContentP>{data.Admin.name}</ModalContentP>
-          <ModalSubTitle>제목</ModalSubTitle>
-          <ModalContentInput
-            value={contents.title}
-            onChange={handleChangeContents}
-            name='title'
-            readOnly={!updatable}
-            ref={firstInput}
-          />
-          <ModalSubTitle>내용</ModalSubTitle>
-          <ModalContentTextarea
-            value={contents.content}
-            onChange={handleChangeContents}
-            name='content'
-            readOnly={!updatable}
-          />
-        </>
+        <ModalSubTitle>관리자</ModalSubTitle>
+        <ModalContentP>{data.Admin.name}</ModalContentP>
+        <ModalSubTitle>제목</ModalSubTitle>
+        <ModalContentInput
+          value={contents.title}
+          onChange={handleChangeContents}
+          name='title'
+          readOnly={!updatable}
+          ref={firstInput}
+        />
+        <ModalSubTitle>내용</ModalSubTitle>
+        <ModalContentTextarea
+          value={contents.content}
+          onChange={handleChangeContents}
+          name='content'
+          readOnly={!updatable}
+        />
 
         <ModalButtonBlock className='modal-button-block'>
-          <ModalButton
-            className='modal-button-submit'
-            onClick={() => {
-              const result = confirm('수정하시겠습니까?');
-              if (result) {
-                updateNotification(id, contents);
-                handleUpdatable();
-                handleModalCancelClick();
-              }
-            }}
-            $purple
-          >
+          <ModalButton className='modal-button-submit' onClick={handleUpdate} $purple>
             수정
           </ModalButton>
-          <ModalButton
-            className='modal-button-ok'
-            onClick={() => {
-              handleModalCancelClick();
-              setUpdatable(false);
-            }}
-          >
+          <ModalButton className='modal-button-ok' onClick={handleCloseModal}>
             확인
           </ModalButton>
         </ModalButtonBlock>

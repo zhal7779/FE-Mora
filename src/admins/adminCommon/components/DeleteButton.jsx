@@ -1,5 +1,3 @@
-import React from 'react';
-
 const DeleteButton = ({ onClick }) => {
   return (
     <span style={{ cursor: 'pointer' }}>
