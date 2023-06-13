@@ -181,6 +181,10 @@ export const DetailContainer = styled.section`
     transition: 0.2s;
     cursor: pointer;
 
+    &.disabled {
+      background: #cdcdd8;
+    }
+
     img {
       margin-right: 10px;
     }
