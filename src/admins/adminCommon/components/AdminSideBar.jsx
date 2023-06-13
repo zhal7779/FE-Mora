@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { SideBar } from '../styledComponents/AdminSideBarStyle';
 import {
   UserButton,
@@ -32,18 +33,6 @@ const AdminSideBar = ({ nowCategoryName }) => {
               title={'사용자 관리'}
             />
           </Link>
-          <Link to='/admin/reports'>
-            <ReportButton
-              nowCategory={nowCategoryName === REPORT_BUTTON && true}
-              title={'신고 관리'}
-            />
-          </Link>
-          <Link to='/admin/posts'>
-            <PostsButton
-              nowCategory={nowCategoryName === POSTS_BUTTON && true}
-              title={'게시물 관리'}
-            />
-          </Link>
           <Link to='/admin/notifications'>
             <NotificationButton
               nowCategory={nowCategoryName === NOTIFICATION_BUTTON && true}
@@ -57,6 +46,12 @@ const AdminSideBar = ({ nowCategoryName }) => {
             <TrackButton
               nowCategory={nowCategoryName === TRACK_BUTTON && true}
               title={'트랙 관리'}
+            />
+          </Link>
+          <Link to='/admin/posts'>
+            <PostsButton
+              nowCategory={nowCategoryName === POSTS_BUTTON && true}
+              title={'게시물 관리'}
             />
           </Link>
         </div>
