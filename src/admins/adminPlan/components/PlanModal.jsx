@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { fetchReadTrackInfoDetail, fetchUpdateTrack } from '../apis/trackApis';
+import { fetchReadPlanInfoDetail, fetchUpdatePlan } from '../apis/planApis';
 
 import {
   ModalTitle,
@@ -13,11 +13,18 @@ import {
   ModalContentInput,
   ModalContentBlock,
   ModalHeaderButton,
+  ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
-const TrackModal = ({ id, handleModalCancelClick }) => {
+const PlanModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ name: '', phase: '' });
+  const [contents, setContents] = useState({
+    title: '',
+    content: '',
+    startDate: '',
+    endDate: '',
+    links: '',
+  });
   const firstInput = useRef(null);
 
   const handleUpdatable = () => {
@@ -26,15 +33,19 @@ const TrackModal = ({ id, handleModalCancelClick }) => {
   };
 
   const handleChangeContents = (e) => {
-    const newContent = { ...contents };
-    newContent[e.target.name] = e.target.value;
-    setContents(() => newContent);
+    const changedValue = e.target.name;
+    const newContents = {
+      ...contents,
+    };
+    newContents[changedValue] = e.target.value;
+
+    setContents(newContents);
   };
 
   const handleUpdate = () => {
     const result = confirm('수정하시겠습니까?');
     if (result) {
-      updateTrack(id, contents);
+      updateNotification(id, contents);
       handleUpdatable();
       handleModalCancelClick();
     }
@@ -46,17 +57,27 @@ const TrackModal = ({ id, handleModalCancelClick }) => {
   };
 
   const { data, isLoading, error } = useQuery(
-    ['admin', 'track', 'detail', 'get'],
-    () => fetchReadTrackInfoDetail(id),
+    ['admin', 'notification', 'detail', 'get'],
+    () => fetchReadPlanInfoDetail(id),
     {
       onSuccess(data) {
-        setContents({ title: data.title, content: data.content });
+        let newLinks = '';
+        data.PlanLinks.map((link) => {
+          newLinks += `${link.url}\n`;
+        });
+        setContents({
+          title: data.title,
+          content: data.content,
+          startDate: data.start_date.slice(0, 10),
+          endDate: data.end_date.slice(0, 10),
+          links: newLinks,
+        });
       },
     }
   );
 
-  const { mutate: updateTrack, error: updateError } = useMutation(
-    async (id) => await fetchUpdateTrack(id, contents),
+  const { mutate: updateNotification, error: updateError } = useMutation(
+    async (id) => await fetchUpdatePlan(id, contents),
     {
       onError(updateError) {
         console.error(updateError);
@@ -74,7 +95,7 @@ const TrackModal = ({ id, handleModalCancelClick }) => {
       <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
-          <ModalTitle className='modal-title'>트랙 정보</ModalTitle>
+          <ModalTitle className='modal-title'>일정 정보</ModalTitle>
           <ModalHeaderButton
             className='modal-button-update'
             onClick={handleUpdatable}
@@ -87,21 +108,43 @@ const TrackModal = ({ id, handleModalCancelClick }) => {
 
         <ModalSubTitle>관리자</ModalSubTitle>
         <ModalContentP>{data.Admin.name}</ModalContentP>
-        <ModalSubTitle>트랙명</ModalSubTitle>
+        <ModalSubTitle>제목</ModalSubTitle>
         <ModalContentInput
-          value={contents.name}
+          value={contents.title}
           onChange={handleChangeContents}
           name='title'
           readOnly={!updatable}
           ref={firstInput}
         />
-        <ModalSubTitle>기수</ModalSubTitle>
-        <ModalContentInput
-          value={contents.phase}
+        <ModalSubTitle>내용</ModalSubTitle>
+        <ModalContentTextarea
+          value={contents.content}
           onChange={handleChangeContents}
-          name='title'
+          name='content'
           readOnly={!updatable}
-          ref={firstInput}
+        />
+        <ModalSubTitle>시작일</ModalSubTitle>
+        <ModalContentInput
+          type='date'
+          value={contents.startDate}
+          onChange={handleChangeContents}
+          name='startDate'
+          readOnly={!updatable}
+        />
+        <ModalSubTitle>종료일</ModalSubTitle>
+        <ModalContentInput
+          type='date'
+          value={contents.endDate}
+          onChange={handleChangeContents}
+          name='endDate'
+          readOnly={!updatable}
+        />
+        <ModalSubTitle>링크</ModalSubTitle>
+        <ModalContentTextarea
+          value={contents.links}
+          onChange={handleChangeContents}
+          name='links'
+          readOnly={!updatable}
         />
 
         <ModalButtonBlock className='modal-button-block'>
@@ -117,4 +160,4 @@ const TrackModal = ({ id, handleModalCancelClick }) => {
   );
 };
 
-export default TrackModal;
+export default PlanModal;

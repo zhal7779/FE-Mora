@@ -2,15 +2,20 @@ import { useState } from 'react';
 
 import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
 
-const SearchBar = ({ placeholder }) => {
-  const [keyword, setKeyword] = useState('');
+const SearchBar = ({ placeholder, setKeyword }) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleKeyDown = (e) => {
-    setKeyword(e.target.value);
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setKeyword(searchTerm);
   };
 
   return (
-    <SearchBarBlock onSubmit={() => {}}>
+    <SearchBarBlock onSubmit={handleSubmit}>
       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'>
         <path
           fill='#94A3B8'
@@ -21,8 +26,8 @@ const SearchBar = ({ placeholder }) => {
       <SearchBarInput
         type='text'
         placeholder={placeholder}
-        value={keyword}
-        onChange={handleKeyDown}
+        value={searchTerm}
+        onChange={handleChange}
       />
     </SearchBarBlock>
   );

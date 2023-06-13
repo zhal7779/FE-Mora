@@ -12,13 +12,16 @@ align-items: center;
 & > span {
 	font-size: 1.4rem;
 }`;
-const TableRowInfo = styled.div`
+export const TableRowInfo = styled.div`
   ${tableRowSetting}
   border-bottom: 1px solid #000;
 
   font-weight: 'bold';
 `;
-const NotificationInfo = styled.li`
+export const NotificationListBlock = styled.ul`
+  min-height: 61.5rem;
+`;
+export const NotificationInfo = styled.li`
   ${tableRowSetting}
   border-bottom: 1px solid #d6c9ff;
 
@@ -35,11 +38,22 @@ const NotificationInfo = styled.li`
     white-space: nowrap;
   }
 `;
-const TableTitle = styled.h2`
+export const TableTitleBlock = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+`;
+export const TableTitle = styled.h2`
   font-size: 1.8rem;
   font-weight: bold;
 `;
-const DetailBtn = styled.button`
+export const TableSearchResult = styled.h3`
+  font-size: 1.6rem;
+  font-weight: 500;
+
+  color: #aeaeae;
+`;
+export const DetailBtn = styled.button`
   padding: 0.7rem 1rem 0.6rem 1rem;
   border: 1px solid #d9d9d9;
   border-radius: 0.4rem;
@@ -50,14 +64,14 @@ const DetailBtn = styled.button`
 `;
 
 // 페이지네이션
-const PageNationBlock = styled.div`
+export const PageNationBlock = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 6rem;
+  margin-top: 5.5rem;
   margin-bottom: 10rem;
 `;
-const PageNationBlockBtn = styled.button`
+export const PageNationBlockBtn = styled.button`
   width: 3rem;
   height: 3rem;
   padding-left: 0.1rem;
@@ -81,23 +95,12 @@ const PageNationBlockBtn = styled.button`
     color: #ffffff;
   }
 `;
-const MainContentHeaderBlock = styled.div`
+export const MainContentHeaderBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
 `;
-const EnrollButton = styled(ModalButton)`
+export const EnrollButton = styled(ModalButton)`
   padding: 0.7rem 1.5rem;
 `;
-
-export {
-  TableRowInfo,
-  TableTitle,
-  NotificationInfo,
-  DetailBtn,
-  PageNationBlock,
-  PageNationBlockBtn,
-  MainContentHeaderBlock,
-  EnrollButton,
-};

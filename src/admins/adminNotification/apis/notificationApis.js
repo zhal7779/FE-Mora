@@ -1,10 +1,11 @@
 const domainPort = 'http://15.164.221.244:5000';
-const adminToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1ZDI4M2Q2LTU1ZmUtNGI0Yi1iMGFjLTI5MGFlMGZlM2I1ZCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjI4OTMwN30.U9rOuWLMkoYjPqVK8pGqwlEt1Kcu21o6IGjHzIUah4Y`;
+const adminToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRhNzg4OGI0LTliMWMtNDhmMy04Zjc4LTkyZWI4ODgxZDdiOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjY0NDc2Nn0.lrsJDeO4V6O0ohBNW3UZ7R4S8nEx7wjq7I80HB6agsw';
 
 // READ
-const fetchReadNotificationInfo = async (page, size, keyword) => {
+export const fetchReadNotificationInfo = async (page, size, keyword) => {
   const response = await fetch(
-    `${domainPort}/api/notices/admin?page=${page}&size=${size}&keyword=${keyword}`,
+    `${domainPort}/api/notices?page=${page}&size=${size}&keyword=${keyword}`,
     {
       headers: { Authorization: `Bearer ${adminToken}` },
     }
@@ -14,7 +15,7 @@ const fetchReadNotificationInfo = async (page, size, keyword) => {
   return data;
 };
 
-const fetchReadNotificationInfoDetail = async (id) => {
+export const fetchReadNotificationInfoDetail = async (id) => {
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -24,7 +25,7 @@ const fetchReadNotificationInfoDetail = async (id) => {
 };
 
 // CREATE
-const fetchCreateNotification = async (newNotification) => {
+export const fetchCreateNotification = async (newNotification) => {
   const response = await fetch(`${domainPort}/api/notices`, {
     method: 'POST',
     headers: {
@@ -39,7 +40,7 @@ const fetchCreateNotification = async (newNotification) => {
 };
 
 // UPDATE
-const fetchUpdateNotification = async (id, newNotification) => {
+export const fetchUpdateNotification = async (id, newNotification) => {
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     method: 'PATCH',
     headers: {
@@ -55,7 +56,7 @@ const fetchUpdateNotification = async (id, newNotification) => {
 };
 
 // DELETE
-const fetchDeleteNotification = async (id) => {
+export const fetchDeleteNotification = async (id) => {
   const response = fetch(`${domainPort}/api/notices/${id}`, {
     method: 'DELETE',
     headers: {
@@ -64,12 +65,4 @@ const fetchDeleteNotification = async (id) => {
   });
 
   return response.status;
-};
-
-export {
-  fetchReadNotificationInfo,
-  fetchReadNotificationInfoDetail,
-  fetchCreateNotification,
-  fetchUpdateNotification,
-  fetchDeleteNotification,
 };

@@ -1,39 +1,67 @@
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { fetchReadUserInfo } from '../apis/userApis';
 
+import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
-// import PageNation from '../../adminCommon/components/PageNation';
-import EnrollModal from './EnrollModal copy';
+import SearchBar from '../../adminCommon/components/SearchBar';
+import PageNation from '../../adminCommon/components/PageNation';
 import {
   EnrollButton,
   MainContentHeaderBlock,
+  TableSearchResult,
   TableTitle,
+  TableTitleBlock,
 } from '../styledComponents/TableComponent';
 
 const AdminTable = () => {
   const [enrollModal, setEnrollModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [keyword, setKeyword] = useState('');
 
   const toggleEnrollModal = () => {
     setEnrollModal(!enrollModal);
   };
 
-  const totalNumber = 30,
-    numberByPage = 14;
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'user', 'get', currentPage, keyword],
+    async () => await fetchReadUserInfo(currentPage, 12, keyword)
+  );
+
+  if (isLoading) return <span>로딩중...</span>;
+  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
-    <div>
+    <>
+      <SearchBar placeholder={'사용자 이름 검색'} setKeyword={setKeyword} />
+
       <MainContentHeaderBlock>
-        <TableTitle className='table-title'>사용자 목록</TableTitle>
+        <TableTitleBlock>
+          <TableTitle className='table-title'>사용자 관리</TableTitle>
+          {keyword && <TableSearchResult>'{keyword}' 검색결과</TableSearchResult>}
+        </TableTitleBlock>
         <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
-          등록
+          생성
         </EnrollButton>
-        {enrollModal && <EnrollModal enrollModal={true} toggleEnrollModal={toggleEnrollModal} />}
+        {enrollModal && (
+          <EnrollModal
+            title={'사용자 등록'}
+            enrollModal={enrollModal}
+            toggleEnrollModal={toggleEnrollModal}
+          />
+        )}
       </MainContentHeaderBlock>
 
       <AdminTableHead />
-      <AdminTableBody />
-      <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} />
-    </div>
+      <AdminTableBody users={data.objArr} />
+
+      <PageNation
+        totalPages={data.totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    </>
   );
 };
 

@@ -1,46 +1,23 @@
 import { useRef, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { fetchReadUserInfoDetail, fetchUpdateUser } from '../apis/userApis';
+
 import {
-  ModalOverlay,
-  ModalContentBlock,
   ModalTitle,
+  ModalHeader,
+  ModalButton,
+  ModalOverlay,
   ModalSubTitle,
-  ModalContentInput,
   ModalContentP,
   ModalButtonBlock,
-  ModalHeader,
+  ModalContentInput,
+  ModalContentBlock,
   ModalHeaderButton,
-  ModalButton,
 } from '../styledComponents/ModalComponents';
 
-const UserModal = ({ 인포, modal, toggleModal }) => {
-  // 밖으로 뺄 거
-  const info = [
-    {
-      type: 'name',
-      subTitle: '이름',
-      contentValue: '임지성',
-    },
-    {
-      type: 'email',
-      subTitle: '이메일',
-      contentValue: 'jisung9105@gmail.com',
-    },
-    {
-      type: 'password',
-      subTitle: '비밀번호',
-      contentValue: 'dkssudgktpdy11334^^&&',
-    },
-    {
-      type: 'createdDate',
-      subTitle: '가입 날짜',
-      contentValue: '2023.06.02',
-    },
-  ];
-  const modalTitle = '사용자 정보';
-  const modalFeature = '수정하기';
-
+const UserModal = ({ id, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState(info);
+  const [contents, setContents] = useState({ title: '', content: '' });
   const firstInput = useRef(null);
 
   const handleUpdatable = () => {
@@ -49,75 +26,92 @@ const UserModal = ({ 인포, modal, toggleModal }) => {
   };
 
   const handleChangeContents = (e) => {
-    const idx = e.target.alt;
-    const newContents = [...contents];
-    newContents[idx].contentValue = e.target.value;
-    setContents(newContents);
+    const newContent = { ...contents };
+    newContent[e.target.name] = e.target.value;
+    setContents(() => newContent);
   };
+
+  const handleUpdate = () => {
+    const result = confirm('수정하시겠습니까?');
+    if (result) {
+      updateNotification(id, contents);
+      handleUpdatable();
+      handleModalCancelClick();
+    }
+  };
+
+  const handleCloseModal = () => {
+    handleModalCancelClick();
+    setUpdatable(false);
+  };
+
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'notification', 'detail', 'get'],
+    () => fetchReadUserInfoDetail(id),
+    {
+      onSuccess(data) {
+        setContents({ title: data.title, content: data.content });
+      },
+    }
+  );
+
+  const { mutate: updateNotification, error: updateError } = useMutation(
+    async (id) => await fetchUpdateUser(id, contents),
+    {
+      onError(updateError) {
+        console.error(updateError);
+      },
+    }
+  );
+
+  if (isLoading) return <span>로딩중...</span>;
+  if (error) return <span>An error has occurred: {error.message}</span>;
+
+  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
   return (
     <>
-      {modal && (
-        <>
-          <ModalOverlay onClick={toggleModal} />
-          <ModalContentBlock className='modal-content-block'>
-            <ModalHeader className='modal-header'>
-              <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
-              <ModalHeaderButton
-                className='modal-button-update'
-                onClick={handleUpdatable}
-                $purple
-                $header
-              >
-                {modalFeature}
-              </ModalHeaderButton>
-            </ModalHeader>
-            <div>
-              {contents.map((content, idx) => {
-                if (content.type !== 'createdDate') {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
-                      <ModalContentInput
-                        type='text'
-                        value={content.contentValue}
-                        className='modal-content'
-                        onChange={handleChangeContents}
-                        readOnly={!updatable}
-                        alt={idx}
-                        ref={idx === 0 ? firstInput : null}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>가입 날짜</ModalSubTitle>
-                      <ModalContentP className='modal-content'>
-                        {content.contentValue}
-                      </ModalContentP>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-            <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' $purple>
-                {modalFeature.slice(0, 2)}
-              </ModalButton>
-              <ModalButton
-                className='modal-button-ok'
-                onClick={() => {
-                  setUpdatable(false);
-                  toggleModal();
-                }}
-              >
-                확인
-              </ModalButton>
-            </ModalButtonBlock>
-          </ModalContentBlock>
-        </>
-      )}
+      <ModalOverlay onClick={handleModalCancelClick} />
+      <ModalContentBlock className='modal-content-block'>
+        <ModalHeader className='modal-header'>
+          <ModalTitle className='modal-title'>공지 정보</ModalTitle>
+          <ModalHeaderButton
+            className='modal-button-update'
+            onClick={handleUpdatable}
+            $purple
+            $header
+          >
+            수정하기
+          </ModalHeaderButton>
+        </ModalHeader>
+
+        <ModalSubTitle>관리자</ModalSubTitle>
+        <ModalContentP>{data.Admin.name}</ModalContentP>
+        <ModalSubTitle>제목</ModalSubTitle>
+        <ModalContentInput
+          value={contents.title}
+          onChange={handleChangeContents}
+          name='title'
+          readOnly={!updatable}
+          ref={firstInput}
+        />
+        <ModalSubTitle>내용</ModalSubTitle>
+        <ModalContentInput
+          value={contents.content}
+          onChange={handleChangeContents}
+          name='content'
+          readOnly={!updatable}
+        />
+
+        <ModalButtonBlock className='modal-button-block'>
+          <ModalButton className='modal-button-submit' onClick={handleUpdate} $purple>
+            수정
+          </ModalButton>
+          <ModalButton className='modal-button-ok' onClick={handleCloseModal}>
+            확인
+          </ModalButton>
+        </ModalButtonBlock>
+      </ModalContentBlock>
     </>
   );
 };

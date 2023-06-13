@@ -6,6 +6,7 @@ export const Container = styled.section`
   margin-top: 6rem;
   padding: 3.8rem 0;
   gap: 2rem;
+
   .header_title {
     display: flex;
     justify-content: space-between;
@@ -23,7 +24,47 @@ export const Container = styled.section`
       margin-right: 2rem;
     }
   }
+  .no_data {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-size: 1.6rem;
+      color: #616161;
+    }
+  }
 `;
+
+export const InputContainer = styled.div`
+  position: relative;
+  width: ${({ width }) => width};
+`;
+export const InputElement = styled.input`
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  padding-left: 40px;
+  border: 1px solid #d8e0e9;
+  border-radius: 4px;
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  color: #242424;
+`;
+
+export const SearchIcon = styled.img`
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+`;
+
 export const Content = styled.div`
   width: 100%;
 

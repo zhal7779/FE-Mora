@@ -61,6 +61,22 @@ export const Content = styled.div`
 export const Main = styled.div`
   height: 100%;
   padding: 9rem 0 0 0;
+
+  .no_schedule {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    img {
+      width: 25rem;
+      margin-bottom: 3rem;
+    }
+    p {
+      font-size: 1.6rem;
+      color: #616161;
+    }
+  }
   .main {
     background: #eeeafe;
     border-radius: 10px;
@@ -90,6 +106,20 @@ export const Main = styled.div`
           color: #242424;
           font-size: 1.4rem;
           line-height: 140%;
+          .link_box {
+            background: #f1f0f7;
+            border-radius: 4px;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            a {
+              display: inline;
+              color: #4700a8;
+
+              &:hover {
+                color: #6700eb;
+              }
+            }
+          }
         }
       }
     }

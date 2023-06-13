@@ -1,21 +1,24 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { fetchDeleteNotification } from '../apis/postApi';
+import { useMutation } from 'react-query';
+import { fetchDeleteNotification } from '../apis/notificationApis';
 
-import DeleteButton from './DeleteButton';
 import NotificationModal from './NotificationModal';
-import { DetailBtn, NotificationInfo } from '../styledComponents/TableComponent';
+import DeleteButton from '../../adminCommon/components/DeleteButton';
+import {
+  DetailBtn,
+  NotificationInfo,
+  NotificationListBlock,
+} from '../styledComponents/TableComponent';
 
 const AdminTableBody = ({ notifications }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalNotificationId, setModalNotificationId] = useState('');
-  const queryClient = useQueryClient();
 
   const handleDelete = (id) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteNotification(id);
-      setModal(false);
+      setIsModalOpen(false);
     }
   };
 
@@ -29,18 +32,15 @@ const AdminTableBody = ({ notifications }) => {
   };
 
   const { mutate: deleteNotification, error } = useMutation((id) => fetchDeleteNotification(id), {
-    onSuccess() {
-      queryClient.invalidateQueries(['admin', 'notification', 'get']);
-    },
     onError(error) {
-      console.log(error);
+      console.error(error);
     },
   });
 
   if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
-    <ul className='user-info-list'>
+    <NotificationListBlock className='user-info-list'>
       {notifications.map((data, idx) => {
         return (
           <NotificationInfo className='user-info' key={idx}>
@@ -53,11 +53,7 @@ const AdminTableBody = ({ notifications }) => {
                 보기
               </DetailBtn>
             </span>
-            <DeleteButton
-              onClick={() => {
-                handleDelete(data.id);
-              }}
-            />
+            <DeleteButton onClick={() => handleDelete(data.id)} />
           </NotificationInfo>
         );
       })}
@@ -67,7 +63,7 @@ const AdminTableBody = ({ notifications }) => {
           handleModalCancelClick={handleModalCancelClick}
         />
       )}
-    </ul>
+    </NotificationListBlock>
   );
 };
 
