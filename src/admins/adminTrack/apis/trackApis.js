@@ -1,6 +1,5 @@
-const domainPort = 'http://15.164.221.244:5000';
-const adminToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRhNzg4OGI0LTliMWMtNDhmMy04Zjc4LTkyZWI4ODgxZDdiOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY4NjY0NDc2Nn0.lrsJDeO4V6O0ohBNW3UZ7R4S8nEx7wjq7I80HB6agsw';
+const domainPort = process.env.REACT_APP_URL;
+const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
 
 // READ
 export const fetchReadTrackInfo = async (page, size, keyword) => {
