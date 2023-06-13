@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/PostDetailStyle';
 import IconLike from '../assets/icons/icon-like.svg';
@@ -11,7 +11,7 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 const PostDetail = ({ postId }) => {
   const [postOption, setPostOption] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(null);
   const { status, data, error } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
@@ -44,10 +44,31 @@ const PostDetail = ({ postId }) => {
     }
   });
 
-  // 좋아요 등록 api
-  const addLike = async () => {
+  useEffect(() => {
+    fetchLikeStatus();
+  }, []);
+
+  // 좋아요 조회 api
+  const fetchLikeStatus = async () => {
     const response = await fetch(`${BASE_URL}api/likes`, {
-      method: 'POST',
+      headers: {
+        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('좋아요 상태를 가져오는데 실패했습니다.');
+    }
+
+    const result = await response.json();
+    console.log(result);
+    setIsLiked(result.isLiked);
+  };
+
+  // 좋아요 등록, 취소 api
+  const toggleLike = async () => {
+    const response = await fetch(`${BASE_URL}api/likes`, {
+      method: isLiked ? 'DELETE' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${sessionStorage.getItem('userToken')}`
@@ -55,46 +76,47 @@ const PostDetail = ({ postId }) => {
       body: JSON.stringify({ board_id: postId })
     });
     if (!response.ok) {
-      throw new Error('좋아요 등록에 실패했습니다.');
+      throw new Error('좋아요 처리에 실패했습니다.');
     }
 
+    setIsLiked(!isLiked);
     return await response.json();
   };
 
-  const { mutate: addLikeMutate } = useMutation(addLike, {
-    onSuccess: () => {
-      console.log('좋아요를 눌렀습니다!');
-    },
-    onError: error => {
-      console.error(error);
-    }
-  });
+  // const { mutate: addLikeMutate } = useMutation(addLike, {
+  //   onSuccess: () => {
+  //     console.log('좋아요를 눌렀습니다!');
+  //   },
+  //   onError: error => {
+  //     console.error(error);
+  //   }
+  // });
 
   // 좋아요 삭제 api
-  const deleteLike = async () => {
-    const response = await fetch(`${BASE_URL}api/likes`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-      },
-      body: JSON.stringify({ board_id: postId })
-    });
-    if (!response.ok) {
-      throw new Error('좋아요 취소에 실패했습니다.');
-    }
+  // const deleteLike = async () => {
+  //   const response = await fetch(`${BASE_URL}api/likes`, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+  //     },
+  //     body: JSON.stringify({ board_id: postId })
+  //   });
+  //   if (!response.ok) {
+  //     throw new Error('좋아요 취소에 실패했습니다.');
+  //   }
 
-    return await response.json();
-  };
+  //   return await response.json();
+  // };
 
-  const { mutate: deleteLikeMutate } = useMutation(deleteLike, {
-    onSuccess: () => {
-      console.log('좋아요를 취소했습니다ㅜㅜ');
-    },
-    onError: error => {
-      console.error(error);
-    }
-  });
+  // const { mutate: deleteLikeMutate } = useMutation(deleteLike, {
+  //   onSuccess: () => {
+  //     console.log('좋아요를 취소했습니다ㅜㅜ');
+  //   },
+  //   onError: error => {
+  //     console.error(error);
+  //   }
+  // });
 
   // 게시글 삭제 핸들러
   const handleDeletePost = () => {
@@ -111,14 +133,14 @@ const PostDetail = ({ postId }) => {
   };
 
   // 좋아요 등록/삭제 핸들러
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    if (isLiked) {
-      addLikeMutate();
-    } else {
-      deleteLikeMutate();
-    }
-  };
+  // const handleToggleLike = () => {
+  //   setIsLiked(!isLiked);
+  //   if (isLiked) {
+  //     addLikeMutate();
+  //   } else {
+  //     deleteLikeMutate();
+  //   }
+  // };
 
   if (status === 'loading') {
     return <Style.Status>Loading...⏳</Style.Status>;
@@ -176,8 +198,8 @@ const PostDetail = ({ postId }) => {
           </ul>
         )}
         <div className="content-text">{data.content}</div>
-        <button className="like-btn">
-          <img src={IconLike} alt="좋아요" onClick={handleLike} />
+        <button className={`like-btn ${isLiked ? '' : 'disabled'}`}>
+          <img src={IconLike} alt="좋아요" onClick={toggleLike} />
           {isLiked ? data.like_cnt + 1 : data.like_cnt}
         </button>
       </div>
