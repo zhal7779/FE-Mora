@@ -1,35 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as LeftIcon } from '../../assets/icons/fi_chevron-left.svg';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import * as Style from '../styleComponents/CalendarModal';
-const CalendarModal = ({ onModal }) => {
+import rabbitImg from '../../assets/images/rabbitStudyng.png';
+import { addDays, subDays, format } from 'date-fns';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchScheduleYMD } from '../api/scheduleApi';
+
+const CalendarModal = ({ onModal, date }) => {
+  //모달 종료
   const handleClickClose = () => {
     onModal(false);
   };
-  const data = [
-    {
-      title: '직무멘토링 강의 자료 업로드 안내 & 만족도 조사',
-      term: '5월 26일 (금) 밤 12시까지',
-      contnet:
-        '지난주 5/24, 5/26 진행된 직무멘토링 강의자료가 업로드 되었습니다. 참여하신 분들은 만족도 조사 진행해주세요!',
-      link: 'https://uuu/miyoung',
-    },
-    {
-      title:
-        '커리어 빌드업 로드맵 과목 - <직무 멘토링> 받고, 멘토링 받은 내용 정리하고 이력서 점검 및 보완하기',
-      term: '5월 26일 (금) 밤 12시까지',
-      contnet:
-        '지난주 수요일(5/24), 금요일(5/25) 직무멘토링에 참여하신 분들은, 멘토링에서 아래 로드맵 과제를 통해 기록해주세요! 멘토링에 참여하지 않은 분들은, 취업매니저님께 받은 피드백을 기록해주시기 바랍니다.',
-      link: 'https://uuu/miyoung',
-    },
-    {
-      title: '직무멘토링 강의 자료 업로드 안내 & 만족도 조사',
-      term: '5월 26일 (금) 밤 12시까지',
-      contnet:
-        '지난주 5/24, 5/26 진행된 직무멘토링 강의자료가 업로드 되었습니다. 참여하신 분들은 만족도 조사 진행해주세요!',
-      link: 'https://uuu/miyoung',
-    },
-  ];
+  const [dateChanged, setDateChaged] = useState(date);
+  const { data } = useQuery(['scheduleYMD', dateChanged], () => fetchScheduleYMD(dateChanged));
+
+  const [formatDate, setFormatDate] = useState(date);
+  //날짜 포맷터 함수 ex) 2023-06-13 =>  2023년 06월 13일
+  const dateFormatter = (date) => {
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7);
+    const day = date.slice(8, 10);
+    const newDate = `${year}년 ${month}월 ${day}일`;
+    return setFormatDate(newDate);
+  };
+
+  useEffect(() => {
+    dateFormatter(date);
+  }, []);
+
+  //prev, next 버튼 클릭시 날짜 변경 함수
+  const handleDateChange = async (type) => {
+    const count = 1;
+    //현재 날짜
+    const currentDate = new Date(dateChanged);
+    let newDate = '';
+    //add 일 경우 1일씩 날짜 증가
+    if (type === 'add') {
+      newDate = addDays(currentDate, count);
+      //sub 일 경우 1일씩 날짜 감소
+    } else if (type === 'sub') {
+      newDate = subDays(currentDate, count);
+    }
+    // 출력한 날짜 yyyy-mm-dd 형식으로 바꿈
+    const formmaterDate = format(newDate, 'yyyy-MM-dd');
+    //쿼리에 넣어줄 dateChanged state, formmaterDate로 변경
+    setDateChaged(formmaterDate);
+    dateFormatter(formmaterDate);
+  };
 
   return (
     <>
@@ -37,11 +55,11 @@ const CalendarModal = ({ onModal }) => {
       <Style.Container>
         <Style.Content>
           <div className='date'>
-            <span>
+            <span onClick={() => handleDateChange('sub')}>
               <LeftIcon stroke='#616161' />
             </span>
-            <h5>2023년 6월 7일</h5>
-            <span>
+            <h5>{formatDate}</h5>
+            <span onClick={() => handleDateChange('add')}>
               <RightIcon stroke='#616161' />
             </span>
           </div>
@@ -51,19 +69,43 @@ const CalendarModal = ({ onModal }) => {
         </Style.Content>
         <Style.Main>
           <div className='scroll'>
-            {data.map((item, index) => (
-              <div className='main' key={index}>
-                <span className='header_span'></span>
-                <div className='main_text'>
-                  <h5>📆 [{item.title}]</h5>
-                  <div>
-                    <p>기간: {item.term}</p>
-                    <p>내용: {item.contnet}</p>
-                    <p>관련 링크: {item.link}</p>
+            {data !== undefined ? (
+              data.length > 0 ? (
+                data.map((item) => (
+                  <div className='main' key={item.id}>
+                    <span className='header_span'></span>
+                    <div className='main_text'>
+                      <h5>📆 [{item.title}]</h5>
+                      <div>
+                        <p>
+                          기간: {item.start_date.slice(0, 10)} ~ {item.end_date.slice(0, 10)}
+                        </p>
+                        <p>내용: {item.content}</p>
+                        <p>
+                          관련 링크
+                          <br />
+                          <div className='link_box'>
+                            {item.PlanLinks.map((link) => (
+                              <a href={link.url} target='_blank'>
+                                {link.url}
+                                <br />
+                              </a>
+                            ))}
+                          </div>
+                        </p>
+                      </div>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className='no_schedule'>
+                  <img src={rabbitImg} alt='No schedule' />
+                  <p>해당 날짜는 일정이 없습니다.</p>
                 </div>
-              </div>
-            ))}
+              )
+            ) : (
+              ''
+            )}
           </div>
         </Style.Main>
       </Style.Container>
