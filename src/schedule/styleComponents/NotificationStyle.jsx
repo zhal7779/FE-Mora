@@ -30,6 +30,10 @@ export const Container = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    p {
+      font-size: 1.6rem;
+      color: #616161;
+    }
   }
 `;
 

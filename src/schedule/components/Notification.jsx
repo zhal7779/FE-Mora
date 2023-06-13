@@ -85,11 +85,13 @@ const Notification = () => {
           <p>해당하는 공지사항이 없습니다.</p>
         </div>
       )}
-      <Pagination
-        pages={data.totalPages}
-        currentPage={data.currentPage}
-        clickPage={handleClickPage}
-      />
+      {data && data.objArr && data.objArr.length > 0 && (
+        <Pagination
+          pages={data.totalPages}
+          currentPage={data.currentPage}
+          clickPage={handleClickPage}
+        />
+      )}
     </Style.Container>
   );
 };

@@ -11,20 +11,23 @@ import SearchResultPost from '../search/components/SearchResultPost';
 import postData from '../search/components/searchPost.json';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
-
+import { fetchFreeSearch } from '../search/api/searchAPI';
+import { useQuery } from 'react-query';
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
   const { state } = useLocation();
+
   const [searchKeyword, setSearchKeyword] = useState(state);
 
   const handleSubSearch = (subResult) => {
     setSearchKeyword(subResult);
   };
-
+  const { data } = useQuery('free', fetchFreeSearch(searchKeyword));
+  console.log(data);
   //menu === 1 ?전체보기(프로필 5개, 게시물 10개, 레이서 Q&A 10개)
   //menu === 2? 프로필
   //menu === 3? 게시물
-  //menu === 4? 레이서 Q&A
+  //menu === 6? 레이서 Q&A
   const [menu, setMenu] = useState(1);
   const handleMenuClick = (num) => {
     setMenu(num);
@@ -49,13 +52,13 @@ const SearchPage = () => {
               <p>자유 게시판</p>
             </Style.SearchNavItem>
             <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
-              <p>레이서 Q&A</p>
-            </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(5)} active={menu === 5}>
               <p>지식 공유</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(6)} active={menu === 6}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(5)} active={menu === 5}>
               <p>스터디 모집</p>
+            </Style.SearchNavItem>
+            <Style.SearchNavItem onClick={() => handleMenuClick(6)} active={menu === 6}>
+              <p>레이서 Q&A</p>
             </Style.SearchNavItem>
           </Style.SearchNav>
         </Style.Content>
@@ -81,11 +84,23 @@ const SearchPage = () => {
               <SearchResultPost data={postData} />
               <RankingContent />
             </SearchPageWrapper>
-          ) : (
+          ) : menu === 4 ? (
+            <SearchPageWrapper>
+              <SearchResultPost data={postData} />
+              <RankingContent />
+            </SearchPageWrapper>
+          ) : menu === 5 ? (
+            <SearchPageWrapper>
+              <SearchResultPost data={postData} />
+              <RegisterQuestion type={'study'} />
+            </SearchPageWrapper>
+          ) : menu === 6 ? (
             <SearchPageWrapper>
               <SearchResultQnA data={postData} />
-              <RegisterQuestion />
+              <RegisterQuestion type={'Q&A'} />
             </SearchPageWrapper>
+          ) : (
+            ''
           )}
         </Style.Container>
       </SearchContext.Provider>
