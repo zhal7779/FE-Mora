@@ -46,10 +46,16 @@ const SearchPage = () => {
               <p>프로필</p>
             </Style.SearchNavItem>
             <Style.SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-              <p>게시물</p>
+              <p>자유 게시판</p>
             </Style.SearchNavItem>
             <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
               <p>레이서 Q&A</p>
+            </Style.SearchNavItem>
+            <Style.SearchNavItem onClick={() => handleMenuClick(5)} active={menu === 5}>
+              <p>지식 공유</p>
+            </Style.SearchNavItem>
+            <Style.SearchNavItem onClick={() => handleMenuClick(6)} active={menu === 6}>
+              <p>스터디 모집</p>
             </Style.SearchNavItem>
           </Style.SearchNav>
         </Style.Content>

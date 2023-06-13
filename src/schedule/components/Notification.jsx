@@ -3,20 +3,25 @@ import * as Style from '../styleComponents/NotificationStyle';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
 import rabbitImg from '../../assets/images/eliceRabbit-removebg-preview.png';
-import Input from '../../components/Input';
+import searchIcon from '../../assets/icons/u_search.svg';
 import { useQuery } from 'react-query';
 import { fetchNotice } from '../api/scheduleApi';
+import Pagination from './Pagination';
 const Notification = () => {
   //검색창 인풋
-  const [inputValue, setValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
-  const handleOnchange = (e) => {
-    setValue(e.target.value);
+  const handleOnChange = (e) => {
+    setInputValue(e.target.value);
   };
 
-  const { data } = useQuery(['notice', inputValue], () => fetchNotice(inputValue));
-  console.log(data);
-
+  const [searchValue, setSearchValue] = useState('');
+  //엔터누를 경우 검색
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setSearchValue(inputValue);
+    }
+  };
   const [view, setView] = useState([]);
   //view Open, close
   const handleClickView = (id) => {
@@ -28,6 +33,17 @@ const Notification = () => {
       }
     });
   };
+  const [page, setPage] = useState(0);
+  const handleClickPage = (number) => {
+    setPage(number);
+  };
+
+  const { data, isLoading } = useQuery(['notice', searchValue, page], () =>
+    fetchNotice(page, inputValue)
+  );
+  if (isLoading) {
+    return <div>'fhe'</div>;
+  }
 
   return (
     <Style.Container>
@@ -35,7 +51,16 @@ const Notification = () => {
         <h4>엘리스에 올라온 중요한 공지사항이에요!</h4>
         <img src={rabbitImg} />
       </div>
-      <Input width='100%' onChange={handleOnchange} value={inputValue} />
+      <Style.InputContainer width='100%' onChange={handleOnChange} value={inputValue}>
+        <Style.SearchIcon src={searchIcon} alt='Search' />
+        <Style.InputElement
+          type='text'
+          placeholder='키워드를 입력해주세요'
+          value={inputValue}
+          onChange={handleOnChange}
+          onKeyDown={handleKeyDown}
+        />
+      </Style.InputContainer>
       {data && data.objArr && data.objArr.length > 0 ? (
         data.objArr.map((item) => (
           <Style.Content key={item.id}>
@@ -60,6 +85,11 @@ const Notification = () => {
           <p>해당하는 공지사항이 없습니다.</p>
         </div>
       )}
+      <Pagination
+        pages={data.totalPages}
+        currentPage={data.currentPage}
+        clickPage={handleClickPage}
+      />
     </Style.Container>
   );
 };

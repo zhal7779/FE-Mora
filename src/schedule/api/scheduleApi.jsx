@@ -22,9 +22,9 @@ export const fetchScheduleYMD = async (yearMonthDay) => {
   return data;
 };
 
-export const fetchNotice = async (keyword) => {
+export const fetchNotice = async (page, keyword) => {
   const response = await fetch(
-    `${process.env.REACT_APP_URL}/api/notices?page=0&size=10&keyword=${keyword}`,
+    `${process.env.REACT_APP_URL}/api/notices?page=${page}&size=8&keyword=${keyword}`,
     {
       method: 'GET',
       headers: {
