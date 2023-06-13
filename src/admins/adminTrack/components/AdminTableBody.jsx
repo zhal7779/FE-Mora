@@ -9,7 +9,7 @@ import { DetailBtn, TrackInfo, TrackListBlock } from '../styledComponents/TableC
 const AdminTableBody = ({ tracks }) => {
   console.log(tracks);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTrackId, setModalTrackId] = useState('');
+  const [modalTrackData, setModalTrackData] = useState({ id: '', name: '', phase: '' });
 
   const handleDelete = (id) => {
     const response = confirm('삭제하시겠습니까?');
@@ -19,8 +19,8 @@ const AdminTableBody = ({ tracks }) => {
     }
   };
 
-  const handleDetailClick = (id) => {
-    setModalTrackId(id);
+  const handleDetailClick = (id, name, phase) => {
+    setModalTrackData(id);
     setIsModalOpen(true);
   };
 
@@ -45,7 +45,10 @@ const AdminTableBody = ({ tracks }) => {
             <span className='content'>{`1~${data.phase}`}</span>
             <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
+              <DetailBtn
+                className='detail-btn'
+                onClick={() => handleDetailClick(data.id, data.name, data.phase)}
+              >
                 보기
               </DetailBtn>
             </span>
@@ -54,7 +57,7 @@ const AdminTableBody = ({ tracks }) => {
         );
       })}
       {isModalOpen && (
-        <TrackModal id={modalTrackId} handleModalCancelClick={handleModalCancelClick} />
+        <TrackModal trackData={modalTrackData} handleModalCancelClick={handleModalCancelClick} />
       )}
     </TrackListBlock>
   );

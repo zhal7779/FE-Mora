@@ -15,7 +15,7 @@ import {
   ModalHeaderButton,
 } from '../styledComponents/ModalComponents';
 
-const TrackModal = ({ id, handleModalCancelClick }) => {
+const TrackModal = ({ trackData, handleModalCancelClick }) => {
   const [updatable, setUpdatable] = useState(false);
   const [contents, setContents] = useState({ name: '', phase: '' });
   const firstInput = useRef(null);
