@@ -75,7 +75,7 @@ const PostList = ({ selectedCategoryId, searchTerm, data }) => {
                   <h2>{post.title}</h2>
                   <p className="list-content">{post.content}</p>
                   <div className="list-info">
-                    <p>댓글 5</p>
+                    <p>댓글 {post.comment_cnt}</p>
                     <div>
                       <p>좋아요 {post.like_cnt} </p>
                       <p>조회 {post.view_cnt} </p>
