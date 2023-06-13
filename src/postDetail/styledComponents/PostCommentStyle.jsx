@@ -25,7 +25,7 @@ export const CommentContainer = styled.div`
 
       textarea {
         width: 100%;
-        height: 100%;
+        overflow: hidden;
         min-height: 120px;
         font-size: 1.6rem;
 
@@ -136,7 +136,7 @@ export const CommentContainer = styled.div`
 
           &-list {
             position: absolute;
-            left: -80px;
+            left: -90px;
             top: 28px;
 
             display: none;
@@ -154,7 +154,7 @@ export const CommentContainer = styled.div`
 
             li {
               width: 100%;
-              padding: 4px 18px;
+              padding: 4px 10px;
               font-size: 14px;
               font-weight: 500;
               line-height: 22px;
@@ -164,7 +164,7 @@ export const CommentContainer = styled.div`
 
               &.active,
               &:hover {
-                color: #424242;
+                color: #e92525;
               }
             }
           }
