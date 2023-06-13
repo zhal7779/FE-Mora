@@ -1,32 +1,35 @@
 import { useState } from 'react';
 import HeaderWrite from '../postWrite/HeaderWrite';
 import PostWrite from '../postWrite/PostWrite';
+import { useLocation } from 'react-router-dom';
 
 const PostWritePage = () => {
   const [showPostImage, setShowPostImage] = useState(false);
-  const [formData, setFormData] = useState({
+  const [data, setData] = useState({
     category: '',
     title: '',
     content: '',
     hashtags: [],
     images: []
   });
-  const [previewImg, setPreviewImg] = useState([]);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const postId = searchParams.get('postId');
 
   return (
     <>
       <HeaderWrite
-        formData={formData}
+        data={data}
         showPostImage={showPostImage}
         setShowPostImage={setShowPostImage}
-        previewImg={previewImg}
+        postId={postId}
       />
       <PostWrite
-        formData={formData}
-        setFormData={setFormData}
+        data={data}
+        setData={setData}
         showPostImage={showPostImage}
-        previewImg={previewImg}
-        setPreviewImg={setPreviewImg}
+        postId={postId}
       />
     </>
   );
