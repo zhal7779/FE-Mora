@@ -179,7 +179,7 @@ const MyPageEdit = () => {
           onClick={(e) => {
             handleSubmit(e);
             console.log();
-            // navigate('/mypage');
+            navigate('/mypage');
           }}
         />
         <Button
@@ -236,7 +236,7 @@ const IntroTextContainter = styled.div`
     border: 1px solid #d8e0e9;
     border-radius: 8px;
     width: 100%;
-    height: 17rem;
+    height: 7rem;
     padding: 0.5rem 1rem;
     font-family: 'Inter';
     font-style: normal;

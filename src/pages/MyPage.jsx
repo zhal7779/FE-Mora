@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import MyPageCategory from '../myPage/MyPageCategory';
 import MyPageProfile from '../myPage/MyPageProfile';
@@ -13,17 +12,6 @@ const MyPage = () => {
     setSelectedCategory(category);
   };
 
-  // mainProfileData (유저 프로필 정보) 가져오기
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
-  );
-
-  const mainProfileData = mainProfileDataQuery.data;
-
   return (
     <MyPageContainer>
       <MyPageCategory
@@ -32,11 +20,11 @@ const MyPage = () => {
         categories={categories}
       />
       {selectedCategory === '게시물' ? (
-        <MyPagePost mainProfileData={mainProfileData} />
+        <MyPagePost />
       ) : selectedCategory === '커피챗' ? (
         <MyPageCoffeeChat />
       ) : (
-        <MyPageProfile mainProfileData={mainProfileData} />
+        <MyPageProfile />
       )}
     </MyPageContainer>
   );

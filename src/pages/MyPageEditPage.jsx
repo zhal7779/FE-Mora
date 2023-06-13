@@ -21,10 +21,18 @@ const MyPageEdit = () => {
   useEffect(() => {
     setUserName(mainProfileData.name);
     setUserImg(mainProfileData.img_path);
-    setPosition(mainProfileData.UserDetail.position);
+    setPosition(
+      mainProfileData.UserDetail.position === '직책을 입력해주세요.'
+        ? ''
+        : mainProfileData.UserDetail.position
+    );
     setIntro(mainProfileData.UserDetail.comment);
-    setPhase(mainProfileData.UserDetail.phase);
-    setTrack(mainProfileData.UserDetail.track);
+    setPhase(mainProfileData.UserDetail.generation.split(' ')[2]);
+    setTrack(
+      mainProfileData.UserDetail.generation.split(' ')[0] +
+        ' ' +
+        mainProfileData.UserDetail.generation.split(' ')[1]
+    );
   }, []);
 
   // 트랙과 기수 이벤트 핸들러
@@ -115,18 +123,14 @@ const MyPageEdit = () => {
     <LoginContainer>
       <ImageContainer>
         <ProfileImg src={userImg || mainProfileData.UserDetail.img_path} alt='프로필'></ProfileImg>
-        {userImg === '' ? (
-          <>
-            <label htmlFor='imageUpload'>
-              <input
-                onChange={handleImageChange}
-                id='imageUpload'
-                type='file'
-                style={{ display: 'none' }}
-              />
-            </label>
-          </>
-        ) : null}
+        <label htmlFor='imageUpload'>
+          <input
+            onChange={handleImageChange}
+            id='imageUpload'
+            type='file'
+            style={{ display: 'none' }}
+          />
+        </label>
       </ImageContainer>
       <MyPageEditInput
         title='이름'
@@ -171,7 +175,14 @@ const MyPageEdit = () => {
         ></textarea>
       </IntroTextContainter>
       <ButtonContainer>
-        <Button color='darkPurple' value='수정완료' onClick={handleSubmit} />
+        <Button
+          color='darkPurple'
+          value='수정완료'
+          onClick={() => {
+            handleSubmit();
+            navigate('/mypage');
+          }}
+        />
         <Button color='white' value='수정취소' onClick={() => navigate('/mypage')} />
       </ButtonContainer>
     </LoginContainer>
@@ -284,7 +295,7 @@ const IntroTextContainter = styled.div`
 
 const trackOptions = [
   { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
-  { value: 'SW 엔지니어 트랙', label: 'SW 엔지니어 트랙' },
+  { value: 'SW 트랙', label: 'SW 트랙' },
   { value: 'AI 트랙', label: 'AI 트랙' },
 ];
 const phaseOptions = [

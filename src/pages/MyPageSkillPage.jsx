@@ -19,7 +19,7 @@ const MyPageEdit = () => {
   }, []);
 
   // 디바운싱으로 요청 수 줄이기
-  // 디바운싱은 여러 이벤트를 한번에 묶어서 처리, 쓰로틀링은 setInterval
+  // 디바운싱 = 여러 이벤트를 한번에 묶어서 처리, 쓰로틀링 = setInterval
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (skill !== '') {
@@ -77,7 +77,7 @@ const MyPageEdit = () => {
     }
   };
 
-  // 검색결괴 중 선택된 스킬로 바꾸는 핸들러
+  // 검색결과 중 선택된 스킬로 바꾸는 핸들러
   const handleSkillChange = (e) => {
     console.log(e.target);
     const selectedOption = e.target.value;
@@ -151,7 +151,7 @@ const MyPageEdit = () => {
         {mySkillList.map((mySkill, index) => (
           <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
             {mySkill}
-            <RemoveText className='remove-text'>x</RemoveText>
+            <RemoveText className='remove-text'>❌</RemoveText>
           </div>
         ))}
       </SkillButtonContainer>

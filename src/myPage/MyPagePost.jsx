@@ -1,6 +1,18 @@
 import * as Style from './styledComponents/MyPagePostStyle';
+import { useQuery } from 'react-query';
 
-const MyPostList = ({ mainProfileData }) => {
+const MyPostList = () => {
+  // mainProfileData (유저 프로필 정보) 가져오기
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch('http://15.164.221.244:5000/api/users/mypage', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
+  );
+
+  const mainProfileData = mainProfileDataQuery.data;
+
   return (
     <Style.ListContainer>
       <h2>내 게시물 {myPostListData.length}</h2>

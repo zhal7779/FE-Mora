@@ -40,9 +40,9 @@ const Quiz = () => {
   }
 
   // 새로고침시 다른 퀴즈 보여주기
-  useEffect(() => {
-    getOtherQuiz();
-  }, []);
+  // useEffect(() => {
+  //   getOtherQuiz();
+  // }, []);
 
   // 다른 퀴즈로 넘어가면 state 초기화
   useEffect(() => {
@@ -119,6 +119,11 @@ const Quiz = () => {
           setShowImage(false);
         }}
         ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSubmit();
+          }
+        }}
       />
       <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
       <div style={{ height: '2rem' }}></div>

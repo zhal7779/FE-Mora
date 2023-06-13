@@ -25,6 +25,7 @@ const ProfileList = () => {
       });
       if (response) {
         const data = await response.json();
+        console.log(data);
         setMySkillList(data);
       } else {
         throw new Error('Failed to fetch mySkillList');
@@ -57,14 +58,11 @@ const ProfileList = () => {
 
   const [myEduList, setMyEduList] = useState([
     {
-      eduName: '멋쟁이토끼처럼',
+      eduName: '🐰멋쟁이토끼처럼',
       program: '챗GPT 스쿨',
-      startYear: '2022년',
-      startMonth: '9월',
-      endYear: '2023년',
-      endMonth: '2월',
+      totalStudyingDate: '6개월',
+      content: 'AI 여친 만들기 트랙 이수',
       isCurrentlyStudying: false,
-      content: '프론트엔드 엔지니어 트랙 이수',
     },
   ]);
 
@@ -93,13 +91,7 @@ const ProfileList = () => {
               <SkillButtonContainer>
                 {myCareerList.map((myCareer, index) => (
                   <div className='careerinfo' key={index}>
-                    {myCareer.isCurrentlyEmployed ? (
-                      <H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}</H5>
-                    ) : (
-                      <H5>
-                        {`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}
-                      </H5>
-                    )}
+                    <H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}</H5>
                   </div>
                 ))}
               </SkillButtonContainer>
@@ -107,11 +99,7 @@ const ProfileList = () => {
               <SkillButtonContainer>
                 {myEduList.map((myEdu, index) => (
                   <div className='eduinfo' key={index}>
-                    {myEdu.isCurrentlyStudying ? (
-                      <H5>{`${myEdu.eduName} ${myEdu.program} ㅣ ${myEdu.startYear} ${myEdu.startMonth} ~ 현재 진행중 ㅣ ${myEdu.content}`}</H5>
-                    ) : (
-                      <H5>{`${myEdu.eduName} ${myEdu.program} ㅣ ${myEdu.startYear} ${myEdu.startMonth} ~ ${myEdu.endYear} ${myEdu.endMonth} ㅣ ${myEdu.content}`}</H5>
-                    )}
+                    <H5>{`${myEdu.eduName} ${myEdu.program} ㅣ ${myEdu.content} ㅣ ${myEdu.totalStudyingDate}`}</H5>
                   </div>
                 ))}
               </SkillButtonContainer>

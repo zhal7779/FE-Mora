@@ -5,11 +5,23 @@ import * as Style from './styledComponents/MyPageProfileStyle';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import LoginInput from '../logIn/LogInInput';
+import { useQuery } from 'react-query';
 
-const MainProfile = ({ mainProfileData }) => {
+const MainProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  // mainProfileData (유저 프로필 정보) 가져오기
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch('http://15.164.221.244:5000/api/users/mypage', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
+  );
+
+  const mainProfileData = mainProfileDataQuery.data;
 
   const openModal = () => {
     setShowModal(true);
@@ -79,7 +91,7 @@ const MainProfile = ({ mainProfileData }) => {
       </div>
       <h3>{mainProfileData.name}</h3>
       <h4>{mainProfileData.UserDetail.generation}</h4>
-      <h5>{mainProfileData.UserDetail.position}</h5>
+      <h5>{mainProfileData.UserDetail.position || '직책을 입력해 주세요.'}</h5>
       <div className='intro-container'>
         <p className='intro'>
           {mainProfileData.UserDetail.comment ||

@@ -102,6 +102,11 @@ const Login = () => {
           setPassword(e.target.value);
         }}
         value={password}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleLogin();
+          }
+        }}
       />
       <LoginButton color='darkPurple' value='이메일로 계속하기' onClick={handleLogin} />
       <OrLineText text='또는' />

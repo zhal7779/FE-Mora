@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { forwardRef } from 'react';
 
-const LoginInput = ({ title, type, placeholder, name, onChange, value }, ref) => {
+const LoginInput = ({ title, type, placeholder, name, onChange, value, onKeyDown }, ref) => {
   return (
     <LoginInputContainer>
       <LoginText>{title}</LoginText>
@@ -12,6 +12,7 @@ const LoginInput = ({ title, type, placeholder, name, onChange, value }, ref) =>
           name={name}
           onChange={onChange}
           value={value}
+          onKeyDown={onKeyDown}
           ref={ref}
         />
       </InputContainer>
