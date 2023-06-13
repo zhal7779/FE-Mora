@@ -13,7 +13,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
 
   // 이미지 등록 api
   const postImage = async imgFormData => {
-    const response = await fetch(`${BASE_URL}api/boards/img`, {
+    const response = await fetch(`${BASE_URL}/api/boards/img`, {
       method: 'POST',
       body: imgFormData,
       headers: {

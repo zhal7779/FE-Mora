@@ -2,7 +2,7 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 export const fetchPostDetail = async (postId) => {
   const storedToken = sessionStorage.getItem('userToken');
-  const response = await fetch(`${BASE_URL}api/boards/detail/${postId}`, {
+  const response = await fetch(`${BASE_URL}/api/boards/detail/${postId}`, {
     headers: {
       authorization: `Bearer ${storedToken}`,
     },
@@ -16,7 +16,7 @@ export const fetchPostDetail = async (postId) => {
 
 export const fetchLike = async (postId) => {
   const storedToken = sessionStorage.getItem('userToken');
-  const response = await fetch(`${BASE_URL}api/likes/${postId}`, {
+  const response = await fetch(`${BASE_URL}/api/likes/${postId}`, {
     headers: {
       authorization: `Bearer ${storedToken}`,
     },

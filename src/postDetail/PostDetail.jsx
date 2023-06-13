@@ -12,14 +12,14 @@ const BASE_URL = process.env.REACT_APP_URL;
 const PostDetail = ({ postId }) => {
   const [postOption, setPostOption] = useState(false);
   const [isLiked, setIsLiked] = useState(null);
-  const { status, data, error } = useQuery(['detail', postId], () =>
+  const { status, data: detail, error } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
   const navigate = useNavigate();
 
   // 게시글 삭제 api
   const deletePost = async () => {
-    const response = await fetch(`${BASE_URL}api/boards`, {
+    const response = await fetch(`${BASE_URL}/api/boards`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -44,13 +44,9 @@ const PostDetail = ({ postId }) => {
     }
   });
 
-  useEffect(() => {
-    fetchLikeStatus();
-  }, []);
-
   // 좋아요 조회 api
   const fetchLikeStatus = async () => {
-    const response = await fetch(`${BASE_URL}api/likes`, {
+    const response = await fetch(`${BASE_URL}/api/likes?board_id=${postId}`, {
       headers: {
         authorization: `Bearer ${sessionStorage.getItem('userToken')}`
       }
@@ -61,13 +57,16 @@ const PostDetail = ({ postId }) => {
     }
 
     const result = await response.json();
-    console.log(result);
-    setIsLiked(result.isLiked);
+    setIsLiked(result);
   };
+
+  useEffect(() => {
+    fetchLikeStatus();
+  }, []);
 
   // 좋아요 등록, 취소 api
   const toggleLike = async () => {
-    const response = await fetch(`${BASE_URL}api/likes`, {
+    const response = await fetch(`${BASE_URL}/api/likes`, {
       method: isLiked ? 'DELETE' : 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,40 +82,20 @@ const PostDetail = ({ postId }) => {
     return await response.json();
   };
 
-  // const { mutate: addLikeMutate } = useMutation(addLike, {
-  //   onSuccess: () => {
-  //     console.log('좋아요를 눌렀습니다!');
-  //   },
-  //   onError: error => {
-  //     console.error(error);
-  //   }
-  // });
+  const { mutate: toggleLikeMutate } = useMutation(toggleLike, {
+    onSuccess: () => {
+      console.log('좋아요 처리에 성공했습니다.');
+      queryClient.invalidateQueries(['detail']);
+    },
+    onError: error => {
+      console.error(error);
+    }
+  });
 
-  // 좋아요 삭제 api
-  // const deleteLike = async () => {
-  //   const response = await fetch(`${BASE_URL}api/likes`, {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-  //     },
-  //     body: JSON.stringify({ board_id: postId })
-  //   });
-  //   if (!response.ok) {
-  //     throw new Error('좋아요 취소에 실패했습니다.');
-  //   }
-
-  //   return await response.json();
-  // };
-
-  // const { mutate: deleteLikeMutate } = useMutation(deleteLike, {
-  //   onSuccess: () => {
-  //     console.log('좋아요를 취소했습니다ㅜㅜ');
-  //   },
-  //   onError: error => {
-  //     console.error(error);
-  //   }
-  // });
+  const handleClickLike = () => {
+    toggleLikeMutate();
+    setIsLiked(!isLiked);
+  };
 
   // 게시글 삭제 핸들러
   const handleDeletePost = () => {
@@ -132,16 +111,6 @@ const PostDetail = ({ postId }) => {
     }
   };
 
-  // 좋아요 등록/삭제 핸들러
-  // const handleToggleLike = () => {
-  //   setIsLiked(!isLiked);
-  //   if (isLiked) {
-  //     addLikeMutate();
-  //   } else {
-  //     deleteLikeMutate();
-  //   }
-  // };
-
   if (status === 'loading') {
     return <Style.Status>Loading...⏳</Style.Status>;
   }
@@ -154,7 +123,7 @@ const PostDetail = ({ postId }) => {
     <Style.DetailContainer>
       <div className="post-head">
         <div className="title">
-          <h2>{data.title}</h2>
+          <h2>{detail.title}</h2>
           {sessionStorage.getItem('userToken') && (
             <div className="post-option">
               <button onClick={() => setPostOption(!postOption)}>
@@ -162,45 +131,47 @@ const PostDetail = ({ postId }) => {
               </button>
               <ul className={`post-option-list ${postOption ? 'show' : ''}`}>
                 <li>
-                  <Link to={`/write?postId=${data.id}`}>✍️ 수정하기</Link>
+                  <Link to={`/write?postId=${detail.id}`}>✍️ 수정하기</Link>
                 </li>
                 <li onClick={handleDeletePost}>❌ 삭제하기</li>
               </ul>
             </div>
           )}
         </div>
-        <p className="view">조회 {data.view_cnt}</p>
+        <p className="view">조회 {detail.view_cnt}</p>
       </div>
       <div className="writer">
         <div className="writer-img">
-          {data.user_detail.img_path ? (
-            <img src={data.user_detail.img_path} alt="작성자 프로필" />
+          {detail.user_detail.img_path ? (
+            <img src={detail.user_detail.img_path} alt="작성자 프로필" />
           ) : (
             <img src={UserProfile} alt="작성자 프로필" />
           )}
         </div>
         <div className="writer-info">
-          <p className="writer-info-name">{data.User.name}</p>
+          <p className="writer-info-name">{detail.User.name}</p>
           <div>
-            <p className="writer-info-position">{data.user_detail.position}</p>
-            <p className="writer-info-time">{formatTime(data.createdAt)}</p>
+            <p className="writer-info-position">
+              {detail.user_detail.position}
+            </p>
+            <p className="writer-info-time">{formatTime(detail.createdAt)}</p>
           </div>
         </div>
       </div>
       <div className="content">
-        {data.Photos.length > 0 && (
+        {detail.Photos.length > 0 && (
           <ul className="content-img">
-            {data.Photos.map((image, index) => (
+            {detail.Photos.map((image, index) => (
               <li key={index}>
                 <img src={image.img_path} alt={image.origin_name} />
               </li>
             ))}
           </ul>
         )}
-        <div className="content-text">{data.content}</div>
+        <div className="content-text">{detail.content}</div>
         <button className={`like-btn ${isLiked ? '' : 'disabled'}`}>
-          <img src={IconLike} alt="좋아요" onClick={toggleLike} />
-          {isLiked ? data.like_cnt + 1 : data.like_cnt}
+          <img src={IconLike} alt="좋아요" onClick={handleClickLike} />
+          {detail.like_cnt}
         </button>
       </div>
     </Style.DetailContainer>

@@ -18,7 +18,7 @@ const CommunityPage = () => {
 
   const fetchPosts = async () => {
     const response = await fetch(
-      `${BASE_URL}api/boards/${selectedCategoryId}`,
+      `${BASE_URL}/api/boards/${selectedCategoryId}`,
       {
         headers: {
           authorization: `Bearer ${sessionStorage.getItem('userToken')}`

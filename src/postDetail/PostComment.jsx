@@ -14,7 +14,7 @@ const PostComment = ({ postId }) => {
   //댓글 조회 api
   const fetchComments = async () => {
     const response = await fetch(
-      `${BASE_URL}api/boards/detail/${postId}/comments`,
+      `${BASE_URL}/api/boards/detail/${postId}/comments`,
       {
         headers: {
           authorization: `Bearer ${sessionStorage.getItem('userToken')}`
@@ -37,7 +37,7 @@ const PostComment = ({ postId }) => {
 
   // 댓글 등록 api
   const postComment = async registerData => {
-    const response = await fetch(`${BASE_URL}api/comments`, {
+    const response = await fetch(`${BASE_URL}/api/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const PostComment = ({ postId }) => {
   // 댓글 삭제 api
   const deleteComment = async commentId => {
     console.log(commentId);
-    const response = await fetch(`${BASE_URL}api/comments`, {
+    const response = await fetch(`${BASE_URL}/api/comments`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

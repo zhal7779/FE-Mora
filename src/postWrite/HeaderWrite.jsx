@@ -8,12 +8,10 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   const navigate = useNavigate();
-  console.log(data);
 
   // 게시글 등록 api
   const registerPost = async () => {
-    console.log(data);
-    const response = await fetch(`${BASE_URL}api/boards`, {
+    const response = await fetch(`${BASE_URL}/api/boards`, {
       method: 'POST',
       body: data,
       headers: {
