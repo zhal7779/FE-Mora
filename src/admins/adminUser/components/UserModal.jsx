@@ -59,7 +59,7 @@ const UserModal = ({ id, handleModalCancelClick }) => {
     async (id) => await fetchUpdateUser(id, contents),
     {
       onError(updateError) {
-        console.log(updateError);
+        console.error(updateError);
       },
     }
   );

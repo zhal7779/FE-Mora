@@ -80,7 +80,7 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
     async (id) => await fetchUpdatePlan(id, contents),
     {
       onError(updateError) {
-        console.log(updateError);
+        console.error(updateError);
       },
     }
   );

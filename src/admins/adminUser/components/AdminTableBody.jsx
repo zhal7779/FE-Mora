@@ -29,7 +29,7 @@ const AdminTableBody = ({ users }) => {
 
   const { mutate: deleteUser, error } = useMutation((email) => fetchDeleteUser(email), {
     onError(error) {
-      console.log(error);
+      console.error(error);
     },
   });
 

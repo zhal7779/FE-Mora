@@ -45,7 +45,7 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     async () => await fetchCreateNotification(contents),
     {
       onError(error) {
-        console.log(error);
+        console.error(error);
       },
     }
   );

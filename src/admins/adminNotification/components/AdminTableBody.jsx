@@ -33,7 +33,7 @@ const AdminTableBody = ({ notifications }) => {
 
   const { mutate: deleteNotification, error } = useMutation((id) => fetchDeleteNotification(id), {
     onError(error) {
-      console.log(error);
+      console.error(error);
     },
   });
 

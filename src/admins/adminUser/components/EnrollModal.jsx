@@ -42,7 +42,7 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
 
   const { mutate: createUser, error } = useMutation(async () => await fetchCreateUser(contents), {
     onError(error) {
-      console.log(error);
+      console.error(error);
     },
   });
 

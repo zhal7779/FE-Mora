@@ -60,7 +60,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
     async (id) => await fetchUpdateNotification(id, contents),
     {
       onError(updateError) {
-        console.log(updateError);
+        console.error(updateError);
       },
     }
   );

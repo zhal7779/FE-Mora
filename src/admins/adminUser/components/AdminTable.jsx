@@ -31,7 +31,6 @@ const AdminTable = () => {
 
   if (isLoading) return <span>로딩중...</span>;
   if (error) return <span>An error has occurred: {error.message}</span>;
-  if (data) console.log(data.objArr);
 
   return (
     <>

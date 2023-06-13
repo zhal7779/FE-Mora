@@ -41,7 +41,7 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
 
   const { mutate: createPlan, error } = useMutation(async () => await fetchCreatePlan(contents), {
     onError(error) {
-      console.log(error);
+      console.error(error);
     },
   });
 
