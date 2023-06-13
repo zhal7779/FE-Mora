@@ -19,6 +19,18 @@ const MyPageEdit = () => {
   const [isCurrentlyStudying, setIsCurrentlyStudying] = useState(false);
   const navigate = useNavigate();
 
+  // useMutation POST 요청 선언
+  const createEduMutation = useMutation((eduData) =>
+    fetch('http://15.164.221.244:5000/api/educations/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(eduData),
+    })
+  );
+
   // input 이벤트로 state 변경하는 핸들러
   const handleStartYearChange = (e) => {
     e.preventDefault();
@@ -50,6 +62,31 @@ const MyPageEdit = () => {
       setEndYear('');
       setEndMonth('');
     }
+  };
+
+  // 년 월 빼고 사이에 대쉬 넣기, 6월 => 06 으로 바꾸기
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const startDate = `${startYear.replace('년', '')}-${startMonth
+      .replace('월', '')
+      .padStart(2, '0')}`;
+
+    let endDate = '';
+    if (!isCurrentlyStudying) {
+      endDate = `${endYear.replace('년', '')}-${endMonth.replace('월', '').padStart(2, '0')}`;
+    }
+    // careerData에 최종 값을 넣어주기
+    const eduData = {
+      edu_name: eduName,
+      program,
+      start_date: startDate,
+      end_date: endDate,
+      content,
+    };
+    // console.log(eduData)
+
+    // Mutation POST 요청
+    createEduMutation.mutate(eduData);
   };
 
   return (
@@ -139,7 +176,8 @@ const MyPageEdit = () => {
         <Button
           color='darkPurple'
           value='수정완료'
-          onClick={() => {
+          onClick={(e) => {
+            handleSubmit(e);
             navigate('/mypage');
           }}
         />

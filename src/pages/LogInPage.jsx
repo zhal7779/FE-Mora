@@ -7,6 +7,7 @@ import LoginInput from '../logIn/LogInInput';
 import LoginButton from '../logIn/LogInButton';
 import OrLineText from '../logIn/OrLine';
 import LittleText from '../logIn/LittleText';
+const URL = process.env.REACT_APP_URL;
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -46,7 +47,7 @@ const Login = () => {
   // 로그인 POST 요청 Mutation 선언
   const loginMutation = useMutation(
     async () => {
-      const url = 'http://15.164.221.244:5000/api/users/login';
+      const url = `${URL}/api/users/login`;
       const data = {
         email: email,
         password: password,

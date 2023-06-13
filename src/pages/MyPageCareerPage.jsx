@@ -178,7 +178,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={(e) => {
             handleSubmit(e);
-            console.log();
             navigate('/mypage');
           }}
         />

@@ -135,10 +135,9 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='이름'
         type='text'
-        placeholder={mainProfileData.name}
         name='userName'
         onChange={(e) => setUserName(e.target.value)}
-        value={userName}
+        value={mainProfileData.name}
       />
       <TrackPhaseContainer>
         <div className='track-container'>

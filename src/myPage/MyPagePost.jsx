@@ -1,10 +1,11 @@
 import * as Style from './styledComponents/MyPagePostStyle';
 import { useQuery } from 'react-query';
+const URL = process.env.REACT_APP_URL;
 
 const MyPostList = () => {
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
+    fetch(`${URL}/api/users/mypage`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },

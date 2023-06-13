@@ -11,6 +11,7 @@ import rabbitImg from '../assets/images/rabbit.png';
 import answerSound from '../assets/sounds/answerSound.mp3';
 import errorSound from '../assets/sounds/errorSound.mp3';
 import { useQuery } from 'react-query';
+const URL = process.env.REACT_APP_URL;
 
 const Quiz = () => {
   const [answer, setAnswer] = useState('');
@@ -22,7 +23,7 @@ const Quiz = () => {
 
   // 퀴즈 불러오고 정리하기
   const quizQuery = useQuery('quiz', () =>
-    fetch('http://15.164.221.244:5000/api/quizs').then((response) => response.json())
+    fetch(`${URL}/api/quizs`).then((response) => response.json())
   );
 
   const quizData = quizQuery.data;
