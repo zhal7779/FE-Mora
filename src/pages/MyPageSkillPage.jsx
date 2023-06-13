@@ -151,7 +151,7 @@ const MyPageEdit = () => {
         {mySkillList.map((mySkill, index) => (
           <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
             {mySkill}
-            <RemoveText className='remove-text'>❌</RemoveText>
+            <RemoveText className='remove-text'>x</RemoveText>
           </div>
         ))}
       </SkillButtonContainer>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
@@ -14,10 +15,11 @@ const MyPageEdit = () => {
   const [startMonth, setStartMonth] = useState('');
   const [endYear, setEndYear] = useState('');
   const [endMonth, setEndMonth] = useState('');
-  const [intro, setIntro] = useState('');
+  const [content, setContent] = useState('');
   const [isCurrentlyStudying, setIsCurrentlyStudying] = useState(false);
   const navigate = useNavigate();
 
+  // input 이벤트로 state 변경하는 핸들러
   const handleStartYearChange = (e) => {
     e.preventDefault();
     const selectedYear = e.target.value;
@@ -125,9 +127,9 @@ const MyPageEdit = () => {
       <IntroTextContainter
         onChange={(e) => {
           e.preventDefault();
-          setIntro(e.target.value);
+          setContent(e.target.value);
         }}
-        value={intro}
+        value={content}
       >
         <h3>어떤 활동을 했나요?</h3>
         <textarea placeholder='교육 내용 및 활동을 입력해주세요'></textarea>
