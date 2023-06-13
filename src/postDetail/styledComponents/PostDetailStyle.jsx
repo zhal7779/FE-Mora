@@ -35,7 +35,7 @@ export const DetailContainer = styled.section`
 
         &-list {
           position: absolute;
-          left: -80px;
+          left: -90px;
           top: 28px;
 
           display: none;
@@ -53,7 +53,7 @@ export const DetailContainer = styled.section`
 
           li {
             width: 100%;
-            padding: 4px 18px;
+            padding: 4px 10px;
             font-size: 14px;
             font-weight: 500;
             line-height: 22px;
@@ -63,7 +63,18 @@ export const DetailContainer = styled.section`
 
             &.active,
             &:hover {
-              color: #424242;
+              color: #e92525;
+            }
+
+            a {
+              display: block;
+              color: #acacac;
+              transition: 0.2s;
+
+              &.active,
+              &:hover {
+                color: #424242;
+              }
             }
           }
         }
@@ -169,6 +180,10 @@ export const DetailContainer = styled.section`
 
     transition: 0.2s;
     cursor: pointer;
+
+    &.disabled {
+      background: #cdcdd8;
+    }
 
     img {
       margin-right: 10px;

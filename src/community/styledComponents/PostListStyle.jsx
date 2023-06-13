@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.section`
-  padding-top: 60px;
-
   .filter {
     display: flex;
-    padding-bottom: 10px;
+    padding: 60px 0 10px;
 
     button {
       display: flex;
@@ -102,10 +100,11 @@ export const PostContainer = styled.section`
     justify-content: center;
     align-items: center;
 
-    padding: 80px 0 100px;
-    font-size: 1.6rem;
+    height: calc(100vh - 460px);
+    margin: 40px 0;
+    font-size: 1.5rem;
     color: #616161;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 `;
 

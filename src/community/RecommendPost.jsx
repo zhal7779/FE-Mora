@@ -10,7 +10,7 @@ const RecommendPost = ({ searchTerm, selectedCategoryId, data }) => {
 
   return (
     <Style.RecommendContainer>
-      {searchTerm === '' && sortedData.length !== 0 ? (
+      {searchTerm === '' && recommendPostData.length > 0 ? (
         <>
           <h3>추천 게시글</h3>
           <ul>
@@ -32,7 +32,7 @@ const RecommendPost = ({ searchTerm, selectedCategoryId, data }) => {
           </ul>
         </>
       ) : (
-        <div>추천 게시글이 없습니다.</div>
+        <div></div>
       )}
     </Style.RecommendContainer>
   );

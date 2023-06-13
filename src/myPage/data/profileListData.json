@@ -1,0 +1,22 @@
+[
+  {
+    "title": "스킬",
+    "content": "내 전문성을 보여줄 수 있는 스킬을 등록해 보세요.",
+    "url": "/mypage/skill"
+  },
+  {
+    "title": "경력",
+    "content": "지금 하고 있는 일, 혹은 이전에 한 일을 알려주세요.",
+    "url": "/mypage/career"
+  },
+  {
+    "title": "교육",
+    "content": "현재 혹은 이전에 다녔던 학교, 부트캠프 등 교육 기관을 입력해주세요.",
+    "url": "/mypage/education"
+  },
+  {
+    "title": "링크",
+    "content": "깃헙, 블로그, SNS등 다양한 링크로 나를 표현해보세요.",
+    "url": "/mypage/link"
+  }
+]

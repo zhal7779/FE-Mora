@@ -15,16 +15,19 @@ const Login = () => {
   const [showLittleText, setShowLittleText] = useState(false);
   const navigate = useNavigate();
 
+  // 로그인 POST 요청 Mutation 실행
   const handleLogin = async () => {
     await loginMutation.mutateAsync();
   };
 
+  // 유저토큰이 있으면 커뮤니티 페이지로 이동
   useEffect(() => {
     if (sessionStorage.getItem('userToken')) {
       navigate('/community/post/free');
     }
   }, [navigate]);
 
+  // 로그인 실패시 에러 텍스트 띄우기
   useEffect(() => {
     if (message) {
       setShowLittleText(true);
@@ -40,6 +43,7 @@ const Login = () => {
     }
   }, [message]);
 
+  // 로그인 POST 요청 Mutation 선언
   const loginMutation = useMutation(
     async () => {
       const url = 'http://15.164.221.244:5000/api/users/login';
@@ -59,10 +63,12 @@ const Login = () => {
       const responseData = await response.json();
       return responseData; // 토큰 반환
     },
+    // 로그인 성공 시 커뮤니티 페이지로 이동
     {
       onSuccess: (data) => {
         const { token, message: responseMessage } = data;
         if (responseMessage === '로그인에 성공하셨습니다!') {
+          // status 까지 주는 걸로 바꿔지면 그걸로 로그인 여부 판단하기
           sessionStorage.setItem('userToken', token);
           navigate('/community/post/free');
         } else {
@@ -96,6 +102,11 @@ const Login = () => {
           setPassword(e.target.value);
         }}
         value={password}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleLogin();
+          }
+        }}
       />
       <LoginButton color='darkPurple' value='이메일로 계속하기' onClick={handleLogin} />
       <OrLineText text='또는' />

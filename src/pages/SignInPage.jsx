@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoginContainer from '../logIn/LogInContainer';
 import Headline from '../logIn/Headline';
@@ -17,6 +17,11 @@ const Signin = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  // 유효성 검사용 ref 선언
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+
+  // 회원가입 POST 요청 Mutation 선언
   const signinMutation = useMutation(async () => {
     const url = 'http://15.164.221.244:5000/api/users/register';
     const data = {
@@ -43,18 +48,26 @@ const Signin = () => {
     }
   });
 
+  // 이메일 형식 및 비밀번호 유효성 검사
   const handleSignin = async () => {
-    // 이메일 형식 및 비밀번호 유효성 검사
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@gmail\.com$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-    if (!emailRegex.test(email) || !passwordRegex.test(password)) {
-      setErrorMessage('이메일과 비밀번호 형식을 확인해 주세요!');
+    if (!emailRegex.test(email)) {
+      setErrorMessage('지메일 형식을 확인해 주세요!');
+      emailInputRef.current.focus();
       return;
     }
+    if (!passwordRegex.test(password)) {
+      setErrorMessage('비밀번호 형식을 확인해 주세요!');
+      passwordInputRef.current.focus();
+      return;
+    }
+    // 회원가입 POST 요청 Mutation 실행
     await signinMutation.mutateAsync();
   };
 
+  // 유효성 에러 메시지 띄우기
   useEffect(() => {
     if (errorMessage) {
       setShowLittleText(true);
@@ -68,6 +81,7 @@ const Signin = () => {
     }
   }, [errorMessage]);
 
+  // 회원가입 성공 시 로그인 페이지로 이동
   if (signinMutation.isSuccess) {
     navigate('/login');
   }
@@ -79,28 +93,35 @@ const Signin = () => {
       <OrLineText text='또는' />
       <SigninAccordion>
         <LoginInput
-          title='이름'
+          title='성함'
           type='text'
-          placeholder='이름 입력'
+          placeholder='성함을 입력해주세요.'
           name='userName'
           onChange={(e) => setUserName(e.target.value)}
           value={userName}
         />
         <LoginInput
-          title='이메일'
+          title='지메일'
           type='text'
-          placeholder='이메일 입력'
+          placeholder='사용중인 지메일을 입력해주세요.'
           name='userEmail'
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          ref={emailInputRef}
         />
         <LoginInput
           title='비밀번호'
           type='password'
-          placeholder='영문, 숫자 포함 8자 이상'
+          placeholder='영문, 숫자 포함 8자 이상입니다.'
           name='password'
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          ref={passwordInputRef}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSignin();
+            }
+          }}
         />
         <LoginButton color='darkPurple' value='회원가입' onClick={handleSignin} />
       </SigninAccordion>

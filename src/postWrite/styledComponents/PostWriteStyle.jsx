@@ -84,6 +84,7 @@ export const WriteContainer = styled.div`
 
   textarea {
     width: 100%;
+    overflow: hidden;
 
     &#title {
       min-height: 36px;
