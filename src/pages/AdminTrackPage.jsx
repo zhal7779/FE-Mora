@@ -1,5 +1,4 @@
 import Header from '../admins/adminCommon/components/Header';
-import SearchBar from '../admins/adminCommon/components/SearchBar';
 import AdminBlock from '../admins/adminCommon/components/AdminBlock';
 import AdminSideBar from '../admins/adminCommon/components/AdminSideBar';
 import { TRACK_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
@@ -14,7 +13,6 @@ const AdminTrackPage = () => {
       <AdminBlock>
         <AdminSideBar nowCategoryName={TRACK_BUTTON} />
         <AdminMainContainer>
-          <SearchBar />
           <AdminTable />
         </AdminMainContainer>
       </AdminBlock>
