@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/MyPageProfileStyle';
 import profileListData from './data/profileListData';
+const URL = process.env.REACT_APP_URL;
 
 const ProfileList = () => {
   const [mySkillList, setMySkillList] = useState([]);
@@ -19,7 +20,7 @@ const ProfileList = () => {
   // 현재 나의 스킬 불러오기
   const fetchMySkillList = async () => {
     try {
-      const response = await fetch('http://15.164.221.244:5000/api/skills/myskill', {
+      const response = await fetch(`${URL}/api/skills/myskill`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
@@ -39,7 +40,7 @@ const ProfileList = () => {
   // 현재 나의 커리어 불러오기
   const fetchMyCareerList = async () => {
     try {
-      const response = await fetch('http://15.164.221.244:5000/api/careers', {
+      const response = await fetch(`${URL}/api/careers`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
@@ -61,7 +62,7 @@ const ProfileList = () => {
   // 현재 나의 교육 불러오기
   const fetchMyEduList = async () => {
     try {
-      const response = await fetch('http://15.164.221.244:5000/api/educations', {
+      const response = await fetch(`${URL}/api/educations`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
@@ -89,7 +90,7 @@ const ProfileList = () => {
   // 경력 삭제 요청 핸들러
   const handleRemoveCareer = async (careerId) => {
     try {
-      const response = await fetch('http://15.164.221.244:5000/api/careers/delete', {
+      const response = await fetch(`${URL}/api/careers/delete`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

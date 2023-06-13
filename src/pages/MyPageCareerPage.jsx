@@ -7,6 +7,7 @@ import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
 import optionsData from '../myPage/data/optionsData';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [companyName, setCompanyName] = useState('');
@@ -21,7 +22,7 @@ const MyPageEdit = () => {
 
   // useMutation POST 요청 선언
   const createCareerMutation = useMutation((careerData) =>
-    fetch('http://15.164.221.244:5000/api/careers/register', {
+    fetch(`${URL}/api/careers/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
