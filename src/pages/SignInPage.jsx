@@ -8,6 +8,7 @@ import OrLineText from '../logIn/OrLine';
 import LittleText from '../logIn/LittleText';
 import SigninAccordion from '../signIn/SignInAccordion';
 import { useMutation } from 'react-query';
+const URL = process.env.REACT_APP_URL;
 
 const Signin = () => {
   const [userName, setUserName] = useState('');
@@ -23,7 +24,7 @@ const Signin = () => {
 
   // 회원가입 POST 요청 Mutation 선언
   const signinMutation = useMutation(async () => {
-    const url = 'http://15.164.221.244:5000/api/users/register';
+    const url = `${URL}/api/users/register`;
     const data = {
       name: userName,
       email: email,

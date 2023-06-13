@@ -5,6 +5,7 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [skill, setSkill] = useState('');
@@ -33,7 +34,7 @@ const MyPageEdit = () => {
   // 기존 서버에 등록된 내 스킬 불러오기
   const fetchMySkillList = async () => {
     try {
-      const response = await fetch('http://15.164.221.244:5000/api/skills/myskill', {
+      const response = await fetch(`${URL}/api/skills/myskill`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
@@ -53,7 +54,7 @@ const MyPageEdit = () => {
   // 검색되는 스킬 리스트 불러오기
   const fetchSkillList = async () => {
     try {
-      const response = await fetch(`http://15.164.221.244:5000/api/skills?keyword=${skill}`, {
+      const response = await fetch(`${URL}/api/skills?keyword=${skill}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
@@ -104,7 +105,7 @@ const MyPageEdit = () => {
         skillNames: mySkillList,
       };
 
-      const response = await fetch('http://15.164.221.244:5000/api/skills/update', {
+      const response = await fetch(`${URL}/api/skills/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

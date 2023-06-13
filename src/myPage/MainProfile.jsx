@@ -6,6 +6,7 @@ import Button from '../components/Button';
 import Modal from '../components/Modal';
 import LoginInput from '../logIn/LogInInput';
 import { useQuery } from 'react-query';
+const URL = process.env.REACT_APP_URL;
 
 const MainProfile = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,7 @@ const MainProfile = () => {
 
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
+    fetch(`${URL}/api/users/mypage`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
@@ -33,7 +34,7 @@ const MainProfile = () => {
 
   // 유저 탈퇴 DELETE 뮤테이션 선언
   const deleteAccountMutation = useMutation(async () => {
-    const url = 'http://15.164.221.244:5000/api/users/delete';
+    const url = `${URL}/api/users/delete`;
 
     const response = await fetch(url, {
       method: 'DELETE',
