@@ -4,7 +4,7 @@ import { ModalButton } from './ModalComponents';
 // 테이블 요소들
 export const tableRowSetting = `
 display: grid;
-grid-template-columns: 8rem 16rem 16rem 12rem 12rem 7rem 7rem;
+grid-template-columns: 8rem 17rem 17rem 12rem 12rem 7rem 7rem;
 grid-template-rows: 5rem;
 justify-items: center;
 align-items: center;
