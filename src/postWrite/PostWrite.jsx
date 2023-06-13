@@ -1,27 +1,54 @@
 import * as Style from './styledComponents/PostWriteStyle';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { categories } from '../community/categoryData';
 import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
 import IconImageDelete from '../assets/icons/icon-delete-image.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 import { useMutation } from 'react-query';
-import { registerPostImg } from './service/postWriteService';
 const BASE_URL = process.env.REACT_APP_URL;
 
-const PostWrite = ({
-  showPostImage,
-  formData,
-  setFormData,
-  previewImg,
-  setPreviewImg
-}) => {
+const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const [showCategory, setShowCategory] = useState(false);
-  const [imageData, setImageData] = useState([]);
+
+  // 이미지 등록 api
+  const postImage = async imgFormData => {
+    const response = await fetch(`${BASE_URL}api/boards/img`, {
+      method: 'POST',
+      body: imgFormData,
+      headers: {
+        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('이미지 등록에 실패하였습니다.');
+    }
+
+    const result = await response.json();
+    return result;
+  };
+
+  const { mutate } = useMutation(postImage, {
+    onSuccess: data => {
+      console.log('게시글 이미지 등록에 성공했습니다.');
+
+      setData(prevFormData => {
+        const updatedFormData = {
+          ...prevFormData,
+          images: [...prevFormData.images, data]
+        };
+        return updatedFormData;
+      });
+    },
+    onError: error => {
+      console.error(error);
+    }
+  });
 
   // 카테고리 선택
   const handleSelectCategory = e => {
-    setFormData({ ...formData, category: e.target.getAttribute('name') });
+    setData({ ...data, category: e.target.getAttribute('name') });
     setShowCategory(false);
   };
 
@@ -29,7 +56,7 @@ const PostWrite = ({
   const handleWriteTitle = e => {
     const inputValue = e.target.value;
     if (inputValue.length <= 100) {
-      setFormData({ ...formData, title: inputValue });
+      setData({ ...data, title: inputValue });
     } else {
       alert('제목을 100자 이하로 작성해주세요!');
     }
@@ -39,7 +66,7 @@ const PostWrite = ({
   const handleWriteContent = e => {
     const inputValue = e.target.value;
     if (inputValue.length <= 500) {
-      setFormData({ ...formData, content: inputValue });
+      setData({ ...data, content: inputValue });
     } else {
       alert('본문을 500자 이하로 작성해주세요!');
     }
@@ -51,48 +78,37 @@ const PostWrite = ({
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
-  // 이미지 등록
-  const { mutate } = useMutation(registerPostImg, {
-    onSuccess: data => {
-      console.log('게시글 이미지 등록에 성공했습니다.');
-      console.log(data.file_name);
-      setPreviewImg(prevImages => {
-        const newImages = [...prevImages, data.file_name];
-        return newImages;
-      });
-    },
-    onError: error => {
-      console.error(error);
-    }
-  });
-
-  const handleAddImage = e => {
-    const file = e.target.files;
-    setImageData(file[0]);
+  const handleTitleChange = e => {
+    handleChange(e);
+    handleWriteTitle(e);
   };
 
-  useEffect(() => {
-    if (imageData) {
-      try {
-        mutate(imageData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, [imageData]);
+  const handleContentChange = e => {
+    handleChange(e);
+    handleWriteContent(e);
+  };
+
+  // 이미지 추가
+  const handleAddImage = e => {
+    const imgFormData = new FormData();
+    const img = e.target.files[0];
+    imgFormData.append('img', img);
+
+    mutate(imgFormData);
+  };
 
   // 이미지 삭제
   const handleImageDelete = index => {
-    setPreviewImg(prevImages => {
-      const updatedImages = [...prevImages];
-      updatedImages.splice(index, 1);
-      return updatedImages;
-    });
-    setImageData(prevImageData => {
-      const updatedImageData = [...prevImageData];
-      updatedImageData.splice(index, 1);
-      return updatedImageData;
-    });
+    // setPreviewImg(prevImages => {
+    //   const updatedImages = [...prevImages];
+    //   updatedImages.splice(index, 1);
+    //   return updatedImages;
+    // });
+    // setImageData(prevImageData => {
+    //   const updatedImageData = [...prevImageData];
+    //   updatedImageData.splice(index, 1);
+    //   return updatedImageData;
+    // });
   };
 
   return (
@@ -103,9 +119,8 @@ const PostWrite = ({
             className="select-category-btn"
             onClick={() => setShowCategory(!showCategory)}
           >
-            {formData.category
-              ? categories.find(category => category.id === formData.category)
-                  .name
+            {data.category
+              ? categories.find(category => category.id === data.category).name
               : '카테고리 선택'}
             {showCategory ? (
               <img src={IconUp} alt="카테고리 목록보기" />
@@ -119,7 +134,7 @@ const PostWrite = ({
                 key={category.name}
                 onClick={handleSelectCategory}
                 name={category.id}
-                className={formData.category === category.name ? 'active' : ''}
+                className={data.category === category.name ? 'active' : ''}
               >
                 <img src={category.icon} alt="카테고리 아이콘" />
                 {category.name}
@@ -132,24 +147,21 @@ const PostWrite = ({
           id="title"
           rows="1"
           placeholder="제목을 입력해주세요"
-          onChange={(handleChange, handleWriteTitle)}
+          onChange={handleTitleChange}
         ></textarea>
       </div>
       <textarea
         name="content"
         id="content"
         placeholder="글을 작성해서 레이서 동료들과 생각을 공유해보세요! "
-        onChange={(handleChange, handleWriteContent)}
+        onChange={handleContentChange}
       ></textarea>
       {showPostImage && (
         <div className="file-upload">
-          {previewImg.length > 0 &&
-            previewImg.map((image, index) => (
+          {data.images.length > 0 &&
+            data.images.map((image, index) => (
               <div className="file-upload-preview" key={index}>
-                <img
-                  src={`${BASE_URL}${image.file_name}`}
-                  alt={image.origin_name}
-                />
+                <img src={image.img_path} alt={`이미지` + index} />
                 <button
                   className="delete-btn"
                   onClick={() => handleImageDelete(index)}
