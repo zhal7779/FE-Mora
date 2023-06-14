@@ -9,3 +9,32 @@ export const getProfile = async () => {
   const data = await response.json();
   return data;
 };
+
+//오픈프로필 등록
+export const putProfile = async (num) => {
+  const response = await fetch(`${process.env.REACT_APP_URL}/api/users/open-profile`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+    },
+    body: {
+      open: num,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+//알림 조회
+export const getAlert = async () => {
+  const response = await fetch(`${process.env.REACT_APP_URL}/api/alerts`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};

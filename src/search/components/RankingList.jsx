@@ -10,17 +10,14 @@ const RankingList = ({ data }) => {
         data.map((item, index) => (
           <Content key={item.id} rank={index + 1}>
             <p className='ranking'>{index + 1}</p>
-            <img
-              className='image_icon'
-              src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'
-            ></img>
+            <img className='image_icon' src={item.User.img_path}></img>
             <div>
               <Link to={'/community/' + item.id}>
                 <h5 className='title'>{item.title}</h5>
               </Link>
               <div className='text_content'>
                 <h5>{item.User.name}</h5>
-                <p> {item.user_detail ? item.user_detail.position : '없음'}</p>
+                <p> {item.User.position}</p>
               </div>
             </div>
           </Content>

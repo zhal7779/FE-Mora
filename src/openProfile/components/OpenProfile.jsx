@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { getProfile } from '../api/openProfileApi';
 const OpenProfile = () => {
   const { data } = useQuery('openProfile', getProfile);
-
+  console.log(data);
   const [moreView, setMoreView] = useState([]);
 
   const handleMoreViewClick = (id) => {
@@ -24,13 +24,12 @@ const OpenProfile = () => {
             <Style.Content>
               <Style.ProfileContent>
                 <div>
-                  <img
-                    className='image_icon'
-                    src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'
-                  ></img>
+                  <img className='image_icon' src={item.img_path}></img>
                   <span className='text_content'>
                     <h5>{item.user.name}</h5>
-                    <p>positon ・ {item.user_careers.total_year}</p>
+                    <p>
+                      {item.position} ・ {item.user_careers.total_year}
+                    </p>
                   </span>
                 </div>
                 <div>

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import { putProfile } from '../api/openProfileApi';
 
 const Toggle = () => {
+  const [open, setOpen] = useState(0);
+  const { data } = useQuery('open', () => putProfile(open));
+
+  console.log(data);
   const [onToggle, setOnToggle] = useState(false);
   const handleToggleClick = () => {
     setOnToggle(!onToggle);

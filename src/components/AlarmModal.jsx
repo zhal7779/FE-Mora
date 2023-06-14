@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import { ReactComponent as DownIcon } from '../assets/icons/fi_chevron-down.svg';
 import { ReactComponent as UpIcon } from '../assets/icons/fi_chevron-up.svg';
 import { ReactComponent as PostIcon } from '../assets/icons/post.svg';
+import { useQuery } from 'react-query';
+import { getAlert } from '../openProfile/api/openProfileApi';
 const AlarmModal = ({ handleClose }) => {
   const arr = ['이민영', '이민영', '이성호', '김윤지', '김지우', '이혜정', '연정환', '임지성'];
   const [hiddenContent, setHiddenContent] = useState([]);
+
+  const { data } = useQuery('alert', getAlert);
+  console.log(data);
 
   //모달 리스트 open, close
   const handleContentClick = (index) => {
