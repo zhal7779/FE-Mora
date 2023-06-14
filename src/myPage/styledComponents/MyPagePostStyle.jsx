@@ -84,6 +84,20 @@ export const ListContainer = styled.section`
       }
     }
   }
+  .no-data-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+
+    h2 {
+      font-weight: 600;
+      font-size: 1.7rem;
+      color: #424242;
+    }
+  }
 `;
 
 export const PostContainer = styled.section`
