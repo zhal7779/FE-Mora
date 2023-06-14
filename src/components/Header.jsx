@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../assets/icons/fi_bell.svg';
@@ -10,38 +10,53 @@ import DefaultImg from '../assets/images/rabbitProfile.png';
 
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
+  const location = useLocation();
 
+  // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
+  //token 값이 있으면  초기 상태값 1
+
+  const [menu, setMenu] = useState(() => {
+    const storedMenu = localStorage.getItem('menu');
+    return storedMenu ? parseInt(storedMenu) : token ? 1 : 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('menu', menu.toString());
+
+    return () => {
+      localStorage.removeItem('menu');
+    };
+  }, [menu]);
+
+  //메뉴 상태 변경
   //menu === 0 ? 로고
   //menu === 1 ? 토끼굴
   //menu === 2 ? 정비소
   //menu === 3 ?오픈프로필
   //menu === 4 ? 검색창 사용불가
   //menu === 5 ? 마이페이지
-
-  // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
-  //token 값이 있으면  초기 상태값 1
-  const [menu, setMenu] = useState(() => {
-    const storedMenu = localStorage.getItem('menu');
-    const initialMenu = token ? 1 : storedMenu ? parseInt(storedMenu) : 0;
-    return initialMenu;
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setMenu(0);
+    } else if (location.pathname === '/community/post/free') {
+      setMenu(1);
+    } else if (location.pathname === '/schedule') {
+      setMenu(2);
+    } else if (location.pathname === '/openprofile') {
+      setMenu(3);
+    } else if (location.pathname === '/search') {
+      setMenu(4);
+    } else if (location.pathname === '/mypage') {
+      setMenu(5);
+    }
   });
 
-  useEffect(() => {
-    localStorage.setItem('menu', menu.toString());
-  }, [menu]);
-  //메뉴 상태 변경
-  const handleMenuClick = (num) => {
-    setMenu(num);
-  };
   //검색창 on
   const [onSearch, setOnSearch] = useState(false);
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
   };
-  // 검색창 사용불가, SearchBar에 전달
-  const handlNotSearch = () => {
-    setMenu(4);
-  };
+
   //모달 open,close
   const [onModal, setOnModal] = useState(false);
   const handleModalClick = (boolean) => {
@@ -51,7 +66,7 @@ const Header = () => {
   return (
     <>
       {onSearch ? (
-        <SearchBar handleClose={handleSearchClick} notSearch={handlNotSearch} />
+        <SearchBar handleClose={handleSearchClick} />
       ) : (
         <Container>
           <Content>
@@ -61,21 +76,21 @@ const Header = () => {
 
             <MenuContainer>
               <Link to='/'>
-                <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+                <LogoIcon style={{ marginRight: '2rem' }} />
               </Link>
               <MenuContent>
                 <Link to={token ? '/community/post/free' : '/nonmember'}>
-                  <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+                  <MenuItem active={menu === 1}>
                     <p>토끼굴</p>
                   </MenuItem>
                 </Link>
                 <Link to={token ? '/schedule' : '/nonmember'}>
-                  <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+                  <MenuItem active={menu === 2}>
                     <p> 정비소</p>
                   </MenuItem>
                 </Link>
                 <Link to={token ? '/openprofile' : '/nonmember'}>
-                  <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+                  <MenuItem active={menu === 3}>
                     <p> 개발자 오픈 프로필</p>
                   </MenuItem>
                 </Link>
@@ -101,7 +116,7 @@ const Header = () => {
                 )}
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
-                <div onClick={() => handleMenuClick(5)}>
+                <div>
                   <ImageIcon src={DefaultImg}></ImageIcon>
                 </div>
               </Link>

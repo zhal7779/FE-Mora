@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { useNavigate } from 'react-router-dom';
 
-const SearchBar = ({ handleClose, notSearch }) => {
+const SearchBar = ({ handleClose }) => {
   const navigate = useNavigate();
   //input 처리
   const [input, setInput] = useState('');
@@ -27,7 +27,6 @@ const SearchBar = ({ handleClose, notSearch }) => {
               if ('Enter' === e.key) {
                 handleClickOutside();
                 navigate('/search', { state: input });
-                notSearch();
               }
             }}
             placeholder='회사, 사람, 키워드로 검색'
