@@ -6,33 +6,6 @@ import noDataImage from '../assets/images/no-data-image.svg';
 const URL = process.env.REACT_APP_URL;
 
 const MyPostList = () => {
-  // const [myPostListData, setMyPostListData] = useState([
-  //   {
-  //     title: '미쳐버린 제목',
-  //     content:
-  //       '유익함이 폭발한다 개발자라면 이제는 꼭 알아야 하는 내용ㅋㅋ 이걸 모르는 개발자가 타이어보다 싸다! 유익함이 폭발한다 개발자라면 이제는 꼭 알아야 하는 내용ㅋㅋ 이걸 모르는 개발자가 타이어보다 싸다! 유익함이 폭발한다 개발자라면 이제는 꼭 알아야 하는 내용ㅋㅋ 이걸 모르는 개발자가 타이어보다 싸다!',
-  //     comment_cnt: 5,
-  //     like_cnt: 60,
-  //     view_cnt: 100,
-  //   },
-  //   {
-  //     title: '맛깔나는 제목',
-  //     content:
-  //       '재미가 폭발한다 개발자라면 이제는 꼭 맛봐야 하는 내용ㅋㅋ 이걸 모르는 개발자가 신발보다 싸다! 재미가 폭발한다 개발자라면 이제는 꼭 맛봐야 하는 내용ㅋㅋ 이걸 모르는 개발자가 신발보다 싸다! 재미가 폭발한다 개발자라면 이제는 꼭 맛봐야 하는 내용ㅋㅋ 이걸 모르는 개발자가 신발보다 싸다!',
-  //     comment_cnt: 5,
-  //     like_cnt: 60,
-  //     view_cnt: 100,
-  //   },
-  //   {
-  //     title: '정신나간 제목',
-  //     content:
-  //       '멋짐이 폭발한다 개발자라면 이제는 꼭 배워야 하는 내용ㅋㅋ 이걸 모르는 개발자가 키보드보다 싸다! 멋짐이 폭발한다 개발자라면 이제는 꼭 배워야 하는 내용ㅋㅋ 이걸 모르는 개발자가 키보드보다 싸다! 멋짐이 폭발한다 개발자라면 이제는 꼭 배워야 하는 내용ㅋㅋ 이걸 모르는 개발자가 키보드보다 싸다!',
-  //     comment_cnt: 5,
-  //     like_cnt: 60,
-  //     view_cnt: 100,
-  //   },
-  // ]);
-
   const queries = useQueries([
     {
       queryKey: 'myPostListData',
@@ -59,9 +32,6 @@ const MyPostList = () => {
 
   const myPostListData = myPostListDataQuery.data;
   const mainProfileData = mainProfileDataQuery.data;
-
-  console.log(myPostListData);
-  console.log(mainProfileData);
 
   return (
     <Style.ListContainer>

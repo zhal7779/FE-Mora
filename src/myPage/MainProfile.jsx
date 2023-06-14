@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import * as Style from './styledComponents/MyPageProfileStyle';
@@ -6,6 +7,7 @@ import Button from '../components/Button';
 import Modal from '../components/Modal';
 import LoginInput from '../logIn/LogInInput';
 import { useQuery } from 'react-query';
+import noDataImage from '../assets/images/no-data-image.svg';
 const URL = process.env.REACT_APP_URL;
 
 const MainProfile = () => {
@@ -70,35 +72,35 @@ const MainProfile = () => {
 
   console.log(mainProfileData);
 
-  // mainProfileData(유저 상세 정보)를 늦게 가져오면 생기는 이미지 없음 에러 방지
-  // if (!mainProfileData || !mainProfileData.UserDetail || !mainProfileData.UserDetail.img_path) {
-  //   return null;
-  // }
-
-  if (!mainProfileData) {
-    return null;
-  }
-
   return (
     <Style.introContainer>
-      <div className='imgAndButtons'>
-        <img src={mainProfileData.UserDetail.img_path} alt='프로필'></img>
-        <div className='buttons-container'>
-          <Style.ButtonLink to='/mypage/edit'>
-            <Button color='darkPurple' value='수정하기' />
-          </Style.ButtonLink>
-          <Button color='white' value='탈퇴하기' onClick={openModal} />
-        </div>
-      </div>
-      <h3>{mainProfileData.name}</h3>
-      <h4>{mainProfileData.UserDetail.generation}</h4>
-      <h5>{mainProfileData.UserDetail.position || '직책을 입력해 주세요.'}</h5>
-      <div className='intro-container'>
-        <p className='intro'>
-          {mainProfileData.UserDetail.comment ||
-            '수정하기 버튼을 눌러 간단한 자기소개를 입력해주세요!'}
-        </p>
-      </div>
+      {mainProfileData ? (
+        <>
+          <div className='imgAndButtons'>
+            <img src={mainProfileData.UserDetail.img_path} alt='프로필'></img>
+            <div className='buttons-container'>
+              <Style.ButtonLink to='/mypage/edit'>
+                <Button color='darkPurple' value='수정하기' />
+              </Style.ButtonLink>
+              <Button color='white' value='탈퇴하기' onClick={openModal} />
+            </div>
+          </div>
+          <h3>{mainProfileData.name}</h3>
+          <h4>{mainProfileData.UserDetail.generation}</h4>
+          <h5>{mainProfileData.UserDetail.position || '직책을 입력해 주세요.'}</h5>
+          <div className='intro-container'>
+            <p className='intro'>
+              {mainProfileData.UserDetail.comment ||
+                '수정하기 버튼을 눌러 간단한 자기소개를 입력해주세요!'}
+            </p>
+          </div>
+        </>
+      ) : (
+        <NoDataContainer>
+          <h2>로딩중 이에요..</h2>
+          <img src={noDataImage} alt='noDataImage'></img>
+        </NoDataContainer>
+      )}
 
       {showModal && (
         <Modal width='50rem'>
@@ -133,3 +135,20 @@ const MainProfile = () => {
 };
 
 export default MainProfile;
+
+const NoDataContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 50%;
+    height: 100vh;
+  }
+  h2 {
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: #424242;
+  }
+`;

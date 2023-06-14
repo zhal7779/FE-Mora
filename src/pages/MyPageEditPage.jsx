@@ -15,7 +15,6 @@ const MyPageEdit = () => {
   const [intro, setIntro] = useState('');
   const [phase, setPhase] = useState('');
   const [track, setTrack] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -31,7 +30,6 @@ const MyPageEdit = () => {
     setTrack('트랙 및');
     setPhase('기수를 입력해주세요');
     setIntro(mainProfileData.UserDetail.comment);
-    setIsOpen(mainProfileData.UserDetail.profile_public === 0 ? false : true);
   }, []);
 
   // 트랙과 기수 이벤트 핸들러
@@ -43,10 +41,6 @@ const MyPageEdit = () => {
   const handlePhaseChange = (e) => {
     const selectedPhase = e.target.value;
     setPhase(selectedPhase);
-  };
-  // 프로필 오픈 핸들러
-  const handleIsOpenChange = (e) => {
-    setIsOpen(e.target.checked);
   };
 
   // 기존 내 정보 가져오기
@@ -110,7 +104,6 @@ const MyPageEdit = () => {
       intro,
       phase,
       track,
-      profile_public: isOpen ? 1 : 0,
     };
 
     updateProfileMutation.mutate(updatedData, {
@@ -180,10 +173,6 @@ const MyPageEdit = () => {
           value={intro}
         ></textarea>
       </IntroTextContainter>
-      <CheckboxContainer>
-        <input type='checkbox' id='isOpen' checked={isOpen} onChange={handleIsOpenChange} />
-        <label htmlFor='currentlyEmployed'>프로필 공개</label>
-      </CheckboxContainer>
       <ButtonContainer>
         <Button
           color='darkPurple'
@@ -300,35 +289,6 @@ const IntroTextContainter = styled.div`
       font-weight: 600;
       opacity: 0.35;
     }
-  }
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-
-  input[type='checkbox'] {
-    appearance: none;
-    width: 2rem;
-    height: 2rem;
-    border: 2px solid #d8e0e9;
-    border-radius: 4px;
-    margin-right: 0.5rem;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.2s ease-in-out;
-
-    &:checked {
-      background-color: #5f3dc4;
-      border-color: #5f3dc4;
-    }
-  }
-
-  label {
-    font-family: 'Noto Sans KR';
-    font-weight: 400;
-    font-size: 1.5rem;
   }
 `;
 
