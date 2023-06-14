@@ -3,18 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import IconGoBack from '../assets/icons/icon-go-back.svg';
 import IconPostImage from '../assets/icons/icon-post-img.svg';
 import Button from '../components/Button';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
+import { useEffect } from 'react';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  // 게시글 등록 api
-  const registerPost = async () => {
+  useEffect(() => {
+    if (postId) {
+      setShowPostImage(true);
+    }
+  }, [postId]);
+
+  // 게시글 등록/수정 api
+  const registerPost = async postData => {
     const response = await fetch(`${BASE_URL}/api/boards`, {
       method: 'POST',
-      body: data,
+      body: JSON.stringify(postData),
       headers: {
+        'Content-Type': 'application/json',
         authorization: `Bearer ${sessionStorage.getItem('userToken')}`
       }
     });
@@ -29,6 +38,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
 
   const { mutate } = useMutation(registerPost, {
     onSuccess: boardId => {
+      queryClient.invalidateQueries(['posts']);
       navigate(`/community/${boardId}`);
     },
     onError: error => {
@@ -36,18 +46,12 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
     }
   });
 
-  // 게시글 등록
-  const handleRegisterPost = async () => {
-    const formData = new FormData();
+  // 게시글 등록/수정
+  const handleRegisterPost = () => {
     const { category, title, content, hashtags, images } = data;
     const imgArr = images.map(img => img.img_path);
-    formData.append('category', category);
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('hashtags', hashtags);
-    formData.append('images', imgArr);
 
-    if (category === '카테고리 선택') {
+    if (category === '') {
       alert('카테고리를 선택해주세요');
       return;
     } else if (title === '') {
@@ -61,8 +65,20 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
       if (!check) return;
     }
 
+    const postData = {
+      category: category,
+      title: title,
+      content: content,
+      hashtags: hashtags,
+      images: imgArr
+    };
+
+    if (postId) {
+      postData.board_id = postId;
+    }
+
     try {
-      await mutate(formData);
+      mutate(postData);
     } catch (error) {
       console.error(error);
     }
