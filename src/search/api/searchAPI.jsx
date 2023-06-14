@@ -1,3 +1,14 @@
+// 게시글 top10 조회
+export const fetchPopular = async () => {
+  const response = await fetch(`${process.env.REACT_APP_URL}/api/boards/popular`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  return data;
+};
 //자유게시판 검색
 export const fetchFreeSearch = async (keyword) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/boards/free?keyword=${keyword}`, {

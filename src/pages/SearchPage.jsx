@@ -12,6 +12,7 @@ import SearchResultPost from '../search/components/SearchResultPost';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
 import {
+  fetchPopular,
   fetchFreeSearch,
   fetchKnowledgeSearch,
   fetchStudySearch,
@@ -39,15 +40,23 @@ const SearchPage = () => {
   const handleMenuClick = (num) => {
     setMenu(num);
   };
+  const popularProfileData = useQueries([
+    {
+      queryKey: ['popular'],
+      queryFn: () => fetchPopular(searchKeyword),
+    },
+  ]);
 
   const freeKnowledgeData = useQueries([
     {
       queryKey: ['free', searchKeyword],
       queryFn: () => fetchFreeSearch(searchKeyword),
+      enabled: popularProfileData[0]?.isSuccess,
     },
     {
       queryKey: ['Knowledge', searchKeyword],
       queryFn: () => fetchKnowledgeSearch(searchKeyword),
+      enabled: popularProfileData[0]?.isSuccess,
     },
   ]);
   const studyQuestionData = useQueries([
@@ -63,10 +72,10 @@ const SearchPage = () => {
     },
   ]);
   //데이터 개수
-  const freeCount = freeKnowledgeData[0].data.length;
-  const knowledgeCount = freeKnowledgeData[1].data.length;
-  const studyCount = studyQuestionData[0].data.length;
-  const questionCount = studyQuestionData[1].data.length;
+  const freeCount = freeKnowledgeData[0]?.data?.length || 0;
+  const knowledgeCount = freeKnowledgeData[1]?.data?.length || 0;
+  const studyCount = studyQuestionData[0]?.data?.length || 0;
+  const questionCount = studyQuestionData[1]?.data?.length || 0;
   const totalCount = freeCount + knowledgeCount + studyCount + questionCount;
   // SearchResultBar에 검색결과 ${count}건에 전달해줄 데이터
   const countArr = {
@@ -177,7 +186,7 @@ const SearchPage = () => {
                   )}
                 </div>
               )}
-              <RankingContent />
+              <RankingContent data={popularProfileData[0].data} />
             </SearchPageWrapper>
           ) : menu === 2 ? (
             <Style.ProfileWrapper>
@@ -186,12 +195,12 @@ const SearchPage = () => {
           ) : menu === 3 ? (
             <SearchPageWrapper>
               <SearchResultPost data={resultData.free} type={'free'} />
-              <RankingContent />
+              <RankingContent data={popularProfileData[0].data} />
             </SearchPageWrapper>
           ) : menu === 4 ? (
             <SearchPageWrapper>
               <SearchResultPost data={resultData.knowledge} type={'Knowledge'} />
-              <RankingContent />
+              <RankingContent data={popularProfileData[0].data} />
             </SearchPageWrapper>
           ) : menu === 5 ? (
             <SearchPageWrapper>

@@ -6,6 +6,7 @@ import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
+import { Link } from 'react-router-dom';
 
 const SearchResultQnA = ({ data, count, receiveMenu }) => {
   const keyword = useContext(SearchContext);
@@ -32,31 +33,33 @@ const SearchResultQnA = ({ data, count, receiveMenu }) => {
           )}
           {data &&
             data.map((item) => (
-              <Content key={item.id}>
-                <div className='main_content'>
-                  <div>
-                    <strong>Q</strong>
-                    <h2>
-                      <KeywordHighlight content={item.title} keyword={keyword} />
-                    </h2>
+              <Link to={'/community/' + item.id}>
+                <Content key={item.id}>
+                  <div className='main_content'>
+                    <div>
+                      <strong>Q</strong>
+                      <h2>
+                        <KeywordHighlight content={item.title} keyword={keyword} />
+                      </h2>
+                    </div>
+                    <p>
+                      <KeywordHighlight content={item.content} keyword={keyword} />
+                    </p>
                   </div>
-                  <p>
-                    <KeywordHighlight content={item.content} keyword={keyword} />
-                  </p>
-                </div>
-                <div className='hashtags'>
-                  {item.hashtags.map((hashtag, index) => (
-                    <h3 key={index}>#{hashtag.title}</h3>
-                  ))}
-                </div>
-                <div className='sub_content'>
-                  <p>댓글 {item.comment_cnt}</p>
-                  <div>
-                    <p>좋아요 {item.like_cnt}</p>
-                    <p>조회 {item.view_cnt}</p>
+                  <div className='hashtags'>
+                    {item.hashtags.map((hashtag, index) => (
+                      <h3 key={index}>#{hashtag.title}</h3>
+                    ))}
                   </div>
-                </div>
-              </Content>
+                  <div className='sub_content'>
+                    <p>댓글 {item.comment_cnt}</p>
+                    <div>
+                      <p>좋아요 {item.like_cnt}</p>
+                      <p>조회 {item.view_cnt}</p>
+                    </div>
+                  </div>
+                </Content>
+              </Link>
             ))}
         </>
       )}

@@ -6,6 +6,7 @@ import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
+import { Link } from 'react-router-dom';
 const SearchResultPost = ({ data, count, receiveMenu, type }) => {
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
@@ -44,34 +45,36 @@ const SearchResultPost = ({ data, count, receiveMenu, type }) => {
           {data &&
             data.length &&
             data.map((item) => (
-              <Content key={item.id}>
-                {type === 'free' ? (
-                  <span className='subject'>자유</span>
-                ) : type === 'Knowledge' ? (
-                  <span className='subject'>지식/정보</span>
-                ) : (
-                  <span className='subject'>스터디/모임</span>
-                )}
+              <Link to={'/community/' + item.id}>
+                <Content key={item.id}>
+                  {type === 'free' ? (
+                    <span className='subject'>자유</span>
+                  ) : type === 'Knowledge' ? (
+                    <span className='subject'>지식/정보</span>
+                  ) : (
+                    <span className='subject'>스터디/모임</span>
+                  )}
 
-                <h3>
-                  <KeywordHighlight content={item.title} keyword={keyword} />
-                </h3>
-                <p>
-                  <KeywordHighlight content={item.content} keyword={keyword} />
-                </p>
-                <div className='hashtags'>
-                  {item.hashtags.map((hashtag, index) => (
-                    <h3 key={index}>#{hashtag.title}</h3>
-                  ))}
-                </div>
-                <div className='sub_content'>
-                  <p>댓글 {item.comment_cnt}</p>
-                  <div>
-                    <p>좋아요 {item.like_cnt}</p>
-                    <p>조회 {item.view_cnt}</p>
+                  <h3>
+                    <KeywordHighlight content={item.title} keyword={keyword} />
+                  </h3>
+                  <p>
+                    <KeywordHighlight content={item.content} keyword={keyword} />
+                  </p>
+                  <div className='hashtags'>
+                    {item.hashtags.map((hashtag, index) => (
+                      <h3 key={index}>#{hashtag.title}</h3>
+                    ))}
                   </div>
-                </div>
-              </Content>
+                  <div className='sub_content'>
+                    <p>댓글 {item.comment_cnt}</p>
+                    <div>
+                      <p>좋아요 {item.like_cnt}</p>
+                      <p>조회 {item.view_cnt}</p>
+                    </div>
+                  </div>
+                </Content>
+              </Link>
             ))}
         </>
       )}
