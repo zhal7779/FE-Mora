@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { fetchDeleteNotification } from '../apis/notificationApis';
+import { fetchDeletePost } from '../apis/postApis';
 
-import NotificationModal from './NotificationModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
-import {
-  DetailBtn,
-  NotificationInfo,
-  NotificationListBlock,
-} from '../styledComponents/TableComponent';
+import { NotificationListBlock } from '../styledComponents/TableComponent';
 
 const AdminTableBody = ({ notifications }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,15 +15,6 @@ const AdminTableBody = ({ notifications }) => {
       deleteNotification(id);
       setIsModalOpen(false);
     }
-  };
-
-  const handleDetailClick = (id) => {
-    setModalNotificationId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleModalCancelClick = () => {
-    setIsModalOpen(false);
   };
 
   const { mutate: deleteNotification, error } = useMutation((id) => fetchDeleteNotification(id), {
@@ -44,7 +30,7 @@ const AdminTableBody = ({ notifications }) => {
       {notifications.map((data, idx) => {
         return (
           <NotificationInfo className='user-info' key={idx}>
-            <span>{data.Admin?.name || '관리자'}</span>
+            <span>{data.Admin.name}</span>
             <span className='title'>{data.title}</span>
             <span className='content'>{data.content}</span>
             <span>{data.createdAt.slice(0, 10)}</span>

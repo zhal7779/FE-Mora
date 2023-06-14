@@ -6,7 +6,6 @@ import { AdminPost } from './AdminPost';
 import SearchBar from '../../adminCommon/components/SearchBar';
 import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import {
-  EnrollButton,
   MainContentHeaderBlock,
   TableSearchResult,
   TableTitle,
@@ -19,7 +18,7 @@ const AdminTable = () => {
 
   const { data, isLoading, error } = useQuery(
     ['admin', 'post', 'get', currentPage, keyword],
-    async () => await fetchReadPostInfo(currentPage, 15, keyword)
+    async () => await fetchReadPostInfo(currentPage, 18, keyword)
   );
 
   if (isLoading) return <LoadingComponent search={'게시물 제목'} title={'게시물'} />;
@@ -36,7 +35,7 @@ const AdminTable = () => {
         </TableTitleBlock>
       </MainContentHeaderBlock>
 
-      <AdminPost data={data} />
+      <AdminPost posts={data.objArr} />
     </>
   );
 };
