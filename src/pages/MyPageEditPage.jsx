@@ -6,6 +6,7 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [userName, setUserName] = useState('');
@@ -48,7 +49,7 @@ const MyPageEdit = () => {
 
   // 기존 내 정보 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
+    fetch(`${URL}/api/users/mypage`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
@@ -59,7 +60,7 @@ const MyPageEdit = () => {
 
   // 프로필 이미지 POST 뮤테이션 선언
   const uploadImageMutation = useMutation((formData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
+    fetch(`${URL}/api/users/mypage/img/upload`, {
       method: 'POST',
       body: formData,
     }).then((response) => response.json())
@@ -67,7 +68,7 @@ const MyPageEdit = () => {
 
   // 내 정보 updatedData 로 수정하기
   const updateProfileMutation = useMutation((updatedData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
+    fetch(`${URL}/api/users/mypage/edit`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ const MyPageEdit = () => {
       const data = await uploadImageMutation.mutateAsync(formData);
 
       if (data) {
-        const imageUrl = 'http://15.164.221.244:5000/' + data.file_name;
+        const imageUrl = `${URL}/` + data.file_name;
         setUserImg(imageUrl);
       } else {
         console.log('이미지 업로드 실패');
