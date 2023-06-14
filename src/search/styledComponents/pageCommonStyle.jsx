@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SearchPageWrapper = styled.div`
+export const SearchPageWrapper = styled.main`
   padding: 6rem 0;
   width: 1024px;
   height: 100%;
@@ -14,7 +14,12 @@ export const SearchPageWrapper = styled.div`
   }
 `;
 
-export const SchedulePageWrapper = styled.div`
+export const NoDataWrapper = styled.div`
+  display: flex;
+  margin: 0 auto;
+`;
+
+export const SchedulePageWrapper = styled.main`
   width: 1024px;
   height: 100%;
   display: flex;
@@ -22,7 +27,7 @@ export const SchedulePageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const OpenProfilePageWrapper = styled.div`
+export const OpenProfilePageWrapper = styled.main`
   width: 1024px;
   height: 100%;
   display: flex;

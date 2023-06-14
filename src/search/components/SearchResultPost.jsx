@@ -13,21 +13,25 @@ const SearchResultPost = ({ data, count, receiveMenu, type }) => {
       receiveMenu(3);
     } else if (type === 'Knowledge') {
       receiveMenu(4);
+    } else {
+      receiveMenu(5);
     }
   };
   return (
     <Container>
-      {data && data.length && data.length === 0 ? (
+      {data && data.length === 0 ? (
         <NoData />
       ) : (
         <>
-          {data && data.length && data.length <= 4 && (
+          {data && data.length <= 4 && (
             <Style.AddView>
               <div>
                 {type === 'free' ? (
                   <p className='title'>자유 게시판</p>
-                ) : (
+                ) : type === 'Knowledge' ? (
                   <p className='title'>지식 공유</p>
+                ) : (
+                  <p className='title'>스터디 모집</p>
                 )}
                 <p className='total_count'>{count}</p>
               </div>
@@ -41,16 +45,31 @@ const SearchResultPost = ({ data, count, receiveMenu, type }) => {
             data.length &&
             data.map((item) => (
               <Content key={item.id}>
+                {type === 'free' ? (
+                  <span className='subject'>자유</span>
+                ) : type === 'Knowledge' ? (
+                  <span className='subject'>지식/정보</span>
+                ) : (
+                  <span className='subject'>스터디/모임</span>
+                )}
+
                 <h3>
                   <KeywordHighlight content={item.title} keyword={keyword} />
                 </h3>
                 <p>
                   <KeywordHighlight content={item.content} keyword={keyword} />
                 </p>
-                <div>
-                  <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF8bkStA_NWmRIUeISz6lRnrar6tzQ0v0uCg&usqp=CAU'></img>
-                  <h4>민영(min_young)</h4>
-                  <h5>라인플러스 프론트엔드 개발자</h5>
+                <div className='hashtags'>
+                  {item.hashtags.map((hashtag, index) => (
+                    <h3 key={index}>#{hashtag.title}</h3>
+                  ))}
+                </div>
+                <div className='sub_content'>
+                  <p>댓글 {item.comment_cnt}</p>
+                  <div>
+                    <p>좋아요 {item.like_cnt}</p>
+                    <p>조회 {item.view_cnt}</p>
+                  </div>
                 </div>
               </Content>
             ))}
@@ -79,33 +98,50 @@ const Content = styled.div`
     background: rgba(233, 233, 238, 0.4);
     transition: 0.2s ease-out;
   }
+  .subject {
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    background: #eeeafe;
+    color: #a58cf5;
+    font-weight: 600;
+    font-size: 1rem;
+  }
   h3 {
     font-size: 1.6rem;
     font-weight: 600;
-    padding-bottom: 1.6rem;
+    padding: 1.6rem 0;
   }
   p {
     font-size: 1.4rem;
-    padding-bottom: 2rem;
     line-height: 140%;
   }
-  div {
+
+  .hashtags {
     display: flex;
-    align-items: center;
-    font-size: 1.2rem;
-    font-weight: 600;
-    img {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
+    h3 {
+      color: #94a3b8;
       margin-right: 1rem;
+      font-size: 1.2rem;
+      font-weight: 500;
     }
-    h4 {
-      color: #242424;
-      margin-right: 0.5rem;
+  }
+  .sub_content {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 0;
+    color: #242424;
+    p {
+      font-size: 1rem;
     }
-    h5 {
-      color: #64748b;
+    div {
+      display: flex;
+      gap: 1rem;
+      p {
+        font-size: 1rem;
+        color: #bdbdbd;
+      }
     }
   }
 `;

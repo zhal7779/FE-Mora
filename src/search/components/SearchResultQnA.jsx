@@ -5,6 +5,7 @@ import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right
 import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
+import NoData from '../../components/NoData';
 
 const SearchResultQnA = ({ data, count, receiveMenu }) => {
   const keyword = useContext(SearchContext);
@@ -13,45 +14,52 @@ const SearchResultQnA = ({ data, count, receiveMenu }) => {
   };
   return (
     <Container>
-      {data.length <= 5 && (
-        <Style.AddView>
-          <div>
-            <p className='title'>레이서 Q&A</p>
-            <p className='total_count'>{count}</p>
-          </div>
-          <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
-            <p className='all_view'>모두 보기</p>
-            <RightIcon stroke='#242424' />
-          </div>
-        </Style.AddView>
-      )}
-      {data.map((item) => (
-        <Content key={item.id}>
-          <div className='main_content'>
-            <div>
-              <strong>Q</strong>
-              <h2>
-                <KeywordHighlight content={item.title} keyword={keyword} />
-              </h2>
-            </div>
-            <p>
-              <KeywordHighlight content={item.content} keyword={keyword} />
-            </p>
-          </div>
-          <div className='hashtags'>
-            {item.hashtags.map((hashtag, index) => (
-              <h3 key={index}>#{hashtag.title}</h3>
+      {data && data.length === 0 ? (
+        <NoData />
+      ) : (
+        <>
+          {data.length <= 4 && (
+            <Style.AddView>
+              <div>
+                <p className='title'>레이서 Q&A</p>
+                <p className='total_count'>{count}</p>
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
+                <p className='all_view'>모두 보기</p>
+                <RightIcon stroke='#242424' />
+              </div>
+            </Style.AddView>
+          )}
+          {data &&
+            data.map((item) => (
+              <Content key={item.id}>
+                <div className='main_content'>
+                  <div>
+                    <strong>Q</strong>
+                    <h2>
+                      <KeywordHighlight content={item.title} keyword={keyword} />
+                    </h2>
+                  </div>
+                  <p>
+                    <KeywordHighlight content={item.content} keyword={keyword} />
+                  </p>
+                </div>
+                <div className='hashtags'>
+                  {item.hashtags.map((hashtag, index) => (
+                    <h3 key={index}>#{hashtag.title}</h3>
+                  ))}
+                </div>
+                <div className='sub_content'>
+                  <p>댓글 {item.comment_cnt}</p>
+                  <div>
+                    <p>좋아요 {item.like_cnt}</p>
+                    <p>조회 {item.view_cnt}</p>
+                  </div>
+                </div>
+              </Content>
             ))}
-          </div>
-          <div className='sub_content'>
-            <p>댓글 {item.comment_cnt}</p>
-            <div>
-              <p>좋아요 {item.like_cnt}</p>
-              <p>조회 {item.view_cnt}</p>
-            </div>
-          </div>
-        </Content>
-      ))}
+        </>
+      )}
     </Container>
   );
 };
