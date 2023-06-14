@@ -29,6 +29,7 @@ import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
 import NotificationModal from './admins/adminNotification/components/NotificationModal';
+import NonmemberPage from './pages/NonmemberPage';
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => {
                 <Route path='/schedule' element={<SchedulePage />} />
                 <Route path='/openprofile' element={<OpenProfilePage />} />
                 <Route path='/mypage' element={<MyPage />} />
+                <Route path='/nonmember' element={<NonmemberPage />} />
               </Route>
               <Route element={<LoginLayout />}>
                 <Route path='/login' element={<Login />} />

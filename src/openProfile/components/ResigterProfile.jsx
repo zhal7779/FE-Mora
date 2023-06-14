@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { Link } from 'react-router-dom';
 
 const ResigterProfile = () => {
   return (
@@ -18,7 +19,9 @@ const ResigterProfile = () => {
         </div>
       </TextContent>
       <ButtonContent>
-        <Button value={'오픈 프로필 등록하기'} color='darkPurple' />
+        <Link to='/mypage'>
+          <Button value={'오픈 프로필 등록하기'} color='darkPurple' />
+        </Link>
       </ButtonContent>
     </Container>
   );
