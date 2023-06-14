@@ -24,11 +24,18 @@ export const PostContainer = styled.section`
     padding-bottom: 200px;
 
     li {
-      display: grid;
-      grid-template-columns: 42px 2fr;
-      gap: 16px;
-      padding: 30px 0;
-      border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+      a {
+        display: grid;
+        grid-template-columns: 42px 2fr;
+        gap: 16px;
+        padding: 30px 0;
+      }
 
       .rank {
         position: relative;
@@ -64,6 +71,7 @@ export const PostContainer = styled.section`
           height: 36px;
           border-radius: 50%;
           background-color: #eee;
+          overflow: hidden;
 
           img {
             width: 100%;
@@ -101,7 +109,6 @@ export const PostContainer = styled.section`
           width: calc(100% - 155px);
           height: 65px;
 
-          word-wrap: break-word;
           font-size: 1.6rem;
           line-height: 2.2rem;
           color: #424242;
@@ -120,9 +127,15 @@ export const PostContainer = styled.section`
 
         &-img {
           width: 135px;
-          background: #d9d9d9;
+          background: #f0eff7;
           overflow: hidden;
           border-radius: 4px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
       }
 
@@ -145,4 +158,15 @@ export const PostContainer = styled.section`
       }
     }
   }
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  font-size: 1.6rem;
+  color: #424242;
+  background-color: #f2f0fa;
 `;

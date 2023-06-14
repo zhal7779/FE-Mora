@@ -6,6 +6,7 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [userName, setUserName] = useState('');
@@ -14,25 +15,23 @@ const MyPageEdit = () => {
   const [intro, setIntro] = useState('');
   const [phase, setPhase] = useState('');
   const [track, setTrack] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   // 수정하지 않고 넘길 때는 이전 값 넣어주기
   useEffect(() => {
     setUserName(mainProfileData.name);
-    setUserImg(mainProfileData.img_path);
+    setUserImg(mainProfileData.UserDetail.img_path);
     setPosition(
       mainProfileData.UserDetail.position === '직책을 입력해주세요.'
         ? ''
         : mainProfileData.UserDetail.position
     );
+    setTrack('트랙 및');
+    setPhase('기수를 입력해주세요');
     setIntro(mainProfileData.UserDetail.comment);
-    setPhase(mainProfileData.UserDetail.generation.split(' ')[2]);
-    setTrack(
-      mainProfileData.UserDetail.generation.split(' ')[0] +
-        ' ' +
-        mainProfileData.UserDetail.generation.split(' ')[1]
-    );
+    setIsOpen(mainProfileData.UserDetail.profile_public === 0 ? false : true);
   }, []);
 
   // 트랙과 기수 이벤트 핸들러
@@ -45,10 +44,14 @@ const MyPageEdit = () => {
     const selectedPhase = e.target.value;
     setPhase(selectedPhase);
   };
+  // 프로필 오픈 핸들러
+  const handleIsOpenChange = (e) => {
+    setIsOpen(e.target.checked);
+  };
 
   // 기존 내 정보 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
+    fetch(`${URL}/api/users/mypage`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
@@ -59,7 +62,7 @@ const MyPageEdit = () => {
 
   // 프로필 이미지 POST 뮤테이션 선언
   const uploadImageMutation = useMutation((formData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
+    fetch(`${URL}/api/users/mypage/img/upload`, {
       method: 'POST',
       body: formData,
     }).then((response) => response.json())
@@ -67,7 +70,7 @@ const MyPageEdit = () => {
 
   // 내 정보 updatedData 로 수정하기
   const updateProfileMutation = useMutation((updatedData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
+    fetch(`${URL}/api/users/mypage/edit`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -87,8 +90,9 @@ const MyPageEdit = () => {
       const data = await uploadImageMutation.mutateAsync(formData);
 
       if (data) {
-        const imageUrl = 'http://15.164.221.244:5000/' + data.file_name;
+        const imageUrl = `${URL}/` + data.file_name;
         setUserImg(imageUrl);
+        queryClient.invalidateQueries('mainProfileData');
       } else {
         console.log('이미지 업로드 실패');
       }
@@ -106,6 +110,7 @@ const MyPageEdit = () => {
       intro,
       phase,
       track,
+      profile_public: isOpen ? 1 : 0,
     };
 
     updateProfileMutation.mutate(updatedData, {
@@ -137,7 +142,7 @@ const MyPageEdit = () => {
         type='text'
         name='userName'
         onChange={(e) => setUserName(e.target.value)}
-        value={mainProfileData.name}
+        value={userName}
       />
       <TrackPhaseContainer>
         <div className='track-container'>
@@ -167,12 +172,18 @@ const MyPageEdit = () => {
         onChange={(e) => setPosition(e.target.value)}
         value={position}
       />
-      <IntroTextContainter onChange={(e) => setIntro(e.target.value)} value={intro}>
+      <IntroTextContainter>
         <h3>자기소개</h3>
         <textarea
           placeholder={mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'}
+          onChange={(e) => setIntro(e.target.value)}
+          value={intro}
         ></textarea>
       </IntroTextContainter>
+      <CheckboxContainer>
+        <input type='checkbox' id='isOpen' checked={isOpen} onChange={handleIsOpenChange} />
+        <label htmlFor='currentlyEmployed'>프로필 공개</label>
+      </CheckboxContainer>
       <ButtonContainer>
         <Button
           color='darkPurple'
@@ -289,6 +300,35 @@ const IntroTextContainter = styled.div`
       font-weight: 600;
       opacity: 0.35;
     }
+  }
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  input[type='checkbox'] {
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border: 2px solid #d8e0e9;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out;
+
+    &:checked {
+      background-color: #5f3dc4;
+      border-color: #5f3dc4;
+    }
+  }
+
+  label {
+    font-family: 'Noto Sans KR';
+    font-weight: 400;
+    font-size: 1.5rem;
   }
 `;
 

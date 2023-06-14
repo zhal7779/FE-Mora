@@ -15,6 +15,7 @@ export const RecommendContainer = styled.section`
 
     li {
       width: 50%;
+      height: 158px;
       padding: 16px;
       background: #ffffff;
       border: 1px solid #d8e0e9;
@@ -49,9 +50,16 @@ export const RecommendContainer = styled.section`
 
   .recommend-title {
     margin-bottom: 32px;
+    height: 38px;
     font-weight: 600;
     font-size: 1.6rem;
     line-height: 1.9rem;
+    white-space: normal;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .recommend-info {

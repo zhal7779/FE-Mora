@@ -31,13 +31,12 @@ const CommunityPage = () => {
     }
 
     const result = await response.json();
-    console.log(result);
     return result;
   };
 
   const { data: posts, isLoading, isError, error } = useQuery(
     ['posts', selectedCategoryId],
-    () => fetchPosts(selectedCategoryId)
+    fetchPosts
   );
 
   if (isError) {

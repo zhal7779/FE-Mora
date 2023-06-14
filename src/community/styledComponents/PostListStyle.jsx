@@ -66,10 +66,19 @@ export const PostContainer = styled.section`
     }
 
     .list-content {
-      padding-bottom: 30px;
+      margin-bottom: 30px;
+      max-height: 85px;
+
+      white-space: normal;
+      text-align: left;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
       font-weight: 500;
       font-size: 1.3rem;
       line-height: 1.7rem;
+      overflow: hidden;
     }
 
     .list-info {

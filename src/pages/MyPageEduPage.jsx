@@ -7,6 +7,7 @@ import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
 import optionsData from '../myPage/data/optionsData';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [eduName, setEduName] = useState('');
@@ -21,7 +22,7 @@ const MyPageEdit = () => {
 
   // useMutation POST 요청 선언
   const createEduMutation = useMutation((eduData) =>
-    fetch('http://15.164.221.244:5000/api/educations/register', {
+    fetch(`${URL}/api/educations/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ const MyPageEdit = () => {
     if (!isCurrentlyStudying) {
       endDate = `${endYear.replace('년', '')}-${endMonth.replace('월', '').padStart(2, '0')}`;
     }
-    // careerData에 최종 값을 넣어주기
+    // eduData에 최종 값을 넣어주기
     const eduData = {
       edu_name: eduName,
       program,
@@ -161,15 +162,14 @@ const MyPageEdit = () => {
         <label htmlFor='currentlyStudying'>교육중</label>
       </CheckboxContainer>
 
-      <IntroTextContainter
-        onChange={(e) => {
-          e.preventDefault();
-          setContent(e.target.value);
-        }}
-        value={content}
-      >
+      <IntroTextContainter value={content}>
         <h3>어떤 활동을 했나요?</h3>
-        <textarea placeholder='교육 내용 및 활동을 입력해주세요'></textarea>
+        <textarea
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+          placeholder='교육 내용 및 활동을 입력해주세요'
+        ></textarea>
       </IntroTextContainter>
 
       <ButtonContainer>

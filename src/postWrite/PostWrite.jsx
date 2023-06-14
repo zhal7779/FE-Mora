@@ -5,11 +5,29 @@ import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
 import IconImageDelete from '../assets/icons/icon-delete-image.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
-import { useMutation } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
+import { getDetail } from '../postDetail/service/postDetailService';
+import { useEffect } from 'react';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const [showCategory, setShowCategory] = useState(false);
+  const { data: detail } = useQuery(['detail', postId], () =>
+    getDetail(postId)
+  );
+
+  useEffect(() => {
+    if (detail) {
+      setData(prevData => ({
+        ...prevData,
+        category: detail.category,
+        title: detail.title,
+        content: detail.content,
+        hashtags: detail.hashtags,
+        images: detail.Photos
+      }));
+    }
+  }, [detail, setData]);
 
   // 이미지 등록 api
   const postImage = async imgFormData => {
@@ -28,7 +46,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     const result = await response.json();
     return result;
   };
-
+  // 이미지 등록 mutation
   const { mutate } = useMutation(postImage, {
     onSuccess: data => {
       console.log('게시글 이미지 등록에 성공했습니다.');
@@ -99,16 +117,11 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
 
   // 이미지 삭제
   const handleImageDelete = index => {
-    // setPreviewImg(prevImages => {
-    //   const updatedImages = [...prevImages];
-    //   updatedImages.splice(index, 1);
-    //   return updatedImages;
-    // });
-    // setImageData(prevImageData => {
-    //   const updatedImageData = [...prevImageData];
-    //   updatedImageData.splice(index, 1);
-    //   return updatedImageData;
-    // });
+    setData(prevData => {
+      const updatedImages = [...prevData.images];
+      updatedImages.splice(index, 1);
+      return { ...prevData, images: updatedImages };
+    });
   };
 
   return (
@@ -147,6 +160,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
           id="title"
           rows="1"
           placeholder="제목을 입력해주세요"
+          value={data.title}
           onChange={handleTitleChange}
         ></textarea>
       </div>
@@ -154,6 +168,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         name="content"
         id="content"
         placeholder="글을 작성해서 레이서 동료들과 생각을 공유해보세요! "
+        value={data.content}
         onChange={handleContentChange}
       ></textarea>
       {showPostImage && (

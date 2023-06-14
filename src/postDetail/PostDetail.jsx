@@ -6,7 +6,7 @@ import UserProfile from '../assets/images/rabbitProfile.png';
 import formatTime from '../community/utils/formatTime';
 import IconMore from '../assets/icons/icon-more.svg';
 import { getDetail, likePost } from './service/postDetailService';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostDetail = ({ postId }) => {
@@ -16,6 +16,7 @@ const PostDetail = ({ postId }) => {
     getDetail(postId)
   );
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // 게시글 삭제 api
   const deletePost = async () => {
@@ -38,6 +39,7 @@ const PostDetail = ({ postId }) => {
     onSuccess: () => {
       console.log('게시글 삭제에 성공했습니다.');
       navigate(-1);
+      queryClient.invalidateQueries(['posts']);
     },
     onError: error => {
       console.error(error);
@@ -130,10 +132,12 @@ const PostDetail = ({ postId }) => {
                 <img src={IconMore} alt="열기" />
               </button>
               <ul className={`post-option-list ${postOption ? 'show' : ''}`}>
-                <li>
+                <li key="post-modify">
                   <Link to={`/write?postId=${detail.id}`}>✍️ 수정하기</Link>
                 </li>
-                <li onClick={handleDeletePost}>❌ 삭제하기</li>
+                <li key="post-delete" onClick={handleDeletePost}>
+                  ❌ 삭제하기
+                </li>
               </ul>
             </div>
           )}
@@ -142,7 +146,7 @@ const PostDetail = ({ postId }) => {
       </div>
       <div className="writer">
         <div className="writer-img">
-          {detail.user_detail.img_path ? (
+          {detail.user_detail.img_path !== null ? (
             <img src={detail.user_detail.img_path} alt="작성자 프로필" />
           ) : (
             <img src={UserProfile} alt="작성자 프로필" />
@@ -168,7 +172,16 @@ const PostDetail = ({ postId }) => {
             ))}
           </ul>
         )}
-        <div className="content-text">{detail.content}</div>
+        <div className="content-text">
+          {detail.content.split('\n').map(line => {
+            return (
+              <span>
+                {line}
+                <br />
+              </span>
+            );
+          })}
+        </div>
         <button className={`like-btn ${isLiked ? '' : 'disabled'}`}>
           <img src={IconLike} alt="좋아요" onClick={handleClickLike} />
           {detail.like_cnt}

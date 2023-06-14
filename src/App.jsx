@@ -30,6 +30,7 @@ import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
 import NotificationModal from './admins/adminNotification/components/NotificationModal';
 import NonmemberPage from './pages/NonmemberPage';
+import ScrollToTop from './utils/ScrollToTop';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <React.StrictMode>
           <Router>
+            <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
                 <Route path='/' exact element={<MainPage />} />
