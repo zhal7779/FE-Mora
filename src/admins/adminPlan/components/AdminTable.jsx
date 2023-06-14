@@ -6,6 +6,7 @@ import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
 import SearchBar from '../../adminCommon/components/SearchBar';
+import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import {
   EnrollButton,
   MainContentHeaderBlock,
@@ -45,7 +46,7 @@ const AdminTable = () => {
     }
   );
 
-  if (isLoading) return <span>로딩중...</span>;
+  if (isLoading) return <LoadingComponent search={'2023-06'} title={'일정'} />;
   if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
