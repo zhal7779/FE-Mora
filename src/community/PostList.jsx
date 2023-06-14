@@ -22,9 +22,14 @@ const PostList = ({ selectedCategoryId, searchTerm, data }) => {
     .filter(post => post.category === selectedCategoryId)
     .filter(post => {
       if (searchTerm === '') return true;
+
+      const lowerCaseTitle = post.title ? post.title.toLowerCase() : '';
+      const lowerCaseContent = post.content ? post.content.toLowerCase() : '';
+      const lowerCaseSearchTerm = debouncedSearchTerm.toLowerCase();
+
       return (
-        post.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        post.content.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        lowerCaseTitle.includes(lowerCaseSearchTerm) ||
+        lowerCaseContent.includes(lowerCaseSearchTerm)
       );
     })
     .sort((a, b) => {

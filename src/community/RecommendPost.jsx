@@ -20,7 +20,7 @@ const RecommendPost = ({ searchTerm, selectedCategoryId, data }) => {
                   <p className="recommend-tag">추천</p>
                   <p className="recommend-title">{post.title}</p>
                   <div className="recommend-info">
-                    <p>댓글 5</p>
+                    <p>댓글 {post.comment_cnt}</p>
                     <div>
                       <p>좋아요 {post.like_cnt}</p>
                       <p>조회 {post.view_cnt}</p>
