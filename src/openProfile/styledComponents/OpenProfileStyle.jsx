@@ -6,7 +6,7 @@ export const Container = styled.div`
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 2rem;
-  background: #ffffff;
+  background: #fdfdff;
   &:hover {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
   }
