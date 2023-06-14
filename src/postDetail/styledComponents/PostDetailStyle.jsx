@@ -10,7 +10,7 @@ export const DetailContainer = styled.section`
       position: relative;
 
       h2 {
-        padding-top: 70px;
+        padding: 70px 24px 0 0;
 
         font-weight: 700;
         font-size: 2.4rem;
@@ -19,7 +19,7 @@ export const DetailContainer = styled.section`
 
       .post-option {
         position: absolute;
-        top: 72px;
+        top: 75px;
         right: 0px;
 
         button {
@@ -158,6 +158,25 @@ export const DetailContainer = styled.section`
       font-size: 1.6rem;
       line-height: 2.3rem;
       word-break: keep-all;
+    }
+
+    &-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      li {
+        width: 100%;
+        height: 300px;
+        padding-bottom: 20px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
     }
   }
 
