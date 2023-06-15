@@ -85,5 +85,3 @@ const MyPageProfile = ({ mainProfileData }) => {
 };
 
 export default MyPageProfile;
-
-``;
