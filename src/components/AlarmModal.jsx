@@ -13,11 +13,11 @@ const AlarmModal = ({ handleClose }) => {
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
 
-  const { data: status } = useQuery('alertStatus', () => patchAlert(alarmId));
-
+  const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
   //모달 리스트 open, close
   const handleContentClick = (id) => {
     setAlarmId(id);
+    refetch();
     setAlarmStauts((prevStatus) => {
       return [...prevStatus, id];
     });
@@ -31,7 +31,6 @@ const AlarmModal = ({ handleClose }) => {
       }
     });
   };
-
   const handleClickOutside = () => {
     handleClose(false);
   };

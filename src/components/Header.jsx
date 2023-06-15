@@ -14,16 +14,26 @@ const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
 
-  const { data } = useQuery('alert', getAlert);
-
+  const { data, refetch } = useQuery('alert', getAlert);
+  // 알림 api 3초에 한 번씩 재호출
+  // const [onAlarm, setOnAlarm] = useState(false);
   const newAlarm = data?.alertComments?.filter((item) => item.checked === 0);
-  const [onAlarm, setOnAlarm] = useState(false);
   useEffect(() => {
-    if (newAlarm && newAlarm.length > 0) {
-      console.log('새 알림');
-      setOnAlarm(true);
-    }
-  }, [newAlarm]);
+    // if (newAlarm && newAlarm.length > 0) {
+    //   setOnAlarm(true);
+    // } else {
+    //   setOnAlarm(false);
+    // }
+
+    const interval = setInterval(() => {
+      refetch();
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [data]);
+
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
   // token 값이 있으면  초기 상태값 1
 
@@ -127,7 +137,7 @@ const Header = () => {
                       onClick={() => handleModalClick(true)}
                       style={{ stroke: '#242424' }}
                     />
-                    {onAlarm && <span className='alarm'></span>}
+                    {newAlarm.length > 0 && <span className='alarm'></span>}
                   </>
                 ) : (
                   <BellIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
