@@ -21,19 +21,15 @@ const MyPageEdit = () => {
   // 수정하지 않고 넘길 때는 이전 값 넣어주기
   useEffect(() => {
     setUserName(mainProfileData.name);
-    setUserImg(mainProfileData.img_path);
+    setUserImg(mainProfileData.UserDetail.img_path);
     setPosition(
       mainProfileData.UserDetail.position === '직책을 입력해주세요.'
         ? ''
         : mainProfileData.UserDetail.position
     );
+    setTrack('트랙 및');
+    setPhase('기수를 입력해주세요');
     setIntro(mainProfileData.UserDetail.comment);
-    setPhase(mainProfileData.UserDetail.generation.split(' ')[2]);
-    setTrack(
-      mainProfileData.UserDetail.generation.split(' ')[0] +
-        ' ' +
-        mainProfileData.UserDetail.generation.split(' ')[1]
-    );
   }, []);
 
   // 트랙과 기수 이벤트 핸들러
@@ -90,6 +86,7 @@ const MyPageEdit = () => {
       if (data) {
         const imageUrl = `${URL}/` + data.file_name;
         setUserImg(imageUrl);
+        queryClient.invalidateQueries('mainProfileData');
       } else {
         console.log('이미지 업로드 실패');
       }
@@ -138,7 +135,7 @@ const MyPageEdit = () => {
         type='text'
         name='userName'
         onChange={(e) => setUserName(e.target.value)}
-        value={mainProfileData.name}
+        value={userName}
       />
       <TrackPhaseContainer>
         <div className='track-container'>
@@ -168,10 +165,12 @@ const MyPageEdit = () => {
         onChange={(e) => setPosition(e.target.value)}
         value={position}
       />
-      <IntroTextContainter onChange={(e) => setIntro(e.target.value)} value={intro}>
+      <IntroTextContainter>
         <h3>자기소개</h3>
         <textarea
           placeholder={mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'}
+          onChange={(e) => setIntro(e.target.value)}
+          value={intro}
         ></textarea>
       </IntroTextContainter>
       <ButtonContainer>

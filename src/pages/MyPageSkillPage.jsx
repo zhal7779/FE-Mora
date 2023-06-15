@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
@@ -13,11 +14,7 @@ const MyPageEdit = () => {
   const [mySkillList, setMySkillList] = useState([]);
   const [skillList, setSkillList] = useState([]); // 검색된 스킬 목록
   const navigate = useNavigate();
-
-  // 기존 서버에 등록된 내 스킬 불러오기
-  useEffect(() => {
-    fetchMySkillList();
-  }, []);
+  const queryClient = useQueryClient();
 
   // 디바운싱으로 요청 수 줄이기
   // 디바운싱 = 여러 이벤트를 한번에 묶어서 처리, 쓰로틀링 = setInterval
@@ -33,23 +30,21 @@ const MyPageEdit = () => {
 
   // 기존 서버에 등록된 내 스킬 불러오기
   const fetchMySkillList = async () => {
-    try {
-      const response = await fetch(`${URL}/api/skills/myskill`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-        },
-      });
-      if (response) {
-        const data = await response.json();
-        setMySkillList(data);
-      } else {
-        throw new Error('Failed to fetch mySkillList');
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await fetch(`${URL}/api/skills/myskill`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    });
+    if (!response) {
+      throw new Error('Failed to fetch mySkillList');
     }
+    const data = await response.json();
+    setMySkillList(data); // Update mySkillList with the fetched data
+    return data;
   };
+
+  const { data: fetchedMySkillList } = useQuery('mySkillList', fetchMySkillList);
 
   // 검색되는 스킬 리스트 불러오기
   const fetchSkillList = async () => {
@@ -99,26 +94,31 @@ const MyPageEdit = () => {
     setMySkillList(updatedSkillList);
   };
 
+  // 스킬 업데이트 뮤테이션 선언
+  const updateSkillMutation = useMutation((updatedSkills) =>
+    fetch(`${URL}/api/skills/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(updatedSkills),
+    }).then((response) => response.json())
+  );
+
+  // 스킬 업데이트 핸들러
   const handleUpdateSkill = async () => {
     try {
       const requestBody = {
         skillNames: mySkillList,
       };
 
-      const response = await fetch(`${URL}/api/skills/update`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
+      await updateSkillMutation.mutateAsync(requestBody);
 
-      if (response) {
-        console.log('스킬 수정이 완료되었습니다.');
-      } else {
-        throw new Error('Failed to update skills');
-      }
+      console.log('스킬 수정이 완료되었습니다.');
+
+      // 스킬 업데이트 후 데이터 갱신
+      queryClient.invalidateQueries('mySkillList');
     } catch (error) {
       console.log(error);
     }
@@ -147,15 +147,21 @@ const MyPageEdit = () => {
       />
       <Button color='darkPurple' value='추가하기' onClick={handleAddSkill} />
 
-      <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
-      <SkillButtonContainer>
-        {mySkillList.map((mySkill, index) => (
-          <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
-            {mySkill}
-            <RemoveText className='remove-text'>x</RemoveText>
-          </div>
-        ))}
-      </SkillButtonContainer>
+      {mySkillList ? (
+        <>
+          <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
+          <SkillButtonContainer>
+            {mySkillList.map((mySkill, index) => (
+              <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
+                {mySkill}
+                <RemoveText className='remove-text'>❌</RemoveText>
+              </div>
+            ))}
+          </SkillButtonContainer>
+        </>
+      ) : (
+        '로딩중'
+      )}
 
       <ButtonContainer>
         <Button
@@ -219,10 +225,10 @@ const SkillButtonContainer = styled.div`
 
 const RemoveText = styled.span`
   position: absolute;
-  top: 46%;
-  right: 0.8rem;
+  top: 50%;
+  right: 0.5rem;
   transform: translateY(-50%);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #ee1e1e;
   display: none;
