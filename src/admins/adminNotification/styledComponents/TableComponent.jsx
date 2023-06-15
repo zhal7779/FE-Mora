@@ -19,7 +19,7 @@ export const TableRowInfo = styled.div`
   font-weight: 'bold';
 `;
 export const NotificationListBlock = styled.ul`
-  min-height: 61.5rem;
+  min-height: 615px;
 `;
 export const NotificationInfo = styled.li`
   ${tableRowSetting}

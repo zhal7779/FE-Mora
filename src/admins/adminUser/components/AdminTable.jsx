@@ -7,6 +7,7 @@ import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
 import SearchBar from '../../adminCommon/components/SearchBar';
 import PageNation from '../../adminCommon/components/PageNation';
+import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import {
   EnrollButton,
   MainContentHeaderBlock,
@@ -29,7 +30,7 @@ const AdminTable = () => {
     async () => await fetchReadUserInfo(currentPage, 12, keyword)
   );
 
-  if (isLoading) return <span>로딩중...</span>;
+  if (isLoading) return <LoadingComponent search={'사용자 이름'} title={'사용자'} />;
   if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
@@ -42,7 +43,7 @@ const AdminTable = () => {
           {keyword && <TableSearchResult>'{keyword}' 검색결과</TableSearchResult>}
         </TableTitleBlock>
         <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
-          생성
+          등록
         </EnrollButton>
         {enrollModal && (
           <EnrollModal

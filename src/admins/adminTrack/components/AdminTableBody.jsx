@@ -7,7 +7,6 @@ import DeleteButton from '../../adminCommon/components/DeleteButton';
 import { DetailBtn, TrackInfo, TrackListBlock } from '../styledComponents/TableComponent';
 
 const AdminTableBody = ({ tracks }) => {
-  console.log(tracks);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTrackData, setModalTrackData] = useState({ id: '', name: '', phase: '' });
 
@@ -20,7 +19,13 @@ const AdminTableBody = ({ tracks }) => {
   };
 
   const handleDetailClick = (id, name, phase) => {
-    setModalTrackData(id);
+    const newTrackData = {
+      ...modalTrackData,
+      id,
+      name,
+      phase,
+    };
+    setModalTrackData(newTrackData);
     setIsModalOpen(true);
   };
 

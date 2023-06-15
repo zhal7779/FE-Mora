@@ -20,7 +20,7 @@ export const TableRowInfo = styled.div`
 `;
 export const PlanListBlock = styled.ul`
   margin-bottom: 20rem;
-  min-height: 61.5rem;
+  min-height: 615px;
 `;
 export const PlanInfo = styled.li`
   ${tableRowSetting}

@@ -27,4 +27,4 @@ yarn-error.log*
 *.txt
 .env
 autoFetch.js
-infiniteScroll.jsx
+infiniteScroll*

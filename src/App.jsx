@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -24,12 +23,12 @@ import AdminPlanPage from './pages/AdminPlanPage';
 import AdminNotificationPage from './pages/AdminNotificationPage';
 import AdminPostPage from './pages/AdminPostPage';
 import AdminTrackPage from './pages/AdminTrackPage';
-import AdminReportPage from './pages/AdminReportPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
-import NotificationModal from './admins/adminNotification/components/NotificationModal';
 import ScrollToTop from './utils/ScrollToTop';
+import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
+import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
 
 const queryClient = new QueryClient();
 
@@ -42,51 +41,40 @@ const App = () => {
             <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
-                <Route path="/" exact element={<MainPage />} />
-                <Route
-                  path="/community/post/:category"
-                  element={<CommunityPage />}
-                />
-                <Route
-                  path="/community/:board_id"
-                  element={<PostDetailPage />}
-                />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/schedule" element={<SchedulePage />} />
-                <Route path="/openprofile" element={<OpenProfilePage />} />
-                <Route path="/mypage" element={<MyPage />} />
+                <Route path='/' exact element={<MainPage />} />
+                <Route path='/community/post/:category' element={<CommunityPage />} />
+                <Route path='/community/:board_id' element={<PostDetailPage />} />
+                <Route path='/search' element={<SearchPage />} />
+                <Route path='/schedule' element={<SchedulePage />} />
+                <Route path='/openprofile' element={<OpenProfilePage />} />
+                <Route path='/mypage' element={<MyPage />} />
               </Route>
               <Route element={<LoginLayout />}>
-                <Route path="/login" element={<Login />} />
-                <Route path="/quiz" element={<Quiz />} />
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/mypage/edit" element={<MyPageEditPage />} />
-                <Route path="/mypage/skill" element={<MyPageSkillPage />} />
-                <Route path="/mypage/career" element={<MyPageCareerPage />} />
-                <Route path="/mypage/education" element={<MyPageEduPage />} />
-                <Route path="/mypage/link" element={<MyPageLinkPage />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/quiz' element={<Quiz />} />
+                <Route path='/signin' element={<Signin />} />
+                <Route path='/mypage/edit' element={<MyPageEditPage />} />
+                <Route path='/mypage/skill' element={<MyPageSkillPage />} />
+                <Route path='/mypage/career' element={<MyPageCareerPage />} />
+                <Route path='/mypage/education' element={<MyPageEduPage />} />
+                <Route path='/mypage/link' element={<MyPageLinkPage />} />
               </Route>
               <Route element={<AdminLayout />}>
-                <Route path="/admin/users" element={<AdminUser />} />
-                <Route path="/admin/plans" element={<AdminPlanPage />} />
-                <Route path="/admin/reports" element={<AdminReportPage />} />
-                <Route path="/admin/posts" element={<AdminPostPage />} />
-                <Route path="/admin/tracks" element={<AdminTrackPage />} />
-                <Route
-                  path="/admin/notifications"
-                  element={<AdminNotificationPage />}
-                />
-                <Route path="/write" element={<PostWritePage />} />
-                <Route
-                  path="/admin/notifications/detail"
-                  element={<NotificationModal />}
-                />
+                <Route path='/admin/users' element={<AdminUser />} />
+                <Route path='/admin/plans' element={<AdminPlanPage />} />
+                <Route path='/admin/posts' element={<AdminPostPage />} />
+                <Route path='/admin/tracks' element={<AdminTrackPage />} />
+                <Route path='/admin/notifications' element={<AdminNotificationPage />} />
+                <Route path='/write' element={<PostWritePage />} />
+                <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
               </Route>
+              <Route path='/admin/login' element={<AdminLogIn />} />
+              <Route path='/admin/signin' element={<AdminSignIn />} />
             </Routes>
           </Router>
         </React.StrictMode>
 
-        <ReactQueryDevtools initialIsOpen={true} position="bottom-right" />
+        <ReactQueryDevtools initialIsOpen={true} position='bottom-right' />
       </QueryClientProvider>
     </React.StrictMode>
   );

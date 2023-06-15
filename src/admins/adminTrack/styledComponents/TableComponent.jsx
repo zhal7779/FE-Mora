@@ -19,7 +19,7 @@ export const TableRowInfo = styled.div`
   font-weight: 'bold';
 `;
 export const TrackListBlock = styled.ul`
-  min-height: 61.5rem;
+  min-height: 615px;
 `;
 export const TrackInfo = styled.li`
   ${tableRowSetting}
