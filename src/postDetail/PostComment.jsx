@@ -4,12 +4,16 @@ import IconMore from '../assets/icons/icon-more.svg';
 import formatTime from '../community/utils/formatTime';
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import jwt_decode from 'jwt-decode';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostComment = ({ postId }) => {
   const [commentOption, setCommentOption] = useState(null);
   const [commentData, setCommentData] = useState('');
+  const [editCommentId, setEditCommentId] = useState(null);
+  const [editCommentData, setEditCommentData] = useState('');
   const queryClient = useQueryClient();
+  const decodedToken = jwt_decode(sessionStorage.getItem('userToken'));
 
   //댓글 조회 api
   const fetchComments = async () => {
@@ -35,10 +39,10 @@ const PostComment = ({ postId }) => {
     fetchComments
   );
 
-  // 댓글 등록 api
+  // 댓글 등록/수정 api
   const postComment = async registerData => {
     const response = await fetch(`${BASE_URL}/api/comments`, {
-      method: 'POST',
+      method: editCommentId ? 'PATCH' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${sessionStorage.getItem('userToken')}`
@@ -51,10 +55,6 @@ const PostComment = ({ postId }) => {
     }
 
     const result = await response.json();
-
-    // const sortedComments = [result].sort((a, b) => {
-    //   return new Date(b.createdAt) - new Date(a.createdAt);
-    // });
     return result;
   };
 
@@ -62,7 +62,6 @@ const PostComment = ({ postId }) => {
     onSuccess: () => {
       console.log('댓글이 성공적으로 등록되었습니다.');
       queryClient.invalidateQueries(['comments']);
-      setCommentData('');
     },
     onError: error => {
       console.error('댓글 등록에 실패하였습니다.', error);
@@ -71,7 +70,6 @@ const PostComment = ({ postId }) => {
 
   // 댓글 삭제 api
   const deleteComment = async commentId => {
-    console.log(commentId);
     const response = await fetch(`${BASE_URL}/api/comments`, {
       method: 'DELETE',
       headers: {
@@ -98,31 +96,52 @@ const PostComment = ({ postId }) => {
     }
   });
 
-  const handleChange = e => {
+  const handleContentChange = e => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
-  };
-
-  const handleWriteComment = e => {
-    setCommentData(e.target.value);
-  };
-
-  const handleContentChange = e => {
-    handleChange(e);
-    handleWriteComment(e);
+    if (editCommentId) {
+      setEditCommentData(e.target.value);
+    } else {
+      setCommentData(e.target.value);
+    }
   };
 
   // 댓글 등록 핸들러
   const handleRegisterComment = () => {
-    if (commentData === '') {
+    if (!editCommentId && commentData === '') {
       alert('댓글을 작성해주세요!');
       return;
     }
-    const registerData = {
-      content: commentData,
-      board_id: postId
-    };
-    postCommentMutate(registerData);
+
+    if (editCommentId && editCommentData === '') {
+      alert('댓글을 작성해주세요!');
+      return;
+    }
+
+    if (editCommentId) {
+      try {
+        const registerData = {
+          comment_id: editCommentId,
+          content: editCommentData
+        };
+        postCommentMutate(registerData);
+        setEditCommentId(null);
+        setEditCommentData('');
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        const registerData = {
+          content: commentData,
+          board_id: postId
+        };
+        postCommentMutate(registerData);
+        setCommentData('');
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   // 댓글 삭제 핸들러
@@ -137,6 +156,13 @@ const PostComment = ({ postId }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // 댓글 수정
+  const handleEditComment = (commentId, commentContent) => {
+    setEditCommentId(commentId);
+    setEditCommentData(commentContent);
+    setCommentOption(null);
   };
 
   if (isLoading) {
@@ -175,7 +201,7 @@ const PostComment = ({ postId }) => {
                 <div className="writer">
                   <div className="writer-img">
                     <img
-                      src={comment.user_detail.img_path}
+                      src={comment.User.img_path}
                       alt="사용자 프로필 이미지"
                     />
                   </div>
@@ -183,7 +209,7 @@ const PostComment = ({ postId }) => {
                     <p className="writer-info-name">{comment.User.name}</p>
                     <div>
                       <p className="writer-info-position">
-                        {comment.user_detail.position}
+                        {comment.User.position}
                       </p>
                       <p className="writer-info-time">
                         {formatTime(comment.createdAt)}
@@ -191,8 +217,42 @@ const PostComment = ({ postId }) => {
                     </div>
                   </div>
                 </div>
-                <p className="comment-content">{comment.content}</p>
-                {sessionStorage.getItem('userToken') && (
+                {editCommentId ? (
+                  <div className="comment-textarea">
+                    <textarea
+                      name="comment-edit"
+                      id="comment-edit"
+                      value={editCommentData}
+                      onChange={handleContentChange}
+                    ></textarea>
+                    <div className="edit-btns">
+                      <button
+                        className="edit-btn"
+                        onClick={handleRegisterComment}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="edit-cancel"
+                        onClick={() => setEditCommentId(null)}
+                      >
+                        취소
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="comment-content">
+                    {comment.content.split('\n').map((line, index) => {
+                      return (
+                        <span key={index}>
+                          {line}
+                          <br />
+                        </span>
+                      );
+                    })}
+                  </p>
+                )}
+                {decodedToken.id === comment.commenter && (
                   <div className="comment-option">
                     <button
                       onClick={() =>
@@ -208,7 +268,17 @@ const PostComment = ({ postId }) => {
                         index === commentOption ? 'show' : ''
                       }`}
                     >
-                      <li onClick={() => handleDeleteComment(comment.id)}>
+                      <li
+                        onClick={() =>
+                          handleEditComment(comment.id, comment.content)
+                        }
+                      >
+                        ✍️ 수정하기
+                      </li>
+                      <li
+                        className="delete"
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
                         ❌ 삭제하기
                       </li>
                     </ul>

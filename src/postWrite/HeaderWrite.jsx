@@ -20,7 +20,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   // 게시글 등록/수정 api
   const registerPost = async postData => {
     const response = await fetch(`${BASE_URL}/api/boards`, {
-      method: 'POST',
+      method: postId ? 'PUT' : 'POST',
       body: JSON.stringify(postData),
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,11 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   const { mutate } = useMutation(registerPost, {
     onSuccess: boardId => {
       queryClient.invalidateQueries(['posts']);
-      navigate(`/community/${boardId}`);
+      if (!postId) {
+        navigate(`/community/${boardId}`);
+      } else {
+        navigate(`/community/post/free`);
+      }
     },
     onError: error => {
       console.error(error);
