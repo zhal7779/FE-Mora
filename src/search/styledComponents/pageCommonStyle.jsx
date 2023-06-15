@@ -23,7 +23,7 @@ export const NonmemberWrapper = styled.main`
   height: 100%;
   display: flex;
   margin: 6rem auto 0 auto;
-  background: #f2effb;
+  background: #eeeafe;
 `;
 export const SchedulePageWrapper = styled.main`
   width: 1024px;

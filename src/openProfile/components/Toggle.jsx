@@ -7,14 +7,14 @@ const Toggle = () => {
   //오픈프로필 초기 상태값, 오픈프로필을 올렸다면 true, 내렸다면 false
 
   const { data: registerStatus } = useQuery('status', ProfilRegistrStatus);
+  // console.log(registerStatus);
 
   const [onToggle, setOnToggle] = useState(
     registerStatus && registerStatus.UserDetail.profile_public
   );
   const [openStatus, setOpenStatus] = useState(onToggle ? 1 : 0);
-  // console.log(onToggle);
-  console.log(openStatus);
-  const { data, refetch } = useQuery('open', () => putProfile(openStatus));
+
+  const { data, refetch } = useQuery('open', () => putProfile(true));
   console.log(data);
   // 커피챗 신청여부 오픈프로필 조회할때 같이 넣어줘야함
   // 공개 === 1
@@ -23,12 +23,13 @@ const Toggle = () => {
   const handleToggleClick = () => {
     setOnToggle(!onToggle);
     if (onToggle === true) {
-      setOpenStatus(1);
+      setOpenStatus(false);
     } else if (onToggle === false) {
       if (confirm('오픈 프로필을 등록 하시겠습니까?')) {
-        alert(setOpenStatus(0));
+        setOpenStatus(true);
       }
     }
+    refetch();
   };
 
   return (

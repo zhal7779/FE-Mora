@@ -13,7 +13,6 @@ const AlarmModal = ({ handleClose }) => {
   const [alarmStatus, setAlarmStauts] = useState([]);
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
-
   const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
   //모달 리스트 open, close
   const handleContentClick = (id) => {
@@ -44,21 +43,31 @@ const AlarmModal = ({ handleClose }) => {
         </Style.HeaderContent>
         <Style.Scroll>
           {data &&
-            data.alertComments &&
-            data.alertComments.map((item) => (
+            data.map((item) => (
               <Style.Content key={item.id}>
                 <Style.ShowContent onClick={() => handleContentClick(item.id)}>
                   <div>
                     {item.checked === 1 || alarmStatus.includes(item.id) ? (
-                      <span style={{ background: '#bdbdbd' }}></span>
+                      <span style={{ background: '#EEEAFE' }}></span>
+                    ) : item.type === 'COMMENT' ? (
+                      <span style={{ background: '#aa8dff' }}></span>
                     ) : (
                       <span></span>
                     )}
-                    <Style.ImageIcon
-                      src={item['AlertFromUser.UserDetail.img_path']}
-                    ></Style.ImageIcon>
-                    <strong>{item['AlertFromUser.name']}</strong>
-                    <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                    {item.type === 'COMMENT' ? (
+                      <>
+                        <Style.ImageIcon
+                          src={item['AlertFromUser.UserDetail.img_path']}
+                        ></Style.ImageIcon>
+                        <strong>{item['AlertFromUser.name']}</strong>
+                        <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                      </>
+                    ) : (
+                      <div className='planAlarm'>
+                        <strong>[{item.planTitle}] </strong>
+                        <p> 일정 시작 1시간 전입니다. </p>
+                      </div>
+                    )}
                   </div>
                   <div>
                     {hiddenContent.includes(item.id) ? (
@@ -71,14 +80,28 @@ const AlarmModal = ({ handleClose }) => {
                 {hiddenContent.includes(item.id) ? (
                   <Style.HiddenContent>
                     <div style={{ border: '1px solid #e0e0e0' }}>
-                      <p>{item.commentContent}</p>
+                      {item.type === 'COMMENT' ? (
+                        <p>{item.commentContent}</p>
+                      ) : (
+                        <p>{item.planContent}</p>
+                      )}
                     </div>
                     <div style={{ background: 'transparent' }}>
-                      <PostIcon />
-
-                      <Link to={'/community/' + item.boardId}>
-                        <h5>{item.boardTitle}</h5>
-                      </Link>
+                      {item.type === 'COMMENT' ? (
+                        <>
+                          <PostIcon />
+                          <Link to={'/community/' + item.boardId}>
+                            <h5>{item.boardTitle}</h5>
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <span>일정</span>
+                          <Link to={'/schedule'}>
+                            <h5>{item.planTitle}</h5>
+                          </Link>
+                        </>
+                      )}
                     </div>
                   </Style.HiddenContent>
                 ) : (

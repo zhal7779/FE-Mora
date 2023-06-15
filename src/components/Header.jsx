@@ -22,7 +22,7 @@ const Header = () => {
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert);
   // 알림 api 3초에 한 번씩 재호출
   // const [onAlarm, setOnAlarm] = useState(false);
-  const newAlarm = data?.alertComments?.filter((item) => item.checked === 0);
+  const newAlarm = data?.filter((item) => item.checked === 0);
   useEffect(() => {
     // if (newAlarm && newAlarm.length > 0) {
     //   setOnAlarm(true);

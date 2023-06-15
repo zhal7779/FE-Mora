@@ -53,15 +53,20 @@ export const Content = styled.div`
 `;
 export const ShowContent = styled.div`
   display: flex;
-  padding: 1.4rem 1rem;
+  margin: 1.4rem 1rem;
   justify-content: space-between;
+  .planAlarm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   div {
     display: flex;
     align-items: center;
   }
   span {
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.7rem;
+    height: 0.7rem;
     border-radius: 50%;
     background: #7353ea;
     margin-right: 1rem;
@@ -82,6 +87,13 @@ export const HiddenContent = styled.div`
   width: 100%;
   padding: 2rem 3rem 0 5rem;
   background: #f7f5ff;
+  span {
+    background: #ed6653;
+    color: #ffffff;
+    font-size: 1.4rem;
+    border-radius: 2px;
+    padding: 0.4rem 0.5rem;
+  }
   div {
     display: flex;
     background: #ffffff;
