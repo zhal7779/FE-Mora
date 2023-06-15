@@ -8,7 +8,6 @@ import {
   ModalButton,
   ModalOverlay,
   ModalSubTitle,
-  ModalContentP,
   ModalButtonBlock,
   ModalContentInput,
   ModalContentBlock,
