@@ -34,7 +34,7 @@ const CommunityPage = () => {
     return result;
   };
 
-  const { data: posts, isLoading, isError, error } = useQuery(
+  const { data, isLoading, isError, error } = useQuery(
     ['posts', selectedCategoryId],
     fetchPosts
   );
@@ -69,11 +69,11 @@ const CommunityPage = () => {
         <RecommendPost
           searchTerm={searchTerm}
           selectedCategoryId={selectedCategoryId}
-          data={posts}
+          data={data}
         />
         <PostList
           selectedCategoryId={selectedCategoryId}
-          data={posts}
+          data={data}
           searchTerm={searchTerm}
         />
       </PostContainer>

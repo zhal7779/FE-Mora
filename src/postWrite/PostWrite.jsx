@@ -46,6 +46,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     const result = await response.json();
     return result;
   };
+
   // 이미지 등록 mutation
   const { mutate } = useMutation(postImage, {
     onSuccess: data => {
@@ -158,7 +159,6 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         <textarea
           name="title"
           id="title"
-          rows="1"
           placeholder="제목을 입력해주세요"
           value={data.title}
           onChange={handleTitleChange}
