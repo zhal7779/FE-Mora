@@ -28,6 +28,8 @@ import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
 import AdminPostDetailPage from './pages/AdminPostDetailPage';
+import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
+import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
 
 const queryClient = new QueryClient();
 
@@ -66,6 +68,8 @@ const App = () => {
                 <Route path='/write' element={<PostWritePage />} />
                 <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
               </Route>
+              <Route path='/admin/login' element={<AdminLogIn />} />
+              <Route path='/admin/signin' element={<AdminSignIn />} />
             </Routes>
           </Router>
         </React.StrictMode>
