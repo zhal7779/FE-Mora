@@ -3,7 +3,6 @@ const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
 
 // READ
 export const fetchReadPostInfo = async ({ page, view, content }) => {
-  console.log('hit🔥');
   const response = await fetch(
     `${domainPort}/api/adminBoards?page=${page}&size=${view}&keyword=${content}`,
     {

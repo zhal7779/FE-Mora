@@ -1,10 +1,11 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import { useInfiniteQuery, useMutation } from 'react-query';
 
 import { images } from '../../../assets/images/images';
 import { fetchDeletePost, fetchReadPostInfo } from '../apis/postApis';
 import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import { PostGrid, PostLayout, PostImage, PostInfoBlock } from '../styledComponents/AdminPost';
+import { Link } from 'react-router-dom';
 
 export const AdminPost = ({ keyword }) => {
   const observerElement = useRef(null);
@@ -30,8 +31,6 @@ export const AdminPost = ({ keyword }) => {
         // 더 이상 로드할 페이지가 없는 경우에 undefined를 해줘야 더 이상 api를 호출하지 않음.
         // false주면 계속 호출하는 거 같음. 근데 error 남.
         // 아 여기 return값이 page에 들어가는 구나.
-        console.log(lastPage.currentPage + 1, lastPage.totalPages);
-        // 뭐가 이 로직에 문제가 있음
         return lastPage.currentPage + 1 < lastPage.totalPages
           ? lastPage.currentPage + 1
           : undefined;
@@ -78,6 +77,7 @@ export const AdminPost = ({ keyword }) => {
           data.pages.map((page) =>
             page.objArr.map((post, idx) => (
               <PostLayout key={post.id}>
+                {/* <Link to={`/community/${item.id}`} key={index}> */}
                 <PostImage className='image'>
                   {post.Photos.length > 0 ? (
                     <img src={post.Photos[0].img_path} alt={'img'} className='img-tag' />
@@ -85,6 +85,7 @@ export const AdminPost = ({ keyword }) => {
                     <img src={images[Math.floor((idx % 15) / 3)]} alt='엘리스 불토끼' />
                   )}
                 </PostImage>
+                {/* </Link> */}
 
                 <PostInfoBlock className='title category'>
                   <span className='title info'>{post.title}</span>
