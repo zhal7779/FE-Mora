@@ -1,5 +1,16 @@
 import styled from 'styled-components';
-export const Container = styled.div`
+
+export const Nodata = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rem;
+  p {
+    color: #616161;
+    font-size: 1.6rem;
+  }
+`;
+export const Container = styled.section`
   width: 100%;
   height: auto;
   border: 1px solid #cbd5e1;

@@ -12,6 +12,7 @@ export const getProfile = async () => {
 
 //오픈프로필 등록
 export const putProfile = async (num) => {
+  console.log(num);
   const response = await fetch(`${process.env.REACT_APP_URL}/api/users/open-profile`, {
     method: 'PUT',
     headers: {
@@ -50,35 +51,6 @@ export const postCoffeeChat = async (id) => {
     },
     body: JSON.stringify({
       profile_id: id,
-    }),
-  });
-  const data = await response.json();
-  return data;
-};
-//알림 조회
-export const getAlert = async () => {
-  const response = await fetch(`${process.env.REACT_APP_URL}/api/alerts`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-    },
-  });
-  const data = await response.json();
-  return data;
-};
-
-// 알림 읽음 여부
-
-export const patchAlert = async (id) => {
-  const response = await fetch(`${process.env.REACT_APP_URL}/api/alerts/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-    },
-    body: JSON.stringify({
-      checked: true,
     }),
   });
   const data = await response.json();

@@ -5,16 +5,21 @@ import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../assets/icons/fi_bell.svg';
 import SearchBar from './SearchBar';
-import AlarmModal from './AlarmModal';
-import DefaultImg from '../assets/images/rabbitProfile.png';
+import AlarmModal from '../alarm/components/AlarmModal';
 import { useQuery } from 'react-query';
-import { getAlert } from '../openProfile/api/openProfileApi';
+import { getAlert } from '../alarm/api/alarmApi';
+import { ProfilRegistrStatus } from '../openProfile/api/openProfileApi';
+import defaultImg from '../assets/images/rabbitProfile.png';
 
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
+  //프로필 이미지 가져오는 쿼리
+  //프로필 이미지도 3초마다 호출됨, 수정 필요
+  const { data: profileData, refetch: profileRefetch } = useQuery('profile', ProfilRegistrStatus);
+  const profileImg = profileData?.UserDetail?.img_path;
 
-  const { data, refetch } = useQuery('alert', getAlert);
+  const { data, refetch: alarmRefetch } = useQuery('alert', getAlert);
   // 알림 api 3초에 한 번씩 재호출
   // const [onAlarm, setOnAlarm] = useState(false);
   const newAlarm = data?.alertComments?.filter((item) => item.checked === 0);
@@ -26,13 +31,17 @@ const Header = () => {
     // }
 
     const interval = setInterval(() => {
-      refetch();
+      alarmRefetch();
     }, 3000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [data]);
+  }, []);
+
+  useState(() => {
+    profileRefetch();
+  }, []);
 
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
   // token 값이 있으면  초기 상태값 1
@@ -137,7 +146,7 @@ const Header = () => {
                       onClick={() => handleModalClick(true)}
                       style={{ stroke: '#242424' }}
                     />
-                    {newAlarm.length > 0 && <span className='alarm'></span>}
+                    {newAlarm && newAlarm.length > 0 && <span className='alarm'></span>}
                   </>
                 ) : (
                   <BellIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
@@ -145,7 +154,7 @@ const Header = () => {
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
                 <div>
-                  <ImageIcon src={DefaultImg}></ImageIcon>
+                  <ImageIcon src={token ? profileImg : defaultImg}></ImageIcon>
                 </div>
               </Link>
             </SideContent>

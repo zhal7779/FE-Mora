@@ -9,12 +9,12 @@ const OpenProfile = () => {
   const { data: coffeeChat, refetch } = useQuery('coffeeChat', () => postCoffeeChat(userId), {
     enabled: false,
   });
+  console.log(data);
   const [userId, setUserId] = useState('');
   const handleCoffeeChatClick = (id) => {
     setUserId(id);
     refetch();
   };
-  // console.log(coffeeChat);
   const [moreView, setMoreView] = useState([]);
 
   const handleMoreViewClick = (id) => {
@@ -27,7 +27,14 @@ const OpenProfile = () => {
 
   return (
     <>
-      {data &&
+      {data && data.length === 0 ? (
+        <Style.Nodata>
+          <img src='static/media/no-data-image.64c9ff0eb8587dac16cb266cc4a9f5b9.svg' />
+          <p>등록된 오픈 프로필이 없습니다.</p>
+        </Style.Nodata>
+      ) : (
+        data &&
+        data.length > 0 &&
         data.map((item) => (
           <Style.Container key={item.user_id}>
             <Style.Content>
@@ -89,7 +96,8 @@ const OpenProfile = () => {
               </Style.MoreViewButton>
             )}
           </Style.Container>
-        ))}
+        ))
+      )}
     </>
   );
 };
