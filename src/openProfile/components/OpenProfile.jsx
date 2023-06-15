@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-alt.svg';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 const OpenProfile = () => {
+  const queryClient = useQueryClient();
+
   const { data } = useQuery('openProfile', getProfile);
-  const { data: coffeeChat, refetch } = useQuery('coffeeChat', () => postCoffeeChat(userId), {
-    enabled: false,
-  });
+  const profileRefetch = async () => {
+    await queryClient.invalidateQueries('openProfile');
+  };
+  profileRefetch();
+
+  const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery(
+    'coffeeChat',
+    () => postCoffeeChat(userId),
+    {
+      enabled: false,
+    }
+  );
+
   console.log(data);
   const [userId, setUserId] = useState('');
   const handleCoffeeChatClick = (id) => {
     setUserId(id);
-    refetch();
+    coffeeCahtRefetch();
   };
   const [moreView, setMoreView] = useState([]);
 
@@ -27,7 +39,7 @@ const OpenProfile = () => {
 
   return (
     <>
-      {/* {data && data.length === 0 ? (
+      {data && data.length === 0 ? (
         <Style.Nodata>
           <img src='static/media/no-data-image.64c9ff0eb8587dac16cb266cc4a9f5b9.svg' />
           <p>등록된 오픈 프로필이 없습니다.</p>
@@ -42,15 +54,16 @@ const OpenProfile = () => {
                 <div>
                   <img className='image_icon' src={item.img_path}></img>
                   <span className='text_content'>
-                    <h5>{item.user.name}</h5>
+                    <h5>{item.User.name}</h5>
                     <p>
                       {item.position} ・ {item.user_careers.total_year}
                     </p>
                   </span>
                 </div>
                 <div>
-                  {coffeeChat && coffeeChat.user_id === item.user_id ? (
-                    <Style.CompleteButton>커피챗 완료</Style.CompleteButton>
+                  {(coffeeChat && coffeeChat.user_id === item.user_id) ||
+                  item.chat_status === true ? (
+                    <Style.CompleteButton>신청 완료</Style.CompleteButton>
                   ) : (
                     <Style.ChatButton onClick={() => handleCoffeeChatClick(item.user_id)}>
                       커피챗 신청
@@ -59,8 +72,8 @@ const OpenProfile = () => {
                 </div>
               </Style.ProfileContent>
               <Style.SkillContent>
-                {item.user_skills.map((skill, index) => (
-                  <div key={index}>{skill}</div>
+                {item.User.Skills.map((skill, index) => (
+                  <div key={index}>{skill.name}</div>
                 ))}
               </Style.SkillContent>
               {moreView.includes(item.user_id)
@@ -97,7 +110,7 @@ const OpenProfile = () => {
             )}
           </Style.Container>
         ))
-      )} */}
+      )}
     </>
   );
 };

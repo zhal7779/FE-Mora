@@ -13,7 +13,6 @@ export const getProfile = async () => {
 //오픈프로필 등록
 
 export const putProfile = async (bool) => {
-  console.log(bool);
   const response = await fetch(`${process.env.REACT_APP_URL}/api/users/open-profile`, {
     method: 'PUT',
     headers: {
@@ -21,7 +20,7 @@ export const putProfile = async (bool) => {
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
     body: JSON.stringify({
-      open: false,
+      open: bool,
     }),
   });
   const data = await response.json();

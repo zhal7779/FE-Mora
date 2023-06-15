@@ -1,45 +1,48 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation } from 'react-query';
 import styled from 'styled-components';
 import { putProfile, ProfilRegistrStatus } from '../api/openProfileApi';
 
 const Toggle = () => {
   //오픈프로필 초기 상태값, 오픈프로필을 올렸다면 true, 내렸다면 false
+  const { data: registerStatus, refetch: statusRefetch } = useQuery('status', ProfilRegistrStatus);
 
-  const { data: registerStatus } = useQuery('status', ProfilRegistrStatus);
-  // console.log(registerStatus);
-
-  const [onToggle, setOnToggle] = useState(
-    registerStatus && registerStatus.UserDetail.profile_public
-  );
-  const [openStatus, setOpenStatus] = useState(onToggle ? 1 : 0);
-
-  const { data, refetch } = useQuery('open', () => putProfile(true));
-  console.log(data);
-  // 커피챗 신청여부 오픈프로필 조회할때 같이 넣어줘야함
-  // 공개 === 1
-  // 비공개 === 0
-
-  const handleToggleClick = () => {
-    setOnToggle(!onToggle);
-    if (onToggle === true) {
-      setOpenStatus(false);
-    } else if (onToggle === false) {
-      if (confirm('오픈 프로필을 등록 하시겠습니까?')) {
-        setOpenStatus(true);
-      }
+  const updateProfileMutation = useMutation(
+    () => putProfile(!registerStatus.UserDetail.profile_public),
+    {
+      onSuccess: () => {
+        statusRefetch();
+      },
     }
-    refetch();
-  };
+  );
 
+  const handleToggleClick = async () => {
+    await updateProfileMutation.mutateAsync();
+  };
   return (
     <Container>
-      {onToggle ? <p className='toggle_text'>올림</p> : <p className='toggle_text'>내림</p>}
-      <ToggleContainer onClick={handleToggleClick}>
-        {/* onToggle === true일 경우 toggle--checked 활성화 */}
-        <div className={`toggle_container ${onToggle ? 'toggle__checked' : null}`} />
-        <div className={`toggle_circle ${onToggle ? 'toggle__checked' : null}`} />
-      </ToggleContainer>
+      {registerStatus && (
+        <>
+          {registerStatus.UserDetail.profile_public ? (
+            <p className='toggle_text'>올림</p>
+          ) : (
+            <p className='toggle_text'>내림</p>
+          )}
+          <ToggleContainer onClick={handleToggleClick}>
+            {/* onToggle === true일 경우 toggle--checked 활성화 */}
+            <div
+              className={`toggle_container ${
+                registerStatus.UserDetail.profile_public ? 'toggle__checked' : null
+              }`}
+            />
+            <div
+              className={`toggle_circle ${
+                registerStatus.UserDetail.profile_public ? 'toggle__checked' : null
+              }`}
+            />
+          </ToggleContainer>
+        </>
+      )}
     </Container>
   );
 };
