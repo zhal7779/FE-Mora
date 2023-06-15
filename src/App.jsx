@@ -24,11 +24,10 @@ import AdminPlanPage from './pages/AdminPlanPage';
 import AdminNotificationPage from './pages/AdminNotificationPage';
 import AdminPostPage from './pages/AdminPostPage';
 import AdminTrackPage from './pages/AdminTrackPage';
-import AdminReportPage from './pages/AdminReportPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
-import NotificationModal from './admins/adminNotification/components/NotificationModal';
+import AdminPostDetailPage from './pages/AdminPostDetailPage';
 
 const queryClient = new QueryClient();
 
@@ -61,12 +60,11 @@ const App = () => {
               <Route element={<AdminLayout />}>
                 <Route path='/admin/users' element={<AdminUser />} />
                 <Route path='/admin/plans' element={<AdminPlanPage />} />
-                <Route path='/admin/reports' element={<AdminReportPage />} />
                 <Route path='/admin/posts' element={<AdminPostPage />} />
                 <Route path='/admin/tracks' element={<AdminTrackPage />} />
                 <Route path='/admin/notifications' element={<AdminNotificationPage />} />
                 <Route path='/write' element={<PostWritePage />} />
-                <Route path='/admin/notifications/detail' element={<NotificationModal />} />
+                <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
               </Route>
             </Routes>
           </Router>
