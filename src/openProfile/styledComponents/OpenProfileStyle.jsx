@@ -59,6 +59,16 @@ export const ChatButton = styled.button`
   }
 `;
 
+export const CompleteButton = styled.button`
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  background: #f1f5f9;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  cursor: default;
+`;
+
 export const SkillContent = styled.div`
   display: flex;
   gap: 0.5rem;

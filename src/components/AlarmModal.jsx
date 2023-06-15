@@ -10,17 +10,17 @@ const AlarmModal = ({ handleClose }) => {
   const [hiddenContent, setHiddenContent] = useState([]);
 
   const { data } = useQuery('alert', getAlert);
-  console.log(data);
+  console.log(data.comments);
 
   //모달 리스트 open, close
-  const handleContentClick = (index) => {
+  const handleContentClick = (id) => {
     setHiddenContent((prevContent) => {
       // 열려있지 않다면 = 배열에 들어온 인덱스가 없다면 =>  배열에 인덱스 추가
-      if (!prevContent.includes(index)) {
-        return [...prevContent, index];
+      if (!prevContent.includes(id)) {
+        return [...prevContent, id];
         // 열려 있다면 = 배열에 인덱스가 있다면 =>  배열에 들어있는 인덱스 삭제
       } else {
-        return prevContent.filter((item) => item !== index);
+        return prevContent.filter((idx) => idx !== id);
       }
     });
   };
@@ -36,42 +36,45 @@ const AlarmModal = ({ handleClose }) => {
           <p>알림</p>
         </HeaderContent>
         <Scroll>
-          {arr.map((item, index) => (
-            <Content key={index}>
-              <ShowContent onClick={() => handleContentClick(index)}>
-                <div>
-                  <span></span>
-                  <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
-                  <strong>{item}</strong>
-                  <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
-                </div>
-                <div>
-                  {hiddenContent.includes(index) ? (
-                    <UpIcon />
-                  ) : (
-                    <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
-                  )}
-                </div>
-              </ShowContent>
-              {hiddenContent.includes(index) ? (
-                <HiddenContent>
-                  <div style={{ border: '1px solid #e0e0e0' }}>
-                    <p>
-                      저는 1차 스터디 때 모던 자바스크립트 딥 다이브 책 읽었었는데, 자바스크립트의
-                      원리에 대해 깊게 공부할 수 있어서 좋았습니다! 자바스크립트 기초를 다지고
-                      싶으시다면 이 책을 한 번 읽어보시는건 어떤가요?
-                    </p>
+          {data.comments &&
+            data.comments.map((item) => (
+              <Content key={item.id}>
+                <ShowContent onClick={() => handleContentClick(item.id)}>
+                  <div>
+                    <span></span>
+                    <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
+                    <strong>
+                      {item.AlertFromUser.name === null ? '홍길동' : item.AlertFromUser.name}
+                    </strong>
+                    <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
                   </div>
-                  <div style={{ background: 'transparent' }}>
-                    <PostIcon />
-                    <h5>자바스크립트 기초를 탄탄히 하기 위해선 어떻게 하면 좋을까요?</h5>
+                  <div>
+                    {hiddenContent.includes(item.id) ? (
+                      <UpIcon />
+                    ) : (
+                      <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
+                    )}
                   </div>
-                </HiddenContent>
-              ) : (
-                ''
-              )}
-            </Content>
-          ))}
+                </ShowContent>
+                {hiddenContent.includes(item.id) ? (
+                  <HiddenContent>
+                    <div style={{ border: '1px solid #e0e0e0' }}>
+                      <p>
+                        저는 1차 스터디 때 모던 자바스크립트 딥 다이브 책 읽었었는데, 자바스크립트의
+                        원리에 대해 깊게 공부할 수 있어서 좋았습니다! 자바스크립트 기초를 다지고
+                        싶으시다면 이 책을 한 번 읽어보시는건 어떤가요?
+                      </p>
+                    </div>
+                    <div style={{ background: 'transparent' }}>
+                      <PostIcon />
+                      <h5>자바스크립트 기초를 탄탄히 하기 위해선 어떻게 하면 좋을까요?</h5>
+                    </div>
+                  </HiddenContent>
+                ) : (
+                  ''
+                )}
+              </Content>
+            ))}
         </Scroll>
       </Container>
       <Background onClick={handleClickOutside} />

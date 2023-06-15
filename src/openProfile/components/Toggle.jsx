@@ -4,21 +4,29 @@ import styled from 'styled-components';
 import { putProfile } from '../api/openProfileApi';
 
 const Toggle = () => {
-  const [open, setOpen] = useState(0);
-  const { data } = useQuery('open', () => putProfile(open));
-
-  console.log(data);
-  const [onToggle, setOnToggle] = useState(false);
+  const { data, refetch } = useQuery('open', () => putProfile(onToggle));
+  //내일, 정환이가 고쳐줘야 함
+  // 커피챗 신청여부 오픈프로필 조회할때 같이 넣어줘야함
+  // 공개 === 1
+  // 비공개 === 0
+  const [onToggle, setOnToggle] = useState(data ? data[0] : 0);
+  // console.log(data[0]);
   const handleToggleClick = () => {
-    setOnToggle(!onToggle);
+    if (data && data[0] === 0) {
+      setOnToggle(1);
+      refetch();
+    } else if (data && data[0] === 1) {
+      setOnToggle(0);
+      refetch();
+    }
   };
   return (
     <Container>
-      {onToggle ? <p className='toggle_text'>올림</p> : <p className='toggle_text'>내림</p>}
+      {onToggle === 1 ? <p className='toggle_text'>올림</p> : <p className='toggle_text'>내림</p>}
       <ToggleContainer onClick={handleToggleClick}>
         {/* onToggle === true일 경우 toggle--checked 활성화 */}
-        <div className={`toggle_container ${onToggle ? 'toggle__checked' : null}`} />
-        <div className={`toggle_circle ${onToggle ? 'toggle__checked' : null}`} />
+        <div className={`toggle_container ${onToggle === 1 ? 'toggle__checked' : null}`} />
+        <div className={`toggle_circle ${onToggle === 1 ? 'toggle__checked' : null}`} />
       </ToggleContainer>
     </Container>
   );

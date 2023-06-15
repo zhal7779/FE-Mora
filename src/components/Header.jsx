@@ -191,7 +191,7 @@ const ImageIcon = styled.img`
   width: 3.6rem;
   height: 3.6rem;
   border-radius: 50%;
-  background: #e3e3e3;
+  background: #969696;
 `;
 const ModalContent = styled.div`
   position: fixed;

@@ -3,10 +3,19 @@ import * as Style from '../styledComponents/OpenProfileStyle';
 import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-alt.svg';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { useQuery } from 'react-query';
-import { getProfile } from '../api/openProfileApi';
+import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 const OpenProfile = () => {
   const { data } = useQuery('openProfile', getProfile);
-  console.log(data);
+  const { data: coffeeChat, refetch } = useQuery('coffeeChat', () => postCoffeeChat(userId), {
+    enabled: false,
+  });
+
+  const [userId, setUserId] = useState('');
+  const handleCoffeeChatClick = (id) => {
+    setUserId(id);
+    refetch();
+  };
+  console.log(coffeeChat);
   const [moreView, setMoreView] = useState([]);
 
   const handleMoreViewClick = (id) => {
@@ -16,6 +25,7 @@ const OpenProfile = () => {
       }
     });
   };
+
   return (
     <>
       {data &&
@@ -33,7 +43,13 @@ const OpenProfile = () => {
                   </span>
                 </div>
                 <div>
-                  <Style.ChatButton>커피챗 신청</Style.ChatButton>
+                  {coffeeChat && coffeeChat.user_id === item.user_id ? (
+                    <Style.CompleteButton>커피챗 완료</Style.CompleteButton>
+                  ) : (
+                    <Style.ChatButton onClick={() => handleCoffeeChatClick(item.user_id)}>
+                      커피챗 신청
+                    </Style.ChatButton>
+                  )}
                 </div>
               </Style.ProfileContent>
               <Style.SkillContent>
