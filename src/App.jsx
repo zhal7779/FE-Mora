@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -26,7 +27,7 @@ import AdminTrackPage from './pages/AdminTrackPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
-import ScrollToTop from './utils/ScrollToTop';
+import AdminPostDetailPage from './pages/AdminPostDetailPage';
 import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
 import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
 
@@ -38,7 +39,6 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <React.StrictMode>
           <Router>
-            <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
                 <Route path='/' exact element={<MainPage />} />
