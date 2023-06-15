@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { fetchReadPostInfo } from '../apis/postApis';
 
 import { AdminPost } from './AdminPost';
 import SearchBar from '../../adminCommon/components/SearchBar';
-import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import {
   MainContentHeaderBlock,
   TableSearchResult,
@@ -14,15 +11,6 @@ import {
 
 const AdminTable = () => {
   const [keyword, setKeyword] = useState('');
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const { data, isLoading, error } = useQuery(
-    ['admin', 'post', 'get', currentPage, keyword],
-    async () => await fetchReadPostInfo(currentPage, 18, keyword)
-  );
-
-  if (isLoading) return <LoadingComponent search={'게시물 제목'} title={'게시물'} />;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>
@@ -35,7 +23,7 @@ const AdminTable = () => {
         </TableTitleBlock>
       </MainContentHeaderBlock>
 
-      <AdminPost posts={data.objArr} />
+      <AdminPost keyword={keyword} />
     </>
   );
 };

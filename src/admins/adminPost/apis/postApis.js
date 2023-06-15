@@ -2,15 +2,15 @@ const domainPort = process.env.REACT_APP_URL;
 const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
 
 // READ
-export const fetchReadPostInfo = async (page, size, keyword) => {
+export const fetchReadPostInfo = async ({ page, view, content }) => {
+  console.log('hit🔥');
   const response = await fetch(
-    `${domainPort}/api/adminBoards?page=${page}&size=${size}&keyword=${keyword}`,
+    `${domainPort}/api/adminBoards?page=${page}&size=${view}&keyword=${content}`,
     {
       headers: { Authorization: `Bearer ${adminToken}` },
     }
   );
   const data = await response.json();
-
   return data;
 };
 
