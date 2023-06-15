@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PostContainer = styled.section`
   .filter {
     display: flex;
-    padding: 60px 0 10px;
+    padding: 30px 0 10px 0;
 
     button {
       display: flex;
@@ -59,26 +59,35 @@ export const PostContainer = styled.section`
     }
 
     h2 {
-      padding: 8px 0 20px;
+      max-height: 46px;
+      margin: 8px 0 10px;
       font-weight: 600;
       font-size: 1.9rem;
       line-height: 2.3rem;
+      white-space: normal;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .list-content {
       margin-bottom: 30px;
-      max-height: 85px;
+      max-height: 80px;
 
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: #493675e8;
+      line-height: 2rem;
+
+      overflow: hidden;
       white-space: normal;
       text-align: left;
       word-wrap: break-word;
       display: -webkit-box;
-      -webkit-line-clamp: 5;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
-      font-weight: 500;
-      font-size: 1.3rem;
-      line-height: 1.7rem;
-      overflow: hidden;
     }
 
     .list-info {
