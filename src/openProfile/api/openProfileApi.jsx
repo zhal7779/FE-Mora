@@ -25,6 +25,21 @@ export const putProfile = async (num) => {
   const data = await response.json();
   return data;
 };
+
+//오픈 프로필 등록 여부
+
+export const ProfilRegistrStatus = async () => {
+  const response = await fetch(`${process.env.REACT_APP_URL}/api/users/mypage`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
 // 커피챗 신청
 export const postCoffeeChat = async (id) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/coffeechats`, {
@@ -48,6 +63,23 @@ export const getAlert = async () => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
+  });
+  const data = await response.json();
+  return data;
+};
+
+// 알림 읽음 여부
+
+export const patchAlert = async (id) => {
+  const response = await fetch(`${process.env.REACT_APP_URL}/api/alerts/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+    },
+    body: JSON.stringify({
+      checked: true,
+    }),
   });
   const data = await response.json();
   return data;

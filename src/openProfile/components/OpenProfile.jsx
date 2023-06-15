@@ -9,13 +9,12 @@ const OpenProfile = () => {
   const { data: coffeeChat, refetch } = useQuery('coffeeChat', () => postCoffeeChat(userId), {
     enabled: false,
   });
-
   const [userId, setUserId] = useState('');
   const handleCoffeeChatClick = (id) => {
     setUserId(id);
     refetch();
   };
-  console.log(coffeeChat);
+  // console.log(coffeeChat);
   const [moreView, setMoreView] = useState([]);
 
   const handleMoreViewClick = (id) => {

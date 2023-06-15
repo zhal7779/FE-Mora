@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import { putProfile } from '../api/openProfileApi';
+import { putProfile, ProfilRegistrStatus } from '../api/openProfileApi';
 
 const Toggle = () => {
-  const { data, refetch } = useQuery('open', () => putProfile(onToggle));
-  //내일, 정환이가 고쳐줘야 함
+  //오픈프로필 초기 상태값, 오픈프로필을 올렸다면 true, 내렸다면 false
+
+  const { data: registerStatus } = useQuery('status', ProfilRegistrStatus);
+
+  const [onToggle, setOnToggle] = useState(
+    registerStatus && registerStatus.UserDetail.profile_public
+  );
+  const [openStatus, setOpenStatus] = useState(onToggle ? 1 : 0);
+  console.log(onToggle);
+  const { data, refetch } = useQuery('open', () => putProfile(1));
+  console.log(data);
   // 커피챗 신청여부 오픈프로필 조회할때 같이 넣어줘야함
   // 공개 === 1
   // 비공개 === 0
-  const [onToggle, setOnToggle] = useState(data ? data[0] : 0);
-  // console.log(data[0]);
+
   const handleToggleClick = () => {
-    if (data && data[0] === 0) {
-      setOnToggle(1);
-      refetch();
-    } else if (data && data[0] === 1) {
-      setOnToggle(0);
-      refetch();
+    setOnToggle(!onToggle);
+    if (onToggle === true) {
+      setOpenStatus(0);
+    } else if (onToggle === false) {
+      setOpenStatus(1);
     }
   };
+
   return (
     <Container>
-      {onToggle === 1 ? <p className='toggle_text'>올림</p> : <p className='toggle_text'>내림</p>}
+      {onToggle ? <p className='toggle_text'>올림</p> : <p className='toggle_text'>내림</p>}
       <ToggleContainer onClick={handleToggleClick}>
         {/* onToggle === true일 경우 toggle--checked 활성화 */}
-        <div className={`toggle_container ${onToggle === 1 ? 'toggle__checked' : null}`} />
-        <div className={`toggle_circle ${onToggle === 1 ? 'toggle__checked' : null}`} />
+        <div className={`toggle_container ${onToggle ? 'toggle__checked' : null}`} />
+        <div className={`toggle_circle ${onToggle ? 'toggle__checked' : null}`} />
       </ToggleContainer>
     </Container>
   );

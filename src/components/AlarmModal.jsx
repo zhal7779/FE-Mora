@@ -4,16 +4,24 @@ import { ReactComponent as DownIcon } from '../assets/icons/fi_chevron-down.svg'
 import { ReactComponent as UpIcon } from '../assets/icons/fi_chevron-up.svg';
 import { ReactComponent as PostIcon } from '../assets/icons/post.svg';
 import { useQuery } from 'react-query';
-import { getAlert } from '../openProfile/api/openProfileApi';
+import { getAlert, patchAlert } from '../openProfile/api/openProfileApi';
 const AlarmModal = ({ handleClose }) => {
-  const arr = ['이민영', '이민영', '이성호', '김윤지', '김지우', '이혜정', '연정환', '임지성'];
+  //더보기 상태
   const [hiddenContent, setHiddenContent] = useState([]);
-
+  // 알림 읽음 여부 상태
+  const [alarmStatus, setAlarmStauts] = useState([]);
+  const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
-  console.log(data.comments);
+  const { data: status } = useQuery('alertStatus', () => patchAlert(alarmId));
+
+  console.log(data);
 
   //모달 리스트 open, close
   const handleContentClick = (id) => {
+    setAlarmId(id);
+    setAlarmStauts((prevStatus) => {
+      return [...prevStatus, id];
+    });
     setHiddenContent((prevContent) => {
       // 열려있지 않다면 = 배열에 들어온 인덱스가 없다면 =>  배열에 인덱스 추가
       if (!prevContent.includes(id)) {
@@ -36,16 +44,20 @@ const AlarmModal = ({ handleClose }) => {
           <p>알림</p>
         </HeaderContent>
         <Scroll>
-          {data.comments &&
-            data.comments.map((item) => (
+          {data &&
+            data.alertComments &&
+            data.alertComments.map((item) => (
               <Content key={item.id}>
                 <ShowContent onClick={() => handleContentClick(item.id)}>
                   <div>
-                    <span></span>
+                    {item.checked === 1 || alarmStatus.includes(item.id) ? (
+                      <span style={{ background: 'transparent' }}></span>
+                    ) : (
+                      <span></span>
+                    )}
+
                     <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
-                    <strong>
-                      {item.AlertFromUser.name === null ? '홍길동' : item.AlertFromUser.name}
-                    </strong>
+                    <strong>{item['AlertFromUser.name']}</strong>
                     <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
                   </div>
                   <div>
@@ -59,15 +71,11 @@ const AlarmModal = ({ handleClose }) => {
                 {hiddenContent.includes(item.id) ? (
                   <HiddenContent>
                     <div style={{ border: '1px solid #e0e0e0' }}>
-                      <p>
-                        저는 1차 스터디 때 모던 자바스크립트 딥 다이브 책 읽었었는데, 자바스크립트의
-                        원리에 대해 깊게 공부할 수 있어서 좋았습니다! 자바스크립트 기초를 다지고
-                        싶으시다면 이 책을 한 번 읽어보시는건 어떤가요?
-                      </p>
+                      <p>{item.commentContent}</p>
                     </div>
                     <div style={{ background: 'transparent' }}>
                       <PostIcon />
-                      <h5>자바스크립트 기초를 탄탄히 하기 위해선 어떻게 하면 좋을까요?</h5>
+                      <h5>{item.boardTitle}</h5>
                     </div>
                   </HiddenContent>
                 ) : (
