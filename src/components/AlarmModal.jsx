@@ -12,9 +12,8 @@ const AlarmModal = ({ handleClose }) => {
   const [alarmStatus, setAlarmStauts] = useState([]);
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
-  const { data: status } = useQuery('alertStatus', () => patchAlert(alarmId));
 
-  console.log(data);
+  const { data: status } = useQuery('alertStatus', () => patchAlert(alarmId));
 
   //모달 리스트 open, close
   const handleContentClick = (id) => {
@@ -51,11 +50,10 @@ const AlarmModal = ({ handleClose }) => {
                 <ShowContent onClick={() => handleContentClick(item.id)}>
                   <div>
                     {item.checked === 1 || alarmStatus.includes(item.id) ? (
-                      <span style={{ background: 'transparent' }}></span>
+                      <span style={{ background: '#bdbdbd' }}></span>
                     ) : (
                       <span></span>
                     )}
-
                     <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
                     <strong>{item['AlertFromUser.name']}</strong>
                     <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>

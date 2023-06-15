@@ -7,13 +7,25 @@ import { ReactComponent as BellIcon } from '../assets/icons/fi_bell.svg';
 import SearchBar from './SearchBar';
 import AlarmModal from './AlarmModal';
 import DefaultImg from '../assets/images/rabbitProfile.png';
+import { useQuery } from 'react-query';
+import { getAlert } from '../openProfile/api/openProfileApi';
 
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
 
+  const { data } = useQuery('alert', getAlert);
+
+  const newAlarm = data?.alertComments?.filter((item) => item.checked === 0);
+  const [onAlarm, setOnAlarm] = useState(false);
+  useEffect(() => {
+    if (newAlarm && newAlarm.length > 0) {
+      console.log('새 알림');
+      setOnAlarm(true);
+    }
+  }, [newAlarm]);
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
-  //token 값이 있으면  초기 상태값 1
+  // token 값이 있으면  초기 상태값 1
 
   const [menu, setMenu] = useState(() => {
     const storedMenu = localStorage.getItem('menu');
@@ -110,7 +122,13 @@ const Header = () => {
 
               <div>
                 {token ? (
-                  <BellIcon onClick={() => handleModalClick(true)} style={{ stroke: '#242424' }} />
+                  <>
+                    <BellIcon
+                      onClick={() => handleModalClick(true)}
+                      style={{ stroke: '#242424' }}
+                    />
+                    {onAlarm && <span className='alarm'></span>}
+                  </>
                 ) : (
                   <BellIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
                 )}
@@ -183,8 +201,17 @@ const SideContent = styled.div`
   display: flex;
   align-items: center;
   div {
+    position: relative;
     margin: 0 1.1rem 0 1.1rem;
     cursor: pointer;
+    .alarm {
+      position: absolute;
+      right: 0.1rem;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      background: #7353ea;
+    }
   }
 `;
 const ImageIcon = styled.img`
