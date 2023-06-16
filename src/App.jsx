@@ -24,13 +24,15 @@ import AdminPlanPage from './pages/AdminPlanPage';
 import AdminNotificationPage from './pages/AdminNotificationPage';
 import AdminPostPage from './pages/AdminPostPage';
 import AdminTrackPage from './pages/AdminTrackPage';
-import AdminReportPage from './pages/AdminReportPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
 import NotificationModal from './admins/adminNotification/components/NotificationModal';
 import NonmemberPage from './pages/NonmemberPage';
 import ScrollToTop from './utils/ScrollToTop';
+import AdminPostDetailPage from './pages/AdminPostDetailPage';
+import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
+import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
 
 const queryClient = new QueryClient();
 
@@ -71,7 +73,10 @@ const App = () => {
                 <Route path='/admin/notifications' element={<AdminNotificationPage />} />
                 <Route path='/write' element={<PostWritePage />} />
                 <Route path='/admin/notifications/detail' element={<NotificationModal />} />
+                <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
               </Route>
+              <Route path='/admin/login' element={<AdminLogIn />} />
+              <Route path='/admin/signin' element={<AdminSignIn />} />
             </Routes>
           </Router>
         </React.StrictMode>

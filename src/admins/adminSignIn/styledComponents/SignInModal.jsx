@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ModalOverlay = styled.div`
+export const SignInOverlay = styled.div`
   position: fixed;
 
   top: 0;
@@ -11,9 +11,9 @@ const ModalOverlay = styled.div`
   background-color: #000;
 
   z-index: 1;
-  opacity: 0.4;
+  opacity: 0.2;
 `;
-const ModalContentBlock = styled.div`
+export const SignInContentBlock = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -25,16 +25,17 @@ const ModalContentBlock = styled.div`
 
   background-color: #ffffff;
 
+  box-shadow: rgba(99, 99, 99, 0.5) 0px 8px 16px 0px;
   z-index: 3;
 `;
-const ModalTitle = styled.h3`
+export const SignInTitle = styled.h3`
   display: block;
   font-size: 2rem;
   font-weight: bold;
 
   color: #424242;
 `;
-const ModalSubTitle = styled.p`
+export const SignInSubTitle = styled.p`
   margin-bottom: 0.8rem;
 
   color: #616161;
@@ -42,7 +43,7 @@ const ModalSubTitle = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
 `;
-const ModalContentInput = styled.input`
+export const SignInContentInput = styled.input`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -58,7 +59,7 @@ const ModalContentInput = styled.input`
     outline: none;
   }
 `;
-const ModalContentP = styled.p`
+export const SignInContentP = styled.p`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -70,19 +71,19 @@ const ModalContentP = styled.p`
 
   font-size: 1.4rem;
 `;
-const ModalButtonBlock = styled.div`
+export const SignInButtonBlock = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
   gap: 1.5rem;
   padding-top: 2rem;
 `;
-const ModalHeader = styled.div`
+export const SignInHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5rem;
 `;
-const ModalHeaderButton = styled.button`
+export const SignInHeaderButton = styled.button`
   padding: 0.6rem 1rem;
   border: none;
   border-radius: 4px;
@@ -93,7 +94,7 @@ const ModalHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-const ModalButton = styled.button`
+export const SignInButton = styled.button`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
@@ -104,16 +105,3 @@ const ModalButton = styled.button`
   font-size: 1.5rem;
   font-weight: bold;
 `;
-
-export {
-  ModalButton,
-  ModalButtonBlock,
-  ModalContentBlock,
-  ModalContentInput,
-  ModalContentP,
-  ModalHeader,
-  ModalHeaderButton,
-  ModalOverlay,
-  ModalSubTitle,
-  ModalTitle,
-};

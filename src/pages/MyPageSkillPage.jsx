@@ -36,11 +36,12 @@ const MyPageEdit = () => {
         Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
     });
-    setMySkillList(fetchedMySkillList);
     if (!response) {
       throw new Error('Failed to fetch mySkillList');
     }
-    return response.json();
+    const data = await response.json();
+    setMySkillList(data); // Update mySkillList with the fetched data
+    return data;
   };
 
   const { data: fetchedMySkillList } = useQuery('mySkillList', fetchMySkillList);
@@ -146,15 +147,21 @@ const MyPageEdit = () => {
       />
       <Button color='darkPurple' value='추가하기' onClick={handleAddSkill} />
 
-      <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
-      <SkillButtonContainer>
-        {mySkillList.map((mySkill, index) => (
-          <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
-            {mySkill}
-            <RemoveText className='remove-text'>x</RemoveText>
-          </div>
-        ))}
-      </SkillButtonContainer>
+      {mySkillList ? (
+        <>
+          <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
+          <SkillButtonContainer>
+            {mySkillList.map((mySkill, index) => (
+              <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
+                {mySkill}
+                <RemoveText className='remove-text'>❌</RemoveText>
+              </div>
+            ))}
+          </SkillButtonContainer>
+        </>
+      ) : (
+        '로딩중'
+      )}
 
       <ButtonContainer>
         <Button
@@ -180,7 +187,6 @@ const MyPageEdit = () => {
 export default MyPageEdit;
 
 const SubTitle = styled.h3`
-  font-family: 'Noto Sans KR';
   font-weight: 600;
   font-size: 2rem;
   margin-top: 7rem;
@@ -218,10 +224,10 @@ const SkillButtonContainer = styled.div`
 
 const RemoveText = styled.span`
   position: absolute;
-  top: 46%;
-  right: 0.8rem;
+  top: 50%;
+  right: 0.5rem;
   transform: translateY(-50%);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #ee1e1e;
   display: none;

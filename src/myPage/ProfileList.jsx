@@ -1,21 +1,13 @@
-import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/MyPageProfileStyle';
+import * as Style2 from './styledComponents/ProfileListStyle';
 import profileListData from './data/profileListData';
-
 const URL = process.env.REACT_APP_URL;
 
 const ProfileList = () => {
   const queryClient = useQueryClient();
-  const [urlList, setUrlList] = useState([
-    {
-      name: '나의 Github',
-      url: 'https://github.com/ziuss76',
-    },
-  ]);
-
   const navigate = useNavigate();
 
   // 현재 나의 스킬 불러오기
@@ -32,6 +24,9 @@ const ProfileList = () => {
 
   // 현재 나의 교육 불러오기
   const { data: myEduList, isLoading: isEduLoading } = useQuery('myEduList', fetchMyEduList);
+
+  // 현재 나의 링크 불러오기
+  const { data: myLinkList, isLoading: isLinkLoading } = useQuery('myLinkList', fetchMyLinkList);
 
   // 현재 나의 스킬 불러오기
   async function fetchMySkillList() {
@@ -66,6 +61,19 @@ const ProfileList = () => {
     return response.json();
   }
 
+  // 현재 나의 링크 불러오기
+  async function fetchMyLinkList() {
+    const response = await fetch(`${URL}/api/links`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    });
+    return response.json();
+  }
+
+  console.log(myLinkList);
+
   // 경력 삭제 요청 핸들러
   async function handleRemoveCareer(careerId) {
     const response = await fetch(`${URL}/api/careers/delete`, {
@@ -98,6 +106,22 @@ const ProfileList = () => {
     }
   }
 
+  // 링크 삭제 요청 핸들러
+  async function handleRemoveLink(linkId) {
+    const response = await fetch(`${URL}/api/links/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify({ linkId: linkId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete link');
+    }
+  }
+
   const removeCareerMutation = useMutation(handleRemoveCareer, {
     onSuccess: () => {
       queryClient.invalidateQueries('myCareerList');
@@ -110,65 +134,78 @@ const ProfileList = () => {
     },
   });
 
+  const removeLinkMutation = useMutation(handleRemoveLink, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('myLinkList');
+    },
+  });
+
   return (
     <Style.ListContainer>
       <ul>
         {profileListData.map((item, index) => (
           <li key={index}>
             <h4>{item.title}</h4>
-            {index === 0 && !isSkillLoading && mySkillList.length > 0 ? (
-              <SkillButtonContainer>
+            {index === 0 && !isSkillLoading && mySkillList && mySkillList.length > 0 ? (
+              <Style2.SkillButtonContainer>
                 {mySkillList.map((mySkill, index) => (
                   <div className='badge' key={index}>
                     {mySkill}
                   </div>
                 ))}
-              </SkillButtonContainer>
-            ) : index === 1 && !isCareerLoading && myCareerList.length > 0 ? (
-              <CareerButtonContainer>
+              </Style2.SkillButtonContainer>
+            ) : index === 1 && !isCareerLoading && myCareerList && myCareerList.length > 0 ? (
+              <Style2.CareerButtonContainer>
                 {myCareerList.map((myCareer, index) => (
                   <div className='badge' key={index}>
-                    <H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}</H5>
-                    <RemoveText
+                    <Style2.H5>{`${myCareer.company_name} ${myCareer.position} ㅣ ${myCareer.content} ㅣ ${myCareer.totalWorkingDate}`}</Style2.H5>
+                    <Style2.RemoveText
                       className='remove-text'
                       onClick={() => removeCareerMutation.mutate(myCareer.id)}
                     >
-                      x
-                    </RemoveText>
+                      ❌
+                    </Style2.RemoveText>
                   </div>
                 ))}
-              </CareerButtonContainer>
-            ) : index === 2 && !isEduLoading && myEduList.length > 0 ? (
-              <CareerButtonContainer>
+              </Style2.CareerButtonContainer>
+            ) : index === 2 && !isEduLoading && myEduList && myEduList.length > 0 ? (
+              <Style2.CareerButtonContainer>
                 {myEduList.map((myEdu, index) => (
                   <div className='badge' key={index}>
                     {myEdu.end_date === '' ? (
-                      <H5>{`${myEdu.name} ${myEdu.program} ㅣ ${myEdu.description} ㅣ ${myEdu.start_date} ~ 교육중`}</H5>
+                      <Style2.H5>{`${myEdu.name} ${myEdu.program} ㅣ ${myEdu.description} ㅣ ${myEdu.start_date} ~ 교육중`}</Style2.H5>
                     ) : (
-                      <H5>{`${myEdu.name} ${myEdu.program} ㅣ ${myEdu.description} ㅣ ${myEdu.start_date} ~ ${myEdu.end_date}`}</H5>
+                      <Style2.H5>{`${myEdu.name} ${myEdu.program} ㅣ ${myEdu.description} ㅣ ${myEdu.start_date} ~ ${myEdu.end_date}`}</Style2.H5>
                     )}
-                    <RemoveText
+                    <Style2.RemoveText
                       className='remove-text'
                       onClick={() => removeEduMutation.mutate(myEdu.id)}
                     >
-                      x
-                    </RemoveText>
+                      ❌
+                    </Style2.RemoveText>
                   </div>
                 ))}
-              </CareerButtonContainer>
-            ) : index === 3 && urlList.length > 0 ? (
-              <SkillButtonContainer>
-                {urlList.map((url, index) => (
+              </Style2.CareerButtonContainer>
+            ) : index === 3 && !isLinkLoading && myLinkList && myLinkList.length > 0 ? (
+              <Style2.LinkButtonContainer>
+                {myLinkList.map((myLink, index) => (
                   <div className='badge' key={index}>
-                    <a href={url.url} target='_blank' rel='noopener noreferrer' key={index}>
-                      {url.name}
+                    <a href={myLink.url} target='_blank' rel='noopener noreferrer' key={index}>
+                      {myLink.name}
                     </a>
+                    <Style2.RemoveText
+                      className='remove-text'
+                      onClick={() => removeLinkMutation.mutate(myLink.id)}
+                    >
+                      ❌
+                    </Style2.RemoveText>
                   </div>
                 ))}
-              </SkillButtonContainer>
+              </Style2.LinkButtonContainer>
             ) : (
               <p className='list-content'>{item.content}</p>
             )}
+
             <button
               className='list-button'
               onClick={() => {
@@ -183,60 +220,3 @@ const ProfileList = () => {
 };
 
 export default ProfileList;
-
-const SkillButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 2rem 0;
-
-  .badge {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #b9b9b9;
-    padding: 8px 20px 9px 20px;
-    border-radius: 2rem;
-    margin-right: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-`;
-
-const CareerButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: 2rem 0;
-
-  .badge {
-    position: relative;
-    background-color: #ffffff;
-    border: 1px solid #b9b9b9;
-    padding: 5px 22px 6px 22px;
-    margin-bottom: 1.2rem;
-    border-radius: 2rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-
-    &:hover .remove-text {
-      display: block;
-    }
-  }
-`;
-
-const H5 = styled.h5`
-  font-weight: 400;
-  font-size: 1.7rem;
-  color: #424242;
-  line-height: 3rem;
-`;
-
-const RemoveText = styled.span`
-  position: absolute;
-  top: 46%;
-  right: 0.8rem;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ee1e1e;
-  display: none;
-`;

@@ -57,7 +57,6 @@ const AccordionButton = styled.button`
   height: 48px;
   margin-top: 0.3rem;
   border-radius: 1.2rem;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 20px;

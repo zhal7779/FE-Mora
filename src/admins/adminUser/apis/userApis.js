@@ -15,7 +15,7 @@ export const fetchReadUserInfo = async (page, size, keyword) => {
 };
 
 export const fetchReadUserInfoDetail = async (id) => {
-  const response = await fetch(`${domainPort}/api/notices/${id}`, {
+  const response = await fetch(`${domainPort}/api/adminUsers/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
   const data = await response.json();
@@ -39,8 +39,8 @@ export const fetchCreateUser = async (newNotification) => {
 };
 
 // UPDATE
-export const fetchUpdateUser = async (id, newNotification) => {
-  const response = await fetch(`${domainPort}/api/notices/${id}`, {
+export const fetchUpdateUser = async (email, newNotification) => {
+  const response = await fetch(`${domainPort}/api/adminUsers/${email}`, {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${adminToken}`,

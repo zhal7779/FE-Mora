@@ -7,16 +7,17 @@ import formatTime from '../community/utils/formatTime';
 import IconMore from '../assets/icons/icon-more.svg';
 import { getDetail, likePost } from './service/postDetailService';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import jwt_decode from 'jwt-decode';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostDetail = ({ postId }) => {
   const [postOption, setPostOption] = useState(false);
-  const [isLiked, setIsLiked] = useState(null);
   const { status, data: detail, error } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const decodedToken = jwt_decode(sessionStorage.getItem('userToken'));
 
   // 게시글 삭제 api
   const deletePost = async () => {
@@ -46,30 +47,10 @@ const PostDetail = ({ postId }) => {
     }
   });
 
-  // 좋아요 조회 api
-  const fetchLikeStatus = async () => {
-    const response = await fetch(`${BASE_URL}/api/likes?board_id=${postId}`, {
-      headers: {
-        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('좋아요 상태를 가져오는데 실패했습니다.');
-    }
-
-    const result = await response.json();
-    setIsLiked(result);
-  };
-
-  useEffect(() => {
-    fetchLikeStatus();
-  }, []);
-
   // 좋아요 등록, 취소 api
   const toggleLike = async () => {
     const response = await fetch(`${BASE_URL}/api/likes`, {
-      method: isLiked ? 'DELETE' : 'POST',
+      method: detail.user_like ? 'DELETE' : 'POST',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${sessionStorage.getItem('userToken')}`
@@ -80,7 +61,6 @@ const PostDetail = ({ postId }) => {
       throw new Error('좋아요 처리에 실패했습니다.');
     }
 
-    setIsLiked(!isLiked);
     return await response.json();
   };
 
@@ -96,7 +76,6 @@ const PostDetail = ({ postId }) => {
 
   const handleClickLike = () => {
     toggleLikeMutate();
-    setIsLiked(!isLiked);
   };
 
   // 게시글 삭제 핸들러
@@ -126,7 +105,7 @@ const PostDetail = ({ postId }) => {
       <div className="post-head">
         <div className="title">
           <h2>{detail.title}</h2>
-          {sessionStorage.getItem('userToken') && (
+          {decodedToken.id === detail.writer && (
             <div className="post-option">
               <button onClick={() => setPostOption(!postOption)}>
                 <img src={IconMore} alt="열기" />
@@ -146,8 +125,8 @@ const PostDetail = ({ postId }) => {
       </div>
       <div className="writer">
         <div className="writer-img">
-          {detail.user_detail.img_path !== null ? (
-            <img src={detail.user_detail.img_path} alt="작성자 프로필" />
+          {detail.User.img_path !== null ? (
+            <img src={detail.User.img_path} alt="작성자 프로필" />
           ) : (
             <img src={UserProfile} alt="작성자 프로필" />
           )}
@@ -155,9 +134,7 @@ const PostDetail = ({ postId }) => {
         <div className="writer-info">
           <p className="writer-info-name">{detail.User.name}</p>
           <div>
-            <p className="writer-info-position">
-              {detail.user_detail.position}
-            </p>
+            <p className="writer-info-position">{detail.User.position}</p>
             <p className="writer-info-time">{formatTime(detail.createdAt)}</p>
           </div>
         </div>
@@ -173,16 +150,16 @@ const PostDetail = ({ postId }) => {
           </ul>
         )}
         <div className="content-text">
-          {detail.content.split('\n').map(line => {
+          {detail.content.split('\n').map((line, index) => {
             return (
-              <span>
+              <span key={index}>
                 {line}
                 <br />
               </span>
             );
           })}
         </div>
-        <button className={`like-btn ${isLiked ? '' : 'disabled'}`}>
+        <button className={`like-btn ${detail.user_like ? '' : 'disabled'}`}>
           <img src={IconLike} alt="좋아요" onClick={handleClickLike} />
           {detail.like_cnt}
         </button>

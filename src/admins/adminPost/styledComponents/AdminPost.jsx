@@ -1,26 +1,23 @@
 import styled from 'styled-components';
 
-const PostGrid = styled.div`
+export const PostGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 24rem);
-  column-gap: 4rem;
+  column-gap: 3rem;
   row-gap: 5rem;
   margin-bottom: 20rem;
 `;
-
-const TitleBlock = styled.div`
+export const TitleBlock = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6rem;
 `;
-
-const Title = styled.h2`
+export const Title = styled.h2`
   font-size: 1.8rem;
   font-weight: bold;
 `;
-
-const EnrollButton = styled.button`
+export const EnrollButton = styled.button`
   padding: 0.7rem 1.5rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
@@ -31,22 +28,21 @@ const EnrollButton = styled.button`
   font-size: 1.5rem;
   font-weight: bold;
 `;
-
-const PostLayout = styled.div`
-  width: 24rem;
-  height: 20rem;
-  /* 14 -> img */
+export const PostLayout = styled.div`
+  width: 25rem;
+  height: 22rem;
 
   border-radius: 6px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
-
-const PostImage = styled.div`
-  width: 24rem;
+export const PostImage = styled.div`
+  width: 25rem;
   height: 14rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   & img {
+    width: 25rem;
+    height: 14rem;
     object-fit: cover;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -60,23 +56,22 @@ const PostImage = styled.div`
     background-color: #fffeb6;
   }
 `;
-
-const PostInfoBlock = styled.div`
+export const PostInfoBlock = styled.div`
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
 
   & .info:first-child {
-    padding-left: 1rem;
-    margin-bottom: 0.7rem;
+    padding-left: 1.6rem;
+    margin-bottom: 1rem;
   }
   & .title {
-    max-width: 17rem;
+    max-width: 15rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
   }
   & .category {
@@ -95,5 +90,3 @@ const PostInfoBlock = styled.div`
     color: #fff;
   }
 `;
-
-export { PostGrid, TitleBlock, Title, EnrollButton, PostLayout, PostImage, PostInfoBlock };

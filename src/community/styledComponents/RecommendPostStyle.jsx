@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const RecommendContainer = styled.section`
-  padding-top: 34px;
-
   h3 {
-    padding-bottom: 10px;
+    padding: 34px 0 10px 0;
     font-weight: 600;
     font-size: 2rem;
     line-height: 2.4rem;
@@ -12,6 +10,7 @@ export const RecommendContainer = styled.section`
 
   ul {
     display: flex;
+    padding-bottom: 30px;
 
     li {
       width: 50%;

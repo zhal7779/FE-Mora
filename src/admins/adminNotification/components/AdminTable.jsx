@@ -7,6 +7,7 @@ import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
 import SearchBar from '../../adminCommon/components/SearchBar';
 import PageNation from '../../adminCommon/components/PageNation';
+import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import {
   EnrollButton,
   MainContentHeaderBlock,
@@ -29,7 +30,7 @@ const AdminTable = () => {
     async () => await fetchReadNotificationInfo(currentPage, 12, keyword)
   );
 
-  if (isLoading) return <span>로딩중...</span>;
+  if (isLoading) return <LoadingComponent search={'공지 제목'} title={'공지'} />;
   if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (

@@ -35,7 +35,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
   const handleUpdate = () => {
     const result = confirm('수정하시겠습니까?');
     if (result) {
-      updateNotification(id, contents);
+      updateNotification();
       handleUpdatable();
       handleModalCancelClick();
     }
@@ -57,7 +57,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
   );
 
   const { mutate: updateNotification, error: updateError } = useMutation(
-    async (id) => await fetchUpdateNotification(id, contents),
+    async () => await fetchUpdateNotification(id, contents),
     {
       onError(updateError) {
         console.error(updateError);

@@ -71,14 +71,16 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
               ref={titleInput}
               className='modal-content'
               onChange={handleFormChange}
+              placeholder='트랙명 ex) SW'
             />
             <ModalSubTitle className='modal-sub-title'>기수</ModalSubTitle>
             <ModalContentInput
-              type='text'
+              type='number'
               name='phase'
               value={contents.phase}
               className='modal-content'
               onChange={handleFormChange}
+              placeholder='숫자만 입력할 수 있습니다. ex) 8'
             />
 
             <ModalButtonBlock className='modal-button-block'>

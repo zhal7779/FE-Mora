@@ -10,7 +10,7 @@ export const DetailContainer = styled.section`
       position: relative;
 
       h2 {
-        padding: 70px 24px 0 0;
+        padding: 70px 30px 0 0;
 
         font-weight: 700;
         font-size: 2.4rem;
@@ -35,7 +35,7 @@ export const DetailContainer = styled.section`
 
         &-list {
           position: absolute;
-          left: -90px;
+          left: -80px;
           top: 28px;
 
           display: none;
@@ -156,7 +156,7 @@ export const DetailContainer = styled.section`
       padding-bottom: 120px;
 
       font-size: 1.6rem;
-      line-height: 2.3rem;
+      line-height: 2.5rem;
       word-break: keep-all;
     }
 

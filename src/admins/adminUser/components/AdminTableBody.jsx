@@ -45,7 +45,7 @@ const AdminTableBody = ({ users }) => {
             <span className='password'>{data.password}</span>
             <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.email)}>
+              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
                 보기
               </DetailBtn>
             </span>

@@ -44,7 +44,7 @@ const AdminTableBody = ({ notifications }) => {
       {notifications.map((data, idx) => {
         return (
           <NotificationInfo className='user-info' key={idx}>
-            <span>{data.Admin.name}</span>
+            <span>{data.Admin?.name || '관리자'}</span>
             <span className='title'>{data.title}</span>
             <span className='content'>{data.content}</span>
             <span>{data.createdAt.slice(0, 10)}</span>

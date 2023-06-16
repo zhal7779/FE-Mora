@@ -39,7 +39,6 @@ const BaseButton = styled.button`
   height: 3.8rem;
   padding: 9px 21px 9px 21px;
   border-radius: 7px;
-  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 1.5rem;

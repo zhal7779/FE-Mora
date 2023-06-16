@@ -29,7 +29,6 @@ const MainPost = () => {
   }
   return (
     <Style.PostContainer>
-      {console.log(data)}
       <div className="post-title">
         <h2>모여라레이서 Top 10🔥</h2>
         <p>모여라레이서에서 가장 인기가 많은 게시물을 만나보세요.</p>
@@ -40,30 +39,22 @@ const MainPost = () => {
             <Link to={`/community/${post.id}`}>
               <p className="rank">{index + 1}</p>
               <div>
-                {/* <div className="writer">
-                <div className="writer-img">
-                  <img
-                    src={post.user_detail.img_path}
-                    alt="사용자 프로필 사진"
-                  />
+                <div className="writer">
+                  <div className="writer-img">
+                    <img src={post.User.img_path} alt="사용자 프로필 사진" />
+                  </div>
+                  <div className="writer-info">
+                    <p className="writer-info-name">{post.User.name}</p>
+                    <p className="writer-info-position">{post.User.position}</p>
+                  </div>
                 </div>
-                <div className="writer-info">
-                  <p className="writer-info-name">{post.User.name}</p>
-                  <p className="writer-info-position">
-                    {post.user_detail.position}
-                  </p>
-                </div>
-              </div> */}
                 <div className="content">
                   <div className="content-text">
                     <span>{post.title}</span> | {post.content}
                   </div>
                   {post.Photos.length > 0 && (
                     <div className="content-img">
-                      <img
-                        src={post.Photos[0].img_path}
-                        alt={post.Photos.origin_name}
-                      />
+                      <img src={post.Photos} alt="이미지 미리보기" />
                     </div>
                   )}
                   <div className="count">

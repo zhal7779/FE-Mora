@@ -41,6 +41,7 @@ export const fetchCreateTrack = async (newTrack) => {
 
 // UPDATE
 export const fetchUpdateTrack = async (id, newTrack) => {
+  console.log(id, newTrack);
   const response = await fetch(`${domainPort}/api/generations/${id}`, {
     method: 'PATCH',
     headers: {

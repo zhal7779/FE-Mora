@@ -1,6 +1,5 @@
 import Header from '../admins/adminCommon/components/Header';
-import AdminPost from '../admins/adminPost/components/AdminPost';
-import SearchBar from '../admins/adminCommon/components/SearchBar';
+import AdminTable from '../admins/adminPost/components/AdminTable';
 import AdminBlock from '../admins/adminCommon/components/AdminBlock';
 import AdminSideBar from '../admins/adminCommon/components/AdminSideBar';
 import { POSTS_BUTTON } from '../admins/adminCommon/constants/sideBarCategory';
@@ -13,8 +12,7 @@ const AdminPostPage = () => {
       <AdminBlock>
         <AdminSideBar nowCategoryName={POSTS_BUTTON} />
         <AdminMainContainer>
-          <SearchBar />
-          <AdminPost />
+          <AdminTable />
         </AdminMainContainer>
       </AdminBlock>
     </>
