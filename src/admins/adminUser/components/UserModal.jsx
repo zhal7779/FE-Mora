@@ -45,7 +45,7 @@ const UserModal = ({ id, handleModalCancelClick }) => {
   };
 
   const { data, isLoading, error } = useQuery(
-    ['admin', 'notification', 'detail', 'get'],
+    ['admin', 'user', 'detail', 'get'],
     () => fetchReadUserInfoDetail(id),
     {
       onSuccess(data) {
@@ -64,8 +64,6 @@ const UserModal = ({ id, handleModalCancelClick }) => {
   );
 
   if (isLoading) return <span>로딩중...</span>;
-  if (error) return <span>An error has occurred: {error.message}</span>;
-
   if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
   return (
@@ -110,7 +108,7 @@ const UserModal = ({ id, handleModalCancelClick }) => {
         <ModalButtonBlock className='modal-button-block'>
           <ModalButton
             className='modal-button-submit'
-            onClick={() => handleUpdate(contents.email)}
+            onClick={() => handleUpdate(data.email)}
             $purple
           >
             수정

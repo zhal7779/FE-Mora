@@ -57,8 +57,6 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   );
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
-
   return (
     <>
       {enrollModal && (

@@ -31,7 +31,6 @@ const AdminTable = () => {
   );
 
   if (isLoading) return <LoadingComponent search={'트랙명'} title={'트랙'} />;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>
