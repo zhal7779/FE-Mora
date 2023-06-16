@@ -6,6 +6,7 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+import noDataImage from '../assets/images/no-data-image.svg';
 const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
@@ -18,20 +19,35 @@ const MyPageEdit = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // 수정하지 않고 넘길 때는 이전 값 넣어주기
-  useEffect(() => {
-    setUserName(mainProfileData.name);
-    setUserImg(mainProfileData.UserDetail.img_path);
-    setPosition(
-      mainProfileData.UserDetail.position === '직책을 입력해주세요.'
-        ? ''
-        : mainProfileData.UserDetail.position
-    );
-    setTrack('트랙 및');
-    setPhase('기수를 입력해주세요');
-    setIntro(mainProfileData.UserDetail.comment);
-  }, []);
+  // 기존 내 정보 가져오기
+  const mainProfileDataQuery = useQuery(
+    'mainProfileData',
+    () =>
+      fetch(`${URL}/api/users/mypage`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+        },
+      }).then((response) => response.json()),
+    {
+      onSuccess: () => {
+        console.log(mainProfileData);
+        setUserName(mainProfileData.name);
+        setUserImg(mainProfileData.UserDetail.img_path);
+        setPosition(
+          mainProfileData.UserDetail.position === '직책을 입력해주세요.'
+            ? ''
+            : mainProfileData.UserDetail.position
+        );
+        setTrack('트랙 및');
+        setPhase('기수를 입력해주세요');
+        setIntro(mainProfileData.UserDetail.comment);
+      },
+    }
+  );
 
+  const { data: mainProfileData } = mainProfileDataQuery;
+
+  // 수정하지 않고 넘길 때는 이전 값 넣어주기
   // 트랙과 기수 이벤트 핸들러
   const handleTrackChange = (e) => {
     const selectedTrack = e.target.value;
@@ -42,17 +58,6 @@ const MyPageEdit = () => {
     const selectedPhase = e.target.value;
     setPhase(selectedPhase);
   };
-
-  // 기존 내 정보 가져오기
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch(`${URL}/api/users/mypage`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
-  );
-
-  const { data: mainProfileData } = mainProfileDataQuery;
 
   // 프로필 이미지 POST 뮤테이션 선언
   const uploadImageMutation = useMutation((formData) =>
@@ -120,7 +125,15 @@ const MyPageEdit = () => {
   return (
     <LoginContainer>
       <ImageContainer>
-        <ProfileImg src={userImg || mainProfileData.UserDetail.img_path} alt='프로필'></ProfileImg>
+        {mainProfileData?.UserDetail?.img_path ? (
+          <ProfileImg
+            src={userImg || mainProfileData.UserDetail.img_path}
+            alt='프로필'
+          ></ProfileImg>
+        ) : (
+          <img src={noDataImage} alt='noDataImage'></img>
+        )}
+
         <label htmlFor='imageUpload'>
           <input
             onChange={handleImageChange}
@@ -179,7 +192,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={() => {
             handleSubmit();
-            navigate('/mypage');
           }}
         />
         <Button color='white' value='수정취소' onClick={() => navigate('/mypage')} />

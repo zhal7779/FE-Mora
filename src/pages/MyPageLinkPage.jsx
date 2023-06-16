@@ -35,6 +35,7 @@ const MyPageEdit = () => {
     createLinkMutation.mutate(linkData, {
       onSuccess: () => {
         queryClient.invalidateQueries('myLinkList');
+        navigate('/mypage');
       },
       onError: (error) => {
         console.error('링크 수정 오류:', error);
@@ -74,7 +75,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={() => {
             handleLinkUpdate();
-            navigate('/mypage');
           }}
         />
         <Button

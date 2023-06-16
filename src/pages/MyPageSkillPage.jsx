@@ -107,21 +107,20 @@ const MyPageEdit = () => {
   );
 
   // 스킬 업데이트 핸들러
-  const handleUpdateSkill = async () => {
-    try {
-      const requestBody = {
-        skillNames: mySkillList,
-      };
+  const handleUpdateSkill = () => {
+    const requestBody = {
+      skillNames: mySkillList,
+    };
 
-      await updateSkillMutation.mutateAsync(requestBody);
-
-      console.log('스킬 수정이 완료되었습니다.');
-
-      // 스킬 업데이트 후 데이터 갱신
-      queryClient.invalidateQueries('mySkillList');
-    } catch (error) {
-      console.log(error);
-    }
+    updateSkillMutation.mutate(requestBody, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('mySkillList');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('프로필 수정 오류:', error);
+      },
+    });
   };
 
   return (
@@ -169,7 +168,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={() => {
             handleUpdateSkill();
-            navigate('/mypage');
           }}
         />
         <Button
