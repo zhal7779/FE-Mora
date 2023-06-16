@@ -1,32 +1,34 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import jwt_decode from 'jwt-decode';
 import DefaultImg from '../../../assets/images/rabbitProfile.png';
 import { ReactComponent as LogoIcon } from '../../../assets/icons/logo1.svg';
-
-const Container = styled.header`
-  position: fixed;
-  display: block;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 6rem;
-
-  border-bottom: #cbd5e1 1px solid;
-  background: #ffffff;
-`;
-const Content = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  max-width: 1280px;
-  height: 100%;
-  margin: 0 auto;
-`;
-const MenuContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
+import {
+  AdminInfoBlock,
+  AdminName,
+  Container,
+  Content,
+  MenuContainer,
+} from '../styledComponents/HeaderStyle';
 
 const Header = () => {
+  const [token, setToken] = useState('');
+  const navigate = useNavigate();
+  let name = '';
+
+  useEffect(() => {
+    const sessionToken = sessionStorage.getItem('adminToken');
+    if (sessionToken && token !== sessionToken) {
+      const decodedToken = jwt_decode(sessionToken);
+      name = decodedToken.name;
+      setToken(sessionToken);
+      console.log(name);
+    } else {
+      navigate('/admin/login');
+    }
+  }, []);
+
   return (
     <Container>
       <Content>
@@ -35,6 +37,10 @@ const Header = () => {
             <LogoIcon />
           </Link>
         </MenuContainer>
+        <AdminInfoBlock>
+          <img src={DefaultImg} alt='기본 이미지' width={40} />
+          <AdminName>{name ? `${name}님` : ''}</AdminName>
+        </AdminInfoBlock>
       </Content>
     </Container>
   );

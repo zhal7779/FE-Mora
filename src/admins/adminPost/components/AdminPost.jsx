@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { images } from '../../../assets/images/images';
 import { fetchDeletePost, fetchReadPostInfo } from '../apis/postApis';
-import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import { PostGrid, PostLayout, PostImage, PostInfoBlock } from '../styledComponents/AdminPost';
 
 export const AdminPost = ({ keyword }) => {
   const observerElement = useRef(null);
 
-  const { data, fetchNextPage, hasNextPage, isLoading, error, isSuccess } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, error, isSuccess } = useInfiniteQuery(
     ['admin', 'posts', 'get', 'infinity', keyword],
     ({ pageParam = 0 }) => fetchReadPostInfo({ page: pageParam, view: 18, content: keyword }),
     {
@@ -58,7 +57,6 @@ export const AdminPost = ({ keyword }) => {
     },
   });
 
-  if (isLoading) return <LoadingComponent search={'게시물 제목'} title={'게시물'} />;
   if (error) return <span>An error has occurred: {error.message}</span>;
   if (deleteError) return <span>An error has occurred: {deleteError.message}</span>;
 
