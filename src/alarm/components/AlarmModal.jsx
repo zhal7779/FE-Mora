@@ -34,6 +34,7 @@ const AlarmModal = ({ handleClose }) => {
   const handleClickOutside = () => {
     handleClose(false);
   };
+  console.log(data);
 
   return (
     <>
@@ -42,73 +43,89 @@ const AlarmModal = ({ handleClose }) => {
           <p>알림</p>
         </Style.HeaderContent>
         <Style.Scroll>
-          {data &&
-            data.map((item) => (
-              <Style.Content key={item.id}>
-                <Style.ShowContent onClick={() => handleContentClick(item.id)}>
-                  <div>
-                    {item.checked === 1 || alarmStatus.includes(item.id) ? (
-                      <span style={{ background: '#EEEAFE' }}></span>
-                    ) : item.type === 'COMMENT' ? (
-                      <span style={{ background: '#aa8dff' }}></span>
-                    ) : (
-                      <span></span>
-                    )}
-                    {item.type === 'COMMENT' ? (
-                      <>
-                        <Style.ImageIcon
-                          src={item['AlertFromUser.UserDetail.img_path']}
-                        ></Style.ImageIcon>
-                        <strong>{item['AlertFromUser.name']}</strong>
-                        <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
-                      </>
-                    ) : (
-                      <div className='planAlarm'>
-                        <strong>[{item.planTitle}] </strong>
-                        <p> 일정 시작 1시간 전입니다. </p>
+          {data && data.length > 1 ? (
+            <>
+              {data.map((item) => (
+                <Style.Content key={item.id}>
+                  <Style.ShowContent onClick={() => handleContentClick(item.id)}>
+                    <div>
+                      {item.checked === 1 || alarmStatus.includes(item.id) ? (
+                        <span style={{ background: '#EEEAFE' }}></span>
+                      ) : item.type === 'COMMENT' ? (
+                        <span style={{ background: '#aa8dff' }}></span>
+                      ) : item.type === 'PLAN' ? (
+                        <span></span>
+                      ) : (
+                        ''
+                      )}
+                      {item.type === 'COMMENT' ? (
+                        <>
+                          <Style.ImageIcon
+                            src={item['AlertFromUser.UserDetail.img_path']}
+                          ></Style.ImageIcon>
+                          <strong>{item['AlertFromUser.name']}</strong>
+                          <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                        </>
+                      ) : item.type === 'PLAN' ? (
+                        <div className='planAlarm'>
+                          <strong>[{item.planTitle}] </strong>
+                          <p> 일정 시작 1시간 전입니다. </p>
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                    <div>
+                      {hiddenContent.includes(item.id) ? (
+                        <UpIcon />
+                      ) : (
+                        <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
+                      )}
+                    </div>
+                  </Style.ShowContent>
+                  {hiddenContent.includes(item.id) ? (
+                    <Style.HiddenContent>
+                      <div style={{ border: '1px solid #e0e0e0' }}>
+                        {item.type === 'COMMENT' ? (
+                          <p>{item.commentContent}</p>
+                        ) : item.type === 'PLAN' ? (
+                          <p>{item.planContent}</p>
+                        ) : (
+                          ''
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div>
-                    {hiddenContent.includes(item.id) ? (
-                      <UpIcon />
-                    ) : (
-                      <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
-                    )}
-                  </div>
-                </Style.ShowContent>
-                {hiddenContent.includes(item.id) ? (
-                  <Style.HiddenContent>
-                    <div style={{ border: '1px solid #e0e0e0' }}>
-                      {item.type === 'COMMENT' ? (
-                        <p>{item.commentContent}</p>
-                      ) : (
-                        <p>{item.planContent}</p>
-                      )}
-                    </div>
-                    <div style={{ background: 'transparent' }}>
-                      {item.type === 'COMMENT' ? (
-                        <>
-                          <PostIcon />
-                          <Link to={'/community/' + item.boardId}>
-                            <h5>{item.boardTitle}</h5>
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <span>일정</span>
-                          <Link to={'/schedule'}>
-                            <h5>{item.planTitle}</h5>
-                          </Link>
-                        </>
-                      )}
-                    </div>
-                  </Style.HiddenContent>
-                ) : (
-                  ''
-                )}
-              </Style.Content>
-            ))}
+                      <div style={{ background: 'transparent' }}>
+                        {item.type === 'COMMENT' ? (
+                          <>
+                            <PostIcon />
+                            <Link to={'/community/' + item.boardId}>
+                              <h5>{item.boardTitle}</h5>
+                            </Link>
+                          </>
+                        ) : item.type === 'PLAN' ? (
+                          <>
+                            <span>일정</span>
+                            <Link to={'/schedule'}>
+                              <h5>{item.planTitle}</h5>
+                            </Link>
+                          </>
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                    </Style.HiddenContent>
+                  ) : (
+                    ''
+                  )}
+                </Style.Content>
+              ))}
+            </>
+          ) : (
+            <Style.Nodata>
+              <img src='static/media/no-data-image.64c9ff0eb8587dac16cb266cc4a9f5b9.svg' />
+              <p>새로운 알림이 없습니다.</p>
+            </Style.Nodata>
+          )}
         </Style.Scroll>
       </Style.Container>
       <Style.Background onClick={handleClickOutside} />

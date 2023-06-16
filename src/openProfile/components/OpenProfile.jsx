@@ -10,16 +10,19 @@ const OpenProfile = ({ registerstatus }) => {
   const token = sessionStorage.getItem('userToken');
   const myId = jwt_decode(token).id;
   const [userId, setUserId] = useState('');
-
+  const [coffeChatStatus, setCoffeChatStatus] = useState([]);
   const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
     postCoffeeChat(userId)
   );
   const handleCoffeeChatClick = (id) => {
+    setCoffeChatStatus((prevData) => {
+      return [...prevData, id];
+    });
     setUserId(id);
     coffeeCahtRefetch();
   };
 
-  console.log(coffeeChat);
+  // console.log(coffeeChat);
 
   const queryClient = useQueryClient();
 
@@ -66,8 +69,7 @@ const OpenProfile = ({ registerstatus }) => {
                   </span>
                 </div>
                 <div>
-                  {(coffeeChat && coffeeChat.user_id === item.user_id) ||
-                  item.chat_status === true ? (
+                  {coffeChatStatus.includes(item.user_id) || item.chat_status === true ? (
                     <Style.CompleteButton>신청 완료</Style.CompleteButton>
                   ) : myId === item.user_id ? (
                     <Style.CompleteButton>내 프로필</Style.CompleteButton>

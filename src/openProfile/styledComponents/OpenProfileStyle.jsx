@@ -15,7 +15,6 @@ export const Container = styled.section`
   height: auto;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
-  cursor: pointer;
   margin-bottom: 2rem;
   background: #fdfdff;
   &:hover {
@@ -133,6 +132,7 @@ export const MoreViewButton = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
   color: #acacb0;
+  cursor: pointer;
   &:hover {
     background: rgba(233, 233, 238, 0.4);
     transition: 0.1s ease-out;

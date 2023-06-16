@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-const SearchResultPost = ({ data, count, receiveMenu, type }) => {
+const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
   console.log(data);
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
@@ -25,7 +25,7 @@ const SearchResultPost = ({ data, count, receiveMenu, type }) => {
         <NoData />
       ) : (
         <>
-          {data && data.length <= 4 && (
+          {data && simple === 'simple' && (
             <Style.AddView>
               <div>
                 {type === 'free' ? (
@@ -87,16 +87,17 @@ export default SearchResultPost;
 
 const Container = styled.section`
   width: 700px;
-  height: 100%;
   border-radius: 4px;
   border: 1px #cbd5e1 solid;
   background: #ffffff;
+  height: inherit;
 `;
 
 const Content = styled.div`
   padding: 2rem;
   border-bottom: 1px #cbd5e1 solid;
   color: #242424;
+
   cursor: pointer;
   &:hover {
     background: rgba(233, 233, 238, 0.4);
@@ -117,12 +118,19 @@ const Content = styled.div`
     padding: 1.6rem 0;
   }
   p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-size: 1.4rem;
     line-height: 140%;
   }
 
   .hashtags {
     display: flex;
+    padding-top: 1.6rem;
     h3 {
       color: #94a3b8;
       margin-right: 1rem;
