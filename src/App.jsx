@@ -71,10 +71,10 @@ const App = () => {
                 <Route path='/admin/posts' element={<AdminPostPage />} />
                 <Route path='/admin/tracks' element={<AdminTrackPage />} />
                 <Route path='/admin/notifications' element={<AdminNotificationPage />} />
-                <Route path='/write' element={<PostWritePage />} />
-                <Route path='/admin/notifications/detail' element={<NotificationModal />} />
                 <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
+                <Route path='/write' element={<PostWritePage />} />
               </Route>
+              <Route path='/admin/' element={<AdminLogIn />} exact />
               <Route path='/admin/login' element={<AdminLogIn />} />
               <Route path='/admin/signin' element={<AdminSignIn />} />
             </Routes>

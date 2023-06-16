@@ -1,7 +1,6 @@
 const domainPort = process.env.REACT_APP_URL;
 
 export const fetchSignInAdmin = async (adminInfo) => {
-  console.log(adminInfo);
   const response = await fetch(`${domainPort}/api/admins/register`, {
     method: 'POST',
     headers: {

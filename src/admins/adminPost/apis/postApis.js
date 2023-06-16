@@ -1,9 +1,9 @@
 const domainPort = process.env.REACT_APP_URL;
-const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
+const adminToken = sessionStorage.getItem('adminToken');
 
 // READ
 export const fetchReadPostInfo = async ({ page, view, content }) => {
-  console.log('hit🔥');
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(
     `${domainPort}/api/adminBoards?page=${page}&size=${view}&keyword=${content}`,
     {
@@ -15,6 +15,7 @@ export const fetchReadPostInfo = async ({ page, view, content }) => {
 };
 
 export const fetchReadPostInfoDetail = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/adminBoards/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -25,6 +26,7 @@ export const fetchReadPostInfoDetail = async (id) => {
 
 // DELETE
 export const fetchDeletePost = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = fetch(`${domainPort}/api/adminBoards/${id}`, {
     method: 'DELETE',
     headers: {
@@ -36,6 +38,7 @@ export const fetchDeletePost = async (id) => {
 };
 
 export const fetchDeleteComment = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = fetch(`${domainPort}/api/adminBoards/comment/${id}`, {
     method: 'DELETE',
     headers: {

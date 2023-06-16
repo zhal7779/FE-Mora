@@ -1,8 +1,8 @@
 const domainPort = process.env.REACT_APP_URL;
-const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
 
 // READ
 export const fetchReadNotificationInfo = async (page, size, keyword) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(
     `${domainPort}/api/notices?page=${page}&size=${size}&keyword=${keyword}`,
     {
@@ -15,6 +15,7 @@ export const fetchReadNotificationInfo = async (page, size, keyword) => {
 };
 
 export const fetchReadNotificationInfoDetail = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -25,6 +26,7 @@ export const fetchReadNotificationInfoDetail = async (id) => {
 
 // CREATE
 export const fetchCreateNotification = async (newNotification) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/notices`, {
     method: 'POST',
     headers: {
@@ -40,6 +42,7 @@ export const fetchCreateNotification = async (newNotification) => {
 
 // UPDATE
 export const fetchUpdateNotification = async (id, newNotification) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     method: 'PATCH',
     headers: {
@@ -56,6 +59,7 @@ export const fetchUpdateNotification = async (id, newNotification) => {
 
 // DELETE
 export const fetchDeleteNotification = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = fetch(`${domainPort}/api/notices/${id}`, {
     method: 'DELETE',
     headers: {
