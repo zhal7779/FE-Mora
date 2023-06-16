@@ -90,3 +90,16 @@ export const PostInfoBlock = styled.div`
     color: #fff;
   }
 `;
+export const ScrollTopButton = styled.img`
+  position: fixed;
+  bottom: 10rem;
+  right: 5rem;
+
+  width: 80px;
+  height: 80px;
+
+  font-size: 1.4rem;
+  font-weight: bold;
+
+  color: #fff;
+`;

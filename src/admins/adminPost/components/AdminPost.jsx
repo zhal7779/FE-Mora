@@ -4,7 +4,14 @@ import { Link } from 'react-router-dom';
 
 import { images } from '../../../assets/images/images';
 import { fetchDeletePost, fetchReadPostInfo } from '../apis/postApis';
-import { PostGrid, PostLayout, PostImage, PostInfoBlock } from '../styledComponents/AdminPost';
+import TopImg from '../../../assets/images/eliceRabbit-removebg-preview.png';
+import {
+  PostGrid,
+  PostLayout,
+  PostImage,
+  PostInfoBlock,
+  ScrollTopButton,
+} from '../styledComponents/AdminPost';
 
 export const AdminPost = ({ keyword }) => {
   const observerElement = useRef(null);
@@ -51,11 +58,18 @@ export const AdminPost = ({ keyword }) => {
     }
   };
 
-  const { mutate: deletePost, error: deleteError } = useMutation((id) => fetchDeletePost(id), {
+  const { mutate: deletePost } = useMutation((id) => fetchDeletePost(id), {
     onError(error) {
       console.error(error);
     },
   });
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <>
@@ -105,6 +119,7 @@ export const AdminPost = ({ keyword }) => {
             height: '30rem',
           }}
         ></div>
+        <ScrollTopButton src={TopImg} alt='엘리스 토끼' onClick={scrollToTop} />
       </PostGrid>
     </>
   );

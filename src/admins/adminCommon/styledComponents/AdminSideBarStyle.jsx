@@ -33,13 +33,13 @@ export const SideBarButtonBlock = styled.button`
   font-size: 1.4rem;
   font-weight: bold;
 
-  background-color: #7353ea;
+  background-color: #bba8fd;
   color: #fff;
 
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: #522bae;
+    background-color: #7356b8;
   }
 `;
 export const SideBarBtn = styled.button`
