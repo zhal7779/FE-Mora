@@ -81,7 +81,7 @@ const Notification = () => {
         ))
       ) : (
         <div className='no_data'>
-          <img src='static/media/no-data-image.64c9ff0eb8587dac16cb266cc4a9f5b9.svg' />
+          <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
           <p>해당하는 공지사항이 없습니다.</p>
         </div>
       )}

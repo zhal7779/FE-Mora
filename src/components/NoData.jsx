@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const NoData = () => {
   return (
     <Content>
-      <img src='static/media/no-data-image.64c9ff0eb8587dac16cb266cc4a9f5b9.svg' />
+      <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
       <strong>검색 결과가 없어요.</strong>
       <p>다른 키워드로 검색해보세요!</p>
     </Content>
