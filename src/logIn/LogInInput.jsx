@@ -32,7 +32,6 @@ const LoginInputContainer = styled.div`
 `;
 
 const LoginText = styled.h3`
-  font-family: 'Noto Sans KR';
   font-weight: 700;
   font-size: 2rem;
   line-height: 2rem;
@@ -54,14 +53,11 @@ const Input = styled.input`
   border: 2px solid #d8e0e9;
   border-radius: 12px;
   padding-left: 1rem;
-  padding-top: 0.4rem;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
 
   &::placeholder {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;

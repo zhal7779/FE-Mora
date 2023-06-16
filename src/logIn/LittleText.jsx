@@ -1,7 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
 
 const StyledLittleText = styled.p`
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 350;
   font-size: 1.7rem;
