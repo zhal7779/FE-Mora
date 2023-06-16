@@ -49,7 +49,7 @@ const OpenProfile = ({ registerstatus }) => {
     <>
       {data && data.length === 0 ? (
         <Style.Nodata>
-          <img src='static/media/no-data-image.64c9ff0eb8587dac16cb266cc4a9f5b9.svg' />
+          <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
           <p>등록된 오픈 프로필이 없습니다.</p>
         </Style.Nodata>
       ) : (
