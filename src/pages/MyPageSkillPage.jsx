@@ -187,7 +187,6 @@ const MyPageEdit = () => {
 export default MyPageEdit;
 
 const SubTitle = styled.h3`
-  font-family: 'Noto Sans KR';
   font-weight: 600;
   font-size: 2rem;
   margin-top: 7rem;

@@ -29,7 +29,6 @@ const MyPageEditInputContainer = styled.div`
 `;
 
 const MyPageEditInputText = styled.h3`
-  font-family: 'Noto Sans KR';
   font-weight: 400;
   font-size: 1.7rem;
   line-height: 2rem;
@@ -51,13 +50,11 @@ const Input = styled.input`
   border: 1px solid #d8e0e9;
   border-radius: 8px;
   padding-left: 1rem;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
 
   &::placeholder {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
