@@ -1,12 +1,23 @@
 import styled from 'styled-components';
-export const Container = styled.div`
+
+export const Nodata = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rem;
+  p {
+    color: #616161;
+    font-size: 1.6rem;
+  }
+`;
+export const Container = styled.section`
   width: 100%;
   height: auto;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 2rem;
-  background: #ffffff;
+  background: #fdfdff;
   &:hover {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
   }
@@ -57,6 +68,16 @@ export const ChatButton = styled.button`
   &:active {
     background: #aa8fff;
   }
+`;
+
+export const CompleteButton = styled.button`
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  background: #f1f5f9;
+  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  cursor: default;
 `;
 
 export const SkillContent = styled.div`

@@ -27,6 +27,9 @@ import AdminTrackPage from './pages/AdminTrackPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
+import NotificationModal from './admins/adminNotification/components/NotificationModal';
+import NonmemberPage from './pages/NonmemberPage';
+import ScrollToTop from './utils/ScrollToTop';
 import AdminPostDetailPage from './pages/AdminPostDetailPage';
 import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
 import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
@@ -39,6 +42,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <React.StrictMode>
           <Router>
+            <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
                 <Route path='/' exact element={<MainPage />} />
@@ -48,6 +52,7 @@ const App = () => {
                 <Route path='/schedule' element={<SchedulePage />} />
                 <Route path='/openprofile' element={<OpenProfilePage />} />
                 <Route path='/mypage' element={<MyPage />} />
+                <Route path='/nonmember' element={<NonmemberPage />} />
               </Route>
               <Route element={<LoginLayout />}>
                 <Route path='/login' element={<Login />} />
@@ -62,10 +67,12 @@ const App = () => {
               <Route element={<AdminLayout />}>
                 <Route path='/admin/users' element={<AdminUser />} />
                 <Route path='/admin/plans' element={<AdminPlanPage />} />
+                <Route path='/admin/reports' element={<AdminReportPage />} />
                 <Route path='/admin/posts' element={<AdminPostPage />} />
                 <Route path='/admin/tracks' element={<AdminTrackPage />} />
                 <Route path='/admin/notifications' element={<AdminNotificationPage />} />
                 <Route path='/write' element={<PostWritePage />} />
+                <Route path='/admin/notifications/detail' element={<NotificationModal />} />
                 <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
               </Route>
               <Route path='/admin/login' element={<AdminLogIn />} />

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import helpImg from '../../assets/images/help.png';
 import catImg from '../../assets/images/cat.png';
 import Button from '../../components/Button';
+import { Link } from 'react-router-dom';
 const RegisterQuestion = ({ type }) => {
   return (
     <Container>
@@ -11,14 +12,18 @@ const RegisterQuestion = ({ type }) => {
           <Image src={catImg} style={{ width: '36rem' }} />
           <strong>아직 스터디를 못 구하셨나요?</strong>
           <p>함께 공부할 스터디를 찾아볼까요?</p>
-          <Button value={'스터디 찾으러 가기'} color='darkPurple' />
+          <Link to='/community/post/study'>
+            <Button value={'스터디 찾으러 가기'} color='darkPurple' />
+          </Link>
         </>
       ) : type === 'Q&A' ? (
         <>
           <Image src={helpImg} />
           <strong>궁금한 내용을 해결하지 못했나요?</strong>
           <p>레이서 Q&A에서 빠른 답변을 드려요.</p>
-          <Button value={'질문하러 가기'} color='darkPurple' />
+          <Link to='/write'>
+            <Button value={'질문하러 가기'} color='darkPurple' />
+          </Link>
         </>
       ) : (
         ''
