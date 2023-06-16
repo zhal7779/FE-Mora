@@ -151,11 +151,16 @@ const SearchPage = () => {
                 </NoDataWrapper>
               ) : (
                 <div>
-                  <SearchResultProfile
-                    data={sliceOpenProfileData}
-                    count={openProfileCount}
-                    receiveMenu={setMenu}
-                  />
+                  {resultData.openProfile.length > 0 ? (
+                    <SearchResultProfile
+                      data={sliceOpenProfileData}
+                      count={openProfileCount}
+                      receiveMenu={setMenu}
+                    />
+                  ) : (
+                    ''
+                  )}
+
                   {resultData.free.length > 0 ? (
                     <SearchResultPost
                       data={sliceFreeData}

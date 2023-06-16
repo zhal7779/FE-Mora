@@ -47,7 +47,7 @@ const SearchResultQnA = ({ data, count, receiveMenu }) => {
                     </p>
                   </div>
                   <div className='hashtags'>
-                    {item.hashtags.map((hashtag, index) => (
+                    {item.Hashtags.map((hashtag, index) => (
                       <h3 key={index}>#{hashtag.title}</h3>
                     ))}
                   </div>
