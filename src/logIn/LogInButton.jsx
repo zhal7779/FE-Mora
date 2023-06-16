@@ -33,7 +33,6 @@ const BaseButton = styled.button`
   height: 48px;
   margin-top: 2.5rem;
   border-radius: 1.2rem;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
@@ -65,6 +64,6 @@ const DarkPurpleButton = styled(BaseButton)``;
 const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
   border: 1px solid #424242;
-  padding: 10px 21px 9px 21px;
+  padding: 8px 21px 9px 21px;
   margin-bottom: 1.5rem;
 `;
