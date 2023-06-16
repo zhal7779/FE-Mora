@@ -5,6 +5,7 @@ import formatTime from '../community/utils/formatTime';
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import jwt_decode from 'jwt-decode';
+import Swal from 'sweetalert2';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostComment = ({ postId }) => {
@@ -109,12 +110,22 @@ const PostComment = ({ postId }) => {
   // 댓글 등록 핸들러
   const handleRegisterComment = () => {
     if (!editCommentId && commentData === '') {
-      alert('댓글을 작성해주세요!');
+      Swal.fire({
+        icon: 'warning',
+        title: '댓글을 작성해주세요!',
+        showConfirmButton: false,
+        timer: 1500
+      });
       return;
     }
 
     if (editCommentId && editCommentData === '') {
-      alert('댓글을 작성해주세요!');
+      Swal.fire({
+        icon: 'warning',
+        title: '댓글을 작성해주세요!',
+        showConfirmButton: false,
+        timer: 1500
+      });
       return;
     }
 
@@ -146,16 +157,27 @@ const PostComment = ({ postId }) => {
 
   // 댓글 삭제 핸들러
   const handleDeleteComment = commentId => {
-    const check = window.confirm('댓글을 삭제하시겠습니까?');
-    if (!check) return;
-
-    if (!sessionStorage.getItem('userToken')) return;
-
-    try {
-      deleteCommentMutate(commentId);
-    } catch (error) {
-      console.error(error);
-    }
+    Swal.fire({
+      icon: 'question',
+      title: '댓글을 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      confirmButtonColor: 'red',
+      cancelButtonText: '취소'
+    }).then(result => {
+      if (!sessionStorage.getItem('userToken')) {
+        return;
+      } else if (result.isConfirmed) {
+        try {
+          deleteCommentMutate(commentId);
+        } catch (error) {
+          console.error(error);
+        }
+        return;
+      } else {
+        return;
+      }
+    });
   };
 
   // 댓글 수정

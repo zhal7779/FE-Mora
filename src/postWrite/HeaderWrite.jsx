@@ -5,6 +5,7 @@ import IconPostImage from '../assets/icons/icon-post-img.svg';
 import Button from '../components/Button';
 import { useMutation, useQueryClient } from 'react-query';
 import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
@@ -55,20 +56,6 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
     const { category, title, content, hashtags, images } = data;
     const imgArr = images.map(img => img.img_path);
 
-    if (category === '') {
-      alert('카테고리를 선택해주세요');
-      return;
-    } else if (title === '') {
-      alert('제목을 입력해주세요');
-      return;
-    } else if (content === '') {
-      alert('본문을 작성해주세요');
-      return;
-    } else {
-      const check = window.confirm('게시글을 등록하시겠습니까?');
-      if (!check) return;
-    }
-
     const postData = {
       category: category,
       title: title,
@@ -81,19 +68,66 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
       postData.board_id = postId;
     }
 
-    try {
-      mutate(postData);
-    } catch (error) {
-      console.error(error);
+    if (category === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '카테고리를 선택해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    } else if (title === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '제목을 작성해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    } else if (content === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '본문을 작성해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    } else {
+      Swal.fire({
+        icon: 'question',
+        title: '게시글을 등록하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '등록',
+        cancelButtonText: '취소'
+      }).then(result => {
+        if (result.isConfirmed) {
+          try {
+            mutate(postData);
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          return;
+        }
+      });
     }
   };
 
   const handleGoBack = () => {
-    const check = window.confirm(
-      '작성을 취소하고 게시글 페이지로 이동하시겠습니까?'
-    );
-    if (!check) return;
-    navigate(-1);
+    Swal.fire({
+      icon: 'question',
+      title: '작성을 취소하고 게시글 페이지로 이동하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then(result => {
+      if (result.isConfirmed) {
+        navigate(-1);
+        return;
+      } else {
+        return;
+      }
+    });
   };
 
   const handlePostImage = () => {

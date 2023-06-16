@@ -8,6 +8,7 @@ import IconMore from '../assets/icons/icon-more.svg';
 import { getDetail, likePost } from './service/postDetailService';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import jwt_decode from 'jwt-decode';
+import Swal from 'sweetalert2';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostDetail = ({ postId }) => {
@@ -80,16 +81,27 @@ const PostDetail = ({ postId }) => {
 
   // 게시글 삭제 핸들러
   const handleDeletePost = () => {
-    const check = window.confirm('게시글을 삭제하시겠습니까?');
-    if (!check) return;
-
-    if (!sessionStorage.getItem('userToken')) return;
-
-    try {
-      deletePostMutate();
-    } catch (error) {
-      console.error(error);
-    }
+    Swal.fire({
+      icon: 'question',
+      title: '게시글을 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      confirmButtonColor: 'red',
+      cancelButtonText: '취소'
+    }).then(result => {
+      if (!sessionStorage.getItem('userToken')) {
+        return;
+      } else if (result.isConfirmed) {
+        try {
+          deletePostMutate();
+        } catch (error) {
+          console.error(error);
+        }
+        return;
+      } else {
+        return;
+      }
+    });
   };
 
   if (status === 'loading') {
