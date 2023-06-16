@@ -33,12 +33,12 @@ const MyPageEdit = () => {
   }, []);
 
   // 트랙과 기수 이벤트 핸들러
-  const handleTrackChange = (e) => {
+  const handleTrackChange = e => {
     const selectedTrack = e.target.value;
     setTrack(selectedTrack);
   };
 
-  const handlePhaseChange = (e) => {
+  const handlePhaseChange = e => {
     const selectedPhase = e.target.value;
     setPhase(selectedPhase);
   };
@@ -47,35 +47,35 @@ const MyPageEdit = () => {
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch(`${URL}/api/users/mypage`, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+      }
+    }).then(response => response.json())
   );
 
   const { data: mainProfileData } = mainProfileDataQuery;
 
   // 프로필 이미지 POST 뮤테이션 선언
-  const uploadImageMutation = useMutation((formData) =>
+  const uploadImageMutation = useMutation(formData =>
     fetch(`${URL}/api/users/mypage/img/upload`, {
       method: 'POST',
-      body: formData,
-    }).then((response) => response.json())
+      body: formData
+    }).then(response => response.json())
   );
 
   // 내 정보 updatedData 로 수정하기
-  const updateProfileMutation = useMutation((updatedData) =>
+  const updateProfileMutation = useMutation(updatedData =>
     fetch(`${URL}/api/users/mypage/edit`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`
       },
-      body: JSON.stringify(updatedData),
-    }).then((response) => response.json())
+      body: JSON.stringify(updatedData)
+    }).then(response => response.json())
   );
 
   // formData 로 이미지 업로드하고 이미지 링크 받기
-  const handleImageChange = async (e) => {
+  const handleImageChange = async e => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('img', file);
@@ -103,7 +103,7 @@ const MyPageEdit = () => {
       position,
       intro,
       phase,
-      track,
+      track
     };
 
     updateProfileMutation.mutate(updatedData, {
@@ -111,78 +111,89 @@ const MyPageEdit = () => {
         queryClient.invalidateQueries('mainProfileData');
         navigate('/mypage');
       },
-      onError: (error) => {
+      onError: error => {
         console.error('프로필 수정 오류:', error);
-      },
+      }
     });
   };
 
   return (
     <LoginContainer>
       <ImageContainer>
-        <ProfileImg src={userImg || mainProfileData.UserDetail.img_path} alt='프로필'></ProfileImg>
-        <label htmlFor='imageUpload'>
+        <ProfileImg>
+          <img
+            src={userImg || mainProfileData.UserDetail.img_path}
+            alt="프로필"
+          />
+        </ProfileImg>
+        <label htmlFor="imageUpload">
           <input
             onChange={handleImageChange}
-            id='imageUpload'
-            type='file'
+            id="imageUpload"
+            type="file"
             style={{ display: 'none' }}
           />
         </label>
       </ImageContainer>
       <MyPageEditInput
-        title='이름'
-        type='text'
-        name='userName'
-        onChange={(e) => setUserName(e.target.value)}
+        title="이름"
+        type="text"
+        name="userName"
+        onChange={e => setUserName(e.target.value)}
         value={userName}
       />
       <TrackPhaseContainer>
-        <div className='track-container'>
+        <div className="track-container">
           <MyPageEditSelect
-            title='트랙'
+            title="트랙"
             options={trackOptions}
-            name='track'
+            name="track"
             onChange={handleTrackChange}
             value={track}
           />
         </div>
-        <div className='phase-container'>
+        <div className="phase-container">
           <MyPageEditSelect
-            title='기수'
+            title="기수"
             options={phaseOptions}
-            name='phase'
+            name="phase"
             onChange={handlePhaseChange}
             value={phase}
           />
         </div>
       </TrackPhaseContainer>
       <MyPageEditInput
-        title='직함'
-        type='text'
+        title="직함"
+        type="text"
         placeholder={mainProfileData.UserDetail.position}
-        name='position'
-        onChange={(e) => setPosition(e.target.value)}
+        name="position"
+        onChange={e => setPosition(e.target.value)}
         value={position}
       />
       <IntroTextContainter>
         <h3>자기소개</h3>
         <textarea
-          placeholder={mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'}
-          onChange={(e) => setIntro(e.target.value)}
+          placeholder={
+            mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'
+          }
+          onChange={e => setIntro(e.target.value)}
           value={intro}
         ></textarea>
       </IntroTextContainter>
       <ButtonContainer>
         <Button
-          color='darkPurple'
-          value='수정완료'
+          color="darkPurple"
+          value="수정완료"
           onClick={() => {
             handleSubmit();
             navigate('/mypage');
           }}
         />
-        <Button color='white' value='수정취소' onClick={() => navigate('/mypage')} />
+        <Button
+          color="white"
+          value="수정취소"
+          onClick={() => navigate('/mypage')}
+        />
       </ButtonContainer>
     </LoginContainer>
   );
@@ -236,10 +247,17 @@ const ButtonContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.div`
   width: 10rem;
+  height: 10rem;
   margin-bottom: 2rem;
   border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const TrackPhaseContainer = styled.div`
@@ -295,7 +313,7 @@ const IntroTextContainter = styled.div`
 const trackOptions = [
   { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
   { value: 'SW 트랙', label: 'SW 트랙' },
-  { value: 'AI 트랙', label: 'AI 트랙' },
+  { value: 'AI 트랙', label: 'AI 트랙' }
 ];
 const phaseOptions = [
   { value: '기수', label: '기수' },
@@ -306,5 +324,5 @@ const phaseOptions = [
   { value: '5기', label: '5기' },
   { value: '6기', label: '6기' },
   { value: '7기', label: '7기' },
-  { value: '8기', label: '8기' },
+  { value: '8기', label: '8기' }
 ];

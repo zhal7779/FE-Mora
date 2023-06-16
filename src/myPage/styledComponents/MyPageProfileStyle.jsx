@@ -8,6 +8,17 @@ export const introContainer = styled.section`
   .imgAndButtons {
     display: flex;
     justify-content: space-between;
+
+    .img-container {
+      width: 120px;
+      height: 120px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
   .buttons-container {
     width: 19.5rem;
