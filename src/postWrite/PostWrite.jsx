@@ -8,6 +8,8 @@ import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 import { useQuery, useMutation } from 'react-query';
 import { getDetail } from '../postDetail/service/postDetailService';
 import { useEffect } from 'react';
+import Swal from 'sweetalert2';
+// import withReactContent from 'sweetalert2-react-content';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostWrite = ({ showPostImage, data, setData, postId }) => {
@@ -15,6 +17,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const { data: detail } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
+  // const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     if (detail) {
@@ -77,7 +80,13 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     if (inputValue.length <= 100) {
       setData({ ...data, title: inputValue });
     } else {
-      alert('제목을 100자 이하로 작성해주세요!');
+      Swal.fire({
+        icon: 'warning',
+        iconColor: '#7353EA',
+        title: '제목을 100자 이하로 작성해주세요!',
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   };
 
