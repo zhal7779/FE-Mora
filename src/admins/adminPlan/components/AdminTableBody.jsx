@@ -33,8 +33,6 @@ const AdminTableBody = ({ plans }) => {
     },
   });
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
-
   return (
     <PlanListBlock className='user-info-list'>
       {plans.map((data, idx) => {

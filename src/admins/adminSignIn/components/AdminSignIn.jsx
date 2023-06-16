@@ -31,6 +31,11 @@ const AdminSignIn = () => {
     setAdminInfo(newAdminInfo);
   };
 
+  const handleLogIn = () => {
+    alert('로그인 페이지로 이동합니다.');
+    navigate('/admin/login');
+  };
+
   const handleSubmit = () => {
     const result = confirm('회원가입 하시겠습니까?');
     if (result) {
@@ -40,12 +45,10 @@ const AdminSignIn = () => {
 
   const { mutate: signInAdmin, error } = useMutation(async () => fetchSignInAdmin(adminInfo), {
     onSuccess() {
-      alert('회원가입이 완료되었습니다.\n로그인 페이지로 이동합니다.');
+      alert('회원가입이 완료되었습니다.');
       navigate('/admin/login');
     },
   });
-
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>
@@ -74,6 +77,9 @@ const AdminSignIn = () => {
         <SignInContentInput value={adminInfo.name} onChange={handleChangeAdminInfo} name='name' />
 
         <SignInButtonBlock className='modal-button-block'>
+          <SignInButton className='modal-button-submit' onClick={handleLogIn}>
+            로그인
+          </SignInButton>
           <SignInButton className='modal-button-submit' onClick={handleSubmit} $purple>
             가입
           </SignInButton>

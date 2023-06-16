@@ -57,9 +57,6 @@ export const AdminPost = ({ keyword }) => {
     },
   });
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
-  if (deleteError) return <span>An error has occurred: {deleteError.message}</span>;
-
   return (
     <>
       <PostGrid className='grid-setting'>

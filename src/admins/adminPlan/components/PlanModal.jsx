@@ -57,7 +57,7 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
   };
 
   const { data, isLoading, error } = useQuery(
-    ['admin', 'notification', 'detail', 'get'],
+    ['admin', 'plan', 'detail', 'get'],
     () => fetchReadPlanInfoDetail(id),
     {
       onSuccess(data) {
@@ -86,7 +86,6 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
   );
 
   if (isLoading) return <span>로딩중...</span>;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 

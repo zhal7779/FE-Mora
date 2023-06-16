@@ -47,7 +47,6 @@ const AdminTable = () => {
   );
 
   if (isLoading) return <LoadingComponent search={'2023-06'} title={'일정'} />;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>
