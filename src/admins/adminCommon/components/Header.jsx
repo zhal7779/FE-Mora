@@ -14,16 +14,16 @@ import {
 
 const Header = () => {
   const [token, setToken] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
 
   const { pathname } = window.location;
-  let name = '';
 
   useEffect(() => {
     const sessionToken = sessionStorage.getItem('adminToken');
     if (sessionToken && token !== sessionToken) {
       const decodedToken = jwt_decode(sessionToken);
-      name = decodedToken.name;
+      setName(decodedToken.name);
       setToken(sessionToken);
     } else if (pathname !== '/admin/signin') {
       navigate('/admin/login');
