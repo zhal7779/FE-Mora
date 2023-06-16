@@ -156,6 +156,7 @@ const SearchPage = () => {
                       data={sliceOpenProfileData}
                       count={openProfileCount}
                       receiveMenu={setMenu}
+                      simple={'simple'}
                     />
                   ) : (
                     ''
@@ -167,6 +168,7 @@ const SearchPage = () => {
                       count={freeCount}
                       receiveMenu={setMenu}
                       type={'free'}
+                      simple={'simple'}
                     />
                   ) : (
                     ''
@@ -177,6 +179,7 @@ const SearchPage = () => {
                       count={knowledgeCount}
                       receiveMenu={setMenu}
                       type={'Knowledge'}
+                      simple={'simple'}
                     />
                   ) : (
                     ''
@@ -187,6 +190,7 @@ const SearchPage = () => {
                       count={studyCount}
                       receiveMenu={setMenu}
                       type={'study'}
+                      simple={'simple'}
                     />
                   ) : (
                     ''

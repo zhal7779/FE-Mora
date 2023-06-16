@@ -19,7 +19,7 @@ const OpenProfile = ({ registerstatus }) => {
     coffeeCahtRefetch();
   };
 
-  console.log(coffeeChat);
+  // console.log(coffeeChat);
 
   const queryClient = useQueryClient();
 

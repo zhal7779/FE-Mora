@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-const SearchResultPost = ({ data, count, receiveMenu, type }) => {
+const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
   console.log(data);
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
@@ -25,7 +25,7 @@ const SearchResultPost = ({ data, count, receiveMenu, type }) => {
         <NoData />
       ) : (
         <>
-          {data && data.length <= 4 && (
+          {data && simple === 'simple' && (
             <Style.AddView>
               <div>
                 {type === 'free' ? (

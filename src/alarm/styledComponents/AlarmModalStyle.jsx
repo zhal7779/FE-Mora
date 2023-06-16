@@ -11,7 +11,6 @@ export const Background = styled.div`
 
 export const Container = styled.div`
   position: fixed;
-  z-index: 2;
   width: 46rem;
   height: 39.4rem;
   background: #ffffff;
@@ -119,4 +118,20 @@ export const ImageIcon = styled.img`
   height: 3rem;
   border-radius: 50%;
   margin-right: 1.2rem;
+`;
+
+export const Nodata = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7rem;
+
+  img {
+    width: 16rem;
+  }
+  p {
+    font-size: 1.6rem;
+    color: #616161;
+    font-weight: 600;
+  }
 `;

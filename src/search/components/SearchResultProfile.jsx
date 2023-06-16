@@ -7,7 +7,7 @@ import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
-const SearchResultProfile = ({ data, count, receiveMenu }) => {
+const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
   //검색후 데이터에 키워드 하이라이트 줄 변수
   const keyword = useContext(SearchContext);
 
@@ -22,7 +22,7 @@ const SearchResultProfile = ({ data, count, receiveMenu }) => {
         <NoData />
       ) : (
         <>
-          {data && data.length <= 3 && (
+          {data && simple === 'simple' && (
             <Style.AddView>
               <div>
                 <p className='title'>프로필</p>
