@@ -7,6 +7,7 @@ import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
+import { Link } from 'react-router-dom';
 const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
   //검색후 데이터에 키워드 하이라이트 줄 변수
   const keyword = useContext(SearchContext);
@@ -54,7 +55,9 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
                   </div>
                 </div>
                 <div className='button_content'>
-                  <ChatButton>오픈프로필 보기</ChatButton>
+                  <Link to='/openProfile'>
+                    <ChatButton>오픈프로필 보기</ChatButton>
+                  </Link>
                 </div>
               </Content>
             ))}
@@ -73,14 +76,10 @@ const Container = styled.section`
 `;
 
 const Content = styled.div`
-  padding: 1.6rem;
+  padding: 2.4rem;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
-  &:hover {
-    background: rgba(233, 233, 238, 0.4);
-    transition: 0.2s ease-out;
-  }
+
   div {
     display: flex;
   }
