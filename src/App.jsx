@@ -28,7 +28,6 @@ import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
 import NonmemberPage from './pages/NonmemberPage';
-import ScrollToTop from './utils/ScrollToTop';
 import AdminPostDetailPage from './pages/AdminPostDetailPage';
 import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
 import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
