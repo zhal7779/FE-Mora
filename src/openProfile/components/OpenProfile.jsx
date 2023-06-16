@@ -4,7 +4,11 @@ import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { useQuery, useQueryClient } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
+import jwt_decode from 'jwt-decode';
+
 const OpenProfile = ({ registerstatus }) => {
+  const token = sessionStorage.getItem('userToken');
+  const myId = jwt_decode(token).id;
   const [userId, setUserId] = useState('');
 
   const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
@@ -16,6 +20,7 @@ const OpenProfile = ({ registerstatus }) => {
   };
 
   console.log(coffeeChat);
+
   const queryClient = useQueryClient();
 
   const { data } = useQuery('openProfile', getProfile);
@@ -25,6 +30,7 @@ const OpenProfile = ({ registerstatus }) => {
     };
     profileRefetch();
   }, [registerstatus, coffeeChat]);
+  console.log(data);
 
   const [moreView, setMoreView] = useState([]);
 
@@ -63,6 +69,8 @@ const OpenProfile = ({ registerstatus }) => {
                   {(coffeeChat && coffeeChat.user_id === item.user_id) ||
                   item.chat_status === true ? (
                     <Style.CompleteButton>신청 완료</Style.CompleteButton>
+                  ) : myId === item.user_id ? (
+                    <Style.CompleteButton>내 프로필</Style.CompleteButton>
                   ) : (
                     <Style.ChatButton onClick={() => handleCoffeeChatClick(item.user_id)}>
                       커피챗 신청
