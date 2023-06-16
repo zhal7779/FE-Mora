@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
@@ -8,28 +8,29 @@ import SearchBar from './SearchBar';
 import AlarmModal from '../alarm/components/AlarmModal';
 import { useQuery } from 'react-query';
 import { getAlert } from '../alarm/api/alarmApi';
-import { ProfilRegistrStatus } from '../openProfile/api/openProfileApi';
 import defaultImg from '../assets/images/rabbitProfile.png';
-
+import jwt_decode from 'jwt-decode';
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
+
   const location = useLocation();
   //프로필 이미지 가져오는 쿼리
   //프로필 이미지도 3초마다 호출됨, 수정 필요
-  const { data: profileData, refetch: profileRefetch } = useQuery('profile', ProfilRegistrStatus);
-  const profileImg = profileData?.UserDetail?.img_path;
 
-  const { data, refetch: alarmRefetch } = useQuery('alert', getAlert);
-  // 알림 api 3초에 한 번씩 재호출
-  // const [onAlarm, setOnAlarm] = useState(false);
-  const newAlarm = data?.filter((item) => item.checked === 0);
+  const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
+    enabled: false,
+  });
+
+  let userData = {};
   useEffect(() => {
-    // if (newAlarm && newAlarm.length > 0) {
-    //   setOnAlarm(true);
-    // } else {
-    //   setOnAlarm(false);
-    // }
+    if (token) {
+      alarmRefetch();
+      userData = jwt_decode(token);
+    }
+  }, []);
 
+  // 알림 api 3초에 한 번씩 재호출
+  useEffect(() => {
     const interval = setInterval(() => {
       alarmRefetch();
     }, 3000);
@@ -37,10 +38,6 @@ const Header = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
-
-  useState(() => {
-    profileRefetch();
   }, []);
 
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
@@ -146,7 +143,11 @@ const Header = () => {
                       onClick={() => handleModalClick(true)}
                       style={{ stroke: '#242424' }}
                     />
-                    {newAlarm && newAlarm.length > 0 && <span className='alarm'></span>}
+                    {data &&
+                      data.length > 0 &&
+                      data.map((item) =>
+                        item.unchecked === true ? <span className='alarm'></span> : ''
+                      )}
                   </>
                 ) : (
                   <BellIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
@@ -154,7 +155,7 @@ const Header = () => {
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
                 <div>
-                  <ImageIcon src={token ? profileImg : defaultImg}></ImageIcon>
+                  <ImageIcon src={userData.length > 0 ? userData.img_path : defaultImg}></ImageIcon>
                 </div>
               </Link>
             </SideContent>

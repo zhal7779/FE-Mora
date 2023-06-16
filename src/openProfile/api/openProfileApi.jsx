@@ -30,10 +30,10 @@ export const putProfile = async (bool) => {
 //오픈 프로필 등록 여부
 
 export const ProfilRegistrStatus = async () => {
+  console.log(sessionStorage.getItem('userToken'));
   const response = await fetch(`${process.env.REACT_APP_URL}/api/users/mypage`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
   });
@@ -43,6 +43,7 @@ export const ProfilRegistrStatus = async () => {
 
 // 커피챗 신청
 export const postCoffeeChat = async (id) => {
+  console.log(id);
   const response = await fetch(`${process.env.REACT_APP_URL}/api/coffeechats`, {
     method: 'POST',
     headers: {

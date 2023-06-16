@@ -4,29 +4,28 @@ import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { useQuery, useQueryClient } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
-const OpenProfile = () => {
-  const queryClient = useQueryClient();
-
-  const { data } = useQuery('openProfile', getProfile);
-  const profileRefetch = async () => {
-    await queryClient.invalidateQueries('openProfile');
-  };
-  profileRefetch();
-
-  const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery(
-    'coffeeChat',
-    () => postCoffeeChat(userId),
-    {
-      enabled: false,
-    }
-  );
-
-  console.log(data);
+const OpenProfile = ({ registerstatus }) => {
   const [userId, setUserId] = useState('');
   const handleCoffeeChatClick = (id) => {
     setUserId(id);
     coffeeCahtRefetch();
   };
+
+  const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
+    postCoffeeChat(userId)
+  );
+
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery('openProfile', getProfile);
+
+  useEffect(() => {
+    const profileRefetch = async () => {
+      await queryClient.invalidateQueries('openProfile');
+    };
+    profileRefetch();
+  }, [registerstatus, coffeeChat]);
+
   const [moreView, setMoreView] = useState([]);
 
   const handleMoreViewClick = (id) => {

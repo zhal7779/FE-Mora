@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery, useMutation } from 'react-query';
 import styled from 'styled-components';
 import { putProfile, ProfilRegistrStatus } from '../api/openProfileApi';
 
-const Toggle = () => {
+const Toggle = ({ handleRegisterStatus }) => {
   //오픈프로필 초기 상태값, 오픈프로필을 올렸다면 true, 내렸다면 false
   const { data: registerStatus, refetch: statusRefetch } = useQuery('status', ProfilRegistrStatus);
 
@@ -18,6 +18,7 @@ const Toggle = () => {
 
   const handleToggleClick = async () => {
     await updateProfileMutation.mutateAsync();
+    await handleRegisterStatus(registerStatus);
   };
   return (
     <Container>
