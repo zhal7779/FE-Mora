@@ -15,17 +15,15 @@ const Header = () => {
 
   const location = useLocation();
   //프로필 이미지 가져오는 쿼리
-  //프로필 이미지도 3초마다 호출됨, 수정 필요
-
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
     enabled: false,
   });
 
-  let userData = {};
+  const [userImg, setUserImg] = useState('');
   useEffect(() => {
     if (token) {
       alarmRefetch();
-      userData = jwt_decode(token);
+      setUserImg(jwt_decode(token).img_path);
     }
   }, []);
 
@@ -114,12 +112,12 @@ const Header = () => {
                 </Link>
                 <Link to={token ? '/schedule' : '/nonmember'}>
                   <MenuItem active={menu === 2}>
-                    <p> 정비소</p>
+                    <p>정비소</p>
                   </MenuItem>
                 </Link>
                 <Link to={token ? '/openprofile' : '/nonmember'}>
                   <MenuItem active={menu === 3}>
-                    <p> 개발자 오픈 프로필</p>
+                    <p>레이서 오픈 프로필</p>
                   </MenuItem>
                 </Link>
               </MenuContent>
@@ -155,7 +153,7 @@ const Header = () => {
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
                 <div>
-                  <ImageIcon src={userData.length > 0 ? userData.img_path : defaultImg}></ImageIcon>
+                  <ImageIcon src={userImg ? userImg : defaultImg}></ImageIcon>
                 </div>
               </Link>
             </SideContent>

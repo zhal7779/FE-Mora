@@ -5,7 +5,6 @@ import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
 import { useState } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
-import profileData from '../search/components/searchProfile.json';
 import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
 
@@ -13,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
 import {
   fetchPopular,
+  fetchProfileSearch,
   fetchFreeSearch,
   fetchKnowledgeSearch,
   fetchStudySearch,
@@ -43,7 +43,11 @@ const SearchPage = () => {
   const popularProfileData = useQueries([
     {
       queryKey: ['popular'],
-      queryFn: () => fetchPopular(searchKeyword),
+      queryFn: fetchPopular,
+    },
+    {
+      queryKey: ['openProfile', searchKeyword],
+      queryFn: () => fetchProfileSearch(searchKeyword),
     },
   ]);
 
@@ -51,12 +55,12 @@ const SearchPage = () => {
     {
       queryKey: ['free', searchKeyword],
       queryFn: () => fetchFreeSearch(searchKeyword),
-      enabled: popularProfileData[0]?.isSuccess,
+      enabled: popularProfileData[0]?.isSuccess && popularProfileData[1]?.isSuccess,
     },
     {
       queryKey: ['Knowledge', searchKeyword],
       queryFn: () => fetchKnowledgeSearch(searchKeyword),
-      enabled: popularProfileData[0]?.isSuccess,
+      enabled: popularProfileData[0]?.isSuccess && popularProfileData[1]?.isSuccess,
     },
   ]);
   const studyQuestionData = useQueries([
@@ -72,6 +76,7 @@ const SearchPage = () => {
     },
   ]);
   //데이터 개수
+  const openProfileCount = popularProfileData[1]?.data?.length || 0;
   const freeCount = freeKnowledgeData[0]?.data?.length || 0;
   const knowledgeCount = freeKnowledgeData[1]?.data?.length || 0;
   const studyCount = studyQuestionData[0]?.data?.length || 0;
@@ -79,6 +84,7 @@ const SearchPage = () => {
   const totalCount = freeCount + knowledgeCount + studyCount + questionCount;
   // SearchResultBar에 검색결과 ${count}건에 전달해줄 데이터
   const countArr = {
+    openProfile: openProfileCount,
     total: totalCount,
     free: freeCount,
     knowledge: knowledgeCount,
@@ -87,18 +93,18 @@ const SearchPage = () => {
   };
   //컴포넌트들에 전달할 데이터들
   const resultData = {
+    openProfile: openProfileCount > 0 ? popularProfileData[1].data : [],
     free: freeCount > 0 ? freeKnowledgeData[0].data : [],
     knowledge: knowledgeCount > 0 ? freeKnowledgeData[1].data : [],
     study: studyCount > 0 ? studyQuestionData[0].data : [],
     question: questionCount > 0 ? studyQuestionData[1].data : [],
   };
 
-  //전달할 데이터 슬라이스
-  const slicePfofileData = profileData.slice(0, 3);
   //전달할 데이터 잘라주는 함수, 전체페이지 보여주는 데이터
   const sliceArray = (array, start, end) => {
     return array && array.length > 0 ? array.slice(start, end) : [];
   };
+  const sliceOpenProfileData = sliceArray(resultData.openProfile, 0, 3);
   const sliceFreeData = sliceArray(resultData.free, 0, 4);
   const sliceKnowledgeData = sliceArray(resultData.knowledge, 0, 4);
   const sliceStudyData = sliceArray(resultData.study, 0, 4);
@@ -135,7 +141,8 @@ const SearchPage = () => {
         <Style.Container>
           {menu === 1 ? (
             <SearchPageWrapper>
-              {resultData.free.length === 0 &&
+              {resultData.openProfile.length === 0 &&
+              resultData.free.length === 0 &&
               resultData.knowledge.length === 0 &&
               resultData.study.length === 0 &&
               resultData.question.length === 0 ? (
@@ -144,7 +151,11 @@ const SearchPage = () => {
                 </NoDataWrapper>
               ) : (
                 <div>
-                  <SearchResultProfile data={slicePfofileData} receiveMenu={setMenu} />
+                  <SearchResultProfile
+                    data={sliceOpenProfileData}
+                    count={openProfileCount}
+                    receiveMenu={setMenu}
+                  />
                   {resultData.free.length > 0 ? (
                     <SearchResultPost
                       data={sliceFreeData}
@@ -190,7 +201,7 @@ const SearchPage = () => {
             </SearchPageWrapper>
           ) : menu === 2 ? (
             <Style.ProfileWrapper>
-              <SearchResultProfile data={profileData} />
+              <SearchResultProfile data={resultData.openProfile} />
             </Style.ProfileWrapper>
           ) : menu === 3 ? (
             <SearchPageWrapper>

@@ -9,6 +9,20 @@ export const fetchPopular = async () => {
   const data = await response.json();
   return data;
 };
+//오픈 프로필 조회
+export const fetchProfileSearch = async (keyword) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_URL}/api/users/open-profile/search?keyword=${keyword}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+};
 //자유게시판 검색
 export const fetchFreeSearch = async (keyword) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/boards/free?keyword=${keyword}`, {

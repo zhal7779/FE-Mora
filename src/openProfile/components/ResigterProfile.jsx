@@ -11,7 +11,7 @@ const ResigterProfile = () => {
           <p>구직 중인 레이서분은,</p>
         </div>
         <div>
-          <strong>개발자 오픈 프로필</strong>
+          <strong>레이서 오픈 프로필</strong>
           <p>에</p>
         </div>
         <div>
@@ -20,7 +20,7 @@ const ResigterProfile = () => {
       </TextContent>
       <ButtonContent>
         <Link to='/mypage'>
-          <Button value={'오픈 프로필 등록하기'} color='darkPurple' />
+          <Button value={'오픈 프로필 작성하기'} color='darkPurple' />
         </Link>
       </ButtonContent>
     </Container>
