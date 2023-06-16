@@ -10,7 +10,6 @@ export const fetchReadTrackInfo = async (page, size, keyword) => {
     }
   );
   const data = await response.json();
-  // console.log(data);
 
   return data;
 };

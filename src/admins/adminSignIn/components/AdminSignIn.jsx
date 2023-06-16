@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 
+import { fetchSignInAdmin } from '../apis/signInApis';
+import Header from '../../adminCommon/components/Header';
 import {
   SignInTitle,
   SignInHeader,
@@ -11,8 +14,6 @@ import {
   SignInContentBlock,
   SignInContentInput,
 } from '../styledComponents/SignInModal';
-import { useNavigate } from 'react-router-dom';
-import { fetchSignInAdmin } from '../apis/signInApis';
 
 const AdminSignIn = () => {
   const [adminInfo, setAdminInfo] = useState({ email: '', name: '', password: '' });
@@ -27,7 +28,6 @@ const AdminSignIn = () => {
     const newAdminInfo = { ...adminInfo };
     newAdminInfo[e.target.name] = e.target.value;
 
-    console.log(newAdminInfo);
     setAdminInfo(newAdminInfo);
   };
 
@@ -40,7 +40,8 @@ const AdminSignIn = () => {
 
   const { mutate: signInAdmin, error } = useMutation(async () => fetchSignInAdmin(adminInfo), {
     onSuccess() {
-      navigate('/admin/users');
+      alert('회원가입이 완료되었습니다.\n로그인 페이지로 이동합니다.');
+      navigate('/admin/login');
     },
   });
 
@@ -83,9 +84,3 @@ const AdminSignIn = () => {
 };
 
 export default AdminSignIn;
-
-// {
-// 	"name": "관리자1",
-// 	"email": "admin1",
-// 	"password": "1234"
-// }

@@ -9,6 +9,5 @@ export const fetchSignInAdmin = async (adminInfo) => {
     body: JSON.stringify(adminInfo),
   });
 
-  console.log(response.ok);
   return response.ok;
 };
