@@ -4,6 +4,7 @@ export const getProfile = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
   });
   const data = await response.json();

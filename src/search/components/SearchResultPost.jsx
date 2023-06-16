@@ -8,6 +8,7 @@ import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
 const SearchResultPost = ({ data, count, receiveMenu, type }) => {
+  console.log(data);
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
     if (type === 'free') {
@@ -62,7 +63,7 @@ const SearchResultPost = ({ data, count, receiveMenu, type }) => {
                     <KeywordHighlight content={item.content} keyword={keyword} />
                   </p>
                   <div className='hashtags'>
-                    {item.hashtags.map((hashtag, index) => (
+                    {item.Hashtags.map((hashtag, index) => (
                       <h3 key={index}>#{hashtag.title}</h3>
                     ))}
                   </div>
