@@ -5,6 +5,7 @@ import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.s
 import { useQuery, useQueryClient } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 import jwt_decode from 'jwt-decode';
+import Swal from 'sweetalert2';
 
 const OpenProfile = ({ registerstatus }) => {
   const token = sessionStorage.getItem('userToken');
@@ -14,15 +15,27 @@ const OpenProfile = ({ registerstatus }) => {
   const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
     postCoffeeChat(userId)
   );
-  const handleCoffeeChatClick = (id) => {
-    setCoffeChatStatus((prevData) => {
-      return [...prevData, id];
+  const handleCoffeeChatClick = (id, name) => {
+    Swal.fire({
+      icon: 'question',
+      title: `[${name}]님께 커피챗을 보내시겠습니까?`,
+      showCancelButton: true,
+      confirmButtonText: '보내기',
+      confirmButtonColor: '#7353ea',
+      cancelButtonText: '취소',
+      cancelButtonColor: '#EEEAFE',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setCoffeChatStatus((prevData) => {
+          return [...prevData, id];
+        });
+        setUserId(id);
+        coffeeCahtRefetch();
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        console.log('커피챗 취소');
+      }
     });
-    setUserId(id);
-    coffeeCahtRefetch();
   };
-
-  // console.log(coffeeChat);
 
   const queryClient = useQueryClient();
 
@@ -74,7 +87,9 @@ const OpenProfile = ({ registerstatus }) => {
                   ) : myId === item.user_id ? (
                     <Style.CompleteButton>내 프로필</Style.CompleteButton>
                   ) : (
-                    <Style.ChatButton onClick={() => handleCoffeeChatClick(item.user_id)}>
+                    <Style.ChatButton
+                      onClick={() => handleCoffeeChatClick(item.user_id, item.User.name)}
+                    >
                       커피챗 신청
                     </Style.ChatButton>
                   )}

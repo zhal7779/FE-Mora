@@ -3,7 +3,7 @@ import { SearchPageWrapper, NoDataWrapper } from '../search/styledComponents/pag
 import SearchResultBar from '../search/components/SearchResultBar';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
 import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
@@ -36,10 +36,25 @@ const SearchPage = () => {
   //menu === 4? 지식고유
   //menu === 5? 스터디 모집
   //menu === 6? 레이서 Q&A
-  const [menu, setMenu] = useState(1);
+
+  const [menu, setMenu] = useState(() => {
+    const storedMenu = localStorage.getItem('menu');
+    return storedMenu ? parseInt(storedMenu) : 1;
+  });
   const handleMenuClick = (num) => {
     setMenu(num);
   };
+
+  // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
+  // token 값이 있으면  초기 상태값 1
+
+  useEffect(() => {
+    localStorage.setItem('menu', menu.toString());
+
+    return () => {
+      localStorage.removeItem('menu');
+    };
+  }, [menu]);
   const popularProfileData = useQueries([
     {
       queryKey: ['popular'],
