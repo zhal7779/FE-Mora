@@ -171,8 +171,11 @@ const PostDetail = ({ postId }) => {
             );
           })}
         </div>
-        <button className={`like-btn ${detail.user_like ? '' : 'disabled'}`}>
-          <img src={IconLike} alt="좋아요" onClick={handleClickLike} />
+        <button
+          className={`like-btn ${detail.user_like ? '' : 'disabled'}`}
+          onClick={handleClickLike}
+        >
+          <img src={IconLike} alt="좋아요" />
           {detail.like_cnt}
         </button>
       </div>
