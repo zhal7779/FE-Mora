@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import jwt_decode from 'jwt-decode';
 import DefaultImg from '../../../assets/images/rabbitProfile.png';
@@ -34,7 +34,7 @@ const Header = () => {
     <Container>
       <Content>
         <MenuContainer>
-          <Link to='/admin/users'>
+          <Link to='/admin/posts'>
             <LogoIcon />
           </Link>
         </MenuContainer>

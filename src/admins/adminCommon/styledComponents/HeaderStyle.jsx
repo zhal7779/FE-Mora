@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
-  position: fixed;
   display: block;
   left: 0;
   right: 0;
