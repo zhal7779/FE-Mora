@@ -29,7 +29,6 @@ const MyPageEditSelectContainer = styled.div`
 `;
 
 const MyPageEditSelectText = styled.h3`
-  font-family: 'Noto Sans KR';
   font-weight: 400;
   font-size: 1.7rem;
   line-height: 2rem;
@@ -50,7 +49,6 @@ const Select = styled.select`
   border: 1px solid #d8e0e9;
   border-radius: 8px;
   padding-left: 1rem;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
