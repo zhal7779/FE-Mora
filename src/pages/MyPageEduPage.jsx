@@ -87,7 +87,15 @@ const MyPageEdit = () => {
     // console.log(eduData)
 
     // Mutation POST 요청
-    createEduMutation.mutate(eduData);
+    createEduMutation.mutate(eduData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('myEduList');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('프로필 수정 오류:', error);
+      },
+    });
   };
 
   return (
@@ -178,7 +186,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={(e) => {
             handleSubmit(e);
-            navigate('/mypage');
           }}
         />
         <Button
