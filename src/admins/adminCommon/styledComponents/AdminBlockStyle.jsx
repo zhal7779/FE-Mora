@@ -4,6 +4,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   max-width: 100%;
+  padding-top: 5.9rem;
 `;
 const InnerContainer = styled.div`
   display: flex;

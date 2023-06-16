@@ -27,6 +27,8 @@ import AdminTrackPage from './pages/AdminTrackPage';
 import MainLayout from './MainLayout';
 import LoginLayout from './LoginLayout';
 import AdminLayout from './AdminLayout';
+import NonmemberPage from './pages/NonmemberPage';
+import ScrollToTop from './utils/ScrollToTop';
 import AdminPostDetailPage from './pages/AdminPostDetailPage';
 import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
 import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
@@ -56,6 +58,7 @@ const App = () => {
                 <Route path="/schedule" element={<SchedulePage />} />
                 <Route path="/openprofile" element={<OpenProfilePage />} />
                 <Route path="/mypage" element={<MyPage />} />
+                <Route path="/nonmember" element={<NonmemberPage />} />
               </Route>
               <Route element={<LoginLayout />}>
                 <Route path="/login" element={<Login />} />
@@ -76,12 +79,13 @@ const App = () => {
                   path="/admin/notifications"
                   element={<AdminNotificationPage />}
                 />
-                <Route path="/write" element={<PostWritePage />} />
                 <Route
                   path="/admin/posts/detail/:boardId"
                   element={<AdminPostDetailPage />}
                 />
+                <Route path="/write" element={<PostWritePage />} />
               </Route>
+              <Route path="/admin/" element={<AdminLogIn />} exact />
               <Route path="/admin/login" element={<AdminLogIn />} />
               <Route path="/admin/signin" element={<AdminSignIn />} />
             </Routes>

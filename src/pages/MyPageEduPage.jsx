@@ -87,7 +87,15 @@ const MyPageEdit = () => {
     // console.log(eduData)
 
     // Mutation POST 요청
-    createEduMutation.mutate(eduData);
+    createEduMutation.mutate(eduData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('myEduList');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('프로필 수정 오류:', error);
+      },
+    });
   };
 
   return (
@@ -178,7 +186,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={(e) => {
             handleSubmit(e);
-            navigate('/mypage');
           }}
         />
         <Button
@@ -223,7 +230,6 @@ const IntroTextContainter = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   h3 {
-    font-family: 'Noto Sans KR';
     font-weight: 400;
     font-size: 1.7rem;
     line-height: 2rem;
@@ -237,7 +243,6 @@ const IntroTextContainter = styled.div`
     width: 100%;
     height: 7rem;
     padding: 0.5rem 1rem;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -274,7 +279,6 @@ const CheckboxContainer = styled.div`
   }
 
   label {
-    font-family: 'Noto Sans KR';
     font-weight: 400;
     font-size: 1.5rem;
   }

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { SideBar } from '../styledComponents/AdminSideBarStyle';
 import {
   UserButton,
-  ReportButton,
   PlanButton,
   TrackButton,
   PostsButton,
@@ -11,7 +10,6 @@ import {
 } from './SideBarSVGs';
 import {
   USER_BUTTON,
-  REPORT_BUTTON,
   PLAN_BUTTON,
   TRACK_BUTTON,
   POSTS_BUTTON,

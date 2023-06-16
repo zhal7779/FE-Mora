@@ -13,6 +13,7 @@ import {
 } from '../styledComponents/LogInModal';
 import { useNavigate } from 'react-router-dom';
 import { fetchLogInAdmin } from '../apis/logInApis';
+import Header from '../../adminCommon/components/Header';
 
 const AdminSignIn = () => {
   const [adminInfo, setAdminInfo] = useState({ email: '', password: '' });
@@ -27,7 +28,6 @@ const AdminSignIn = () => {
     const newAdminInfo = { ...adminInfo };
     newAdminInfo[e.target.name] = e.target.value;
 
-    console.log(newAdminInfo);
     setAdminInfo(newAdminInfo);
   };
 
@@ -54,6 +54,7 @@ const AdminSignIn = () => {
   return (
     <>
       <LogInOverlay />
+      <Header />
       <LogInContentBlock className='modal-content-block'>
         <LogInHeader className='modal-header'>
           <LogInTitle className='modal-title'>관리자 로그인</LogInTitle>

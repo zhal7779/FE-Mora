@@ -1,10 +1,11 @@
 import { changePlanForm } from '../utils/clientToServer';
 
 const domainPort = process.env.REACT_APP_URL;
-const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
+const adminToken = sessionStorage.getItem('adminToken');
 
 // READ
 export const fetchReadPlanInfo = async (yearMonth) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/plans/ym/${yearMonth}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -14,6 +15,7 @@ export const fetchReadPlanInfo = async (yearMonth) => {
 };
 
 export const fetchReadPlanInfoDetail = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/plans/detail/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -24,6 +26,7 @@ export const fetchReadPlanInfoDetail = async (id) => {
 
 // CREATE
 export const fetchCreatePlan = async (newPlan) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const plan = changePlanForm(newPlan);
 
   const response = await fetch(`${domainPort}/api/plans`, {
@@ -41,6 +44,7 @@ export const fetchCreatePlan = async (newPlan) => {
 
 // UPDATE
 export const fetchUpdatePlan = async (id, newPlan) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const plan = changePlanForm(newPlan);
 
   const response = await fetch(`${domainPort}/api/plans/${id}`, {
@@ -58,6 +62,7 @@ export const fetchUpdatePlan = async (id, newPlan) => {
 
 // DELETE
 export const fetchDeletePlan = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = fetch(`${domainPort}/api/plans/${id}`, {
     method: 'DELETE',
     headers: {

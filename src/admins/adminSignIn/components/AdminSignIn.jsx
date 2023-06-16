@@ -49,6 +49,7 @@ const AdminSignIn = () => {
   return (
     <>
       <SignInOverlay />
+      <Header />
       <SignInContentBlock className='modal-content-block'>
         <SignInHeader className='modal-header'>
           <SignInTitle className='modal-title'>관리자 회원가입</SignInTitle>

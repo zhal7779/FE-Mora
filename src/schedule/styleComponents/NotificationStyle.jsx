@@ -48,7 +48,6 @@ export const InputElement = styled.input`
   padding-left: 40px;
   border: 1px solid #d8e0e9;
   border-radius: 4px;
-  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;

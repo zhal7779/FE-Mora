@@ -6,7 +6,7 @@ import * as Style from '../styledComponents/AddView';
 import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
-const SearchResultProfile = ({ data, receiveMenu }) => {
+const SearchResultProfile = ({ data, count, receiveMenu }) => {
   //검색후 데이터에 키워드 하이라이트 줄 변수
   const keyword = useContext(SearchContext);
 
@@ -15,14 +15,15 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
   const handleAllView = () => {
     receiveMenu(2);
   };
+  // console.log(data);
 
   return (
     <Container>
-      {data.length <= 3 && (
+      {data && data.length <= 3 && (
         <Style.AddView>
           <div>
             <p className='title'>프로필</p>
-            <p className='total_count'>108</p>
+            <p className='total_count'>{count}</p>
           </div>
           <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
             <p className='all_view'>모두 보기</p>
@@ -30,30 +31,30 @@ const SearchResultProfile = ({ data, receiveMenu }) => {
           </div>
         </Style.AddView>
       )}
-      {data.map((item, index) => (
-        <Content key={index}>
-          <div>
-            <div className='img_content'>
-              <img
-                className='img__content'
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF8bkStA_NWmRIUeISz6lRnrar6tzQ0v0uCg&usqp=CAU'
-              ></img>
+      {data &&
+        data.map((item) => (
+          <Content key={item.user_id}>
+            <div>
+              <div className='img_content'>
+                <img className='img__content' src={item.img_path}></img>
+              </div>
+              <div className='text_content'>
+                <h4>{item.User.name}</h4>
+                <h5>
+                  <KeywordHighlight content={item.position} keyword={keyword} />
+                </h5>
+                <div className='skill'>
+                  {item.User.Skills.map((skill) => (
+                    <p>#{skill.name} </p>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className='text_content'>
-              <h4>{item.name}</h4>
-              <h5>
-                <KeywordHighlight content={item.currentJob} keyword={keyword} />
-              </h5>
-              <p>
-                경력: <KeywordHighlight content={item.career} keyword={keyword} />
-              </p>
+            <div className='button_content'>
+              <ChatButton>오픈프로필 보기</ChatButton>
             </div>
-          </div>
-          <div className='button_content'>
-            <ChatButton>커피챗 신청</ChatButton>
-          </div>
-        </Content>
-      ))}
+          </Content>
+        ))}
     </Container>
   );
 };
@@ -69,6 +70,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   padding: 1.6rem;
+
   display: flex;
   justify-content: space-between;
   cursor: pointer;
@@ -90,6 +92,10 @@ const Content = styled.div`
     border-radius: 50%;
     color: #242424;
     margin-right: 1.6rem;
+  }
+  .skill {
+    display: flex;
+    gap: 1rem;
   }
   .text_content {
     display: flex;

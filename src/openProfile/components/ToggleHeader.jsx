@@ -2,11 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import Toggle from './Toggle';
 
-const ToggleHeader = () => {
+const ToggleHeader = ({ handleProfileRegisterStatus }) => {
+  // const [Registerstatus, setRegisterStatus] = useState();
+  const handleRegisterStatus = (status) => {
+    handleProfileRegisterStatus(status);
+  };
   return (
     <Container>
       <p>오픈 프로필 올리기</p>
-      <Toggle />
+      <Toggle handleRegisterStatus={handleRegisterStatus} />
     </Container>
   );
 };

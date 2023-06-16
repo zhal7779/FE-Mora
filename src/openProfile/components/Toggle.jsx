@@ -1,19 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useQuery, useMutation } from 'react-query';
 import styled from 'styled-components';
+import { putProfile, ProfilRegistrStatus } from '../api/openProfileApi';
 
-const Toggle = () => {
-  const [onToggle, setOnToggle] = useState(false);
-  const handleToggleClick = () => {
-    setOnToggle(!onToggle);
+const Toggle = ({ handleRegisterStatus }) => {
+  //오픈프로필 초기 상태값, 오픈프로필을 올렸다면 true, 내렸다면 false
+  const { data: registerStatus, refetch: statusRefetch } = useQuery('status', ProfilRegistrStatus);
+
+  const updateProfileMutation = useMutation(
+    () => putProfile(!registerStatus.UserDetail.profile_public),
+    {
+      onSuccess: () => {
+        statusRefetch();
+      },
+    }
+  );
+
+  const handleToggleClick = async () => {
+    await updateProfileMutation.mutateAsync();
+    await handleRegisterStatus(registerStatus);
   };
   return (
     <Container>
-      {onToggle ? <p className='toggle_text'>올림</p> : <p className='toggle_text'>내림</p>}
-      <ToggleContainer onClick={handleToggleClick}>
-        {/* onToggle === true일 경우 toggle--checked 활성화 */}
-        <div className={`toggle_container ${onToggle ? 'toggle__checked' : null}`} />
-        <div className={`toggle_circle ${onToggle ? 'toggle__checked' : null}`} />
-      </ToggleContainer>
+      {registerStatus && (
+        <>
+          {registerStatus.UserDetail.profile_public ? (
+            <p className='toggle_text'>올림</p>
+          ) : (
+            <p className='toggle_text'>내림</p>
+          )}
+          <ToggleContainer onClick={handleToggleClick}>
+            {/* onToggle === true일 경우 toggle--checked 활성화 */}
+            <div
+              className={`toggle_container ${
+                registerStatus.UserDetail.profile_public ? 'toggle__checked' : null
+              }`}
+            />
+            <div
+              className={`toggle_circle ${
+                registerStatus.UserDetail.profile_public ? 'toggle__checked' : null
+              }`}
+            />
+          </ToggleContainer>
+        </>
+      )}
     </Container>
   );
 };

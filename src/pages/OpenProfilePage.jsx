@@ -1,17 +1,19 @@
-import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import React, { useState } from 'react';
 import ResigterProfile from '../openProfile/components/ResigterProfile';
 import { OpenProfilePageWrapper } from '../search/styledComponents/pageCommonStyle';
 import ToggleHeader from '../openProfile/components/ToggleHeader';
 import OpenProfile from '../openProfile/components/OpenProfile';
 const OpenProfilePage = () => {
+  const [registerstatus, setRegisterStatus] = useState();
+  const handleProfileRegisterStatus = (status) => {
+    setRegisterStatus(status);
+  };
   return (
     <OpenProfilePageWrapper>
       <ResigterProfile />
       <div>
-        <ToggleHeader />
-        <OpenProfile />
+        <ToggleHeader handleProfileRegisterStatus={handleProfileRegisterStatus} />
+        <OpenProfile registerstatus={registerstatus} />
       </div>
     </OpenProfilePageWrapper>
   );

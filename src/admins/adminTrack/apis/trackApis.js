@@ -1,8 +1,8 @@
 const domainPort = process.env.REACT_APP_URL;
-const adminToken = process.env.REACT_APP_ADMIN_TOKEN;
 
 // READ
 export const fetchReadTrackInfo = async (page, size, keyword) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(
     `${domainPort}/api/generations?page=${page}&size=${size}&keyword=${keyword}`,
     {
@@ -16,6 +16,7 @@ export const fetchReadTrackInfo = async (page, size, keyword) => {
 };
 
 export const fetchReadTrackInfoDetail = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/generations/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
   });
@@ -26,6 +27,7 @@ export const fetchReadTrackInfoDetail = async (id) => {
 
 // CREATE
 export const fetchCreateTrack = async (newTrack) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/generations`, {
     method: 'POST',
     headers: {
@@ -41,7 +43,7 @@ export const fetchCreateTrack = async (newTrack) => {
 
 // UPDATE
 export const fetchUpdateTrack = async (id, newTrack) => {
-  console.log(id, newTrack);
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/generations/${id}`, {
     method: 'PATCH',
     headers: {
@@ -58,6 +60,7 @@ export const fetchUpdateTrack = async (id, newTrack) => {
 
 // DELETE
 export const fetchDeleteTrack = async (id) => {
+  const adminToken = sessionStorage.getItem('adminToken');
   const response = fetch(`${domainPort}/api/generations/${id}`, {
     method: 'DELETE',
     headers: {
