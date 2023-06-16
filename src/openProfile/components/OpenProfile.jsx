@@ -6,15 +6,16 @@ import { useQuery, useQueryClient } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 const OpenProfile = ({ registerstatus }) => {
   const [userId, setUserId] = useState('');
+
+  const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
+    postCoffeeChat(userId)
+  );
   const handleCoffeeChatClick = (id) => {
     setUserId(id);
     coffeeCahtRefetch();
   };
 
-  const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
-    postCoffeeChat(userId)
-  );
-
+  console.log(coffeeChat);
   const queryClient = useQueryClient();
 
   const { data } = useQuery('openProfile', getProfile);

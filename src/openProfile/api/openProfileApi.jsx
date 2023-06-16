@@ -49,7 +49,7 @@ export const postCoffeeChat = async (id) => {
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
     body: JSON.stringify({
-      profile_id: '92e24c99-0157-4675-b13b-4be2ea34827f',
+      profile_id: id,
     }),
   });
   const data = await response.json();
