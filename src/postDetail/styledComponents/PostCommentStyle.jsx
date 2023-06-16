@@ -130,7 +130,7 @@ export const CommentContainer = styled.div`
 
           .edit-btns {
             position: absolute;
-            right: 12px;
+            right: 0;
             bottom: 12px;
 
             .edit {

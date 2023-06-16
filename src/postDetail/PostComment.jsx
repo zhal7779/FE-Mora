@@ -239,7 +239,7 @@ const PostComment = ({ postId }) => {
                     </div>
                   </div>
                 </div>
-                {editCommentId ? (
+                {editCommentId === comment.id ? (
                   <div className="comment-textarea">
                     <textarea
                       name="comment-edit"
