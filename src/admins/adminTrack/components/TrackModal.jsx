@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
-import { fetchReadTrackInfoDetail, fetchUpdateTrack } from '../apis/trackApis';
+import { useMutation } from 'react-query';
+import { fetchUpdateTrack } from '../apis/trackApis';
 
 import {
   ModalTitle,
@@ -8,7 +8,6 @@ import {
   ModalButton,
   ModalOverlay,
   ModalSubTitle,
-  ModalContentP,
   ModalButtonBlock,
   ModalContentInput,
   ModalContentBlock,
@@ -16,7 +15,6 @@ import {
 } from '../styledComponents/ModalComponents';
 
 const TrackModal = ({ trackData, handleModalCancelClick }) => {
-  console.log(trackData);
   const [updatable, setUpdatable] = useState(false);
   const [contents, setContents] = useState({ name: trackData.name, phase: trackData.phase });
   const firstInput = useRef(null);

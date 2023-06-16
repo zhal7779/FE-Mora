@@ -38,13 +38,10 @@ const AdminSignIn = () => {
     }
   };
 
-  const {
-    data: adminToken,
-    mutate: logInAdmin,
-    error,
-  } = useMutation(async () => fetchLogInAdmin(adminInfo), {
-    onSuccess(adminToken) {
-      sessionStorage.setItem('adminToken', adminToken);
+  const { mutate: logInAdmin, error } = useMutation(async () => fetchLogInAdmin(adminInfo), {
+    onSuccess(data) {
+      alert('로그인 되었습니다.\n관리 페이지로 이동합니다.');
+      sessionStorage.setItem('adminToken', data);
       navigate('/admin/users');
     },
   });

@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import jwt_decode from 'jwt-decode';
 import DefaultImg from '../../../assets/images/rabbitProfile.png';
 import { ReactComponent as LogoIcon } from '../../../assets/icons/logo1.svg';
 import {
-  AdminInfoBlock,
+  Content,
   AdminName,
   Container,
-  Content,
   MenuContainer,
+  AdminInfoBlock,
 } from '../styledComponents/HeaderStyle';
 
 const Header = () => {
   const [token, setToken] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
-  let name = '';
+
+  const { pathname } = window.location;
 
   useEffect(() => {
     const sessionToken = sessionStorage.getItem('adminToken');
     if (sessionToken && token !== sessionToken) {
       const decodedToken = jwt_decode(sessionToken);
-      name = decodedToken.name;
+      setName(decodedToken.name);
       setToken(sessionToken);
-      console.log(name);
-    } else {
+    } else if (pathname !== '/admin/signin') {
       navigate('/admin/login');
     }
   }, []);

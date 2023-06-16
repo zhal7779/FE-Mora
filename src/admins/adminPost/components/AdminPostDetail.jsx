@@ -92,8 +92,8 @@ const AdminPostDetail = ({ postId }) => {
 
       <div className='writer'>
         <div className='writer-img'>
-          {data.Photos[0].img_path !== null ? (
-            <img src={data.Photos[0].img_path} alt='작성자 프로필' />
+          {data.Photos[0]?.img_path !== null ? (
+            <img src={data.Photos[0]?.img_path} alt='작성자 프로필' onError={UserProfile} />
           ) : (
             <img src={UserProfile} alt='작성자 프로필' />
           )}
