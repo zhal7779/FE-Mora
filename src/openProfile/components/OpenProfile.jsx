@@ -18,7 +18,6 @@ const OpenProfile = ({ registerstatus }) => {
   const queryClient = useQueryClient();
 
   const { data } = useQuery('openProfile', getProfile);
-
   useEffect(() => {
     const profileRefetch = async () => {
       await queryClient.invalidateQueries('openProfile');

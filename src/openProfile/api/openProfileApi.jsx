@@ -30,7 +30,6 @@ export const putProfile = async (bool) => {
 //오픈 프로필 등록 여부
 
 export const ProfilRegistrStatus = async () => {
-  console.log(sessionStorage.getItem('userToken'));
   const response = await fetch(`${process.env.REACT_APP_URL}/api/users/mypage`, {
     method: 'GET',
     headers: {
@@ -43,7 +42,6 @@ export const ProfilRegistrStatus = async () => {
 
 // 커피챗 신청
 export const postCoffeeChat = async (id) => {
-  console.log(id);
   const response = await fetch(`${process.env.REACT_APP_URL}/api/coffeechats`, {
     method: 'POST',
     headers: {
@@ -51,7 +49,7 @@ export const postCoffeeChat = async (id) => {
       Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
     },
     body: JSON.stringify({
-      profile_id: id,
+      profile_id: '92e24c99-0157-4675-b13b-4be2ea34827f',
     }),
   });
   const data = await response.json();
