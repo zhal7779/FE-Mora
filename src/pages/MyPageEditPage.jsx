@@ -122,10 +122,9 @@ const MyPageEdit = () => {
     <LoginContainer>
       <ImageContainer>
         {mainProfileData?.UserDetail?.img_path ? (
-          <ProfileImg
-            src={userImg || mainProfileData.UserDetail.img_path}
-            alt='프로필'
-          ></ProfileImg>
+          <ProfileImg>
+            <img src={userImg || mainProfileData.UserDetail.img_path} alt='프로필' />
+          </ProfileImg>
         ) : (
           <img src={noDataImage} alt='noDataImage'></img>
         )}
@@ -244,10 +243,16 @@ const ButtonContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.div`
   width: 10rem;
+  height: 10rem;
   margin-bottom: 2rem;
   border-radius: 50%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const TrackPhaseContainer = styled.div`
