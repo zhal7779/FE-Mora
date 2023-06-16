@@ -33,8 +33,6 @@ const AdminTableBody = ({ users }) => {
     },
   });
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
-
   return (
     <ul className='user-info-list'>
       {users.map((data, idx) => {
@@ -42,7 +40,7 @@ const AdminTableBody = ({ users }) => {
           <UserInfo className='user-info' key={idx}>
             <span>{data.name}</span>
             <span className='email'>{data.email}</span>
-            <span className='password'>{data.password}</span>
+            <span className='password'>**********</span>
             <span>{data.createdAt.slice(0, 10)}</span>
             <span>
               <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>

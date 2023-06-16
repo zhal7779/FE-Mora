@@ -37,8 +37,6 @@ const AdminTableBody = ({ notifications }) => {
     },
   });
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
-
   return (
     <NotificationListBlock className='user-info-list'>
       {notifications.map((data, idx) => {

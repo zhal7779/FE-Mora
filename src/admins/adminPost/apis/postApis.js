@@ -1,5 +1,4 @@
 const domainPort = process.env.REACT_APP_URL;
-const adminToken = sessionStorage.getItem('adminToken');
 
 // READ
 export const fetchReadPostInfo = async ({ page, view, content }) => {

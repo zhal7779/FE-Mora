@@ -2,13 +2,31 @@ import styled, { keyframes } from 'styled-components';
 
 const moveDiagonally = keyframes`
   from {
-    transform: translate(-100%, -200%) scale(0.5);
+    transform: translate(-100%, -200%) scale(0.1);
     opacity: 0;
   }
 
   to {
     transform: translate(100%, -65%) scale(1);
     opacity: 1;
+  }
+`;
+
+const shakeAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 `;
 
@@ -54,9 +72,10 @@ export const BannerContainer = styled.section`
     width: 50%;
 
     img {
-      width: 100%;
-      height: 100%;
+      width: 95%;
+      height: 95%;
       object-fit: contain;
+      animation: ${shakeAnimation} 2s ease-in-out infinite;
     }
   }
 

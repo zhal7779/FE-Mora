@@ -39,8 +39,6 @@ const AdminTableBody = ({ tracks }) => {
     },
   });
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
-
   return (
     <TrackListBlock className='user-info-list'>
       {tracks.map((data, idx) => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
@@ -19,6 +19,7 @@ const MyPageEdit = () => {
   const [content, setContent] = useState('');
   const [isCurrentlyStudying, setIsCurrentlyStudying] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // useMutation POST 요청 선언
   const createEduMutation = useMutation((eduData) =>
