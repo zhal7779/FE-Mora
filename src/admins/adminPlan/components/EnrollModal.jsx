@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 import { fetchCreatePlan } from '../apis/planApis';
 
+import jwt_decode from 'jwt-decode';
 import {
   ModalTitle,
   ModalHeader,
@@ -16,6 +17,7 @@ import {
 } from '../styledComponents/ModalComponents';
 
 const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+  const [adminName, setAdminName] = useState('');
   const [contents, setContents] = useState({
     title: '',
     content: '',
@@ -24,6 +26,12 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     links: '',
   });
   const titleInput = useRef(null);
+
+  useEffect(() => {
+    const sessionToken = sessionStorage.getItem('adminToken');
+    const decodedToken = jwt_decode(sessionToken);
+    setAdminName(decodedToken.name);
+  }, []);
 
   useEffect(() => {
     titleInput.current.focus();
@@ -66,7 +74,7 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
             </ModalHeader>
 
             <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
-            <ModalContentP className='modal-content'>{'엘리스 토낑'}</ModalContentP>
+            <ModalContentP className='modal-content'>{adminName}</ModalContentP>
             <ModalSubTitle className='modal-sub-title'>제목</ModalSubTitle>
             <ModalContentInput
               type='text'
