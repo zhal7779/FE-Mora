@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { SideBar } from '../styledComponents/AdminSideBarStyle';
+import { SideBar, SideBarButtonBlock } from '../styledComponents/AdminSideBarStyle';
 import {
   UserButton,
   PlanButton,
@@ -17,14 +17,32 @@ import {
 } from '../constants/sideBarCategory';
 
 const AdminSideBar = ({ nowCategoryName }) => {
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    const result = confirm('로그아웃 하시겠습니까?');
+    if (result) {
+      sessionStorage.removeItem('adminToken');
+      alert('로그아웃 되었습니다.');
+      navigate('/admin/login');
+    }
+  };
+
   return (
     <SideBar>
       <div>
         <h1>관리자</h1>
+        <SideBarButtonBlock onClick={handleLogOut}>로그아웃</SideBarButtonBlock>
       </div>
       <div className='management-list'>
         <p>관리 목록</p>
         <div>
+          <Link to='/admin/posts'>
+            <PostsButton
+              nowCategory={nowCategoryName === POSTS_BUTTON && true}
+              title={'게시물 관리'}
+            />
+          </Link>
           <Link to='/admin/users'>
             <UserButton
               nowCategory={nowCategoryName === USER_BUTTON && true}
@@ -44,12 +62,6 @@ const AdminSideBar = ({ nowCategoryName }) => {
             <TrackButton
               nowCategory={nowCategoryName === TRACK_BUTTON && true}
               title={'트랙 관리'}
-            />
-          </Link>
-          <Link to='/admin/posts'>
-            <PostsButton
-              nowCategory={nowCategoryName === POSTS_BUTTON && true}
-              title={'게시물 관리'}
             />
           </Link>
         </div>

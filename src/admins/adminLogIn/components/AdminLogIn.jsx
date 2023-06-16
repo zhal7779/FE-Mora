@@ -31,6 +31,11 @@ const AdminSignIn = () => {
     setAdminInfo(newAdminInfo);
   };
 
+  const handleSignIn = () => {
+    alert('회원가입 페이지로 이동합니다.');
+    navigate('/admin/signin');
+  };
+
   const handleSubmit = () => {
     const result = confirm('로그인 하시겠습니까?');
     if (result) {
@@ -40,13 +45,16 @@ const AdminSignIn = () => {
 
   const { mutate: logInAdmin, error } = useMutation(async () => fetchLogInAdmin(adminInfo), {
     onSuccess(data) {
-      alert('로그인 되었습니다.\n관리 페이지로 이동합니다.');
-      sessionStorage.setItem('adminToken', data);
-      navigate('/admin/users');
+      if (Math.floor(data.statusCode / 100) !== 4) {
+        alert('로그인 되었습니다.');
+        sessionStorage.setItem('adminToken', data);
+        navigate('/admin/posts');
+      } else {
+        alert('로그인에 실패했습니다!');
+        sessionStorage.removeItem('adminToken');
+      }
     },
   });
-
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>
@@ -73,6 +81,9 @@ const AdminSignIn = () => {
         />
 
         <LogInButtonBlock className='modal-button-block'>
+          <LogInButton className='modal-button-submit' onClick={handleSignIn}>
+            회원가입
+          </LogInButton>
           <LogInButton className='modal-button-submit' onClick={handleSubmit} $purple>
             로그인
           </LogInButton>
@@ -83,9 +94,3 @@ const AdminSignIn = () => {
 };
 
 export default AdminSignIn;
-
-// {
-// 	"name": "관리자1",
-// 	"email": "admin1",
-// 	"password": "1234"
-// }

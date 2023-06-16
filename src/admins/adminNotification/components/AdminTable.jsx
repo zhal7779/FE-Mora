@@ -31,7 +31,6 @@ const AdminTable = () => {
   );
 
   if (isLoading) return <LoadingComponent search={'공지 제목'} title={'공지'} />;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <>

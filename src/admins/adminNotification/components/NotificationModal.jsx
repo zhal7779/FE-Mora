@@ -66,7 +66,6 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
   );
 
   if (isLoading) return <span>로딩중...</span>;
-  if (error) return <span>An error has occurred: {error.message}</span>;
 
   if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
