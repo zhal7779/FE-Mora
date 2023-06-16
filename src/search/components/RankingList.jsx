@@ -77,6 +77,13 @@ const Content = styled.div`
       font-weight: 700;
       font-size: 1rem;
       color: #605ea0;
+      width: 11rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
   }
 `;

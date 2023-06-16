@@ -9,10 +9,11 @@ export const Background = styled.div`
   background: transparent;
 `;
 
-export const Container = styled.div`
+export const Container = styled.section`
   position: fixed;
-  width: 46rem;
-  height: 39.4rem;
+  right: 5%;
+  width: 460px;
+  height: 394px;
   background: #ffffff;
   box-shadow: 2px 3px 10px 2px rgba(0, 0, 0, 0.15);
   border-radius: 12px 0px 12px 12px;

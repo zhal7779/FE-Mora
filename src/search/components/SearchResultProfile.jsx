@@ -67,7 +67,6 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
 export default SearchResultProfile;
 const Container = styled.section`
   width: 700px;
-
   background: #ffffff;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;

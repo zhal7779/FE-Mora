@@ -118,7 +118,7 @@ const AlarmModal = ({ handleClose }) => {
                     ''
                   )}
                 </Style.Content>
-              ))}{' '}
+              ))}
             </>
           ) : (
             <Style.Nodata>

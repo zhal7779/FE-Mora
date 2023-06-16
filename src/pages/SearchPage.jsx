@@ -200,6 +200,7 @@ const SearchPage = () => {
                       data={sliceQuestionData}
                       count={questionCount}
                       receiveMenu={setMenu}
+                      simple={'simple'}
                     />
                   ) : (
                     ''

@@ -73,7 +73,6 @@ const Container = styled.section`
   width: 700px;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
-  height: 100%;
   background: #ffffff;
 `;
 const Content = styled.div`
