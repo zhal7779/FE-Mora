@@ -87,6 +87,13 @@ export const HiddenContent = styled.div`
   width: 100%;
   padding: 2rem 3rem 0 5rem;
   background: #f7f5ff;
+  .title_div {
+    width: 100%;
+    display: flex;
+    background: transparent;
+    align-items: center;
+    justify-content: flex-start;
+  }
   span {
     background: #ed6653;
     color: #ffffff;

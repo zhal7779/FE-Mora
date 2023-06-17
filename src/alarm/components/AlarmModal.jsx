@@ -96,19 +96,19 @@ const AlarmModal = ({ handleClose }) => {
                       </div>
                       <div style={{ background: 'transparent' }}>
                         {item.type === 'COMMENT' ? (
-                          <>
+                          <div className='title_div'>
                             <PostIcon />
                             <Link to={'/community/' + item.boardId}>
                               <h5>{item.boardTitle}</h5>
                             </Link>
-                          </>
+                          </div>
                         ) : item.type === 'PLAN' ? (
-                          <>
+                          <div className='title_div'>
                             <span>일정</span>
                             <Link to={'/schedule'}>
                               <h5>{item.planTitle}</h5>
                             </Link>
-                          </>
+                          </div>
                         ) : (
                           ''
                         )}
