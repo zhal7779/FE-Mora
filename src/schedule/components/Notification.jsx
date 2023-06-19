@@ -3,10 +3,10 @@ import * as Style from '../styleComponents/NotificationStyle';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
 import rabbitImg from '../../assets/images/eliceRabbit-removebg-preview.png';
-import searchIcon from '../../assets/icons/u_search.svg';
 import { useQuery } from 'react-query';
 import { fetchNotice } from '../api/scheduleApi';
 import Pagination from './Pagination';
+import Input from '../../components/Input';
 const Notification = () => {
   //검색창 인풋
   const [inputValue, setInputValue] = useState('');
@@ -14,14 +14,7 @@ const Notification = () => {
   const handleOnChange = (e) => {
     setInputValue(e.target.value);
   };
-
-  const [searchValue, setSearchValue] = useState('');
-  //엔터누를 경우 검색
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      setSearchValue(inputValue);
-    }
-  };
+  console.log(inputValue);
   const [view, setView] = useState([]);
   //view Open, close
   const handleClickView = (id) => {
@@ -38,29 +31,19 @@ const Notification = () => {
     setPage(number);
   };
 
-  const { data, isLoading } = useQuery(['notice', searchValue, page], () =>
+  const { data, isLoading } = useQuery(['notice', inputValue, page], () =>
     fetchNotice(page, inputValue)
   );
   if (isLoading) {
     return <div>'fhe'</div>;
   }
-
   return (
     <Style.Container>
       <div className='header_title'>
         <h4>엘리스에 올라온 중요한 공지사항이에요!</h4>
         <img src={rabbitImg} />
       </div>
-      <Style.InputContainer width='100%' onChange={handleOnChange} value={inputValue}>
-        <Style.SearchIcon src={searchIcon} alt='Search' />
-        <Style.InputElement
-          type='text'
-          placeholder='키워드를 입력해주세요'
-          value={inputValue}
-          onChange={handleOnChange}
-          onKeyDown={handleKeyDown}
-        />
-      </Style.InputContainer>
+      <Input width='100%' onChange={handleOnChange} value={inputValue} />
       {data && data.objArr && data.objArr.length > 0 ? (
         data.objArr.map((item) => (
           <Style.Content key={item.id}>

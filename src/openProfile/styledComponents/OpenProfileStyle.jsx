@@ -17,6 +17,7 @@ export const Container = styled.section`
   border-radius: 4px;
   margin-bottom: 2rem;
   background: #fdfdff;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
   &:hover {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25);
   }
@@ -86,7 +87,7 @@ export const SkillContent = styled.div`
   div {
     display: inline-block;
     padding: 0.4rem 0.8rem;
-    background: #fdfdff;
+    background: #f1f5f9;
     border: 1px solid #cbd5e1;
     border-radius: 4px;
     font-weight: 600;

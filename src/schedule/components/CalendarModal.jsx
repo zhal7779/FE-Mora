@@ -49,6 +49,7 @@ const CalendarModal = ({ onModal, date }) => {
     dateFormatter(formmaterDate);
   };
 
+  console.log(data);
   return (
     <>
       <Style.Background onClick={handleClickClose} />
@@ -81,6 +82,7 @@ const CalendarModal = ({ onModal, date }) => {
                           기간: {item.start_date.slice(0, 10)} ~ {item.end_date.slice(0, 10)}
                         </p>
                         <p>내용: {item.content}</p>
+
                         <p>
                           관련 링크
                           <br />

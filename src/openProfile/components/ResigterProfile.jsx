@@ -30,6 +30,7 @@ const ResigterProfile = () => {
 export default ResigterProfile;
 const Container = styled.div`
   position: sticky;
+  top: 0;
   height: 100%;
   margin-bottom: 36rem;
 `;
