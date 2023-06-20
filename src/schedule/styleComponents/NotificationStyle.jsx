@@ -44,14 +44,24 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1.6rem 2rem;
     background: #eeeafe;
-    border-radius: 4px;
+    border-radius: 5px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
     h5 {
       font-weight: 700;
       font-size: 1.5rem;
       color: #242424;
+    }
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #9169ff;
     }
   }
 

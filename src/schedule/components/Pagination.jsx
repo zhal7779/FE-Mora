@@ -60,8 +60,8 @@ const Container = styled.div`
     width: 2.1rem;
     height: 2.1rem;
     margin: 0 1rem;
-    background: #7353ea;
-    border: 1px solid#7353EA;
+    background: #9169ff;
+    border: 1px solid#9169ff;
     border-radius: 50%;
   }
 `;

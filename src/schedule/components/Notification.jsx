@@ -54,11 +54,13 @@ const Notification = () => {
           <Style.Content key={item.id}>
             <div className='title' onClick={() => handleClickView(item.id)}>
               <h5>📢 [{item.title}]</h5>
-              {view.includes(item.id) ? (
-                <UpIcon stroke='#616161' strokeWidth='2' width='26' height='26' />
-              ) : (
-                <DownIcon stroke='#616161' strokeWidth='2' width='26' height='26' />
-              )}
+              <span>
+                {view.includes(item.id) ? (
+                  <UpIcon stroke='#ffffff' strokeWidth='2.4' width='18' height='20' />
+                ) : (
+                  <DownIcon stroke='#ffffff' strokeWidth='2.4' width='18' height='20' />
+                )}
+              </span>
             </div>
             {view.includes(item.id) && (
               <div className='main_text'>
