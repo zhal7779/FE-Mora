@@ -49,6 +49,10 @@ export const Content = styled.div`
     border-radius: 5px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    &:hover {
+      background: rgba(238, 234, 254, 0.6);
+      transition: 0.1s ease-out;
+    }
     h5 {
       font-weight: 700;
       font-size: 1.5rem;
@@ -61,7 +65,7 @@ export const Content = styled.div`
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
-      background: #9169ff;
+      background: #aa8dff;
     }
   }
 

@@ -57,12 +57,13 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2.1rem;
-    height: 2.1rem;
+    padding: 0.2rem;
     margin: 0 1rem;
-    background: #9169ff;
-    border: 1px solid#9169ff;
+    background: #aa8dff;
     border-radius: 50%;
+    &:hover {
+      background: rgb(170, 141, 255, 0.5);
+    }
   }
 `;
 const PageNumber = styled.p`
