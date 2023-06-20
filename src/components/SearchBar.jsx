@@ -40,7 +40,7 @@ const SearchBar = ({ handleClose }) => {
 export default SearchBar;
 const Background = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   width: 100%;
   height: 100vh;
@@ -48,7 +48,7 @@ const Background = styled.div`
 `;
 const Container = styled.div`
   position: fixed;
-  z-index: 2;
+  z-index: 200;
   width: 100%;
   background: #ffffff;
 `;

@@ -65,7 +65,7 @@ const Header = () => {
       setMenu(0);
     } else if (location.pathname === '/community/post/free') {
       setMenu(1);
-    } else if (location.pathname === '/schedule') {
+    } else if (location.pathname === '/schedule/notice') {
       setMenu(2);
     } else if (location.pathname === '/openprofile') {
       setMenu(3);
@@ -74,7 +74,7 @@ const Header = () => {
     } else if (location.pathname === '/mypage') {
       setMenu(5);
     }
-  });
+  }, [location.pathname]);
 
   //검색창 on
   const [onSearch, setOnSearch] = useState(false);
@@ -109,7 +109,7 @@ const Header = () => {
                     <p>토끼굴</p>
                   </MenuItem>
                 </Link>
-                <Link to={token ? '/schedule' : '/nonmember'}>
+                <Link to={token ? '/schedule/notice' : '/nonmember'}>
                   <MenuItem active={menu === 2}>
                     <p>정비소</p>
                   </MenuItem>

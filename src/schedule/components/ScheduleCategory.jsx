@@ -5,7 +5,7 @@ import { ReactComponent as MegaphoneIcon } from '../../assets/icons/u_megaphone.
 import { ReactComponent as CalendarIcon } from '../../assets/icons/u_calendar-alt.svg';
 
 const ScheduleCategory = ({ setMenu }) => {
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('notice');
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setMenu(category);
@@ -23,10 +23,10 @@ const ScheduleCategory = ({ setMenu }) => {
         <ul>
           <li>
             <a
-              onClick={() => handleCategorySelect(0)}
-              className={selectedCategory === 0 ? 'active' : ''}
+              onClick={() => handleCategorySelect('notice')}
+              className={selectedCategory === 'notice' ? 'active' : ''}
             >
-              {selectedCategory === 0 ? (
+              {selectedCategory === 'notice' ? (
                 <MegaphoneIcon fill='#7353EA' />
               ) : (
                 <MegaphoneIcon fill='#bdbdbd' />
@@ -36,10 +36,10 @@ const ScheduleCategory = ({ setMenu }) => {
           </li>
           <li>
             <a
-              onClick={() => handleCategorySelect(1)}
-              className={selectedCategory === 1 ? 'active' : ''}
+              onClick={() => handleCategorySelect('calendar')}
+              className={selectedCategory === 'calendar' ? 'active' : ''}
             >
-              {selectedCategory === 1 ? (
+              {selectedCategory === 'calendar' ? (
                 <CalendarIcon fill='#7353EA' />
               ) : (
                 <CalendarIcon fill='#bdbdbd' />

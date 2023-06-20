@@ -28,7 +28,8 @@ const NonmemberPage = () => {
 export default NonmemberPage;
 
 const Container = styled.div`
-  margin: 10rem 2rem;
+  height: 100%;
+  margin: 20rem 2rem;
   display: flex;
   justify-content: space-between;
   img {
