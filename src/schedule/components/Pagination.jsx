@@ -27,7 +27,7 @@ const Pagination = ({ pages, currentPage, clickPage }) => {
   return (
     <Container>
       <button className='prev_button' onClick={handlePrevButton}>
-        <LeftIcon stroke='#616161' />
+        <LeftIcon stroke='#ffffff' />
       </button>
       {Array.from({ length: pages }, (_, index) => (
         <PageNumber
@@ -39,7 +39,7 @@ const Pagination = ({ pages, currentPage, clickPage }) => {
         </PageNumber>
       ))}
       <button className='next_button' onClick={handleNextButton}>
-        <RightIcon stroke='#616161' />
+        <RightIcon stroke='#ffffff' />
       </button>
     </Container>
   );
@@ -54,24 +54,27 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   button {
-    width: 2rem;
-    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2rem;
     margin: 0 1rem;
-    background: transparent;
+    background: #aa8dff;
+    border-radius: 50%;
+    &:hover {
+      background: rgb(170, 141, 255, 0.5);
+    }
   }
 `;
 const PageNumber = styled.p`
   cursor: pointer;
-  // 일반 페이지 번호 스타일링
   color: #616161;
 
   padding: 0 0.5rem;
   ${({ isActive }) =>
     isActive &&
     `
-    color:#ffffff;
-    background: #7353EA;
-    border: 1px solid#7353EA;
-    border-radius:4px;
+    font-weight: 600;
+    
   `}
 `;

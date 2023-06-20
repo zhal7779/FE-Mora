@@ -49,6 +49,7 @@ const CalendarModal = ({ onModal, date }) => {
     dateFormatter(formmaterDate);
   };
 
+  console.log(data);
   return (
     <>
       <Style.Background onClick={handleClickClose} />
@@ -56,11 +57,11 @@ const CalendarModal = ({ onModal, date }) => {
         <Style.Content>
           <div className='date'>
             <span onClick={() => handleDateChange('sub')}>
-              <LeftIcon stroke='#616161' />
+              <LeftIcon stroke='#ffffff' />
             </span>
             <h5>{formatDate}</h5>
             <span onClick={() => handleDateChange('add')}>
-              <RightIcon stroke='#616161' />
+              <RightIcon stroke='#ffffff' />
             </span>
           </div>
           <span className='close_btn' onClick={handleClickClose}>
@@ -81,18 +82,22 @@ const CalendarModal = ({ onModal, date }) => {
                           기간: {item.start_date.slice(0, 10)} ~ {item.end_date.slice(0, 10)}
                         </p>
                         <p>내용: {item.content}</p>
-                        <p>
-                          관련 링크
-                          <br />
-                          <div className='link_box'>
-                            {item.PlanLinks.map((link) => (
-                              <a href={link.url} target='_blank'>
-                                {link.url}
-                                <br />
-                              </a>
-                            ))}
-                          </div>
-                        </p>
+                        {item.PlanLinks.length > 0 ? (
+                          <p>
+                            관련 링크
+                            <br />
+                            <div className='link_box'>
+                              {item.PlanLinks.map((link) => (
+                                <a href={link.url} target='_blank'>
+                                  {link.url}
+                                  <br />
+                                </a>
+                              ))}
+                            </div>
+                          </p>
+                        ) : (
+                          ''
+                        )}
                       </div>
                     </div>
                   </div>

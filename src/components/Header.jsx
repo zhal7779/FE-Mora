@@ -12,7 +12,6 @@ import defaultImg from '../assets/images/rabbitProfile.png';
 import jwt_decode from 'jwt-decode';
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
-
   const location = useLocation();
   //프로필 이미지 가져오는 쿼리
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
@@ -27,11 +26,11 @@ const Header = () => {
     }
   }, []);
 
-  // 알림 api 3초에 한 번씩 재호출
+  //알림 api 30초에 한 번씩 재호출
   useEffect(() => {
     const interval = setInterval(() => {
       alarmRefetch();
-    }, 3000);
+    }, 30000);
 
     return () => {
       clearInterval(interval);
@@ -66,7 +65,7 @@ const Header = () => {
       setMenu(0);
     } else if (location.pathname === '/community/post/free') {
       setMenu(1);
-    } else if (location.pathname === '/schedule') {
+    } else if (location.pathname === '/schedule/notice') {
       setMenu(2);
     } else if (location.pathname === '/openprofile') {
       setMenu(3);
@@ -75,7 +74,7 @@ const Header = () => {
     } else if (location.pathname === '/mypage') {
       setMenu(5);
     }
-  });
+  }, [location.pathname]);
 
   //검색창 on
   const [onSearch, setOnSearch] = useState(false);
@@ -110,7 +109,7 @@ const Header = () => {
                     <p>토끼굴</p>
                   </MenuItem>
                 </Link>
-                <Link to={token ? '/schedule' : '/nonmember'}>
+                <Link to={token ? '/schedule/notice' : '/nonmember'}>
                   <MenuItem active={menu === 2}>
                     <p>정비소</p>
                   </MenuItem>

@@ -44,8 +44,11 @@ export const Content = styled.div`
       cursor: pointer;
       width: 2.4rem;
       height: 2.4rem;
-      background: #eeeafe;
-      border-radius: 5px;
+      background: #aa8dff;
+      border-radius: 50%;
+      &:hover {
+        background: rgb(170, 141, 255, 0.5);
+      }
     }
   }
   .close_btn {
@@ -53,7 +56,7 @@ export const Content = styled.div`
     top: 0;
     right: 0;
     margin: 0.5rem 1rem;
-    color: #d9d9d9;
+    color: #616161;
     font-size: 2.4rem;
     cursor: pointer;
   }

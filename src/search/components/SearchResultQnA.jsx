@@ -71,13 +71,13 @@ export default SearchResultQnA;
 
 const Container = styled.section`
   width: 700px;
+  height: inherit;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
   background: #ffffff;
 `;
 const Content = styled.div`
   width: 100%;
-  height: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -111,6 +111,12 @@ const Content = styled.div`
       font-size: 1.3rem;
       margin-bottom: 2rem;
       line-height: 140%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
     }
   }
   .hashtags {

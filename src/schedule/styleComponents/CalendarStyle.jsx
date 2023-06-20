@@ -38,10 +38,10 @@ export const Container = styled.section`
       border: none;
       box-shadow: none !important;
       &:hover {
-        background: #d6c9ff !important;
+        background: rgb(170, 141, 255, 0.6) !important;
       }
       &:active {
-        background: #d6c9ff !important;
+        background: rgb(170, 141, 255, 0.6) !important;
       }
     }
     //prev,next 아이콘 색상 변경
@@ -59,7 +59,7 @@ export const Container = styled.section`
       cursor: pointer;
       height: 100% !important;
       &:hover {
-        background: #f2effb;
+        background: rgba(238, 234, 254, 0.6);
       }
     }
     .fc-daygrid-dot-event {

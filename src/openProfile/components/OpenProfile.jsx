@@ -46,7 +46,6 @@ const OpenProfile = ({ registerstatus }) => {
     };
     profileRefetch();
   }, [registerstatus, coffeeChat]);
-  console.log(data);
 
   const [moreView, setMoreView] = useState([]);
 

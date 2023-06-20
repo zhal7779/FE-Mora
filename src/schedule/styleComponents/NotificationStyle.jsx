@@ -12,7 +12,7 @@ export const Container = styled.section`
     justify-content: space-between;
     border: #d8e0e9 solid 1px;
     border-radius: 4px;
-    background: #fdfdff;
+    background: #fdfdfd;
     h4 {
       padding: 4rem 0 0 3rem;
       font-size: 2rem;
@@ -37,33 +37,6 @@ export const Container = styled.section`
   }
 `;
 
-export const InputContainer = styled.div`
-  position: relative;
-  width: ${({ width }) => width};
-`;
-export const InputElement = styled.input`
-  box-sizing: border-box;
-  width: 100%;
-  height: 50px;
-  padding-left: 40px;
-  border: 1px solid #d8e0e9;
-  border-radius: 4px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 23px;
-  color: #242424;
-`;
-
-export const SearchIcon = styled.img`
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-`;
-
 export const Content = styled.div`
   width: 100%;
 
@@ -71,13 +44,28 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1.6rem 2rem;
     background: #eeeafe;
-    border-radius: 4px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    &:hover {
+      background: rgba(238, 234, 254, 0.6);
+      transition: 0.1s ease-out;
+    }
     h5 {
       font-weight: 700;
       font-size: 1.5rem;
       color: #242424;
+    }
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #aa8dff;
     }
   }
 

@@ -37,24 +37,24 @@ const SearchPage = () => {
   //menu === 5? 스터디 모집
   //menu === 6? 레이서 Q&A
 
-  const [menu, setMenu] = useState(() => {
-    const storedMenu = localStorage.getItem('menu');
+  const [searchMenu, setSearchMenu] = useState(() => {
+    const storedMenu = localStorage.getItem('searchMenu');
     return storedMenu ? parseInt(storedMenu) : 1;
   });
   const handleMenuClick = (num) => {
-    setMenu(num);
+    setSearchMenu(num);
   };
 
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
   // token 값이 있으면  초기 상태값 1
 
   useEffect(() => {
-    localStorage.setItem('menu', menu.toString());
+    localStorage.setItem('searchMenu', searchMenu.toString());
 
     return () => {
-      localStorage.removeItem('menu');
+      localStorage.removeItem('searchMenu');
     };
-  }, [menu]);
+  }, [searchMenu]);
   const popularProfileData = useQueries([
     {
       queryKey: ['popular'],
@@ -130,31 +130,31 @@ const SearchPage = () => {
       <Style.NavContainer>
         <Style.Content>
           <Style.SearchNav>
-            <Style.SearchNavItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(1)} active={searchMenu === 1}>
               <p>전체</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(2)} active={menu === 2}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(2)} active={searchMenu === 2}>
               <p>프로필</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(3)} active={menu === 3}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(3)} active={searchMenu === 3}>
               <p>자유 게시판</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={menu === 4}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={searchMenu === 4}>
               <p>지식 공유</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(5)} active={menu === 5}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(5)} active={searchMenu === 5}>
               <p>스터디 모집</p>
             </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(6)} active={menu === 6}>
+            <Style.SearchNavItem onClick={() => handleMenuClick(6)} active={searchMenu === 6}>
               <p>레이서 Q&A</p>
             </Style.SearchNavItem>
           </Style.SearchNav>
         </Style.Content>
       </Style.NavContainer>
       <SearchContext.Provider value={searchKeyword}>
-        <SearchResultBar handleSubSearch={handleSubSearch} menu={menu} count={countArr} />
+        <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>
-          {menu === 1 ? (
+          {searchMenu === 1 ? (
             <SearchPageWrapper>
               {resultData.openProfile.length === 0 &&
               resultData.free.length === 0 &&
@@ -170,7 +170,7 @@ const SearchPage = () => {
                     <SearchResultProfile
                       data={sliceOpenProfileData}
                       count={openProfileCount}
-                      receiveMenu={setMenu}
+                      receiveMenu={setSearchMenu}
                       simple={'simple'}
                     />
                   ) : (
@@ -181,7 +181,7 @@ const SearchPage = () => {
                     <SearchResultPost
                       data={sliceFreeData}
                       count={freeCount}
-                      receiveMenu={setMenu}
+                      receiveMenu={setSearchMenu}
                       type={'free'}
                       simple={'simple'}
                     />
@@ -192,7 +192,7 @@ const SearchPage = () => {
                     <SearchResultPost
                       data={sliceKnowledgeData}
                       count={knowledgeCount}
-                      receiveMenu={setMenu}
+                      receiveMenu={setSearchMenu}
                       type={'Knowledge'}
                       simple={'simple'}
                     />
@@ -203,7 +203,7 @@ const SearchPage = () => {
                     <SearchResultPost
                       data={sliceStudyData}
                       count={studyCount}
-                      receiveMenu={setMenu}
+                      receiveMenu={setSearchMenu}
                       type={'study'}
                       simple={'simple'}
                     />
@@ -214,7 +214,7 @@ const SearchPage = () => {
                     <SearchResultQnA
                       data={sliceQuestionData}
                       count={questionCount}
-                      receiveMenu={setMenu}
+                      receiveMenu={setSearchMenu}
                       simple={'simple'}
                     />
                   ) : (
@@ -224,26 +224,26 @@ const SearchPage = () => {
               )}
               <RankingContent data={popularProfileData[0].data} />
             </SearchPageWrapper>
-          ) : menu === 2 ? (
+          ) : searchMenu === 2 ? (
             <Style.ProfileWrapper>
               <SearchResultProfile data={resultData.openProfile} />
             </Style.ProfileWrapper>
-          ) : menu === 3 ? (
+          ) : searchMenu === 3 ? (
             <SearchPageWrapper>
               <SearchResultPost data={resultData.free} type={'free'} />
               <RankingContent data={popularProfileData[0].data} />
             </SearchPageWrapper>
-          ) : menu === 4 ? (
+          ) : searchMenu === 4 ? (
             <SearchPageWrapper>
               <SearchResultPost data={resultData.knowledge} type={'Knowledge'} />
               <RankingContent data={popularProfileData[0].data} />
             </SearchPageWrapper>
-          ) : menu === 5 ? (
+          ) : searchMenu === 5 ? (
             <SearchPageWrapper>
               <SearchResultPost data={resultData.study} type={'study'} />
               <RegisterQuestion type={'study'} />
             </SearchPageWrapper>
-          ) : menu === 6 ? (
+          ) : searchMenu === 6 ? (
             <SearchPageWrapper>
               <SearchResultQnA data={resultData.question} />
               <RegisterQuestion type={'Q&A'} />
