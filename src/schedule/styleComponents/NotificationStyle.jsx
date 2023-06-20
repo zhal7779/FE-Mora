@@ -12,7 +12,7 @@ export const Container = styled.section`
     justify-content: space-between;
     border: #d8e0e9 solid 1px;
     border-radius: 4px;
-    background: #fdfdff;
+    background: #fdfdfd;
     h4 {
       padding: 4rem 0 0 3rem;
       font-size: 2rem;
@@ -47,6 +47,7 @@ export const Content = styled.div`
     padding: 1rem 2rem;
     background: #eeeafe;
     border-radius: 4px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
     h5 {
       font-weight: 700;
       font-size: 1.5rem;
