@@ -12,7 +12,6 @@ import defaultImg from '../assets/images/rabbitProfile.png';
 import jwt_decode from 'jwt-decode';
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
-
   const location = useLocation();
   //프로필 이미지 가져오는 쿼리
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
@@ -27,11 +26,11 @@ const Header = () => {
     }
   }, []);
 
-  // 알림 api 3초에 한 번씩 재호출
+  //알림 api 30초에 한 번씩 재호출
   useEffect(() => {
     const interval = setInterval(() => {
       alarmRefetch();
-    }, 3000);
+    }, 30000);
 
     return () => {
       clearInterval(interval);

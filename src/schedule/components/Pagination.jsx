@@ -62,7 +62,6 @@ const Container = styled.div`
 `;
 const PageNumber = styled.p`
   cursor: pointer;
-  // 일반 페이지 번호 스타일링
   color: #616161;
 
   padding: 0 0.5rem;

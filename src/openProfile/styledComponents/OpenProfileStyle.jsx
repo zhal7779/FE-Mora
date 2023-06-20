@@ -44,7 +44,7 @@ export const ProfileContent = styled.div`
   p {
     font-size: 1.3rem;
     color: #616161;
-    font-weight: 500;
+    font-weight: 600;
   }
   .image_icon {
     width: 6.6rem;
