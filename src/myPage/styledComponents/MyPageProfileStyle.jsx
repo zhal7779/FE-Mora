@@ -8,6 +8,17 @@ export const introContainer = styled.section`
   .imgAndButtons {
     display: flex;
     justify-content: space-between;
+
+    .img-container {
+      width: 120px;
+      height: 120px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
   .buttons-container {
     width: 19.5rem;
@@ -20,11 +31,12 @@ export const introContainer = styled.section`
     align-items: center;
   }
   .modal-buttons-container {
+    width: 14.5rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 
     button {
-      margin: 1rem;
+      margin-top: 1rem;
     }
   }
 
@@ -33,13 +45,20 @@ export const introContainer = styled.section`
     margin-bottom: 2rem;
     border-radius: 50%;
   }
-
   h3 {
     margin: 1.5rem 0;
     font-weight: 600;
     font-size: 2.3rem;
   }
+
   h4 {
+    margin: 1.5rem 0;
+    font-weight: 400;
+    font-size: 2rem;
+    color: #909090;
+  }
+
+  h5 {
     margin-bottom: 4rem;
     font-weight: 400;
     font-size: 2rem;

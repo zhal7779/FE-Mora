@@ -1,40 +1,67 @@
 import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { fetchReadTrackInfo } from '../apis/trackApis';
 
 import EnrollModal from './EnrollModal';
 import AdminTableHead from './AdminTableHead';
 import AdminTableBody from './AdminTableBody';
+import SearchBar from '../../adminCommon/components/SearchBar';
 import PageNation from '../../adminCommon/components/PageNation';
+import LoadingComponent from '../../adminCommon/components/LoadingComponent';
 import {
   EnrollButton,
   MainContentHeaderBlock,
+  TableSearchResult,
   TableTitle,
-} from '../styledComponents/tableComponent';
+  TableTitleBlock,
+} from '../styledComponents/TableComponent';
 
 const AdminTable = () => {
-  const [modal, setModal] = useState(false);
+  const [enrollModal, setEnrollModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [keyword, setKeyword] = useState('');
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleEnrollModal = () => {
+    setEnrollModal(!enrollModal);
   };
 
-  // 추후 api 받아오는 걸로 변경 예정(얘도 함수로 따로 빼서 객체로 넘긴 다음 구조분해할당으로 값 2개 받아오자!)
-  const totalNumber = 30,
-    numberByPage = 14;
+  const { data, isLoading, error } = useQuery(
+    ['admin', 'track', 'get', currentPage, keyword],
+    async () => await fetchReadTrackInfo(currentPage, 12, keyword)
+  );
+
+  if (isLoading) return <LoadingComponent search={'트랙명'} title={'트랙'} />;
 
   return (
-    <div>
+    <>
+      <SearchBar placeholder={'트랙명 검색'} setKeyword={setKeyword} />
+
       <MainContentHeaderBlock>
-        <TableTitle className='table-title'>트랙 관리</TableTitle>
-        <EnrollButton className='modal-button-submit' onClick={() => setModal(!modal)} $purple>
+        <TableTitleBlock>
+          <TableTitle className='table-title'>트랙 관리</TableTitle>
+          {keyword && <TableSearchResult>'{keyword}' 검색결과</TableSearchResult>}
+        </TableTitleBlock>
+        <EnrollButton className='modal-button-submit' onClick={toggleEnrollModal} $purple>
           등록
         </EnrollButton>
-        {modal && <EnrollModal modal={true} toggleModal={toggleModal} />}
+        {enrollModal && (
+          <EnrollModal
+            title={'트랙 등록'}
+            enrollModal={enrollModal}
+            toggleEnrollModal={toggleEnrollModal}
+          />
+        )}
       </MainContentHeaderBlock>
 
       <AdminTableHead />
-      <AdminTableBody toggleModal={toggleModal} />
-      <PageNation totalDataNumber={totalNumber} numberByPage={numberByPage} />
-    </div>
+      <AdminTableBody tracks={data.objArr} />
+
+      <PageNation
+        totalPages={data.totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    </>
   );
 };
 

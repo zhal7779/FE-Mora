@@ -1,23 +1,88 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../assets/icons/fi_bell.svg';
 import SearchBar from './SearchBar';
-import AlarmModal from './AlarmModal';
+import AlarmModal from '../alarm/components/AlarmModal';
+import { useQuery } from 'react-query';
+import { getAlert } from '../alarm/api/alarmApi';
+import defaultImg from '../assets/images/rabbitProfile.png';
+import jwt_decode from 'jwt-decode';
 const Header = () => {
-  const [menu, setMenu] = useState(0);
-  const handleMenuClick = (num) => {
-    setMenu(num);
-  };
+  const token = sessionStorage.getItem('userToken');
+  const location = useLocation();
+  //프로필 이미지 가져오는 쿼리
+  const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
+    enabled: false,
+  });
 
+  const [userImg, setUserImg] = useState('');
+  useEffect(() => {
+    if (token) {
+      alarmRefetch();
+      setUserImg(jwt_decode(token).img_path);
+    }
+  }, []);
+
+  //알림 api 30초에 한 번씩 재호출
+  useEffect(() => {
+    const interval = setInterval(() => {
+      alarmRefetch();
+    }, 30000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
+  // token 값이 있으면  초기 상태값 1
+
+  const [menu, setMenu] = useState(() => {
+    const storedMenu = localStorage.getItem('menu');
+    return storedMenu ? parseInt(storedMenu) : token ? 1 : 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('menu', menu.toString());
+
+    return () => {
+      localStorage.removeItem('menu');
+    };
+  }, [menu]);
+
+  //메뉴 상태 변경
+  //menu === 0 ? 로고
+  //menu === 1 ? 토끼굴
+  //menu === 2 ? 정비소
+  //menu === 3 ?오픈프로필
+  //menu === 4 ? 검색창 사용불가
+  //menu === 5 ? 마이페이지
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setMenu(0);
+    } else if (location.pathname === '/community/post/free') {
+      setMenu(1);
+    } else if (location.pathname === '/schedule/notice') {
+      setMenu(2);
+    } else if (location.pathname === '/openprofile') {
+      setMenu(3);
+    } else if (location.pathname === '/search') {
+      setMenu(4);
+    } else if (location.pathname === '/mypage') {
+      setMenu(5);
+    }
+  }, [location.pathname]);
+
+  //검색창 on
   const [onSearch, setOnSearch] = useState(false);
   const handleSearchClick = (boolean) => {
     setOnSearch(boolean);
-    setMenu(5);
   };
 
+  //모달 open,close
   const [onModal, setOnModal] = useState(false);
   const handleModalClick = (boolean) => {
     setOnModal(boolean);
@@ -36,29 +101,29 @@ const Header = () => {
 
             <MenuContainer>
               <Link to='/'>
-                <LogoIcon onClick={() => handleMenuClick(0)} style={{ marginRight: '2rem' }} />
+                <LogoIcon style={{ marginRight: '2rem' }} />
               </Link>
               <MenuContent>
-                <Link to='/community'>
-                  <MenuItem onClick={() => handleMenuClick(1)} active={menu === 1}>
+                <Link to={token ? '/community/post/free' : '/nonmember'}>
+                  <MenuItem active={menu === 1}>
                     <p>토끼굴</p>
                   </MenuItem>
                 </Link>
-                <Link to='/schedule'>
-                  <MenuItem onClick={() => handleMenuClick(2)} active={menu === 2}>
-                    <p> 정비소</p>
+                <Link to={token ? '/schedule/notice' : '/nonmember'}>
+                  <MenuItem active={menu === 2}>
+                    <p>정비소</p>
                   </MenuItem>
                 </Link>
-                <Link to='/openprofile'>
-                  <MenuItem onClick={() => handleMenuClick(3)} active={menu === 3}>
-                    <p> 개발자 오픈 프로필</p>
+                <Link to={token ? '/openprofile' : '/nonmember'}>
+                  <MenuItem active={menu === 3}>
+                    <p>레이서 오픈 프로필</p>
                   </MenuItem>
                 </Link>
               </MenuContent>
             </MenuContainer>
             <SideContent>
               <div>
-                {menu === 5 ? (
+                {menu === 4 || !token ? (
                   <SearchIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
                 ) : (
                   <SearchIcon
@@ -69,11 +134,27 @@ const Header = () => {
               </div>
 
               <div>
-                <BellIcon onClick={() => handleModalClick(true)} />
+                {token ? (
+                  <>
+                    <BellIcon
+                      onClick={() => handleModalClick(true)}
+                      style={{ stroke: '#242424' }}
+                    />
+                    {data &&
+                      data.length > 0 &&
+                      data.map((item) =>
+                        item.unchecked === true ? <span className='alarm'></span> : ''
+                      )}
+                  </>
+                ) : (
+                  <BellIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
+                )}
               </div>
-              <div>
-                <ImageIcon src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'></ImageIcon>
-              </div>
+              <Link to={token ? '/mypage' : '/nonmember'}>
+                <div>
+                  <ImageIcon src={userImg ? userImg : defaultImg}></ImageIcon>
+                </div>
+              </Link>
             </SideContent>
           </Content>
         </Container>
@@ -89,7 +170,7 @@ const Container = styled.header`
   left: 0;
   right: 0;
   top: 0;
-  z-index: 100;
+  z-index: 90;
   background: #ffffff;
   border-bottom: #cbd5e1 1px solid;
   height: 6rem;
@@ -137,14 +218,24 @@ const SideContent = styled.div`
   display: flex;
   align-items: center;
   div {
+    position: relative;
     margin: 0 1.1rem 0 1.1rem;
     cursor: pointer;
+    .alarm {
+      position: absolute;
+      right: 0.1rem;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      background: #7353ea;
+    }
   }
 `;
 const ImageIcon = styled.img`
   width: 3.6rem;
   height: 3.6rem;
   border-radius: 50%;
+  background: #969696;
 `;
 const ModalContent = styled.div`
   position: fixed;

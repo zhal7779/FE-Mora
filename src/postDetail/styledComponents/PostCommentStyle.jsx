@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CommentContainer = styled.div`
   max-width: 1024px;
+  padding: 0 20px;
   margin: 0 auto;
 
   h3 {
@@ -24,7 +25,7 @@ export const CommentContainer = styled.div`
 
       textarea {
         width: 100%;
-        height: 100%;
+        overflow: hidden;
         min-height: 120px;
         font-size: 1.6rem;
 
@@ -48,7 +49,8 @@ export const CommentContainer = styled.div`
       & > li {
         position: relative;
 
-        padding: 0 16px 16px;
+        padding: 0 26px 16px;
+        margin-bottom: 20px;
         background-color: #d7e1ee24;
         border-radius: 4px;
 
@@ -63,6 +65,7 @@ export const CommentContainer = styled.div`
             height: 36px;
             border-radius: 50%;
             background-color: #eee;
+            overflow: hidden;
 
             img {
               width: 100%;
@@ -87,7 +90,7 @@ export const CommentContainer = styled.div`
             &-time {
               margin-top: 4px;
               font-size: 1.4rem;
-              color: #bdbdbd;
+              color: rgba(54, 78, 117, 0.5);
             }
 
             &-time {
@@ -103,6 +106,60 @@ export const CommentContainer = styled.div`
                 margin-right: 5px;
                 border-radius: 50%;
                 background-color: #bdbdbd;
+              }
+            }
+          }
+        }
+
+        .comment-textarea {
+          position: relative;
+          width: 100%;
+
+          textarea {
+            width: 100%;
+            min-height: 100px;
+
+            font-size: 1.5rem;
+            line-height: 2rem;
+            border-radius: 4px;
+            padding: 12px 14px;
+            margin-bottom: 48px;
+            border: 1px solid #cbd5e190;
+            overflow: hidden;
+          }
+
+          .edit-btns {
+            position: absolute;
+            right: 0;
+            bottom: 12px;
+
+            .edit {
+              &-btn,
+              &-cancel {
+                padding: 6px 10px;
+                font-size: 1.4rem;
+                border-radius: 4px;
+                color: #fff;
+                transition: 0.3s;
+              }
+
+              &-btn {
+                margin-right: 10px;
+                border: 1px solid #7453eaab;
+                background-color: #7453ea8d;
+
+                &:hover {
+                  background-color: #7453ea;
+                }
+              }
+
+              &-cancel {
+                border: 1px solid #e9252596;
+                background-color: #e925257a;
+
+                &:hover {
+                  background-color: #e92525b0;
+                }
               }
             }
           }
@@ -151,7 +208,7 @@ export const CommentContainer = styled.div`
 
             li {
               width: 100%;
-              padding: 4px 18px;
+              padding: 4px 10px;
               font-size: 14px;
               font-weight: 500;
               line-height: 22px;
@@ -161,12 +218,39 @@ export const CommentContainer = styled.div`
 
               &.active,
               &:hover {
-                color: #424242;
+                color: #616161;
+              }
+
+              &.delete {
+                &.active,
+                &:hover {
+                  color: #e92525;
+                }
               }
             }
           }
         }
       }
     }
+
+    .no-comment {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-height: 120px;
+      font-size: 1.5rem;
+      color: #616161;
+      background-color: #d7e1ee24;
+    }
   }
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 20px 0;
+  font-size: 1.6rem;
 `;

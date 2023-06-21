@@ -1,18 +1,21 @@
-import { useState } from 'react';
-import { PageNationBlock } from '../styledComponents/tableComponent';
-import { getPageNumberComponents, getNumberOfPage } from '../utils/pageNation';
+import { PageNationBlock, PageNationBlockBtn } from '../styledComponents/TableComponent';
 
-const PageNation = ({ totalDataNumber, numberByPage }) => {
-  const [nowPageNumber, setNowPageNumber] = useState(1);
+const PageNation = ({ totalPages, currentPage, setCurrentPage }) => {
+  const totalPagesArray = Array(totalPages).fill(true);
 
-  const numberOfPage = getNumberOfPage(totalDataNumber, numberByPage);
-  const pageNumberComponents = getPageNumberComponents(
-    nowPageNumber,
-    numberOfPage,
-    setNowPageNumber
+  return (
+    <PageNationBlock className='page-nation-block'>
+      {totalPagesArray.map((falseValue, index) => (
+        <PageNationBlockBtn
+          className={index === currentPage ? 'now-page page' : 'page'}
+          onClick={() => setCurrentPage(index)}
+          key={index}
+        >
+          <p>{index + 1}</p>
+        </PageNationBlockBtn>
+      ))}
+    </PageNationBlock>
   );
-
-  return <PageNationBlock className='page-nation-block'>{pageNumberComponents}</PageNationBlock>;
 };
 
 export default PageNation;

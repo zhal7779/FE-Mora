@@ -1,8 +1,21 @@
-import { SearchBarBlock, SearchBarInput } from '../styledComponents/searchBar';
+import { useState } from 'react';
 
-const SearchBar = () => {
+import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
+
+const SearchBar = ({ placeholder, setKeyword }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setKeyword(searchTerm);
+  };
+
   return (
-    <SearchBarBlock>
+    <SearchBarBlock onSubmit={handleSubmit}>
       <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'>
         <path
           fill='#94A3B8'
@@ -10,7 +23,12 @@ const SearchBar = () => {
           clipRule='evenodd'
         />
       </svg>
-      <SearchBarInput type='text' placeholder='사용자 이름 검색' />
+      <SearchBarInput
+        type='text'
+        placeholder={placeholder}
+        value={searchTerm}
+        onChange={handleChange}
+      />
     </SearchBarBlock>
   );
 };

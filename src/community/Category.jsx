@@ -1,18 +1,16 @@
 import * as Style from './styledComponents/CategoryStyle';
 import Button from '../components/Button';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { categories } from './categoryData';
 
-const Category = ({ selectedCategory, setSelectedCategory }) => {
-  const { category_id } = useParams();
-
+const Category = ({ selectedCategoryId, setSelectedCategoryId }) => {
   const handleCategorySelect = category => {
-    setSelectedCategory(category);
+    setSelectedCategoryId(category);
   };
 
   return (
     <Style.CategoryContainer>
-      <h2>토끼굴</h2>
+      <h2>토끼굴🐰</h2>
       <Link to="/write">
         <Button value="글 작성하기" color="darkPurple" />
       </Link>
@@ -20,13 +18,15 @@ const Category = ({ selectedCategory, setSelectedCategory }) => {
         <p className="category-list-title">토픽</p>
         <ul>
           {categories.map(category => (
-            <li
-              key={category.name}
-              onClick={() => handleCategorySelect(category.name)}
-              className={selectedCategory === category.name ? 'active' : ''}
-            >
-              <img src={category.icon} alt={category.name} />
-              <p>{category.name}</p>
+            <li key={category.id}>
+              <Link
+                to={`/community/post/${category.id}`}
+                onClick={() => handleCategorySelect(category.id)}
+                className={selectedCategoryId === category.id ? 'active' : ''}
+              >
+                <img src={category.icon} alt={category.name} />
+                <p>{category.name}</p>
+              </Link>
             </li>
           ))}
         </ul>

@@ -10,15 +10,15 @@ const MainBanner = () => {
       <img src={BannerBackgroundImg} alt="배경 이미지" className="bg-img" />
       <div className="main-slogan">
         <div className="main-slogan-side">
-          <span>개발 트렌드부터 Q&A까지!</span>
+          <span>레이서 커뮤니티부터 주요 일정까지 한번에!</span>
           <br />
           엘리스에서
           <br />
           인정한 레이서
           <br /> 필수 커뮤니티, 모레
-          <Button value="지금 시작하기" color="darkPurple">
-            <Link to="/login"></Link>
-          </Button>
+          <Link to="/login">
+            <Button value="지금 시작하기" color="darkPurple" />
+          </Link>
         </div>
         <div className="main-image">
           <img src={BannerImg} alt="메인 배너 이미지" />

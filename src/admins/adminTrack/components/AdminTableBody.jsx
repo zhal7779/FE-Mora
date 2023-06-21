@@ -1,27 +1,68 @@
-import { DetailBtn, UserInfo } from '../styledComponents/tableComponent';
-import tableBodyData from '../data/trackData';
-import DeleteButton from './DeleteButton';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { fetchDeleteTrack } from '../apis/trackApis';
 
-const AdminTableBody = ({ toggleModal }) => {
+import TrackModal from './TrackModal';
+import DeleteButton from '../../adminCommon/components/DeleteButton';
+import { DetailBtn, TrackInfo, TrackListBlock } from '../styledComponents/TableComponent';
+
+const AdminTableBody = ({ tracks }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTrackData, setModalTrackData] = useState({ id: '', name: '', phase: '' });
+
+  const handleDelete = (id) => {
+    const response = confirm('삭제하시겠습니까?');
+    if (response) {
+      deleteTrack(id);
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleDetailClick = (id, name, phase) => {
+    const newTrackData = {
+      ...modalTrackData,
+      id,
+      name,
+      phase,
+    };
+    setModalTrackData(newTrackData);
+    setIsModalOpen(true);
+  };
+
+  const handleModalCancelClick = () => {
+    setIsModalOpen(false);
+  };
+
+  const { mutate: deleteTrack, error } = useMutation((id) => fetchDeleteTrack(id), {
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   return (
-    <ul className='user-info-list'>
-      {tableBodyData.map((info, idx) => {
+    <TrackListBlock className='user-info-list'>
+      {tracks.map((data, idx) => {
         return (
-          <UserInfo className='user-info' key={idx}>
-            {/* 아래애들 컴포넌트로 빼서 prop으로 데이터 넘겨줘서 map 돌릴까? */}
-            <span>{idx + 1}</span>
-            <span>{info.name}</span>
-            <span>{info.phase}</span>
+          <TrackInfo className='user-info' key={idx}>
+            <span className='title'>{data.name}</span>
+            <span className='content'>{`1~${data.phase}`}</span>
+            <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={toggleModal}>
+              <DetailBtn
+                className='detail-btn'
+                onClick={() => handleDetailClick(data.id, data.name, data.phase)}
+              >
                 보기
               </DetailBtn>
             </span>
-            <DeleteButton />
-          </UserInfo>
+            <DeleteButton onClick={() => handleDelete(data.id)} />
+          </TrackInfo>
         );
       })}
-    </ul>
+      {isModalOpen && (
+        <TrackModal trackData={modalTrackData} handleModalCancelClick={handleModalCancelClick} />
+      )}
+    </TrackListBlock>
   );
 };
 

@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ScheduleCategory from '../schedule/components/ScheduleCategory';
-import { Wrapper } from '../search/styledComponents/pageCommonStyle';
+import { SchedulePageWrapper } from '../search/styledComponents/pageCommonStyle';
 import Notification from '../schedule/components/Notification';
-import CalendarModal from '../schedule/components/CalendarModal';
-const SchedulePage = () => {
-  //menu === 0? 공지사항
-  //menu === 1? 일정표
-  const [menu, setMenu] = useState(0);
+import Calendar from '../schedule/components/Calendar';
 
-  const handleClickMenu = (category) => {
-    setMenu(category);
+const SchedulePage = () => {
+  const [category, setCategory] = useState('notice');
+
+  const navigate = useNavigate();
+
+  const handleSetCategory = (category) => {
+    setCategory(category);
   };
+  useEffect(() => {
+    if (category === 'notice') {
+      navigate('/schedule/notice');
+    } else if (category === 'calendar') {
+      navigate('/schedule/calendar');
+    }
+  }, [category, navigate]);
   return (
-    <Wrapper>
-      <ScheduleCategory setMenu={handleClickMenu} />
-      {menu === 0 ? <Notification /> : menu === 1 ? <CalendarModal /> : ''}
-    </Wrapper>
+    <SchedulePageWrapper>
+      <ScheduleCategory setMenu={handleSetCategory} />
+      {category === 'notice' ? <Notification /> : category === 'calendar' ? <Calendar /> : null}
+    </SchedulePageWrapper>
   );
 };
 

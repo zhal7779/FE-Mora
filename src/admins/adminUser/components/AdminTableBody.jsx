@@ -1,45 +1,59 @@
-import { DetailBtn, UserInfo } from '../../adminCommon/styledComponents/tableComponent';
-import tableBodyData from '../data/userData';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { fetchDeleteUser } from '../apis/userApis';
 
-const AdminTableBody = ({ toggleModal }) => {
+import UserModal from './UserModal';
+import DeleteButton from '../../adminCommon/components/DeleteButton';
+import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
+
+const AdminTableBody = ({ users }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalUserId, setModalUserId] = useState('');
+
+  const handleDelete = (email) => {
+    const response = confirm('삭제하시겠습니까?');
+    if (response) {
+      deleteUser(email);
+      setIsModalOpen(false);
+    }
+  };
+
+  const handleDetailClick = (id) => {
+    setModalUserId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleModalCancelClick = () => {
+    setIsModalOpen(false);
+  };
+
+  const { mutate: deleteUser, error } = useMutation((email) => fetchDeleteUser(email), {
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   return (
     <ul className='user-info-list'>
-      {tableBodyData.map((info) => {
+      {users.map((data, idx) => {
         return (
-          <UserInfo className='user-info' key={info.userId}>
-            {/* 아래애들 컴포넌트로 빼서 prop으로 데이터 넘겨줘서 map 돌릴까? */}
-            <span>{info.userId}</span>
-            <span>{info.name}</span>
-            <span>{info.email}</span>
-            <span>{info.password}</span>
-            <span>{info.createdDate}</span>
+          <UserInfo className='user-info' key={idx}>
+            <span>{data.name}</span>
+            <span className='email'>{data.email}</span>
+            <span className='password'>**********</span>
+            <span>{data.createdAt.slice(0, 10)}</span>
             <span>
-              <DetailBtn className='detail-btn' onClick={toggleModal}>
+              <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
                 보기
               </DetailBtn>
             </span>
-            <span>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='22'
-                height='22'
-                fill='none'
-                onClick={() => {
-                  const response = confirm('삭제하시겠습니까?');
-                }}
-              >
-                <path
-                  stroke='#FF1300'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='1.8'
-                  d='M2.75 5.5h16.5M7.333 5.5V3.667a1.833 1.833 0 0 1 1.834-1.834h3.666a1.833 1.833 0 0 1 1.834 1.834V5.5m2.75 0v12.833a1.833 1.833 0 0 1-1.834 1.834H6.417a1.833 1.833 0 0 1-1.834-1.834V5.5h12.834ZM12.833 10.083v5.5M9.167 10.083v5.5'
-                />
-              </svg>
-            </span>
+            <DeleteButton onClick={() => handleDelete(data.email)} />
           </UserInfo>
         );
       })}
+      {isModalOpen && (
+        <UserModal id={modalUserId} handleModalCancelClick={handleModalCancelClick} />
+      )}
     </ul>
   );
 };

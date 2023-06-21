@@ -18,6 +18,7 @@ export const HeaderContainer = styled.header`
     justify-content: space-between;
     align-items: center;
     width: 1280px;
+    padding: 0 20px;
     margin: 0 auto;
   }
 
@@ -30,11 +31,11 @@ export const HeaderContainer = styled.header`
     display: flex;
   }
 
-  .post-image,
-  .write-code {
+  .post-image {
     width: 36px;
     height: 36px;
     padding: 6px;
+    margin-right: 20px;
     border-radius: 4px;
     transition: 0.2s;
 
@@ -44,8 +45,7 @@ export const HeaderContainer = styled.header`
   }
 
   .btn-back,
-  .post-image,
-  .write-code {
+  .post-image {
     background: none;
     cursor: pointer;
 
@@ -54,9 +54,5 @@ export const HeaderContainer = styled.header`
       height: 100%;
       object-fit: contain;
     }
-  }
-
-  .write-code {
-    margin: 0 60px 0 10px;
   }
 `;

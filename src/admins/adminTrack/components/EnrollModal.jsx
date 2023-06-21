@@ -1,100 +1,99 @@
 import { useEffect, useRef, useState } from 'react';
+import { useMutation } from 'react-query';
+import { fetchCreateTrack } from '../apis/trackApis';
+
+import jwt_decode from 'jwt-decode';
 import {
-  ModalOverlay,
-  ModalContentBlock,
   ModalTitle,
+  ModalHeader,
+  ModalButton,
+  ModalOverlay,
   ModalSubTitle,
-  ModalContentInput,
   ModalContentP,
   ModalButtonBlock,
-  ModalHeader,
-  ModalHeaderButton,
-  ModalButton,
-} from '../styledComponents/modalComponents';
+  ModalContentBlock,
+  ModalContentInput,
+} from '../styledComponents/ModalComponents';
 
-// 밖으로 뺄 거
-const info = [
-  {
-    type: 'id',
-    subTitle: '번호',
-    contentValue: '1',
-  },
-  {
-    type: 'name',
-    subTitle: '트랙 이름',
-    contentValue: 'SW',
-  },
-  {
-    type: 'phase',
-    subTitle: '기수',
-    contentValue: '1',
-  },
-];
+const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+  const [adminName, setAdminName] = useState('');
+  const [contents, setContents] = useState({ name: '', phase: '' });
+  const titleInput = useRef(null);
 
-const EnrollModal = ({ 인포, modal, toggleModal }) => {
-  const modalTitle = '트랙 정보';
-  const modalFeature = '수정하기';
+  useEffect(() => {
+    const sessionToken = sessionStorage.getItem('adminToken');
+    const decodedToken = jwt_decode(sessionToken);
+    setAdminName(decodedToken.name);
+  }, []);
 
-  const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState(info);
-  const firstInput = useRef(null);
+  useEffect(() => {
+    titleInput.current.focus();
+  }, [enrollModal]);
 
-  const handleChangeContents = (e) => {
-    const idx = e.target.alt;
-    const newContents = [...contents];
-    newContents[idx].contentValue = e.target.value;
+  const handleFormChange = (e) => {
+    const changedValue = e.target.name;
+    const newContents = {
+      ...contents,
+    };
+    newContents[changedValue] = e.target.value;
+
     setContents(newContents);
   };
 
-  const handleModalClose = () => {
-    setUpdatable(false);
-    toggleModal();
+  const handleSubmit = () => {
+    const result = confirm('공지를 등록하시겠습니까?');
+    if (result) {
+      createNotification(contents);
+      toggleEnrollModal();
+    }
   };
 
-  useEffect(() => {
-    firstInput.current.focus();
-  }, [modal]);
+  const { mutate: createNotification, error } = useMutation(
+    async () => await fetchCreateTrack(contents),
+    {
+      onError(error) {
+        console.error(error);
+      },
+    }
+  );
 
   return (
     <>
-      {modal && (
+      {enrollModal && (
         <>
-          <ModalOverlay onClick={toggleModal} />
+          <ModalOverlay onClick={toggleEnrollModal} />
           <ModalContentBlock className='modal-content-block'>
             <ModalHeader className='modal-header'>
-              <ModalTitle className='modal-title'>{modalTitle}</ModalTitle>
+              <ModalTitle className='modal-title'>{title}</ModalTitle>
             </ModalHeader>
-            <div>
-              {contents.map((content, idx) => {
-                if (content.type !== 'id') {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>{content.subTitle}</ModalSubTitle>
-                      <ModalContentInput
-                        type='text'
-                        value={''}
-                        className='modal-content'
-                        onChange={handleChangeContents}
-                        alt={idx}
-                        ref={idx === 1 ? firstInput : null}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={content.type + idx}>
-                      <ModalSubTitle className='modal-sub-title'>번호</ModalSubTitle>
-                      <ModalContentP className='modal-content'>{13}</ModalContentP>
-                    </div>
-                  );
-                }
-              })}
-            </div>
+
+            <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
+            <ModalContentP className='modal-content'>{adminName}</ModalContentP>
+            <ModalSubTitle className='modal-sub-title'>트랙명</ModalSubTitle>
+            <ModalContentInput
+              type='text'
+              name='name'
+              value={contents.name}
+              ref={titleInput}
+              className='modal-content'
+              onChange={handleFormChange}
+              placeholder='트랙명 ex) SW'
+            />
+            <ModalSubTitle className='modal-sub-title'>기수</ModalSubTitle>
+            <ModalContentInput
+              type='number'
+              name='phase'
+              value={contents.phase}
+              className='modal-content'
+              onChange={handleFormChange}
+              placeholder='숫자만 입력할 수 있습니다. ex) 8'
+            />
+
             <ModalButtonBlock className='modal-button-block'>
-              <ModalButton className='modal-button-submit' onClick={handleModalClose}>
+              <ModalButton className='modal-button-submit' onClick={toggleEnrollModal}>
                 취소
               </ModalButton>
-              <ModalButton className='modal-button-ok' $purple>
+              <ModalButton type='submit' className='modal-button-ok' onClick={handleSubmit} $purple>
                 등록
               </ModalButton>
             </ModalButtonBlock>

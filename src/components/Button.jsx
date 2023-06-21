@@ -38,15 +38,13 @@ const BaseButton = styled.button`
   width: auto;
   height: 3.8rem;
   padding: 9px 21px 9px 21px;
-  border-radius: 4px;
-  font-family: 'Noto Sans KR';
+  border-radius: 7px;
   font-style: normal;
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 2.2rem;
   text-align: center;
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
-  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
   background: ${({ color }) =>
     color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};

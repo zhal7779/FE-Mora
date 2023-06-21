@@ -1,25 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import data from './ranking.json';
-const RankingList = () => {
+
+const RankingList = ({ data }) => {
   return (
     <>
-      {data.map((item) => (
-        <Content key={item.rank} rank={item.rank}>
-          <p className='ranking'>{item.rank}</p>
-          <img
-            className='image_icon'
-            src='https://www.chemicalnews.co.kr/news/photo/202210/4996_13445_157.png'
-          ></img>
-          <div>
-            <h5 className='title'>{item.title}</h5>
-            <div className='text_content'>
-              <h5>{item.name}</h5>
-              <p>{item.currentJob}</p>
+      {data &&
+        data.map((item, index) => (
+          <Content key={item.id} rank={index + 1}>
+            <p className='ranking'>{index + 1}</p>
+            <img className='image_icon' src={item.User.img_path}></img>
+            <div>
+              <Link to={'/community/' + item.id}>
+                <h5 className='title'>{item.title}</h5>
+              </Link>
+              <div className='text_content'>
+                <h5>{item.User.name}</h5>
+                <p> {item.User.position}</p>
+              </div>
             </div>
-          </div>
-        </Content>
-      ))}
+          </Content>
+        ))}
     </>
   );
 };
@@ -51,6 +52,13 @@ const Content = styled.div`
     font-size: 1.4rem;
     color: #242424;
     cursor: pointer;
+    width: 15.9rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     &:hover {
     }
   }
@@ -69,6 +77,13 @@ const Content = styled.div`
       font-weight: 700;
       font-size: 1rem;
       color: #605ea0;
+      width: 11rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
   }
 `;

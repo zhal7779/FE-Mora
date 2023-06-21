@@ -2,64 +2,85 @@ import React from 'react';
 import styled from 'styled-components';
 import { ChatButton } from '../../openProfile/styledComponents/OpenProfileStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
-const SearchResultProfile = ({ data, receiveMenu }) => {
+import * as Style from '../styledComponents/AddView';
+import { KeywordHighlight } from './KeywordHighlight';
+import { useContext } from 'react';
+import { SearchContext } from '../context/SearchContext';
+import NoData from '../../components/NoData';
+import { Link } from 'react-router-dom';
+const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
+  //검색후 데이터에 키워드 하이라이트 줄 변수
+  const keyword = useContext(SearchContext);
+
   //모두보기 클릭시 메뉴 2번 프로필 보기로 이동
-  //모두보기 클릭시 메뉴에 보더가 2번으로 이동을 안함, 로직이 복잡할거 같으니 리덕스로 해야될듯
   const handleAllView = () => {
     receiveMenu(2);
   };
+
   return (
     <Container>
-      {data.length === 3 && (
-        <AddView>
-          <div>
-            <p className='title'>프로필</p>
-            <p className='total_count'>108</p>
-          </div>
-          <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
-            <p className='all_view'>모두 보기</p>
-            <RightIcon stroke='#242424' />
-          </div>
-        </AddView>
+      {data && data.length === 0 ? (
+        <NoData />
+      ) : (
+        <>
+          {data && simple === 'simple' && (
+            <Style.AddView>
+              <div>
+                <p className='title'>프로필</p>
+                <p className='total_count'>{count}</p>
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
+                <p className='all_view'>모두 보기</p>
+                <RightIcon stroke='#242424' />
+              </div>
+            </Style.AddView>
+          )}
+          {data &&
+            data.map((item) => (
+              <Content key={item.user_id}>
+                <div>
+                  <div className='img_content'>
+                    <img className='img__content' src={item.img_path}></img>
+                  </div>
+                  <div className='text_content'>
+                    <h4>{item.User.name}</h4>
+                    <h5>
+                      <KeywordHighlight content={item.position} keyword={keyword} />
+                    </h5>
+                    <div className='skill'>
+                      {item.User.Skills.map((skill) => (
+                        <p>#{skill.name} </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className='button_content'>
+                  <Link to='/openProfile'>
+                    <ChatButton>오픈프로필 보기</ChatButton>
+                  </Link>
+                </div>
+              </Content>
+            ))}
+        </>
       )}
-      {data.map((item, index) => (
-        <Content key={index}>
-          <div>
-            <div className='img_content'>
-              <img
-                className='img__content'
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF8bkStA_NWmRIUeISz6lRnrar6tzQ0v0uCg&usqp=CAU'
-              ></img>
-            </div>
-            <div className='text_content'>
-              <h4>{item.name}</h4>
-              <h5>{item.currentJob}</h5>
-              <p>경력: {item.career}</p>
-            </div>
-          </div>
-          <div className='button_content'>
-            <ChatButton>커피챗 신청</ChatButton>
-          </div>
-        </Content>
-      ))}
     </Container>
   );
 };
 
 export default SearchResultProfile;
-const Container = styled.div`
-  width: 66%;
-  height: 100%;
+const Container = styled.section`
+  width: 700px;
+  height: inherit;
   background: #ffffff;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
-  margin: 4rem 0;
 `;
 
 const Content = styled.div`
-  padding: 1.6rem;
+  padding: 2.4rem;
   display: flex;
   justify-content: space-between;
+
   div {
     display: flex;
   }
@@ -74,6 +95,10 @@ const Content = styled.div`
     border-radius: 50%;
     color: #242424;
     margin-right: 1.6rem;
+  }
+  .skill {
+    display: flex;
+    gap: 1rem;
   }
   .text_content {
     display: flex;
@@ -96,27 +121,4 @@ const Content = styled.div`
     color: #94a3b8;
   }
   border-bottom: 1px #cbd5e1 solid;
-`;
-
-const AddView = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #242424;
-  padding: 2rem;
-  div {
-    display: flex;
-    align-items: center;
-  }
-  .title {
-    padding-right: 0.5rem;
-  }
-  .total_count {
-    color: #94a3b8;
-  }
-  .all_view {
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
 `;
