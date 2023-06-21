@@ -7,7 +7,6 @@ const OrLine = styled.div`
 `;
 
 const OrText = styled.span`
-  font-family: 'Inter';
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;

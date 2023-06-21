@@ -4,58 +4,134 @@ import IconGoBack from '../assets/icons/icon-go-back.svg';
 import IconPostImage from '../assets/icons/icon-post-img.svg';
 import Button from '../components/Button';
 import { useMutation, useQueryClient } from 'react-query';
-import { registerPost } from './service/postWriteService';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
+const BASE_URL = process.env.REACT_APP_URL;
 
-const WriteHeader = ({ showPostImage, setShowPostImage, formData }) => {
-  const queryClient = useQueryClient();
+const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const handleGoBack = () => {
-    const check = window.confirm(
-      '작성을 취소하고 게시글 페이지로 이동하시겠습니까?'
-    );
-    if (!check) return;
-    navigate(-1);
-  };
+  useEffect(() => {
+    if (postId) {
+      setShowPostImage(true);
+    }
+  }, [postId]);
 
-  const handlePostImage = () => {
-    showPostImage ? setShowPostImage(false) : setShowPostImage(true);
+  // 게시글 등록/수정 api
+  const registerPost = async postData => {
+    const response = await fetch(`${BASE_URL}/api/boards`, {
+      method: postId ? 'PUT' : 'POST',
+      body: JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('게시글 등록에 실패하였습니다.');
+    }
+
+    const result = response.json();
+    return result;
   };
 
   const { mutate } = useMutation(registerPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('posts');
-      console.log('게시글 내용 등록에 성공했습니다.');
+    onSuccess: boardId => {
+      queryClient.invalidateQueries(['posts']);
+      if (!postId) {
+        navigate(`/community/${boardId}`);
+      } else {
+        navigate(`/community/post/free`);
+      }
     },
     onError: error => {
       console.error(error);
     }
   });
 
-  const handleRegisterPost = async () => {
-    const { category, title, content } = formData;
+  // 게시글 등록/수정
+  const handleRegisterPost = () => {
+    const { category, title, content, hashtags, images } = data;
+    const imgArr = images.map(img => img.img_path);
 
-    try {
-      if (category === '카테고리 선택') {
-        alert('카테고리를 선택해주세요');
-        return;
-      } else if (title === '') {
-        alert('제목을 입력해주세요');
-        return;
-      } else if (content === '') {
-        alert('본문을 작성해주세요');
+    const postData = {
+      category: category,
+      title: title,
+      content: content,
+      hashtags: hashtags,
+      images: imgArr
+    };
+
+    if (postId) {
+      postData.board_id = postId;
+    }
+
+    if (category === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '카테고리를 선택해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    } else if (title === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '제목을 작성해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    } else if (content === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '본문을 작성해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    } else {
+      Swal.fire({
+        icon: 'question',
+        title: '게시글을 등록하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '등록',
+        cancelButtonText: '취소'
+      }).then(result => {
+        if (result.isConfirmed) {
+          try {
+            mutate(postData);
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          return;
+        }
+      });
+    }
+  };
+
+  const handleGoBack = () => {
+    Swal.fire({
+      icon: 'question',
+      title: '작성을 취소하고 게시글 페이지로 이동하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소'
+    }).then(result => {
+      if (result.isConfirmed) {
+        navigate(-1);
         return;
       } else {
-        const check = window.confirm('게시글을 등록하시겠습니까?');
-        if (!check) return;
+        return;
       }
+    });
+  };
 
-      const data = await mutate(formData);
-      console.log(data);
-      navigate(`/community/${data.id}`);
-    } catch (error) {
-      console.error(error);
-    }
+  const handlePostImage = () => {
+    showPostImage ? setShowPostImage(false) : setShowPostImage(true);
   };
 
   return (
@@ -69,7 +145,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, formData }) => {
             <img src={IconPostImage} alt="이미지 삽입하기" />
           </button>
           <Button
-            value="등록"
+            value={postId ? '수정' : '등록'}
             color="darkPurple"
             onClick={handleRegisterPost}
           />

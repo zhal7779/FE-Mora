@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import RankingList from './RankingList';
 
-const RankingContent = () => {
+const RankingContent = ({ data }) => {
   return (
     <Container>
       <TitleContent>
@@ -10,7 +10,7 @@ const RankingContent = () => {
         <p>지난 24시간 동안</p>
         <p>가장 인기가 좋았던 게시물을 만나보세요.</p>
       </TitleContent>
-      <RankingList />
+      <RankingList data={data} />
     </Container>
   );
 };

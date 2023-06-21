@@ -44,8 +44,11 @@ export const Content = styled.div`
       cursor: pointer;
       width: 2.4rem;
       height: 2.4rem;
-      background: #eeeafe;
-      border-radius: 5px;
+      background: #aa8dff;
+      border-radius: 50%;
+      &:hover {
+        background: rgb(170, 141, 255, 0.5);
+      }
     }
   }
   .close_btn {
@@ -53,7 +56,7 @@ export const Content = styled.div`
     top: 0;
     right: 0;
     margin: 0.5rem 1rem;
-    color: #d9d9d9;
+    color: #616161;
     font-size: 2.4rem;
     cursor: pointer;
   }
@@ -61,6 +64,22 @@ export const Content = styled.div`
 export const Main = styled.div`
   height: 100%;
   padding: 9rem 0 0 0;
+
+  .no_schedule {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    img {
+      width: 25rem;
+      margin-bottom: 3rem;
+    }
+    p {
+      font-size: 1.6rem;
+      color: #616161;
+    }
+  }
   .main {
     background: #eeeafe;
     border-radius: 10px;
@@ -90,6 +109,20 @@ export const Main = styled.div`
           color: #242424;
           font-size: 1.4rem;
           line-height: 140%;
+          .link_box {
+            background: #f1f0f7;
+            border-radius: 4px;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            a {
+              display: inline;
+              color: #4700a8;
+
+              &:hover {
+                color: #6700eb;
+              }
+            }
+          }
         }
       }
     }

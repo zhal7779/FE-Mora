@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginContainer from '../logIn/LogInContainer';
@@ -10,6 +10,8 @@ import turtleImg from '../assets/images/turtle.png';
 import rabbitImg from '../assets/images/rabbit.png';
 import answerSound from '../assets/sounds/answerSound.mp3';
 import errorSound from '../assets/sounds/errorSound.mp3';
+import { useQuery } from 'react-query';
+const URL = process.env.REACT_APP_URL;
 
 const Quiz = () => {
   const [answer, setAnswer] = useState('');
@@ -19,33 +21,49 @@ const Quiz = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    getOtherQuiz();
-  }, []);
+  // 퀴즈 불러오고 정리하기
+  const quizQuery = useQuery('quiz', () =>
+    fetch(`${URL}/api/quizs`).then((response) => response.json())
+  );
 
+  const quizData = quizQuery.data;
+
+  const quizList = [];
+  const quizAns = [];
+  const quizHint = [];
+
+  if (quizData) {
+    quizData.forEach(({ question, answer, hint }) => {
+      quizList.push(question);
+      quizAns.push(answer);
+      quizHint.push(hint);
+    });
+  }
+
+  // 새로고침시 다른 퀴즈 보여주기
+  // useEffect(() => {
+  //   getOtherQuiz();
+  // }, []);
+
+  // 다른 퀴즈로 넘어가면 state 초기화
   useEffect(() => {
     setAnswer('');
     setShowImage(false);
     setCountdown(null);
   }, [randomIndex]);
 
-  const quizList = [
-    'ㅇㅇㅈ 매니저님의 이름은?',
-    '잊지마 기억해 봇은 어떤 동물?',
-    '정답을 맞추면 나오는 동물은?',
-  ];
-  const quizAns = ['이어진', '거북이', '토끼'];
-  const quizHint = ['힌트는 20대 꽃미남', '힌트는 세 글자', '힌트는 두 글자'];
-
+  // submit 하면 이미지 보여줄 준비
   const handleSubmit = () => {
     setShowImage(true);
   };
 
+  // 성공과 실패 소리 준비
   const playSound = (sound) => {
     const audio = new Audio(sound);
     audio.play();
   };
 
+  // 다른 퀴즈 불러오기 1 2 3 1 2 3 순서
   const getOtherQuiz = () => {
     let nextIndex = randomIndex + 1;
     if (nextIndex >= quizList.length) {
@@ -59,9 +77,10 @@ const Quiz = () => {
     }
   };
 
+  // 성공과 실패 판정하고 알맞은 소리 들려주기
   useEffect(() => {
     if (showImage) {
-      if (answer === quizAns[randomIndex]) {
+      if (answer === quizData[randomIndex].answer) {
         playSound(answerSound);
         setCountdown(5);
       } else {
@@ -70,6 +89,7 @@ const Quiz = () => {
     }
   }, [showImage]);
 
+  // 5 4 3 2 1 후 회원가입으로 이동
   useEffect(() => {
     if (countdown !== null) {
       if (countdown === 0) {
@@ -100,10 +120,16 @@ const Quiz = () => {
           setShowImage(false);
         }}
         ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSubmit();
+          }
+        }}
       />
-
       <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
+      <div style={{ height: '2rem' }}></div>
       <LittleText
+        wiggle
         text={
           countdown !== null
             ? `${countdown}초 뒤 회원가입으로 넘어갑니다!`
@@ -118,14 +144,16 @@ const Quiz = () => {
         <AnimatedTurtle src={turtleImg} style={{ width: '25rem', height: '25rem' }} />
       )}
 
-      <LoginButton
-        color='lightPurple'
-        value='다른 문제 풀기'
-        onClick={() => {
-          getOtherQuiz();
-          setAnswer('');
-        }}
-      />
+      {countdown === null && (
+        <LoginButton
+          color='lightPurple'
+          value='다른 문제 풀기'
+          onClick={() => {
+            getOtherQuiz();
+            setAnswer('');
+          }}
+        />
+      )}
     </LoginContainer>
   );
 };

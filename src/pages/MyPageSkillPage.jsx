@@ -1,25 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [skill, setSkill] = useState('');
   const [selectedSkill, setSelectedSkill] = useState('');
   const [mySkillList, setMySkillList] = useState([]);
   const [skillList, setSkillList] = useState([]); // 검색된 스킬 목록
-
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  // 디바운싱으로 요청 수 줄이기
+  // 디바운싱 = 여러 이벤트를 한번에 묶어서 처리, 쓰로틀링 = setInterval
   useEffect(() => {
-    fetchMySkillList();
-  }, []);
-
-  useEffect(() => {
-    // 디바운싱은 여러 이벤트를 한번에 묶어서 처리 쓰로틀링은 setInterval
     const delayDebounceFn = setTimeout(() => {
       if (skill !== '') {
         fetchSkillList();
@@ -29,31 +28,31 @@ const MyPageEdit = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [skill]);
 
+  // 기존 서버에 등록된 내 스킬 불러오기
   const fetchMySkillList = async () => {
-    try {
-      const userToken = sessionStorage.getItem('userToken');
-      const response = await fetch('http://15.164.221.244:5000/api/skills/myskill', {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-      if (response) {
-        const data = await response.json();
-        setMySkillList(data);
-      } else {
-        throw new Error('Failed to fetch mySkillList');
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await fetch(`${URL}/api/skills/myskill`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    });
+    if (!response) {
+      throw new Error('Failed to fetch mySkillList');
     }
+    const data = await response.json();
+    setMySkillList(data); // Update mySkillList with the fetched data
+    return data;
   };
 
+  const { data: fetchedMySkillList } = useQuery('mySkillList', fetchMySkillList);
+
+  // 검색되는 스킬 리스트 불러오기
   const fetchSkillList = async () => {
     try {
-      const userToken = sessionStorage.getItem('userToken');
-      const response = await fetch(`http://15.164.221.244:5000/api/skills?keyword=${skill}`, {
+      const response = await fetch(`${URL}/api/skills?keyword=${skill}`, {
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
         },
       });
       if (response) {
@@ -64,6 +63,7 @@ const MyPageEdit = () => {
             label: item.name,
           }));
           setSkillList(updatedList);
+          setSelectedSkill(updatedList[0].value);
         } else {
           setSkillList([]);
         }
@@ -73,8 +73,12 @@ const MyPageEdit = () => {
     }
   };
 
+  // 검색결과 중 선택된 스킬로 바꾸는 핸들러
   const handleSkillChange = (e) => {
+    console.log(e.target);
     const selectedOption = e.target.value;
+    console.log(selectedOption);
+
     setSelectedSkill(selectedOption);
   };
 
@@ -90,26 +94,33 @@ const MyPageEdit = () => {
     setMySkillList(updatedSkillList);
   };
 
-  const handleUpdateSkill = async () => {
-    try {
-      const userToken = sessionStorage.getItem('userToken');
-      const response = await fetch('http://15.164.221.244:5000/api/skills/update', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify(mySkillList),
-      });
+  // 스킬 업데이트 뮤테이션 선언
+  const updateSkillMutation = useMutation((updatedSkills) =>
+    fetch(`${URL}/api/skills/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(updatedSkills),
+    }).then((response) => response.json())
+  );
 
-      if (response) {
-        console.log('스킬 수정이 완료되었습니다.');
-      } else {
-        throw new Error('Failed to update skills');
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  // 스킬 업데이트 핸들러
+  const handleUpdateSkill = () => {
+    const requestBody = {
+      skillNames: mySkillList,
+    };
+
+    updateSkillMutation.mutate(requestBody, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('mySkillList');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('프로필 수정 오류:', error);
+      },
+    });
   };
 
   return (
@@ -135,15 +146,21 @@ const MyPageEdit = () => {
       />
       <Button color='darkPurple' value='추가하기' onClick={handleAddSkill} />
 
-      <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
-      <SkillButtonContainer>
-        {mySkillList.map((mySkill, index) => (
-          <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
-            {mySkill}
-            <RemoveText className='remove-text'>x</RemoveText>
-          </div>
-        ))}
-      </SkillButtonContainer>
+      {mySkillList ? (
+        <>
+          <SubTitle>{mySkillList.length === 0 ? '내 스킬이 비어있어요' : '내 스킬 목록'}</SubTitle>
+          <SkillButtonContainer>
+            {mySkillList.map((mySkill, index) => (
+              <div className='badge' key={index} onClick={() => handleRemoveSkill(mySkill)}>
+                {mySkill}
+                <RemoveText className='remove-text'>❌</RemoveText>
+              </div>
+            ))}
+          </SkillButtonContainer>
+        </>
+      ) : (
+        '로딩중'
+      )}
 
       <ButtonContainer>
         <Button
@@ -151,7 +168,6 @@ const MyPageEdit = () => {
           value='수정완료'
           onClick={() => {
             handleUpdateSkill();
-            navigate('/mypage');
           }}
         />
         <Button
@@ -169,7 +185,6 @@ const MyPageEdit = () => {
 export default MyPageEdit;
 
 const SubTitle = styled.h3`
-  font-family: 'Noto Sans KR';
   font-weight: 600;
   font-size: 2rem;
   margin-top: 7rem;
@@ -207,10 +222,10 @@ const SkillButtonContainer = styled.div`
 
 const RemoveText = styled.span`
   position: absolute;
-  top: 46%;
-  right: 0.8rem;
+  top: 50%;
+  right: 0.5rem;
   transform: translateY(-50%);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #ee1e1e;
   display: none;

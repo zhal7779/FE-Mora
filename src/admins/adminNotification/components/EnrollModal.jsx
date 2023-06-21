@@ -1,36 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { fetchCreateNotification } from '../apis/postApi';
+import { useMutation } from 'react-query';
+import { fetchCreateNotification } from '../apis/notificationApis';
 
+import jwt_decode from 'jwt-decode';
 import {
-  ModalOverlay,
-  ModalContentBlock,
   ModalTitle,
-  ModalSubTitle,
-  ModalContentInput,
-  ModalContentP,
-  ModalButtonBlock,
   ModalHeader,
   ModalButton,
+  ModalOverlay,
+  ModalSubTitle,
+  ModalContentP,
+  ModalButtonBlock,
+  ModalContentBlock,
+  ModalContentInput,
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
 const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+  const [adminName, setAdminName] = useState('');
   const [contents, setContents] = useState({ title: '', content: '' });
   const titleInput = useRef(null);
-  const queryClient = useQueryClient();
 
-  const { mutate: createNotification, error } = useMutation(
-    async () => await fetchCreateNotification(contents),
-    {
-      onSuccess() {
-        queryClient.invalidateQueries(['admin', 'notification', 'get']);
-      },
-      onError(error) {
-        console.log(error);
-      },
-    }
-  );
+  useEffect(() => {
+    const sessionToken = sessionStorage.getItem('adminToken');
+    const decodedToken = jwt_decode(sessionToken);
+    setAdminName(decodedToken.name);
+  }, []);
 
   useEffect(() => {
     titleInput.current.focus();
@@ -54,7 +49,14 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   };
 
-  if (error) return <span>An error has occurred: {error.message}</span>;
+  const { mutate: createNotification, error } = useMutation(
+    async () => await fetchCreateNotification(contents),
+    {
+      onError(error) {
+        console.error(error);
+      },
+    }
+  );
 
   return (
     <>
@@ -66,41 +68,34 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
               <ModalTitle className='modal-title'>{title}</ModalTitle>
             </ModalHeader>
 
-            <>
-              <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
-              <ModalContentP className='modal-content'>{'임지성'}</ModalContentP>
-              <ModalSubTitle className='modal-sub-title'>제목</ModalSubTitle>
-              <ModalContentInput
-                type='text'
-                name='title'
-                value={contents.title}
-                ref={titleInput}
-                className='modal-content'
-                onChange={handleFormChange}
-              />
-              <ModalSubTitle className='modal-sub-title'>내용</ModalSubTitle>
-              <ModalContentTextarea
-                type='text'
-                name='content'
-                value={contents.content}
-                className='modal-content'
-                onChange={handleFormChange}
-              />
+            <ModalSubTitle className='modal-sub-title'>관리자</ModalSubTitle>
+            <ModalContentP className='modal-content'>{adminName}</ModalContentP>
+            <ModalSubTitle className='modal-sub-title'>제목</ModalSubTitle>
+            <ModalContentInput
+              type='text'
+              name='title'
+              value={contents.title}
+              ref={titleInput}
+              className='modal-content'
+              onChange={handleFormChange}
+            />
+            <ModalSubTitle className='modal-sub-title'>내용</ModalSubTitle>
+            <ModalContentTextarea
+              type='text'
+              name='content'
+              value={contents.content}
+              className='modal-content'
+              onChange={handleFormChange}
+            />
 
-              <ModalButtonBlock className='modal-button-block'>
-                <ModalButton className='modal-button-submit' onClick={toggleEnrollModal}>
-                  취소
-                </ModalButton>
-                <ModalButton
-                  type='submit'
-                  className='modal-button-ok'
-                  onClick={handleSubmit}
-                  $purple
-                >
-                  등록
-                </ModalButton>
-              </ModalButtonBlock>
-            </>
+            <ModalButtonBlock className='modal-button-block'>
+              <ModalButton className='modal-button-submit' onClick={toggleEnrollModal}>
+                취소
+              </ModalButton>
+              <ModalButton type='submit' className='modal-button-ok' onClick={handleSubmit} $purple>
+                등록
+              </ModalButton>
+            </ModalButtonBlock>
           </ModalContentBlock>
         </>
       )}

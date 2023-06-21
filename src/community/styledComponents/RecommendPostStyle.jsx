@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const RecommendContainer = styled.section`
-  padding-top: 34px;
-
   h3 {
-    padding-bottom: 10px;
+    padding: 34px 0 10px 0;
     font-weight: 600;
     font-size: 2rem;
     line-height: 2.4rem;
@@ -12,9 +10,11 @@ export const RecommendContainer = styled.section`
 
   ul {
     display: flex;
+    padding-bottom: 30px;
 
     li {
       width: 50%;
+      height: 158px;
       padding: 16px;
       background: #ffffff;
       border: 1px solid #d8e0e9;
@@ -49,9 +49,16 @@ export const RecommendContainer = styled.section`
 
   .recommend-title {
     margin-bottom: 32px;
+    height: 38px;
     font-weight: 600;
     font-size: 1.6rem;
     line-height: 1.9rem;
+    white-space: normal;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .recommend-info {

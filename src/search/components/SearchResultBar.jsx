@@ -4,7 +4,7 @@ import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 import { SearchContext } from '../context/SearchContext';
 import { useContext } from 'react';
 
-const SearchResultBar = ({ handleSubSearch }) => {
+const SearchResultBar = ({ handleSubSearch, menu, count }) => {
   const keyword = useContext(SearchContext);
   //검색창 input
   const [input, setInput] = useState(keyword);
@@ -43,7 +43,20 @@ const SearchResultBar = ({ handleSubSearch }) => {
       <MainDiv>
         <Content>
           <ResultTextContent>
-            <p>{resultKeyword} 검색결과 0건</p>
+            <p>{resultKeyword} 검색결과 </p>
+            {menu === 1 ? (
+              <p> {count.total}건</p>
+            ) : menu === 2 ? (
+              <p> {count.free}건</p>
+            ) : menu === 3 ? (
+              <p>{count.free}건</p>
+            ) : menu === 4 ? (
+              <p>{count.knowledge}건</p>
+            ) : menu === 5 ? (
+              <p>{count.study}건</p>
+            ) : (
+              <p>{count.question}건</p>
+            )}
           </ResultTextContent>
         </Content>
       </MainDiv>
@@ -86,7 +99,9 @@ const SubSearchContent = styled.div`
   }
 `;
 const ResultTextContent = styled.div`
+  display: flex;
   margin: 1.8rem 0;
+  gap: 1.4rem;
   p {
     font-weight: 600;
     font-size: 1.6rem;

@@ -1,4 +1,3 @@
-import * as Style from '../community/styledComponents/PostListStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { categories } from '../community/categoryData';
@@ -6,8 +5,10 @@ import Category from '../community/Category';
 import SearchBar from '../community/SearchBar';
 import PostList from '../community/PostList';
 import RecommendPost from '../community/RecommendPost';
-import { getPosts } from '../community/service/postListService';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
+import Button from '../components/Button';
+const BASE_URL = process.env.REACT_APP_URL;
 
 const CommunityPage = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(
@@ -15,16 +16,46 @@ const CommunityPage = () => {
   );
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { status, data, error } = useQuery(['posts', selectedCategoryId], () =>
-    getPosts(selectedCategoryId)
+  const fetchPosts = async () => {
+    const response = await fetch(
+      `${BASE_URL}/api/boards/${selectedCategoryId}`,
+      {
+        headers: {
+          authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('게시글을 불러오는데 실패했습니다.');
+    }
+
+    const result = await response.json();
+    return result;
+  };
+
+  const { data, isLoading, isError, error } = useQuery(
+    ['posts', selectedCategoryId],
+    fetchPosts
   );
 
-  if (status === 'loading') {
-    return <Style.Status>Loading...⏳</Style.Status>;
+  if (isError) {
+    return (
+      <Status>
+        {error.message}⚠️
+        <div>
+          모여라레이서는 회원 전용 서비스입니다! <br />
+          혹시 로그인을 깜빡하셨나요?
+          <Link to="/login">
+            <Button value="로그인하기" color="darkPurple" />
+          </Link>
+        </div>
+      </Status>
+    );
   }
 
-  if (status === 'error') {
-    return <Style.Status>{error.message}⚠️</Style.Status>;
+  if (isLoading) {
+    return <Status>Loading...⏳</Status>;
   }
 
   return (
@@ -35,7 +66,11 @@ const CommunityPage = () => {
       />
       <PostContainer>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <RecommendPost selectedCategoryId={selectedCategoryId} data={data} />
+        <RecommendPost
+          searchTerm={searchTerm}
+          selectedCategoryId={selectedCategoryId}
+          data={data}
+        />
         <PostList
           selectedCategoryId={selectedCategoryId}
           data={data}
@@ -65,4 +100,24 @@ const PostContainer = styled.div`
   padding: 38px 20px 0;
   max-width: 738px;
   width: 100%;
+`;
+
+export const Status = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  font-size: 1.6rem;
+  color: #424242;
+  background-color: #f2f0fa;
+
+  div {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 3.4rem;
+    padding-top: 12px;
+    color: #47424b;
+  }
 `;

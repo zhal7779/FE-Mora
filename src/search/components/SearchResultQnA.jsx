@@ -5,53 +5,64 @@ import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right
 import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
+import NoData from '../../components/NoData';
+import { Link } from 'react-router-dom';
 
-const SearchResultQnA = ({ data, receiveMenu }) => {
+const SearchResultQnA = ({ data, count, simple, receiveMenu }) => {
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
-    receiveMenu(4);
+    receiveMenu(6);
   };
   return (
     <Container>
-      {data.length <= 5 && (
-        <Style.AddView>
-          <div>
-            <p className='title'>레이서 Q&A</p>
-            <p className='total_count'>18</p>
-          </div>
-          <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
-            <p className='all_view'>모두 보기</p>
-            <RightIcon stroke='#242424' />
-          </div>
-        </Style.AddView>
-      )}
-      {data.map((item) => (
-        <Content key={item.id}>
-          <div className='main_content'>
-            <div>
-              <strong>Q</strong>
-              <h2>
-                <KeywordHighlight content={item.title} keyword={keyword} />
-              </h2>
-            </div>
-            <p>
-              <KeywordHighlight content={item.content} keyword={keyword} />
-            </p>
-          </div>
-          <div className='hashtags'>
-            {item.hashtags.map((hashtag, index) => (
-              <h3 key={index}>#{hashtag}</h3>
+      {data && data.length === 0 ? (
+        <NoData />
+      ) : (
+        <>
+          {data && simple === 'simple' && (
+            <Style.AddView>
+              <div>
+                <p className='title'>레이서 Q&A</p>
+                <p className='total_count'>{count}</p>
+              </div>
+              <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
+                <p className='all_view'>모두 보기</p>
+                <RightIcon stroke='#242424' />
+              </div>
+            </Style.AddView>
+          )}
+          {data &&
+            data.map((item) => (
+              <Link to={'/community/' + item.id}>
+                <Content key={item.id}>
+                  <div className='main_content'>
+                    <div>
+                      <strong>Q</strong>
+                      <h2>
+                        <KeywordHighlight content={item.title} keyword={keyword} />
+                      </h2>
+                    </div>
+                    <p>
+                      <KeywordHighlight content={item.content} keyword={keyword} />
+                    </p>
+                  </div>
+                  <div className='hashtags'>
+                    {item.Hashtags.map((hashtag, index) => (
+                      <h3 key={index}>#{hashtag.title}</h3>
+                    ))}
+                  </div>
+                  <div className='sub_content'>
+                    <p>댓글 {item.comment_cnt}</p>
+                    <div>
+                      <p>좋아요 {item.like_cnt}</p>
+                      <p>조회 {item.view_cnt}</p>
+                    </div>
+                  </div>
+                </Content>
+              </Link>
             ))}
-          </div>
-          <div className='sub_content'>
-            <p>댓글 {item.view_cnt}</p>
-            <div>
-              <p>좋아요 {item.like_cnt}</p>
-              <p>조회 {item.view_cnt}</p>
-            </div>
-          </div>
-        </Content>
-      ))}
+        </>
+      )}
     </Container>
   );
 };
@@ -60,13 +71,13 @@ export default SearchResultQnA;
 
 const Container = styled.section`
   width: 700px;
+  height: inherit;
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
   background: #ffffff;
 `;
 const Content = styled.div`
   width: 100%;
-  height: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -100,6 +111,12 @@ const Content = styled.div`
       font-size: 1.3rem;
       margin-bottom: 2rem;
       line-height: 140%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
     }
   }
   .hashtags {

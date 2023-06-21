@@ -10,7 +10,7 @@ export const DetailContainer = styled.section`
       position: relative;
 
       h2 {
-        padding-top: 70px;
+        padding: 70px 30px 0 0;
 
         font-weight: 700;
         font-size: 2.4rem;
@@ -19,7 +19,7 @@ export const DetailContainer = styled.section`
 
       .post-option {
         position: absolute;
-        top: 72px;
+        top: 75px;
         right: 0px;
 
         button {
@@ -53,7 +53,7 @@ export const DetailContainer = styled.section`
 
           li {
             width: 100%;
-            padding: 4px 18px;
+            padding: 4px 10px;
             font-size: 14px;
             font-weight: 500;
             line-height: 22px;
@@ -63,7 +63,18 @@ export const DetailContainer = styled.section`
 
             &.active,
             &:hover {
-              color: #424242;
+              color: #e92525;
+            }
+
+            a {
+              display: block;
+              color: #acacac;
+              transition: 0.2s;
+
+              &.active,
+              &:hover {
+                color: #424242;
+              }
             }
           }
         }
@@ -145,8 +156,27 @@ export const DetailContainer = styled.section`
       padding-bottom: 120px;
 
       font-size: 1.6rem;
-      line-height: 2.3rem;
+      line-height: 2.5rem;
       word-break: keep-all;
+    }
+
+    &-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      li {
+        width: 100%;
+        height: 300px;
+        padding-bottom: 20px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
     }
   }
 
@@ -170,6 +200,10 @@ export const DetailContainer = styled.section`
     transition: 0.2s;
     cursor: pointer;
 
+    &.disabled {
+      background: #cdcdd8;
+    }
+
     img {
       margin-right: 10px;
     }
@@ -184,7 +218,9 @@ export const Status = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  margin: 20px 0;
+  flex-direction: column;
+  height: 100vh;
   font-size: 1.6rem;
+  color: #424242;
+  background-color: #f2f0fa;
 `;

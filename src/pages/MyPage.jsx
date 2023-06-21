@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import MyPageCategory from '../myPage/MyPageCategory';
 import MyPageProfile from '../myPage/MyPageProfile';
@@ -13,26 +12,6 @@ const MyPage = () => {
     setSelectedCategory(category);
   };
 
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
-  );
-
-  if (mainProfileDataQuery.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (mainProfileDataQuery.isError) {
-    return <div>Error: {mainProfileDataQuery.error.message}</div>;
-  }
-
-  // console.log(mainProfileDataQuery.data);
-
-  const { data: mainProfileData } = mainProfileDataQuery;
-
   return (
     <MyPageContainer>
       <MyPageCategory
@@ -41,11 +20,11 @@ const MyPage = () => {
         categories={categories}
       />
       {selectedCategory === '게시물' ? (
-        <MyPagePost mainProfileData={mainProfileData} />
+        <MyPagePost />
       ) : selectedCategory === '커피챗' ? (
         <MyPageCoffeeChat />
       ) : (
-        <MyPageProfile mainProfileData={mainProfileData} />
+        <MyPageProfile />
       )}
     </MyPageContainer>
   );
@@ -57,7 +36,6 @@ const MyPageContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-
   max-width: 1024px;
   padding-top: 60px;
   margin: 0 auto;

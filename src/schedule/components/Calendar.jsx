@@ -1,114 +1,128 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import * as Style from '../styleComponents/CalendarStyle';
 import CalendarModal from './CalendarModal';
-import styled from 'styled-components';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment';
 import 'moment/locale/ko';
+import { useQuery } from 'react-query';
+import { fetchSchedule } from '../api/scheduleApi';
+import { format } from 'date-fns';
 
 const MyCalendar = () => {
+  //모달 open,close
+  const [onModal, setOnModal] = useState(false);
+  const handleClickOpen = () => {
+    setOnModal(true);
+  };
+  //처음 렌더링시 현재 날짜 추출
+  const [selectedYearMonth, setSelectedYearMonth] = useState(format(new Date(), 'yyyy-MM'));
+
+  //prev,next 클릭시 추출한 날짜 변환 함수
+  // return  => 2023-06
+  const dateConversion = (currentDate) => {
+    const resultDate = format(currentDate, 'yyyy-MM');
+    return resultDate;
+  };
+
+  //prev 버튼 날짜 추출
+  const calendarRef = useRef();
+  // buttonType === prev => 이전달, 이전달 date 추출
+  // buttonType === next 버튼 => 다음달, 다음달 date 추출
+  // buttonType === today 버튼 => 현재달, 오늘 date 추출
+  const handleButtonClick = (buttonType) => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      switch (buttonType) {
+        case 'prev':
+          calendarApi.prev();
+          break;
+        case 'next':
+          calendarApi.next();
+          break;
+        case 'today':
+          calendarApi.today();
+          break;
+        default:
+          break;
+      }
+      // 추출한 날짜를 dateConversion 함수에 담아 date 변환
+      const currentDate = calendarApi.getDate();
+      const resultDate = dateConversion(currentDate);
+      setSelectedYearMonth(resultDate);
+    }
+  };
+
+  // 날짜 클릭 이벤트 핸들러, date cell에서 클릭한 날짜를 가져온다.
+  // ex) 2023-06-12
+  const [selectedDate, setSelectedDate] = useState(null);
+  const handleDateClick = (info) => {
+    setSelectedDate(info.dateStr);
+    handleClickOpen();
+  };
+
+  const { data, isLoading, isError } = useQuery('schedule', () => fetchSchedule(selectedYearMonth));
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {isError.message}</span>;
+  }
+  // 받아온 데이터 풀캘린더 event 형식으로 변환
+
+  const eventData = data.map((item) => ({
+    title: item.title,
+    start: item.start_date,
+    end: item.end_date,
+    sortIdx: item._id,
+  }));
+
   //한국어 설정
   moment.locale('ko');
   const views = {};
   //이벤트 컬러 변경 함수
   const renderEventContent = (eventInfo) => {
     return (
-      <EventColor onClick={handleClickOpen}>
+      <Style.EventColor>
         <i className='event_text'>{eventInfo.event.title}</i>
-      </EventColor>
+      </Style.EventColor>
     );
   };
-  //모달 open,close
-  const [onModal, setOnModal] = useState(false);
-  const handleClickOpen = () => {
-    setOnModal(true);
-  };
   return (
-    <Container>
-      {/* <Button onClick={handleClickOpen}>모달 클릭</Button> */}
-      {onModal ? <CalendarModal onModal={setOnModal} /> : ''}
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView='dayGridMonth'
-        locale='ko'
-        views={views}
-        eventContent={renderEventContent}
-        events={[
-          { title: '2차 프로젝트 마감일', date: '2023-06-16' },
-          { title: '2차 프로젝트 발표일', date: '2023-06-17' },
-        ]}
-      />
-    </Container>
+    <Style.Container>
+      {onModal ? <CalendarModal onModal={setOnModal} date={selectedDate} /> : ''}
+      <div>
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          ref={calendarRef}
+          initialView='dayGridMonth'
+          //한글 변환시 1일, 2일,3일 => 1,2,3으로 바꿈
+          dayCellContent={({ date }) => <a className='fc-daygrid-day-number'>{date.getDate()}</a>}
+          dateClick={handleDateClick}
+          locale='ko'
+          views={views}
+          eventContent={renderEventContent}
+          events={eventData}
+          eventOverlap={false}
+          customButtons={{
+            prev: {
+              click: () => handleButtonClick('prev'),
+            },
+            next: {
+              click: () => handleButtonClick('next'),
+            },
+            today: {
+              text: 'Today',
+              click: () => handleButtonClick('today'),
+            },
+          }}
+        />
+      </div>
+    </Style.Container>
   );
 };
 
 export default MyCalendar;
-
-const Container = styled.section`
-  margin-top: 10rem;
-  width: 67%;
-  height: 100%;
-  //토,일 색상 변경
-  .fc-day-sat a {
-    color: #9169ff;
-  }
-  .fc-day-sun a {
-    color: #6700e6;
-  }
-  // 요일 헤더 셀
-  .fc .fc-col-header-cell-cushion {
-    padding: 0.5rem 0;
-    font-weight: 600;
-    font-size: 1.2rem;
-  }
-  //헤더 2023년 6월
-  .fc .fc-toolbar-title {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #242424;
-    margin: 0px;
-  }
-  // 헤더 today, prev,next 버튼색상 변경
-  .fc-button-primary {
-    background: #d6c9ff;
-  }
-  .fc-today-button {
-    background: #7353ea !important;
-  }
-
-  .fc-button {
-    border: none;
-    box-shadow: none !important;
-    &:hover {
-      background: #d6c9ff !important;
-    }
-    &:active {
-      background: #d6c9ff !important;
-    }
-  }
-  //prev,next 아이콘 색상 변경
-  .fc-icon-chevron-left,
-  .fc-icon-chevron-right {
-    &::before {
-      color: #616161;
-    }
-  }
-
-  //이벤트
-  .fc-event {
-    border: none;
-  }
-`;
-const EventColor = styled.div`
-  cursor: pointer;
-  background: #7353ea;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  .event_text {
-    color: #ffffff;
-  }
-`;
-const Button = styled.button`
-  margin-top: 10rem;
-  padding: 2rem;
-`;

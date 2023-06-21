@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.section`
-  padding-top: 60px;
-
   .filter {
     display: flex;
-    padding-bottom: 10px;
+    padding: 30px 0 10px 0;
 
     button {
       display: flex;
@@ -61,17 +59,35 @@ export const PostContainer = styled.section`
     }
 
     h2 {
-      padding: 8px 0 20px;
+      max-height: 46px;
+      margin: 8px 0 10px;
       font-weight: 600;
       font-size: 1.9rem;
       line-height: 2.3rem;
+      white-space: normal;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .list-content {
-      padding-bottom: 30px;
-      font-weight: 500;
-      font-size: 1.3rem;
-      line-height: 1.7rem;
+      margin-bottom: 30px;
+      max-height: 80px;
+
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: #493675e8;
+      line-height: 2rem;
+
+      overflow: hidden;
+      white-space: normal;
+      text-align: left;
+      word-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
     }
 
     .list-info {
@@ -102,10 +118,11 @@ export const PostContainer = styled.section`
     justify-content: center;
     align-items: center;
 
-    padding: 80px 0 100px;
-    font-size: 1.6rem;
+    height: calc(100vh - 460px);
+    margin: 40px 0;
+    font-size: 1.5rem;
     color: #616161;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 `;
 

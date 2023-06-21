@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useMutation, useQueryClient } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
-import optionsData from '../myPage/optionsData';
+import optionsData from '../myPage/data/optionsData';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [companyName, setCompanyName] = useState('');
@@ -14,10 +16,24 @@ const MyPageEdit = () => {
   const [startMonth, setStartMonth] = useState('');
   const [endYear, setEndYear] = useState('');
   const [endMonth, setEndMonth] = useState('');
-  const [intro, setIntro] = useState(''); // 삭제 고려중
+  const [content, setContent] = useState('');
   const [isCurrentlyEmployed, setIsCurrentlyEmployed] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  // useMutation POST 요청 선언
+  const createCareerMutation = useMutation((careerData) =>
+    fetch(`${URL}/api/careers/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(careerData),
+    })
+  );
+
+  // input 이벤트로 state 변경하는 핸들러
   const handleStartYearChange = (e) => {
     e.preventDefault();
     const selectedYear = e.target.value;
@@ -48,6 +64,39 @@ const MyPageEdit = () => {
       setEndYear('');
       setEndMonth('');
     }
+  };
+
+  // 년 월 빼고 사이에 대쉬 넣기, 6월 => 06 으로 바꾸기
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const hireDate = `${startYear.replace('년', '')}-${startMonth
+      .replace('월', '')
+      .padStart(2, '0')}`;
+
+    let resignDate = '';
+    if (!isCurrentlyEmployed) {
+      resignDate = `${endYear.replace('년', '')}-${endMonth.replace('월', '').padStart(2, '0')}`;
+    }
+    // careerData에 최종 값을 넣어주기
+    const careerData = {
+      company_name: companyName,
+      position,
+      hire_date: hireDate,
+      resign_date: resignDate,
+      content,
+    };
+    // console.log(careerData);
+
+    // Mutation POST 요청
+    createCareerMutation.mutate(careerData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('myCareerList');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('프로필 수정 오류:', error);
+      },
+    });
   };
 
   return (
@@ -122,23 +171,23 @@ const MyPageEdit = () => {
         <label htmlFor='currentlyEmployed'>재직중</label>
       </CheckboxContainer>
 
-      <IntroTextContainter
-        onChange={(e) => {
-          e.preventDefault();
-          setIntro(e.target.value);
-        }}
-        value={intro}
-      >
+      <IntroTextContainter>
         <h3>어떤 일을 했나요?</h3>
-        <textarea placeholder='담당한 업무, 프로젝트 등을 소개해주세요'></textarea>
+        <textarea
+          placeholder='담당한 업무, 프로젝트 등을 소개해주세요'
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+          value={content}
+        ></textarea>
       </IntroTextContainter>
 
       <ButtonContainer>
         <Button
           color='darkPurple'
           value='수정완료'
-          onClick={() => {
-            navigate('/mypage');
+          onClick={(e) => {
+            handleSubmit(e);
           }}
         />
         <Button
@@ -183,7 +232,6 @@ const IntroTextContainter = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   h3 {
-    font-family: 'Noto Sans KR';
     font-weight: 400;
     font-size: 1.7rem;
     line-height: 2rem;
@@ -195,9 +243,8 @@ const IntroTextContainter = styled.div`
     border: 1px solid #d8e0e9;
     border-radius: 8px;
     width: 100%;
-    height: 17rem;
+    height: 7rem;
     padding: 0.5rem 1rem;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -234,7 +281,6 @@ const CheckboxContainer = styled.div`
   }
 
   label {
-    font-family: 'Noto Sans KR';
     font-weight: 400;
     font-size: 1.5rem;
   }

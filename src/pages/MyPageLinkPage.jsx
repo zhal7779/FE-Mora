@@ -1,14 +1,47 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import Button from '../components/Button';
 
+const URL = process.env.REACT_APP_URL;
+
 const MyPageEdit = () => {
   const [url, setUrl] = useState('');
   const [urlName, setUrlName] = useState('');
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // useMutation POST 요청 선언
+  const createLinkMutation = useMutation((linkData) =>
+    fetch(`${URL}/api/links`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(linkData),
+    })
+  );
+
+  const handleLinkUpdate = () => {
+    const linkData = {
+      url: url,
+      name: urlName,
+    };
+
+    createLinkMutation.mutate(linkData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('myLinkList');
+        navigate('/mypage');
+      },
+      onError: (error) => {
+        console.error('링크 수정 오류:', error);
+      },
+    });
+  };
 
   return (
     <LoginContainer>
@@ -41,7 +74,7 @@ const MyPageEdit = () => {
           color='darkPurple'
           value='수정완료'
           onClick={() => {
-            navigate('/mypage');
+            handleLinkUpdate();
           }}
         />
         <Button

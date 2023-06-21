@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import styled from 'styled-components';
@@ -6,6 +6,8 @@ import LoginContainer from '../logIn/LogInContainer';
 import MyPageEditInput from '../myPage/styledComponents/MyPageEditInput';
 import MyPageEditSelect from '../myPage/styledComponents/MyPageEditSelect';
 import Button from '../components/Button';
+import noDataImage from '../assets/images/no-data-image.svg';
+const URL = process.env.REACT_APP_URL;
 
 const MyPageEdit = () => {
   const [userName, setUserName] = useState('');
@@ -14,29 +16,24 @@ const MyPageEdit = () => {
   const [intro, setIntro] = useState('');
   const [phase, setPhase] = useState('');
   const [track, setTrack] = useState('');
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch('http://15.164.221.244:5000/api/users/mypage', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
-  );
+  // 수정하지 않고 넘길 때는 이전 값 넣어주기
+  useEffect(() => {
+    setUserName(mainProfileData.name);
+    setUserImg(mainProfileData.UserDetail.img_path);
+    setPosition(
+      mainProfileData.UserDetail.position === '직책을 입력해주세요.'
+        ? ''
+        : mainProfileData.UserDetail.position
+    );
+    setTrack('트랙 및');
+    setPhase('기수를 입력해주세요');
+    setIntro(mainProfileData.UserDetail.comment);
+  }, []);
 
-  const updateProfileMutation = useMutation((updatedData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/edit', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-      body: JSON.stringify(updatedData),
-    }).then((response) => response.json())
-  );
-
+  // 트랙과 기수 이벤트 핸들러
   const handleTrackChange = (e) => {
     const selectedTrack = e.target.value;
     setTrack(selectedTrack);
@@ -47,13 +44,38 @@ const MyPageEdit = () => {
     setPhase(selectedPhase);
   };
 
+  // 기존 내 정보 가져오기
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch(`${URL}/api/users/mypage`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
+  );
+
+  const { data: mainProfileData } = mainProfileDataQuery;
+
+  // 프로필 이미지 POST 뮤테이션 선언
   const uploadImageMutation = useMutation((formData) =>
-    fetch('http://15.164.221.244:5000/api/users/mypage/img/upload', {
+    fetch(`${URL}/api/users/mypage/img/upload`, {
       method: 'POST',
       body: formData,
     }).then((response) => response.json())
   );
 
+  // 내 정보 updatedData 로 수정하기
+  const updateProfileMutation = useMutation((updatedData) =>
+    fetch(`${URL}/api/users/mypage/edit`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+      body: JSON.stringify(updatedData),
+    }).then((response) => response.json())
+  );
+
+  // formData 로 이미지 업로드하고 이미지 링크 받기
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -63,8 +85,9 @@ const MyPageEdit = () => {
       const data = await uploadImageMutation.mutateAsync(formData);
 
       if (data) {
-        const imageUrl = 'http://15.164.221.244:5000/' + data.file_name;
+        const imageUrl = `${URL}/` + data.file_name;
         setUserImg(imageUrl);
+        queryClient.invalidateQueries('mainProfileData');
       } else {
         console.log('이미지 업로드 실패');
       }
@@ -73,6 +96,7 @@ const MyPageEdit = () => {
     }
   };
 
+  // 수정한 값이 담긴 state 를 모두 updatedData 객체에 담아 post 요청 보내기
   const handleSubmit = () => {
     const updatedData = {
       userName,
@@ -94,37 +118,29 @@ const MyPageEdit = () => {
     });
   };
 
-  if (mainProfileDataQuery.isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (mainProfileDataQuery.isError) {
-    return <div>Error: {mainProfileDataQuery.error.message}</div>;
-  }
-
-  const { data: mainProfileData } = mainProfileDataQuery;
-
   return (
     <LoginContainer>
       <ImageContainer>
-        <ProfileImg src={userImg || mainProfileData.userProfile.img_path} alt='프로필'></ProfileImg>
-        {userImg === '' ? (
-          <>
-            <label htmlFor='imageUpload'>
-              <input
-                onChange={handleImageChange}
-                id='imageUpload'
-                type='file'
-                style={{ display: 'none' }}
-              />
-            </label>
-          </>
-        ) : null}
+        {mainProfileData?.UserDetail?.img_path ? (
+          <ProfileImg>
+            <img src={userImg || mainProfileData.UserDetail.img_path} alt='프로필' />
+          </ProfileImg>
+        ) : (
+          <img src={noDataImage} alt='noDataImage'></img>
+        )}
+
+        <label htmlFor='imageUpload'>
+          <input
+            onChange={handleImageChange}
+            id='imageUpload'
+            type='file'
+            style={{ display: 'none' }}
+          />
+        </label>
       </ImageContainer>
       <MyPageEditInput
         title='이름'
         type='text'
-        placeholder={mainProfileData.userName.name}
         name='userName'
         onChange={(e) => setUserName(e.target.value)}
         value={userName}
@@ -152,19 +168,27 @@ const MyPageEdit = () => {
       <MyPageEditInput
         title='직함'
         type='text'
-        placeholder={mainProfileData.userProfile.position}
+        placeholder={mainProfileData.UserDetail.position}
         name='position'
         onChange={(e) => setPosition(e.target.value)}
         value={position}
       />
-      <IntroTextContainter onChange={(e) => setIntro(e.target.value)} value={intro}>
+      <IntroTextContainter>
         <h3>자기소개</h3>
         <textarea
-          placeholder={mainProfileData.userProfile.comment || '자기소개를 입력해주세요.'}
+          placeholder={mainProfileData.UserDetail.comment || '자기소개를 입력해주세요.'}
+          onChange={(e) => setIntro(e.target.value)}
+          value={intro}
         ></textarea>
       </IntroTextContainter>
       <ButtonContainer>
-        <Button color='darkPurple' value='수정완료' onClick={handleSubmit} />
+        <Button
+          color='darkPurple'
+          value='수정완료'
+          onClick={() => {
+            handleSubmit();
+          }}
+        />
         <Button color='white' value='수정취소' onClick={() => navigate('/mypage')} />
       </ButtonContainer>
     </LoginContainer>
@@ -219,10 +243,16 @@ const ButtonContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.div`
   width: 10rem;
+  height: 10rem;
   margin-bottom: 2rem;
   border-radius: 50%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const TrackPhaseContainer = styled.div`
@@ -277,7 +307,7 @@ const IntroTextContainter = styled.div`
 
 const trackOptions = [
   { value: '트랙을 선택해 주세요', label: '트랙을 선택해 주세요' },
-  { value: 'SW 엔지니어 트랙', label: 'SW 엔지니어 트랙' },
+  { value: 'SW 트랙', label: 'SW 트랙' },
   { value: 'AI 트랙', label: 'AI 트랙' },
 ];
 const phaseOptions = [
