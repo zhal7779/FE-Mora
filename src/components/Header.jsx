@@ -152,7 +152,7 @@ const Header = () => {
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
                 <div>
-                  <ImageIcon src={userImg ? userImg : defaultImg}></ImageIcon>
+                  <ImageIcon src={userImg ? userImg : defaultImg} alt='프로필'></ImageIcon>
                 </div>
               </Link>
             </SideContent>
@@ -236,6 +236,7 @@ const ImageIcon = styled.img`
   height: 3.6rem;
   border-radius: 50%;
   background: #969696;
+  object-fit: cover;
 `;
 const ModalContent = styled.div`
   position: fixed;

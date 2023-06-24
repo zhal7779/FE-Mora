@@ -9,7 +9,7 @@ const RankingList = ({ data }) => {
         data.map((item, index) => (
           <Content key={item.id} rank={index + 1}>
             <p className='ranking'>{index + 1}</p>
-            <img className='image_icon' src={item.User.img_path}></img>
+            <img className='image_icon' src={item.User.img_path} alt='프로필'></img>
             <div>
               <Link to={'/community/' + item.id}>
                 <h5 className='title'>{item.title}</h5>
@@ -45,6 +45,7 @@ const Content = styled.div`
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
+    object-fit: cover;
   }
   .title {
     ${(props) => props}

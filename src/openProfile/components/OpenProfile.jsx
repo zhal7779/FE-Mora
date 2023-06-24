@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-alt.svg';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 const OpenProfile = ({ registerstatus }) => {
   const token = sessionStorage.getItem('userToken');
   const myId = jwt_decode(token).id;
+
   const [userId, setUserId] = useState('');
   const [coffeChatStatus, setCoffeChatStatus] = useState([]);
   const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
@@ -40,6 +41,7 @@ const OpenProfile = ({ registerstatus }) => {
   const queryClient = useQueryClient();
 
   const { data } = useQuery('openProfile', getProfile);
+  // const {data, fetchNextPage, hasNextPage} = useInfiniteQuery("openProfile",({pageParam}) => getProfile);
   useEffect(() => {
     const profileRefetch = async () => {
       await queryClient.invalidateQueries('openProfile');
@@ -72,7 +74,7 @@ const OpenProfile = ({ registerstatus }) => {
             <Style.Content>
               <Style.ProfileContent>
                 <div>
-                  <img className='image_icon' src={item.img_path}></img>
+                  <img className='image_icon' src={item.img_path} alt='프로필'></img>
                   <span className='text_content'>
                     <h5>{item.User.name}</h5>
                     <p>

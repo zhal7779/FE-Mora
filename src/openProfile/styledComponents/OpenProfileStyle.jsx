@@ -51,6 +51,7 @@ export const ProfileContent = styled.div`
     height: 6.6rem;
     border-radius: 50%;
     margin-right: 2rem;
+    object-fit: cover;
   }
 `;
 
