@@ -4,7 +4,6 @@ import LoginContainer from '../logIn/LogInContainer';
 import Headline from '../logIn/Headline';
 import LoginInput from '../logIn/LogInInput';
 import LoginButton from '../logIn/LogInButton';
-import OrLineText from '../logIn/OrLine';
 import LittleText from '../logIn/LittleText';
 import SigninAccordion from '../signIn/SignInAccordion';
 import { useMutation } from 'react-query';
@@ -90,8 +89,6 @@ const Signin = () => {
   return (
     <LoginContainer>
       <Headline title='엘리스 갱스터 회원 가입 🕶️' />
-      <LoginButton color='white' value='구글계정으로 시작하기' />
-      <OrLineText text='또는' />
       <SigninAccordion>
         <LoginInput
           title='성함'

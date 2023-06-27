@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import LoginContainer from '../logIn/LogInContainer';
 import Headline from '../logIn/Headline';
 import LoginInput from '../logIn/LogInInput';
 import LoginButton from '../logIn/LogInButton';
-import OrLineText from '../logIn/OrLine';
 import LittleText from '../logIn/LittleText';
 const URL = process.env.REACT_APP_URL;
 
@@ -15,6 +14,7 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [showLittleText, setShowLittleText] = useState(false);
   const navigate = useNavigate();
+  const emailInputRef = useRef(null);
 
   // 로그인 POST 요청 Mutation 실행
   const handleLogin = async () => {
@@ -27,6 +27,13 @@ const Login = () => {
       navigate('/community/post/free');
     }
   }, [navigate]);
+
+  // 컴포넌트 로드 시 이메일 입력란에 포커스 주기
+  useEffect(() => {
+    if (emailInputRef.current) {
+      emailInputRef.current.focus();
+    }
+  }, []);
 
   // 로그인 실패시 에러 텍스트 띄우기
   useEffect(() => {
@@ -69,7 +76,6 @@ const Login = () => {
       onSuccess: (data) => {
         const { token, message: responseMessage } = data;
         if (responseMessage === '로그인에 성공하셨습니다!') {
-          // status 까지 주는 걸로 바꿔지면 그걸로 로그인 여부 판단하기
           sessionStorage.setItem('userToken', token);
           navigate('/community/post/free');
         } else {
@@ -92,6 +98,7 @@ const Login = () => {
           setEmail(e.target.value);
         }}
         value={email}
+        ref={emailInputRef}
       />
       <LoginInput
         title='비밀번호'
@@ -110,8 +117,7 @@ const Login = () => {
         }}
       />
       <LoginButton color='darkPurple' value='이메일로 계속하기' onClick={handleLogin} />
-      <OrLineText text='또는' />
-      <LoginButton color='white' value='구글계정으로 로그인' />
+
       {showLittleText ? (
         <LittleText wiggle text={message} />
       ) : (

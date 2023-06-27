@@ -45,6 +45,13 @@ const Quiz = () => {
   //   getOtherQuiz();
   // }, []);
 
+  // 인풋에 자동 포커스
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [quizList]);
+
   // 다른 퀴즈로 넘어가면 state 초기화
   useEffect(() => {
     setAnswer('');
@@ -107,7 +114,6 @@ const Quiz = () => {
   return (
     <LoginContainer>
       <Headline title='자, 여기서 퀴즈!' />
-
       <LoginInput
         title={quizList[randomIndex]}
         type='text'
@@ -127,7 +133,6 @@ const Quiz = () => {
         }}
       />
       <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
-      <div style={{ height: '2rem' }}></div>
       <LittleText
         wiggle
         text={
