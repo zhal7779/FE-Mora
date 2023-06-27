@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+## 사용자 기능
+---
+- 비회원일 경우 :  메뉴 접근 불가, 메뉴 접근시 로그인 창으로 이동
+- 로그인 페이지: 로그인을 통해 레이서 전용 커뮤니티 이용하기
+- 퀴즈 페이지: 레이서 전용 퀴즈로 회원가입 전 레이서 여부 판별하기
+- 회원가입 페이지: Gmail, 비밀번호 양식 검증하기
+- 마이 페이지: 사용자 정보 수정, 탈퇴 / 스킬, 경력, 교육, 링크 추가, 수정, 삭제 / 내 게시물 확인하기
+- 메인페이지: keyframe animation, 인기 게시글 조회
+- 커뮤니티 페이지(토끼굴): 카테고리별 전체 게시글 및 추천 게시글 조회, 게시글 필터링 조회, 카테고리별 게시글 검색 및 검색결과 조회
+- 게시글 등록 페이지: 카테고리 선택, 제목과 내용 및 이미지 등록, 이미지 미리보기 및 삭제
+- 게시글 상세 페이지: 게시글 상세 조회, 게시글 수정 및 삭제, 좋아요 등록 및 취소, 댓글 등록 및 조회, 댓글 수정 및 삭제
+- 공지사항, 일정 페이지 : 엘리스 트랙의 공지사항과 전체 일정(캘린더) 조회
+- 오픈프로필 페이지: 이용자의 오픈프로필을 올리기 내리기 가능, 다른 이용자가 올린 오픈프로필을 볼 수 있으며 이용자는 다른 이용자에게 커피챗 전송 (이메일 전송)
+- 전체 검색 페이지:  모든 카테고리 통합으로 전체 검색
+- 알림모달:  중요 일정 1시간 전,  이용자가 올린 게시글에 댓글 달릴 경우 헤더에 알림이오며 알림 온 상세 내용은 알림 모달창에서 확인
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 관리자 기능
+---
+- 로그인/회원가입 페이지: 관리자 로그인/회원가입
+- 게시물 관리 페이지: 게시물 검색, 조회, 삭제 / 게시물 댓글 삭제
+- 사용자 관리 페이지: 사용자 검색, 조회, 등록, 수정, 삭제
+- 공지사항 관리 페이지: 공지사항 검색, 조회, 등록, 수정, 삭제
+- 일정 관리 페이지: 일정 검색, 조회, 등록, 수정, 삭제
+- 트랙 관리 페이지: 트랙 검색, 조회, 등록, 수정, 삭제
