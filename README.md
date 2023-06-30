@@ -87,7 +87,7 @@ https://documenter.getpostman.com/view/27753347/2s93z9a1sW
 <br />
 
 ### Git Flow
-![깃경로](https://github.com/SeongHo-C/FE-TicketWantIt/assets/87592697/920dd7e7-985e-46b4-90cc-0b292ec82599)
+![image](https://github.com/zhal7779/FE-Mora/assets/79049046/11930a76-7c47-4d09-8fb7-77de51cc00bc)
 
 <br />
 
