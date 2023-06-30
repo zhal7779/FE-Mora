@@ -4,6 +4,7 @@ import { categories } from '../community/categoryData';
 import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
 import IconImageDelete from '../assets/icons/icon-delete-image.svg';
+import IconHashtagDelete from '../assets/icons/icon-delete-hashtag.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 import { useQuery, useMutation } from 'react-query';
 import { getDetail } from '../postDetail/service/postDetailService';
@@ -136,6 +137,39 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     });
   };
 
+  // 해쉬태그 change핸들러
+  const handleChangeHashtag = e => {
+    if (e.target.value.length > 30) {
+      Swal.fire({
+        icon: 'warning',
+        title: '해쉬태그는 30자 이하로 작성해주세요!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  };
+
+  // 해쉬태그 추가
+  const handleAddHashtag = e => {
+    const inputValue = e.target.value;
+    if (inputValue.length !== 0 && e.key === 'Enter') {
+      setData(prevData => ({
+        ...prevData,
+        hashtags: [...prevData.hashtags, inputValue]
+      }));
+      e.target.value = '';
+    }
+  };
+
+  // 해쉬태그 삭제
+  const handleHashtagDelete = index => {
+    setData(prevData => {
+      const updatedHashtags = [...prevData.hashtags];
+      updatedHashtags.splice(index, 1);
+      return { ...prevData, hashtags: updatedHashtags };
+    });
+  };
+
   return (
     <Style.WriteContainer>
       <div className="write-top">
@@ -183,10 +217,10 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         onChange={handleContentChange}
       ></textarea>
       {showPostImage && (
-        <div className="file-upload">
+        <ul className="file-upload">
           {data.images.length > 0 &&
             data.images.map((image, index) => (
-              <div className="file-upload-preview" key={index}>
+              <li className="file-upload-preview" key={index}>
                 <img src={image.img_path} alt={`이미지` + index} />
                 <button
                   className="delete-btn"
@@ -194,7 +228,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
                 >
                   <img src={IconImageDelete} alt="이미지 삭제" />
                 </button>
-              </div>
+              </li>
             ))}
           <label htmlFor="file" className="file-upload-btn">
             <input
@@ -208,8 +242,35 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
             <img src={IconAddImage} alt="" />
             사진 추가
           </label>
-        </div>
+        </ul>
       )}
+      <div className="hashtags">
+        {data.hashtags && (
+          <ul className="hashtags-preview">
+            {data.hashtags.map((hashtag, index) => (
+              <li key={index}>
+                <span>#</span>
+                {hashtag}
+                <button
+                  className="hashtag-delete"
+                  onClick={() => handleHashtagDelete(index)}
+                >
+                  <img src={IconHashtagDelete} alt="해쉬태그 삭제" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="hashtags-input">
+          <span>#</span>
+          <input
+            type="text"
+            placeholder="태그를 입력하세요. (예: #react, #javascript)"
+            onChange={handleChangeHashtag}
+            onKeyUp={handleAddHashtag}
+          />
+        </div>
+      </div>
     </Style.WriteContainer>
   );
 };
