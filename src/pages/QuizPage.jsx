@@ -16,7 +16,7 @@ const URL = process.env.REACT_APP_URL;
 const Quiz = () => {
   const [answer, setAnswer] = useState('');
   const [showImage, setShowImage] = useState(false);
-  const [randomIndex, setRandomIndex] = useState(0);
+  const [quizIndex, setQuizIndex] = useState(0);
   const [countdown, setCountdown] = useState(null);
   const navigate = useNavigate();
   const inputRef = useRef(null);
@@ -45,12 +45,19 @@ const Quiz = () => {
   //   getOtherQuiz();
   // }, []);
 
+  // 인풋에 자동 포커스
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [quizList]);
+
   // 다른 퀴즈로 넘어가면 state 초기화
   useEffect(() => {
     setAnswer('');
     setShowImage(false);
     setCountdown(null);
-  }, [randomIndex]);
+  }, [quizIndex]);
 
   // submit 하면 이미지 보여줄 준비
   const handleSubmit = () => {
@@ -65,11 +72,11 @@ const Quiz = () => {
 
   // 다른 퀴즈 불러오기 1 2 3 1 2 3 순서
   const getOtherQuiz = () => {
-    let nextIndex = randomIndex + 1;
+    let nextIndex = quizIndex + 1;
     if (nextIndex >= quizList.length) {
       nextIndex = 0; // 문제가 마지막까지 갔다면 다시 처음으로
     }
-    setRandomIndex(nextIndex);
+    setQuizIndex(nextIndex);
     setShowImage(false);
 
     if (inputRef.current) {
@@ -80,7 +87,7 @@ const Quiz = () => {
   // 성공과 실패 판정하고 알맞은 소리 들려주기
   useEffect(() => {
     if (showImage) {
-      if (answer === quizData[randomIndex].answer) {
+      if (answer === quizData[quizIndex].answer) {
         playSound(answerSound);
         setCountdown(5);
       } else {
@@ -107,11 +114,10 @@ const Quiz = () => {
   return (
     <LoginContainer>
       <Headline title='자, 여기서 퀴즈!' />
-
       <LoginInput
-        title={quizList[randomIndex]}
+        title={quizList[quizIndex]}
         type='text'
-        placeholder={quizHint[randomIndex]}
+        placeholder={quizHint[quizIndex]}
         name='answer'
         value={answer}
         onChange={(e) => {
@@ -127,7 +133,6 @@ const Quiz = () => {
         }}
       />
       <LoginButton color='darkPurple' value='제출' onClick={handleSubmit} />
-      <div style={{ height: '2rem' }}></div>
       <LittleText
         wiggle
         text={
@@ -137,10 +142,10 @@ const Quiz = () => {
         }
       />
 
-      {showImage && answer === quizAns[randomIndex] && (
+      {showImage && answer === quizAns[quizIndex] && (
         <AnimatedRabbit src={rabbitImg} style={{ width: '25rem', height: '27rem' }} />
       )}
-      {showImage && answer !== quizAns[randomIndex] && (
+      {showImage && answer !== quizAns[quizIndex] && (
         <AnimatedTurtle src={turtleImg} style={{ width: '25rem', height: '25rem' }} />
       )}
 

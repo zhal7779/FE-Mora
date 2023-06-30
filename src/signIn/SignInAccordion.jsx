@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import upIcon from '../assets/icons/u_angle-up.svg';
 import downIcon from '../assets/icons/u_angle-down.svg';
 
 const SigninAccordion = ({ children }) => {
   const [expanded, setExpanded] = useState(false);
+  const firstChildRef = useRef(null);
 
   const toggleAccordion = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    if (expanded && firstChildRef.current) {
+      firstChildRef.current.focus();
+    }
+  }, [expanded]);
 
   return (
     <AccordionWrapper>
@@ -20,7 +27,14 @@ const SigninAccordion = ({ children }) => {
           <AccordionIcon src={downIcon} alt='Down Icon' />
         )}
       </AccordionButton>
-      <AccordionContent expanded={expanded}>{children}</AccordionContent>
+      <AccordionContent expanded={expanded}>
+        {React.Children.map(children, (child, index) => {
+          if (index === 0) {
+            return React.cloneElement(child, { ref: firstChildRef });
+          }
+          return child;
+        })}
+      </AccordionContent>
     </AccordionWrapper>
   );
 };
@@ -69,9 +83,15 @@ const AccordionButton = styled.button`
 
   &:hover {
     background: #5e3de4;
+    transition: all 0.2s ease-in-out;
+  }
+  &:not(:hover) {
+    background: #7353ea;
+    transition: all 0.2s ease-in-out;
   }
   &:active {
     background: #532eda;
+    transition: all 0.2s ease-in-out;
   }
 `;
 
