@@ -17,6 +17,7 @@ const Header = () => {
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
     enabled: false,
   });
+  console.log(data);
 
   const [userImg, setUserImg] = useState('');
   useEffect(() => {

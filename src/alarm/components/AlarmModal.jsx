@@ -79,7 +79,7 @@ const AlarmModal = ({ handleClose }) => {
                         </div>
                         <div>
                           {hiddenContent.includes(item.id) ? (
-                            <UpIcon />
+                            <UpIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
                           ) : (
                             <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
                           )}
