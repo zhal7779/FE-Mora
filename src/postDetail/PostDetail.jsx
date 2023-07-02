@@ -170,17 +170,17 @@ const PostDetail = ({ postId }) => {
               </span>
             );
           })}
+          {detail.Hashtags.length > 0 && (
+            <ul className="hashtags">
+              {detail.Hashtags.map((hashtag, index) => (
+                <li key={index}>
+                  <span>#</span>
+                  {hashtag}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        {detail.Hashtags.length > 0 && (
-          <ul className="hashtags">
-            {detail.Hashtags.map((hashtag, index) => (
-              <li key={index}>
-                <span>#</span>
-                {hashtag}
-              </li>
-            ))}
-          </ul>
-        )}
         <button
           className={`like-btn ${detail.user_like ? '' : 'disabled'}`}
           onClick={handleClickLike}

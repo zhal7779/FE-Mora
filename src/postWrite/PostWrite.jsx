@@ -25,7 +25,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         category: detail.category,
         title: detail.title,
         content: detail.content,
-        hashtags: detail.hashtags,
+        hashtags: detail.Hashtags,
         images: detail.Photos
       }));
     }
@@ -245,7 +245,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         </ul>
       )}
       <div className="hashtags">
-        {data.hashtags && (
+        {data.hashtags.length > 0 && (
           <ul className="hashtags-preview">
             {data.hashtags.map((hashtag, index) => (
               <li key={index}>

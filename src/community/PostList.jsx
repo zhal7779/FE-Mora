@@ -74,11 +74,21 @@ const PostList = ({ selectedCategoryId, searchTerm, data }) => {
           </div>
           <ul>
             {filteredData.map(post => (
-              <li key={post.id}>
+              <li key={post.id} className="list">
                 <Link to={`/community/${post.id}`}>
                   <p className="list-time">{formatTime(post.createdAt)}</p>
                   <h2>{post.title}</h2>
                   <p className="list-content">{post.content}</p>
+                  {post.Hashtags.length > 0 && (
+                    <ul className="list-hashtags">
+                      {post.Hashtags.map((hashtag, index) => (
+                        <li key={index}>
+                          <span>#</span>
+                          {hashtag}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   <div className="list-info">
                     <p>댓글 {post.comment_cnt}</p>
                     <div>
