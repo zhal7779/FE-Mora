@@ -153,7 +153,7 @@ export const DetailContainer = styled.section`
 
     &-text {
       min-height: 120px;
-      padding-bottom: 20px;
+      padding-bottom: 120px;
 
       font-size: 1.6rem;
       line-height: 2.5rem;
@@ -183,12 +183,12 @@ export const DetailContainer = styled.section`
       display: flex;
       flex-wrap: wrap;
       gap: 0.8rem;
-      padding-bottom: 120px;
+      padding-top: 20px;
 
       li {
         display: flex;
         align-items: center;
-        padding: 5px 10px;
+        padding: 4px 10px;
         font-size: 1.4rem;
         color: rgb(66, 66, 66);
         background: rgb(255, 255, 255);
