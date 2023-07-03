@@ -17,6 +17,7 @@ export const PostContainer = styled.section`
       line-height: 2.2rem;
       font-weight: 600;
       color: #605ea0;
+      word-break: keep-all;
     }
   }
 
@@ -131,6 +132,17 @@ export const PostContainer = styled.section`
             width: 100%;
             height: 100%;
             object-fit: cover;
+          }
+        }
+
+        @media (max-width: 768px) {
+          &-text {
+            width: 100%;
+            height: 61px;
+          }
+
+          &-img {
+            display: none;
           }
         }
       }
