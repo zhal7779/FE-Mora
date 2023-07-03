@@ -144,6 +144,7 @@ export const WriteContainer = styled.div`
     }
 
     &-input {
+      position: relative;
       display: flex;
       align-items: center;
       padding: 12px;
@@ -159,6 +160,35 @@ export const WriteContainer = styled.div`
 
         &::placeholder {
           color: #becbdd;
+        }
+      }
+    }
+
+    &-popular {
+      position: absolute;
+      left: 0;
+      top: 52px;
+
+      width: 100%;
+      border: 1px solid rgb(200, 210, 223);
+      border-radius: 4px;
+
+      li {
+        padding: 18px 20px;
+        cursor: pointer;
+
+        &:first-child::after {
+          position: absolute;
+          right: 20px;
+          content: '가장 많이 사용된 해쉬태그입니다';
+          display: inline-block;
+          color: #becbdd;
+          font-size: 1.4rem;
+        }
+
+        &.selected,
+        &:hover {
+          background-color: #c8d2df22;
         }
       }
     }
