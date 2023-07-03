@@ -152,7 +152,7 @@ export const DetailContainer = styled.section`
     position: relative;
 
     &-text {
-      min-height: 220px;
+      min-height: 120px;
       padding-bottom: 120px;
 
       font-size: 1.6rem;
@@ -175,6 +175,28 @@ export const DetailContainer = styled.section`
           width: 100%;
           height: 100%;
           object-fit: contain;
+        }
+      }
+    }
+
+    .hashtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      padding-top: 20px;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 4px 10px;
+        font-size: 1.4rem;
+        color: rgb(66, 66, 66);
+        background: rgb(255, 255, 255);
+        border: 1px solid rgb(216, 224, 233);
+        border-radius: 20px;
+
+        span {
+          margin-right: 4px;
         }
       }
     }

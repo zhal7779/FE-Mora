@@ -27,6 +27,7 @@ export const fetchReadPlanInfoDetail = async (id) => {
 export const fetchCreatePlan = async (newPlan) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const plan = changePlanForm(newPlan);
+  console.log(plan);
 
   const response = await fetch(`${domainPort}/api/plans`, {
     method: 'POST',

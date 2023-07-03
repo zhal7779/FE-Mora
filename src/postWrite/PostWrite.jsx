@@ -1,9 +1,10 @@
 import * as Style from './styledComponents/PostWriteStyle';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { categories } from '../community/categoryData';
 import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
 import IconImageDelete from '../assets/icons/icon-delete-image.svg';
+import IconHashtagDelete from '../assets/icons/icon-delete-hashtag.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 import { useQuery, useMutation } from 'react-query';
 import { getDetail } from '../postDetail/service/postDetailService';
@@ -13,9 +14,20 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const [showCategory, setShowCategory] = useState(false);
+  const [popularHashtags, setPopularHashtags] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const firstListItemRef = useRef(null);
   const { data: detail } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
+
+  useEffect(() => {
+    if (firstListItemRef.current) {
+      firstListItemRef.current.focus();
+    }
+    console.log(firstListItemRef.current);
+  }, []);
 
   useEffect(() => {
     if (detail) {
@@ -24,7 +36,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         category: detail.category,
         title: detail.title,
         content: detail.content,
-        hashtags: detail.hashtags,
+        hashtags: detail.Hashtags,
         images: detail.Photos
       }));
     }
@@ -65,6 +77,18 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
       console.error(error);
     }
   });
+
+  // 인기 해쉬태그 조회
+  const fetchHashtags = async keyword => {
+    const response = await fetch(`${BASE_URL}/api/hashtags?keyword=${keyword}`);
+
+    if (!response.ok) {
+      throw new Error('인기 해쉬태그 조회에 실패했습니다.');
+    }
+
+    const result = await response.json();
+    setPopularHashtags(result);
+  };
 
   // 카테고리 선택
   const handleSelectCategory = e => {
@@ -136,6 +160,96 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     });
   };
 
+  // 해쉬태그 change핸들러
+  const handleChangeHashtag = async e => {
+    const inputValue = e.target.value;
+    setInputValue(inputValue);
+
+    if (inputValue.length > 0) {
+      try {
+        await fetchHashtags(inputValue);
+      } catch {
+        console.error(error);
+      }
+    }
+
+    if (inputValue.length > 30) {
+      Swal.fire({
+        icon: 'warning',
+        title: '해쉬태그는 30자 이하로 작성해주세요!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  };
+
+  // 해쉬태그 추가
+  const handleAddHashtag = hashtag => {
+    if (hashtag.length !== 0) {
+      setData(prevData => ({
+        ...prevData,
+        hashtags: [...prevData.hashtags, hashtag]
+      }));
+    }
+  };
+
+  const handleHashtagKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleAddHashtag(e.target.value);
+      e.target.value = '';
+    }
+  };
+
+  const handleHashtagOnClick = selectedHashtag => {
+    handleAddHashtag(selectedHashtag);
+    setInputValue('');
+  };
+
+  // 키보드로 해쉬태그 선택
+  const handleHashtagKeyDown = e => {
+    const currentListItem = firstListItemRef.current;
+    console.log(currentListItem);
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextListItem = currentListItem.nextElementSibling;
+      console.log(nextListItem);
+
+      if (nextListItem) {
+        nextListItem.focus();
+        setInputValue(nextListItem.textContent);
+
+        setSelectedItem(nextListItem);
+      }
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const previousListItem = currentListItem.previousElementSibling;
+      console.log(previousListItem);
+
+      if (previousListItem) {
+        previousListItem.focus();
+        setInputValue(previousListItem.textContent);
+
+        setSelectedItem(previousListItem);
+      }
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
+  // 해쉬태그 삭제
+  const handleHashtagDelete = index => {
+    setData(prevData => {
+      const updatedHashtags = [...prevData.hashtags];
+      updatedHashtags.splice(index, 1);
+      return { ...prevData, hashtags: updatedHashtags };
+    });
+  };
+
   return (
     <Style.WriteContainer>
       <div className="write-top">
@@ -183,10 +297,10 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         onChange={handleContentChange}
       ></textarea>
       {showPostImage && (
-        <div className="file-upload">
+        <ul className="file-upload">
           {data.images.length > 0 &&
             data.images.map((image, index) => (
-              <div className="file-upload-preview" key={index}>
+              <li className="file-upload-preview" key={index}>
                 <img src={image.img_path} alt={`이미지` + index} />
                 <button
                   className="delete-btn"
@@ -194,7 +308,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
                 >
                   <img src={IconImageDelete} alt="이미지 삭제" />
                 </button>
-              </div>
+              </li>
             ))}
           <label htmlFor="file" className="file-upload-btn">
             <input
@@ -208,8 +322,52 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
             <img src={IconAddImage} alt="" />
             사진 추가
           </label>
-        </div>
+        </ul>
       )}
+      <div className="hashtags">
+        {data.hashtags.length > 0 && (
+          <ul className="hashtags-preview">
+            {data.hashtags.map((hashtag, index) => (
+              <li key={index}>
+                <span>#</span>
+                {hashtag}
+                <button
+                  className="hashtag-delete"
+                  onClick={() => handleHashtagDelete(index)}
+                >
+                  <img src={IconHashtagDelete} alt="해쉬태그 삭제" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="hashtags-input">
+          <span>#</span>
+          <input
+            type="text"
+            placeholder="태그를 입력하세요. (예: #react, #javascript)"
+            id="hashtagInput"
+            value={inputValue}
+            onChange={handleChangeHashtag}
+            onKeyUp={handleHashtagKeyPress}
+            onKeyDown={handleHashtagKeyDown}
+          />
+          {popularHashtags.length > 0 && inputValue !== '' && (
+            <ul className="hashtags-popular">
+              {popularHashtags.map((hashtag, index) => (
+                <li
+                  key={index}
+                  ref={index === 0 ? firstListItemRef : null}
+                  className={selectedItem === index ? 'selected' : ''}
+                  onClick={() => handleHashtagOnClick(hashtag)}
+                >
+                  {hashtag}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </Style.WriteContainer>
   );
 };
