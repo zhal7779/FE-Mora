@@ -5,9 +5,13 @@
  * @example 'aa\nbb\n' -> [{url: 'aa'}, {url: 'bb'}, {url: 'cc'}]
  */
 export const changePlanForm = (plan) => {
-  const newLinks = plan.links.split('\n').map((link) => {
-    return { url: link };
-  });
+  let newLinks = [];
+
+  if (plan.length) {
+    newLinks = plan.links.split('\n').map((link) => {
+      return { url: link };
+    });
+  }
   const newContents = { ...plan, links: newLinks };
 
   newContents.start_date = newContents.startDate;
