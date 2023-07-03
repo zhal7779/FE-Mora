@@ -1,5 +1,5 @@
 import * as Style from './styledComponents/PostWriteStyle';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { categories } from '../community/categoryData';
 import IconDown from '../assets/icons/icon-down.svg';
 import IconUp from '../assets/icons/icon-up.svg';
@@ -14,9 +14,20 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const [showCategory, setShowCategory] = useState(false);
+  const [popularHashtags, setPopularHashtags] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const firstListItemRef = useRef(null);
   const { data: detail } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
+
+  useEffect(() => {
+    if (firstListItemRef.current) {
+      firstListItemRef.current.focus();
+    }
+    console.log(firstListItemRef.current);
+  }, []);
 
   useEffect(() => {
     if (detail) {
@@ -66,6 +77,18 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
       console.error(error);
     }
   });
+
+  // 인기 해쉬태그 조회
+  const fetchHashtags = async keyword => {
+    const response = await fetch(`${BASE_URL}/api/hashtags?keyword=${keyword}`);
+
+    if (!response.ok) {
+      throw new Error('인기 해쉬태그 조회에 실패했습니다.');
+    }
+
+    const result = await response.json();
+    setPopularHashtags(result);
+  };
 
   // 카테고리 선택
   const handleSelectCategory = e => {
@@ -138,8 +161,19 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   };
 
   // 해쉬태그 change핸들러
-  const handleChangeHashtag = e => {
-    if (e.target.value.length > 30) {
+  const handleChangeHashtag = async e => {
+    const inputValue = e.target.value;
+    setInputValue(inputValue);
+
+    if (inputValue.length > 0) {
+      try {
+        await fetchHashtags(inputValue);
+      } catch {
+        console.error(error);
+      }
+    }
+
+    if (inputValue.length > 30) {
       Swal.fire({
         icon: 'warning',
         title: '해쉬태그는 30자 이하로 작성해주세요!',
@@ -150,14 +184,60 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   };
 
   // 해쉬태그 추가
-  const handleAddHashtag = e => {
-    const inputValue = e.target.value;
-    if (inputValue.length !== 0 && e.key === 'Enter') {
+  const handleAddHashtag = hashtag => {
+    if (hashtag.length !== 0) {
       setData(prevData => ({
         ...prevData,
-        hashtags: [...prevData.hashtags, inputValue]
+        hashtags: [...prevData.hashtags, hashtag]
       }));
+    }
+  };
+
+  const handleHashtagKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleAddHashtag(e.target.value);
       e.target.value = '';
+    }
+  };
+
+  const handleHashtagOnClick = selectedHashtag => {
+    handleAddHashtag(selectedHashtag);
+    setInputValue('');
+  };
+
+  // 키보드로 해쉬태그 선택
+  const handleHashtagKeyDown = e => {
+    const currentListItem = firstListItemRef.current;
+    console.log(currentListItem);
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextListItem = currentListItem.nextElementSibling;
+      console.log(nextListItem);
+
+      if (nextListItem) {
+        nextListItem.focus();
+        setInputValue(nextListItem.textContent);
+
+        setSelectedItem(nextListItem);
+      }
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const previousListItem = currentListItem.previousElementSibling;
+      console.log(previousListItem);
+
+      if (previousListItem) {
+        previousListItem.focus();
+        setInputValue(previousListItem.textContent);
+
+        setSelectedItem(previousListItem);
+      }
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
     }
   };
 
@@ -266,9 +346,26 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
           <input
             type="text"
             placeholder="태그를 입력하세요. (예: #react, #javascript)"
+            id="hashtagInput"
+            value={inputValue}
             onChange={handleChangeHashtag}
-            onKeyUp={handleAddHashtag}
+            onKeyUp={handleHashtagKeyPress}
+            onKeyDown={handleHashtagKeyDown}
           />
+          {popularHashtags.length > 0 && inputValue !== '' && (
+            <ul className="hashtags-popular">
+              {popularHashtags.map((hashtag, index) => (
+                <li
+                  key={index}
+                  ref={index === 0 ? firstListItemRef : null}
+                  className={selectedItem === index ? 'selected' : ''}
+                  onClick={() => handleHashtagOnClick(hashtag)}
+                >
+                  {hashtag}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </Style.WriteContainer>
