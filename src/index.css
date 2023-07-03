@@ -7,19 +7,3 @@
   --light-gray: #bdbdbd;
   --blue-gray: #d8e0e9;
 }
-@media (max-width: 375px) {
-  html {
-    font-size: 42.5%;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1200px) {
-  html {
-    font-size: 52.5%;
-  }
-}
-@media (min-width: 1200px) {
-  html {
-    font-size: 62.5%;
-  }
-}
