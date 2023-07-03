@@ -121,3 +121,13 @@ export const ModalButton = styled.button`
   font-size: 1.5rem;
   font-weight: bold;
 `;
+export const DateTimeBlock = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 1.5rem;
+`;
+export const DateTimeContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 17rem;
+`;

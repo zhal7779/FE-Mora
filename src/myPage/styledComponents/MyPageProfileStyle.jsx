@@ -5,6 +5,10 @@ export const introContainer = styled.section`
   width: 100%;
   padding: 34px 0 60px 0;
 
+  @media (max-width: 768px) {
+    padding: 34px 20px 60px 20px;
+  }
+
   .imgAndButtons {
     display: flex;
     justify-content: space-between;
@@ -21,7 +25,7 @@ export const introContainer = styled.section`
     }
   }
   .buttons-container {
-    width: 19.5rem;
+    width: 21rem;
     display: flex;
     justify-content: space-around;
   }
@@ -80,10 +84,19 @@ export const introContainer = styled.section`
       font-size: 1.9rem;
       line-height: 3rem;
     }
+    @media (max-width: 768px) {
+      min-width: unset;
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+    }
   }
 `;
 
 export const ListContainer = styled.section`
+  @media (max-width: 768px) {
+    padding: 34px 20px 60px 20px;
+  }
+
   ul {
     padding-bottom: 100px;
   }
@@ -138,10 +151,10 @@ export const ListContainer = styled.section`
 export const PostContainer = styled.section`
   display: flex;
   flex-direction: column;
-  max-width: 738px;
+  max-width: 728px;
 `;
 
 export const ButtonLink = styled(Link)`
-  width: 10rem;
+  width: 9.4rem;
   height: 4rem;
 `;

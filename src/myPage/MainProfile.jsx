@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import LoginInput from '../logIn/LogInInput';
 import { useQuery } from 'react-query';
 import noDataImage from '../assets/images/no-data-image.svg';
+import defaultImg from '../assets/images/rabbitProfile.png';
 const URL = process.env.REACT_APP_URL;
 
 const MainProfile = () => {
@@ -19,9 +20,9 @@ const MainProfile = () => {
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch(`${URL}/api/users/mypage`, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-      }
-    }).then(response => response.json())
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
   );
 
   const mainProfileData = mainProfileDataQuery.data;
@@ -42,9 +43,9 @@ const MainProfile = () => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
-      body: JSON.stringify({ password })
+      body: JSON.stringify({ password }),
     });
 
     const responseData = await response.json();
@@ -70,30 +71,27 @@ const MainProfile = () => {
     }
   }, []);
 
-  console.log(mainProfileData);
-
   return (
     <Style.introContainer>
       {mainProfileData ? (
         <>
-          <div className="imgAndButtons">
-            <div className="img-container">
-              <img src={mainProfileData.UserDetail.img_path} alt="프로필"></img>
+          <div className='imgAndButtons'>
+            <div className='img-container'>
+              <img src={mainProfileData.UserDetail.img_path} alt='프로필' />
             </div>
-            <div className="buttons-container">
-              <Style.ButtonLink to="/mypage/edit">
-                <Button color="darkPurple" value="수정하기" />
+
+            <div className='buttons-container'>
+              <Style.ButtonLink to='/mypage/edit'>
+                <Button color='darkPurple' value='수정하기' />
               </Style.ButtonLink>
-              <Button color="white" value="탈퇴하기" onClick={openModal} />
+              <Button color='white' value='탈퇴하기' onClick={openModal} />
             </div>
           </div>
           <h3>{mainProfileData.name}</h3>
           <h4>{mainProfileData.UserDetail.generation}</h4>
-          <h5>
-            {mainProfileData.UserDetail.position || '직책을 입력해 주세요.'}
-          </h5>
-          <div className="intro-container">
-            <p className="intro">
+          <h5>{mainProfileData.UserDetail.position || '직책을 입력해 주세요.'}</h5>
+          <div className='intro-container'>
+            <p className='intro'>
               {mainProfileData.UserDetail.comment ||
                 '수정하기 버튼을 눌러 간단한 자기소개를 입력해주세요!'}
             </p>
@@ -102,29 +100,29 @@ const MainProfile = () => {
       ) : (
         <NoDataContainer>
           <h2>로딩중 이에요..</h2>
-          <img src={noDataImage} alt="noDataImage"></img>
+          <img src={noDataImage} alt='noDataImage'></img>
         </NoDataContainer>
       )}
 
       {showModal && (
-        <Modal width="50rem">
-          <div className="modal-container">
+        <Modal width='50rem'>
+          <div className='modal-container'>
             <LoginInput
-              title="탈퇴하시려면 비밀번호를 입력해주세요"
-              type="password"
-              placeholder="비밀번호 입력"
-              name="password"
-              onChange={e => {
+              title='탈퇴하시려면 비밀번호를 입력해주세요'
+              type='password'
+              placeholder='비밀번호 입력'
+              name='password'
+              onChange={(e) => {
                 e.preventDefault();
                 setPassword(e.target.value);
               }}
               value={password}
             />
-            <div className="modal-buttons-container">
-              <Button color="white" value="취소" onClick={closeModal} />
+            <div className='modal-buttons-container'>
+              <Button color='white' value='취소' onClick={closeModal} />
               <Button
-                color="darkPurple"
-                value="탈퇴"
+                color='darkPurple'
+                value='탈퇴'
                 onClick={() => {
                   handleDeleteAccount();
                   navigate('/');
