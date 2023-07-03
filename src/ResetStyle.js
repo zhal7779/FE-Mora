@@ -202,19 +202,19 @@ button {
 
 @media (max-width: 375px) {
   html {
-    font-size: 42.5%;
+    font-size: 55%;
   }
 }
 
 @media (min-width: 375px) and (max-width: 768px) {
   html {
-    font-size: 48.5%;
+    font-size: 57.5%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1200px) {
   html {
-    font-size: 55.5%;
+    font-size: 60%;
   }
 }
 @media (min-width: 1200px) {
