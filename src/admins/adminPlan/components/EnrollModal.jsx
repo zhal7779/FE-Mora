@@ -8,8 +8,10 @@ import {
   ModalHeader,
   ModalButton,
   ModalOverlay,
+  DateTimeBlock,
   ModalSubTitle,
   ModalContentP,
+  DateTimeContent,
   ModalButtonBlock,
   ModalContentBlock,
   ModalContentInput,
@@ -90,20 +92,46 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
               className='modal-content'
               onChange={handleFormChange}
             />
-            <ModalSubTitle className='modal-sub-title'>시작일</ModalSubTitle>
-            <ModalContentInput
-              type='date'
-              name='startDate'
-              className='modal-content'
-              onChange={handleFormChange}
-            />
-            <ModalSubTitle className='modal-sub-title'>종료일</ModalSubTitle>
-            <ModalContentInput
-              type='date'
-              name='endDate'
-              className='modal-content'
-              onChange={handleFormChange}
-            />
+            <DateTimeBlock>
+              <DateTimeContent>
+                <ModalSubTitle className='modal-sub-title'>시작일</ModalSubTitle>
+                <ModalContentInput
+                  type='date'
+                  name='startDate'
+                  className='modal-content'
+                  onChange={handleFormChange}
+                />
+              </DateTimeContent>
+              <DateTimeContent>
+                <ModalSubTitle className='modal-sub-title'>시작 시간</ModalSubTitle>
+                <ModalContentInput
+                  type='time'
+                  name='startTime'
+                  className='modal-content'
+                  onChange={handleFormChange}
+                />
+              </DateTimeContent>
+            </DateTimeBlock>
+            <DateTimeBlock>
+              <DateTimeContent>
+                <ModalSubTitle className='modal-sub-title'>종료일</ModalSubTitle>
+                <ModalContentInput
+                  type='date'
+                  name='endDate'
+                  className='modal-content'
+                  onChange={handleFormChange}
+                />
+              </DateTimeContent>
+              <DateTimeContent>
+                <ModalSubTitle className='modal-sub-title'>종료 시간</ModalSubTitle>
+                <ModalContentInput
+                  type='time'
+                  name='endTime'
+                  className='modal-content'
+                  onChange={handleFormChange}
+                />
+              </DateTimeContent>
+            </DateTimeBlock>
             <ModalSubTitle className='modal-sub-title'>링크</ModalSubTitle>
             <ModalContentTextarea
               type='text'

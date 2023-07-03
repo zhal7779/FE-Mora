@@ -12,12 +12,16 @@ export const changePlanForm = (plan) => {
       return { url: link };
     });
   }
+  plan.startDate += ` ${plan.startTime || '00:00'}:00`;
+  plan.endDate += ` ${plan.endTime || '00:00'}:00`;
   const newContents = { ...plan, links: newLinks };
 
   newContents.start_date = newContents.startDate;
   newContents.end_date = newContents.endDate;
   delete newContents.startDate;
   delete newContents.endDate;
+  delete newContents.startTime;
+  delete newContents.endTime;
 
   return newContents;
 };
