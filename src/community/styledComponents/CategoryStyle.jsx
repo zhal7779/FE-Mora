@@ -78,7 +78,7 @@ export const CategoryContainer = styled.section`
     position: static;
     width: 100%;
     height: auto;
-    padding: 38px 24px 0;
+    padding: 38px 20px 0;
 
     .category-title {
       display: flex;
@@ -122,6 +122,16 @@ export const CategoryContainer = styled.section`
               border-bottom: 2px solid #5e3de4;
             }
           }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .category-list {
+      ul {
+        li > a > p {
+          font-size: 1.6rem;
         }
       }
     }
