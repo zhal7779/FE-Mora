@@ -88,10 +88,9 @@ input[type='radio'] {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  color: #242424;
+  color: var(--main-font-color);
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -200,10 +199,30 @@ button {
   cursor: pointer;
 }
 
-// rem 단위설정 (1rem = 10px)
-html {
+
+@media (max-width: 375px) {
+  html {
+    font-size: 42.5%;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 768px) {
+  html {
+    font-size: 48.5%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  html {
+    font-size: 55.5%;
+  }
+}
+@media (min-width: 1200px) {
+  html {
     font-size: 62.5%;
   }
+}
+
 `;
 
 export default ResetStyle;
