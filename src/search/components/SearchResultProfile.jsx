@@ -39,8 +39,8 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
             data.map((item) => (
               <Content key={item.user_id}>
                 <div>
-                  <div className='img_content'>
-                    <img className='img__content' src={item.img_path}></img>
+                  <div className='img-container'>
+                    <img className='img-content' src={item.img_path} alt='프로필'></img>
                   </div>
                   <div className='text_content'>
                     <h4>{item.User.name}</h4>
@@ -84,10 +84,10 @@ const Content = styled.div`
   div {
     display: flex;
   }
-  .img_content {
+  .img-container {
     align-items: center;
   }
-  .img__content {
+  .img-content {
     display: flex;
     align-items: center;
     width: 4.6rem;
@@ -95,6 +95,7 @@ const Content = styled.div`
     border-radius: 50%;
     color: #242424;
     margin-right: 1.6rem;
+    object-fit: cover;
   }
   .skill {
     display: flex;

@@ -20,6 +20,7 @@ const Header = () => {
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
     enabled: false,
   });
+  console.log(data);
 
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
@@ -256,6 +257,7 @@ const ImageIcon = styled.img`
   height: 3.6rem;
   border-radius: 50%;
   background: #969696;
+  object-fit: cover;
 `;
 const ModalContent = styled.div`
   position: fixed;

@@ -1,12 +1,16 @@
 //오픈프로필 조회
-export const getProfile = async () => {
-  const response = await fetch(`${process.env.REACT_APP_URL}/api/users/open-profile`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-    },
-  });
+export const getProfile = async (page) => {
+  const response = await fetch(
+    `${process.env.REACT_APP_URL}/api/users/open-profile?page=${page}&size=5
+  `,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }
+  );
   const data = await response.json();
   return data;
 };
