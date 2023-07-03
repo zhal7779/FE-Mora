@@ -114,6 +114,10 @@ const PostContainer = styled.div`
   padding: 38px 20px 0;
   max-width: 738px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    max-width: none;
+  }
 `;
 
 export const Status = styled.div`
