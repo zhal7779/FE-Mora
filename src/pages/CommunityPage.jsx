@@ -101,6 +101,10 @@ const CommunityContainer = styled.div`
   max-width: 1024px;
   padding-top: 60px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const PostContainer = styled.div`
