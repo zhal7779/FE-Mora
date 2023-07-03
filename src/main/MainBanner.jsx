@@ -11,7 +11,6 @@ const MainBanner = () => {
       <div className="main-slogan">
         <div className="main-slogan-side">
           <span>레이서 커뮤니티부터 주요 일정까지 한번에!</span>
-          <br />
           엘리스에서
           <br />
           인정한 레이서
