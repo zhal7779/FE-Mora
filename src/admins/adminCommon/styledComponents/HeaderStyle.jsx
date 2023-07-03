@@ -8,7 +8,7 @@ export const Container = styled.header`
   height: 6rem;
 
   border-bottom: #cbd5e1 1px solid;
-  background: #ffffff;
+  background: var(--main-white);
 `;
 export const Content = styled.nav`
   display: flex;

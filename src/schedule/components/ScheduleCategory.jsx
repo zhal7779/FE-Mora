@@ -29,7 +29,7 @@ const ScheduleCategory = ({ setMenu }) => {
               {selectedCategory === 'notice' ? (
                 <MegaphoneIcon fill='#7353EA' />
               ) : (
-                <MegaphoneIcon fill='#bdbdbd' />
+                <MegaphoneIcon fill='var(--light-gray)' />
               )}
               <p>공지사항</p>
             </a>
@@ -42,7 +42,7 @@ const ScheduleCategory = ({ setMenu }) => {
               {selectedCategory === 'calendar' ? (
                 <CalendarIcon fill='#7353EA' />
               ) : (
-                <CalendarIcon fill='#bdbdbd' />
+                <CalendarIcon fill='var(--light-gray)' />
               )}
 
               <p>일정표</p>

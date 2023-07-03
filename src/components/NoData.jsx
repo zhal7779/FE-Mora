@@ -18,13 +18,13 @@ const Content = styled.div`
   margin: 8rem 0;
   align-items: center;
   strong {
-    color: #616161;
+    color: var(--dark-gray);
     font-size: 1.6rem;
     margin-bottom: 1.6rem;
     font-weight: 600;
   }
   p {
-    color: #616161;
+    color: var(--dark-gray);
     font-size: 1.4rem;
   }
 `;

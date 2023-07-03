@@ -139,7 +139,7 @@ const Header = () => {
             <SideContent>
               <div>
                 {menu === 4 || !token ? (
-                  <SearchIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
+                  <SearchIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
                 ) : (
                   <SearchIcon
                     onClick={() => handleSearchClick(true)}
@@ -162,7 +162,7 @@ const Header = () => {
                       )}
                   </>
                 ) : (
-                  <BellIcon style={{ stroke: '#BDBDBD', cursor: 'default' }} />
+                  <BellIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
                 )}
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
@@ -192,7 +192,7 @@ const Container = styled.header`
   right: 0;
   top: 0;
   z-index: 90;
-  background: #ffffff;
+  background: var(--main-white);
   border-bottom: #cbd5e1 1px solid;
   height: 6rem;
 `;
@@ -211,9 +211,9 @@ const MenuContainer = styled.div`
     padding: 2.1rem 2rem 2.1rem 2rem;
     font-weight: 700;
     font-size: 1.6rem;
-    color: #616161;
+    color: var(--dark-gray);
     &:hover {
-      color: #242424;
+      color: var(--main-font-color);
     }
   }
 `;
@@ -231,7 +231,7 @@ const MenuItem = styled.div`
   p {
     font-weight: 700;
     font-size: 1.6rem;
-    color: ${(props) => (props.active ? '#242424' : '#616161')};
+    color: ${(props) => (props.active ? 'var( --main-font-color)' : 'var(--dark-gray)')};
   }
 `;
 
@@ -248,7 +248,7 @@ const SideContent = styled.div`
       width: 1.1rem;
       height: 1.1rem;
       border-radius: 50%;
-      background: #7353ea;
+      background: var(--dark-purple);
     }
   }
 `;

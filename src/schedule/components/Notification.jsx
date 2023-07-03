@@ -56,9 +56,9 @@ const Notification = () => {
               <h5>📢 [{item.title}]</h5>
               <span>
                 {view.includes(item.id) ? (
-                  <UpIcon stroke='#ffffff' strokeWidth='2.6' width='18' height='20' />
+                  <UpIcon stroke='var(--main-white)' strokeWidth='2.6' width='18' height='20' />
                 ) : (
-                  <DownIcon stroke='#ffffff' strokeWidth='2.6' width='18' height='20' />
+                  <DownIcon stroke='var(--main-white)' strokeWidth='2.6' width='18' height='20' />
                 )}
               </span>
             </div>

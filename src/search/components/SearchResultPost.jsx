@@ -96,8 +96,6 @@ const Container = styled.section`
 const Content = styled.div`
   padding: 2rem;
   border-bottom: 1px #cbd5e1 solid;
-  color: #242424;
-
   cursor: pointer;
   &:hover {
     background: rgba(233, 233, 238, 0.4);
@@ -143,7 +141,6 @@ const Content = styled.div`
     justify-content: space-between;
     font-weight: 600;
     margin-bottom: 0;
-    color: #242424;
     p {
       font-size: 1rem;
     }
@@ -152,7 +149,7 @@ const Content = styled.div`
       gap: 1rem;
       p {
         font-size: 1rem;
-        color: #bdbdbd;
+        color: var(--light-gray);
       }
     }
   }

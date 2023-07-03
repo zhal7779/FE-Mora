@@ -50,7 +50,7 @@ const Container = styled.div`
   position: fixed;
   z-index: 200;
   width: 100%;
-  background: #ffffff;
+  background: var(--main-white);
 `;
 const Content = styled.div`
   max-width: 1280px;
@@ -62,7 +62,6 @@ const Content = styled.div`
 `;
 const Input = styled.input`
   padding: 1.4rem;
-  color: #242424;
   font-weight: 500;
   font-size: 3rem;
   width: 100%;
