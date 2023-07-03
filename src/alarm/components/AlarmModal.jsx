@@ -13,6 +13,7 @@ const AlarmModal = ({ handleClose }) => {
   const [alarmStatus, setAlarmStauts] = useState([]);
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
+  console.log(data);
   const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
   //모달 리스트 open, close
   const handleContentClick = (id) => {

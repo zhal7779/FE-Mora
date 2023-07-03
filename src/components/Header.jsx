@@ -167,9 +167,6 @@ const Header = () => {
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
                 <div>
-<<<<<<< HEAD
-                  <ImageIcon src={userImg ? userImg : defaultImg} alt='프로필'></ImageIcon>
-=======
                   {mainProfileData &&
                   mainProfileData.UserDetail &&
                   mainProfileData.UserDetail.img_path ? (
@@ -177,7 +174,6 @@ const Header = () => {
                   ) : (
                     <ImageIcon src={defaultImg} />
                   )}
->>>>>>> 35c48d05ca7a184fc522982177536c8822a3af47
                 </div>
               </Link>
             </SideContent>
