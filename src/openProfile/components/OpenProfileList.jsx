@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import jwt_decode from 'jwt-decode';
 import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-alt.svg';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import * as Style from '../styledComponents/OpenProfileStyle';
+import { coffeeChatConfirm } from './CoffeeChatConfrim';
 
 const OpenProfileList = ({
   data,
-  myId,
+  setCoffeChatStatus,
   coffeChatStatus,
-  handleCoffeeChatClick,
-  moreView,
-  handleMoreViewClick,
+  setUserId,
+  coffeeCahtRefetch,
 }) => {
+  const token = sessionStorage.getItem('userToken');
+  const myId = jwt_decode(token).id;
+
+  const [moreView, setMoreView] = useState([]);
+
+  const handleMoreViewClick = (id) => {
+    setMoreView((prevMoreView) => {
+      if (!prevMoreView.includes(id)) {
+        return [...prevMoreView, id];
+      }
+    });
+  };
+
   return data.map((item) => (
     <Style.Container key={item.user_id}>
       <Style.Content>
@@ -30,7 +44,17 @@ const OpenProfileList = ({
             ) : myId === item.user_id ? (
               <Style.CompleteButton>내 프로필</Style.CompleteButton>
             ) : (
-              <Style.ChatButton onClick={() => handleCoffeeChatClick(item.user_id, item.User.name)}>
+              <Style.ChatButton
+                onClick={() =>
+                  coffeeChatConfirm(
+                    item.user_id,
+                    item.User.name,
+                    setCoffeChatStatus,
+                    setUserId,
+                    coffeeCahtRefetch
+                  )
+                }
+              >
                 커피챗 신청
               </Style.ChatButton>
             )}

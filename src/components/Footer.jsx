@@ -96,7 +96,7 @@ const MainContent = styled.div`
   p {
     padding: 0 3rem;
     font-size: 1.3rem;
-    color: #616161;
+    color: var(--dark-gray);
     cursor: pointer;
   }
 `;
@@ -113,13 +113,12 @@ const SubItems = styled.div`
 
   strong {
     font-size: 1.6rem;
-    color: #242424;
     font-weight: 600;
   }
 
   p {
     font-size: 1.2rem;
-    color: #616161;
+    color: var(--dark-gray);
     padding: 1rem 0 0 0.5rem;
   }
 `;
@@ -137,6 +136,6 @@ const CopyrightItem = styled.div`
   display: flex;
   justify-content: center;
   font-size: 1.3rem;
-  color: #616161;
+  color: var(--dark-gray);
   padding-top: 2rem;
 `;

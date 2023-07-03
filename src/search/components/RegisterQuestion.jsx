@@ -49,7 +49,6 @@ const Container = styled.span`
   font-size: 1.6rem;
   gap: 1rem;
   strong {
-    color: #242424;
     font-weight: 600;
   }
   p {

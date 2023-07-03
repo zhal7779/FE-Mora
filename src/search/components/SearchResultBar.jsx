@@ -70,7 +70,7 @@ const Container = styled.div`
   width: 100%;
   top: 6rem;
   left: 0;
-  background: #ffffff;
+  background: var(--main-white);
 `;
 const MainDiv = styled.div`
   border-bottom: #cbd5e1 1px solid;
@@ -88,7 +88,6 @@ const SubSearchContent = styled.div`
   input {
     padding: 1.6rem;
     width: 100%;
-    color: #242424;
     font-weight: 500;
     font-size: 2.4rem;
     border: none;
@@ -107,6 +106,5 @@ const ResultTextContent = styled.div`
     font-size: 1.6rem;
     display: flex;
     align-items: center;
-    color: #242424;
   }
 `;
