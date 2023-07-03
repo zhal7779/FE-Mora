@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import LoginInput from '../logIn/LogInInput';
 import { useQuery } from 'react-query';
 import noDataImage from '../assets/images/no-data-image.svg';
+import defaultImg from '../assets/images/rabbitProfile.png';
 const URL = process.env.REACT_APP_URL;
 
 const MainProfile = () => {
@@ -76,8 +77,9 @@ const MainProfile = () => {
         <>
           <div className='imgAndButtons'>
             <div className='img-container'>
-              <img src={mainProfileData.UserDetail.img_path} alt='프로필'></img>
+              <img src={mainProfileData.UserDetail.img_path} alt='프로필' />
             </div>
+
             <div className='buttons-container'>
               <Style.ButtonLink to='/mypage/edit'>
                 <Button color='darkPurple' value='수정하기' />
