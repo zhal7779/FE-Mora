@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import MyPageCategory from '../myPage/MyPageCategory';
 import MyPageProfile from '../myPage/MyPageProfile';
 import MyPagePost from '../myPage/MyPagePost';
-import MyPageCoffeeChat from '../myPage/MyPageCoffeeChat';
 
 const MyPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('프로필');
@@ -19,13 +18,9 @@ const MyPage = () => {
         selectedCategory={selectedCategory}
         categories={categories}
       />
-      {selectedCategory === '게시물' ? (
-        <MyPagePost />
-      ) : selectedCategory === '커피챗' ? (
-        <MyPageCoffeeChat />
-      ) : (
-        <MyPageProfile />
-      )}
+      <MyPageContent>
+        {selectedCategory === '게시물' ? <MyPagePost /> : <MyPageProfile />}
+      </MyPageContent>
     </MyPageContainer>
   );
 };
@@ -39,6 +34,20 @@ const MyPageContainer = styled.div`
   max-width: 1024px;
   padding-top: 60px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const MyPageContent = styled.div`
+  flex: 1;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    width: auto;
+  }
 `;
 
 const categories = [
@@ -49,9 +58,5 @@ const categories = [
   {
     name: '게시물',
     icon: require('../assets/icons/icon-post.svg').default,
-  },
-  {
-    name: '커피챗',
-    icon: require('../assets/icons/icon-coffeeChat.svg').default,
   },
 ];

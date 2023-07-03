@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const LoginContainer = ({ children }) => {
@@ -23,4 +24,8 @@ const StyledLoginContainer = styled.div`
   border-width: 0px 1px;
   border-style: solid;
   border-color: #cbd5e1;
+
+  @media (max-width: 768px) {
+    border: none;
+  }
 `;

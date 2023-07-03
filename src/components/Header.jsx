@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/icons/logo1.svg';
@@ -10,22 +10,36 @@ import { useQuery } from 'react-query';
 import { getAlert } from '../alarm/api/alarmApi';
 import defaultImg from '../assets/images/rabbitProfile.png';
 import jwt_decode from 'jwt-decode';
+const URL = process.env.REACT_APP_URL;
+
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
-  //프로필 이미지 가져오는 쿼리
+  const [userImg, setUserImg] = useState('');
+
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
     enabled: false,
   });
   console.log(data);
 
-  const [userImg, setUserImg] = useState('');
+  // mainProfileData (유저 프로필 정보) 가져오기
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch(`${URL}/api/users/mypage`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+      },
+    }).then((response) => response.json())
+  );
+  const mainProfileData = mainProfileDataQuery.data;
+
   useEffect(() => {
-    if (token) {
+    if (token && mainProfileData) {
       alarmRefetch();
-      setUserImg(jwt_decode(token).img_path);
+      setUserImg(mainProfileData?.UserDetail?.img_path || '');
     }
-  }, []);
+  }, [token, mainProfileData]);
+
+  console.log(mainProfileData);
 
   //알림 api 30초에 한 번씩 재호출
   useEffect(() => {
@@ -153,7 +167,17 @@ const Header = () => {
               </div>
               <Link to={token ? '/mypage' : '/nonmember'}>
                 <div>
+<<<<<<< HEAD
                   <ImageIcon src={userImg ? userImg : defaultImg} alt='프로필'></ImageIcon>
+=======
+                  {mainProfileData &&
+                  mainProfileData.UserDetail &&
+                  mainProfileData.UserDetail.img_path ? (
+                    <ImageIcon src={mainProfileData.UserDetail.img_path || defaultImg} />
+                  ) : (
+                    <ImageIcon src={defaultImg} />
+                  )}
+>>>>>>> 35c48d05ca7a184fc522982177536c8822a3af47
                 </div>
               </Link>
             </SideContent>

@@ -31,7 +31,8 @@ const BaseButton = styled.button`
   display: inline-block;
   width: 35.2rem;
   height: 48px;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
   border-radius: 1.2rem;
   font-style: normal;
   font-weight: 600;

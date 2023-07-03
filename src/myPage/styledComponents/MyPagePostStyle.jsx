@@ -2,6 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const ListContainer = styled.section`
+  width: 100%;
+  padding: 34px 24px 60px 24px;
+
+  @media (max-width: 768px) {
+    padding: 34px 20px 60px 20px;
+  }
   h2 {
     padding: 3.75rem 0;
     font-weight: 600;

@@ -72,8 +72,6 @@ const ProfileList = () => {
     return response.json();
   }
 
-  console.log(myLinkList);
-
   // 경력 삭제 요청 핸들러
   async function handleRemoveCareer(careerId) {
     const response = await fetch(`${URL}/api/careers/delete`, {
