@@ -2,44 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
-import jwt_decode from 'jwt-decode';
-import Swal from 'sweetalert2';
 import { useObserver } from './useObserver';
 import OpenProfileList from './OpenProfileList';
 
 const OpenProfile = ({ registerstatus }) => {
-  const token = sessionStorage.getItem('userToken');
-  const myId = jwt_decode(token).id;
-
   const [userId, setUserId] = useState('');
   const [coffeChatStatus, setCoffeChatStatus] = useState([]);
-  const { data: coffeeChat, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
+  //커피챗 쿼리
+  const { data: coffeeChatData, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
     postCoffeeChat(userId)
   );
-  const handleCoffeeChatClick = (id, name) => {
-    Swal.fire({
-      icon: 'question',
-      title: `[${name}]님께 커피챗을 보내시겠습니까?`,
-      showCancelButton: true,
-      confirmButtonText: '보내기',
-      confirmButtonColor: '#7353ea',
-      cancelButtonText: '취소',
-      cancelButtonColor: '#EEEAFE',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setCoffeChatStatus((prevData) => {
-          return [...prevData, id];
-        });
-        setUserId(id);
-        coffeeCahtRefetch();
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        console.log('커피챗 취소');
-      }
-    });
-  };
-
   const queryClient = useQueryClient();
-
+  //오픈프로필 전체 데이터 쿼리, 무한스크롤 적용
   const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
     'openProfile',
     ({ pageParam = 0 }) => getProfile(pageParam),
@@ -55,24 +29,16 @@ const OpenProfile = ({ registerstatus }) => {
   );
 
   const observerRef = useRef(null);
+  //무한스크롤 DOM요소 가시성 감지 함수
   useObserver(observerRef, fetchNextPage, hasNextPage);
 
+  // 오픈프로필 등록하거나 커피챗 신청시 refetch
   useEffect(() => {
     const profileRefetch = async () => {
       await queryClient.invalidateQueries('openProfile');
     };
     profileRefetch();
-  }, [registerstatus, coffeeChat]);
-
-  const [moreView, setMoreView] = useState([]);
-
-  const handleMoreViewClick = (id) => {
-    setMoreView((prevMoreView) => {
-      if (!prevMoreView.includes(id)) {
-        return [...prevMoreView, id];
-      }
-    });
-  };
+  }, [registerstatus, coffeeChatData]);
 
   return (
     <>
@@ -87,11 +53,10 @@ const OpenProfile = ({ registerstatus }) => {
             <>
               <OpenProfileList
                 data={page.objArr}
-                myId={myId}
                 coffeChatStatus={coffeChatStatus}
-                handleCoffeeChatClick={handleCoffeeChatClick}
-                moreView={moreView}
-                handleMoreViewClick={handleMoreViewClick}
+                setCoffeChatStatus={setCoffeChatStatus}
+                setUserId={setUserId}
+                coffeeCahtRefetch={coffeeCahtRefetch}
               />
               <div ref={observerRef}></div>
             </>
