@@ -8,7 +8,6 @@ import Modal from '../components/Modal';
 import LoginInput from '../logIn/LogInInput';
 import { useQuery } from 'react-query';
 import noDataImage from '../assets/images/no-data-image.svg';
-import defaultImg from '../assets/images/rabbitProfile.png';
 const URL = process.env.REACT_APP_URL;
 
 const MainProfile = () => {
