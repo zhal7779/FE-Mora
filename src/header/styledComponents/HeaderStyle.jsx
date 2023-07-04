@@ -124,10 +124,11 @@ export const HeaderStyle = styled.header`
     }
     .menu-item {
       width: 100%;
-      border-radius: 4px;
-      /* &:hover {
+      border-radius: 5px;
+      margin: 0.5rem 0 0.5rem 0;
+      &:hover {
         background-color: var(--light-purple);
-      } */
+      }
       p {
         justify-content: center;
         align-items: center;
@@ -138,12 +139,14 @@ export const HeaderStyle = styled.header`
       justify-content: center;
     }
     .menu-item.active {
-      background-color: var(--light-purple);
       border: none;
     }
 
     .side-content {
       justify-content: center;
+      div {
+        padding: 1rem 2rem 2rem 2rem;
+      }
     }
     .nav-toggle {
       display: block;
