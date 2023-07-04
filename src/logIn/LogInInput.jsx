@@ -55,14 +55,13 @@ const Input = styled.input`
   padding-left: 1rem;
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 2rem;
 
   &::placeholder {
     font-style: normal;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 2rem;
     line-height: 24px;
-    margin-left: 2rem;
     color: #d9d9d9;
   }
 `;

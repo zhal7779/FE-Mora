@@ -6,7 +6,7 @@ import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../assets/icons/fi_bell.svg';
 import SearchBar from './SearchBar';
 import AlarmModal from '../alarm/components/AlarmModal';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { getAlert } from '../alarm/api/alarmApi';
 import defaultImg from '../assets/images/rabbitProfile.png';
 import jwt_decode from 'jwt-decode';
@@ -40,6 +40,57 @@ const Header = () => {
   }, [token, mainProfileData]);
 
   console.log(mainProfileData);
+
+  // 리프레쉬 토큰 요청 Mutation 선언
+  const refreshMutation = useMutation(
+    async () => {
+      const url = `${URL}/api/users/refresh-token`;
+      const userToken = sessionStorage.getItem('userToken');
+      const refeshToken = sessionStorage.getItem('userRefreshToken');
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+          refresh: refeshToken,
+        },
+      });
+
+      const data = await response.json();
+      const { accessToken, refreshToken } = data;
+      return { accessToken, refreshToken };
+    },
+    {
+      onSuccess: (data) => {
+        const { accessToken, refreshToken } = data;
+        if (accessToken && refreshToken) {
+          if (sessionStorage.getItem('userToken')) {
+            sessionStorage.removeItem('userToken');
+          }
+          if (sessionStorage.getItem('userRefreshToken')) {
+            sessionStorage.removeItem('userRefreshToken');
+          }
+          sessionStorage.setItem('userToken', accessToken);
+          sessionStorage.setItem('userRefreshToken', refreshToken);
+          console.log('리프레쉬 토큰 발급 성공');
+        } else {
+          console.log('리프레쉬 토큰 발급 실패');
+        }
+      },
+    }
+  );
+
+  // useEffect로 10분에 한 번씩 refreshMutation 실행
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     refreshMutation.mutate();
+  //   }, 2000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   //알림 api 30초에 한 번씩 재호출
   useEffect(() => {
