@@ -2,22 +2,31 @@ import styled from 'styled-components';
 
 export const Background = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   width: 100%;
   height: 100vh;
   background: transparent;
+  @media (max-width: 768px) {
+    top: 0;
+    background: rgba(0, 0, 0, 0.3);
+  }
 `;
 
 export const Container = styled.section`
   position: fixed;
   right: 5%;
-  width: 460px;
-  height: 394px;
+  width: 46rem;
+  height: 39.4rem;
   background: var(--main-white);
   box-shadow: 2px 3px 10px 2px rgba(0, 0, 0, 0.15);
-  border-radius: 12px 0px 12px 12px;
+  border-radius: 12px;
   z-index: 300;
+  @media (max-width: 768px) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 export const HeaderContent = styled.div`
   padding: 1.4rem 1.8rem;
@@ -26,6 +35,10 @@ export const HeaderContent = styled.div`
   p {
     font-weight: 600;
     font-size: 1.6rem;
+  }
+  @media (max-width: 768px) {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
 `;
 export const Scroll = styled.div`
