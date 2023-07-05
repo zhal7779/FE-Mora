@@ -157,7 +157,11 @@ export const DetailContainer = styled.section`
 
       font-size: 1.6rem;
       line-height: 2.5rem;
-      word-break: keep-all;
+
+      span {
+        display: block;
+        width: 100%;
+      }
     }
 
     &-img {

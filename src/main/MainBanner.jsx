@@ -16,7 +16,7 @@ const MainBanner = () => {
           인정한 레이서
           <br /> 필수 커뮤니티, 모레
           <Link to="/login">
-            <Button value="지금 시작하기" color="darkPurple" />
+            <Button value="시작하기" color="darkPurple" />
           </Link>
         </div>
         <div className="main-image">
