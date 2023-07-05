@@ -33,4 +33,8 @@ export const OpenProfilePageWrapper = styled.main`
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
