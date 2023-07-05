@@ -24,18 +24,19 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     getDetail(postId)
   );
 
-  useEffect(() => {
-    const titleTextareaEl = titleTextareaRef.current;
-    const contentTextareaEl = contentTextareaRef.current;
+  // textarea 높이 유동적 변경
+  const textareaHeight = el => {
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  };
 
-    if (titleTextareaEl) {
-      titleTextareaEl.style.height = 'auto';
-      titleTextareaEl.style.height = `${titleTextareaEl.scrollHeight}px`;
+  useEffect(() => {
+    if (titleTextareaRef.current) {
+      textareaHeight(titleTextareaRef.current);
     }
 
-    if (contentTextareaEl) {
-      contentTextareaEl.style.height = 'auto';
-      contentTextareaEl.style.height = `${contentTextareaEl.scrollHeight}px`;
+    if (contentTextareaRef.current) {
+      textareaHeight(contentTextareaRef.current);
     }
   }, [data]);
 
@@ -46,6 +47,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
     console.log(firstListItemRef.current);
   }, []);
 
+  // 게시글 수정일 경우 해당 게시글의 콘텐츠 내용 보여주기
   useEffect(() => {
     if (detail) {
       setData(prevData => ({

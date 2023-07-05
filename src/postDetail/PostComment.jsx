@@ -2,10 +2,11 @@ import * as Style from './styledComponents/PostCommentStyle';
 import Button from '../components/Button';
 import IconMore from '../assets/icons/icon-more.svg';
 import formatTime from '../community/utils/formatTime';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostComment = ({ postId }) => {
@@ -13,8 +14,18 @@ const PostComment = ({ postId }) => {
   const [commentData, setCommentData] = useState('');
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentData, setEditCommentData] = useState('');
+  const textareaRef = useRef(null);
   const queryClient = useQueryClient();
   const decodedToken = jwt_decode(sessionStorage.getItem('userToken'));
+
+  // textarea 높이 유동적 변경
+  useEffect(() => {
+    const textareaEl = textareaRef.current;
+    if (textareaEl) {
+      textareaEl.style.height = 'auto';
+      textareaEl.style.height = `${textareaEl.scrollHeight}px`;
+    }
+  });
 
   //댓글 조회 api
   const fetchComments = async () => {
@@ -246,6 +257,7 @@ const PostComment = ({ postId }) => {
                       id="comment-edit"
                       value={editCommentData}
                       onChange={handleContentChange}
+                      ref={textareaRef}
                     ></textarea>
                     <div className="edit-btns">
                       <button
