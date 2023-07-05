@@ -15,7 +15,7 @@ export const Container = styled.section`
   height: auto;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.8rem;
   background: #fdfdff;
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
   &:hover {
