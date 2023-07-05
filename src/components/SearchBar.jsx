@@ -23,7 +23,7 @@ const SearchBar = ({ handleClose }) => {
             type='text'
             value={input}
             onChange={handleInputChange}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               if ('Enter' === e.key) {
                 handleClickOutside();
                 navigate('/search', { state: input });
@@ -58,7 +58,7 @@ const Content = styled.div`
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  padding: 3.2rem 0;
+  padding: 3.2rem;
 `;
 const Input = styled.input`
   padding: 1.4rem;
@@ -69,5 +69,9 @@ const Input = styled.input`
   outline: none;
   ::placeholder {
     color: #94a3b8;
+  }
+  @media (max-width: 768px) {
+    font-size: 2.6rem;
+    padding: 1.2rem;
   }
 `;
