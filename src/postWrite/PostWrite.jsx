@@ -18,9 +18,26 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const firstListItemRef = useRef(null);
+  const titleTextareaRef = useRef(null);
+  const contentTextareaRef = useRef(null);
   const { data: detail } = useQuery(['detail', postId], () =>
     getDetail(postId)
   );
+
+  useEffect(() => {
+    const titleTextareaEl = titleTextareaRef.current;
+    const contentTextareaEl = contentTextareaRef.current;
+
+    if (titleTextareaEl) {
+      titleTextareaEl.style.height = 'auto';
+      titleTextareaEl.style.height = `${titleTextareaEl.scrollHeight}px`;
+    }
+
+    if (contentTextareaEl) {
+      contentTextareaEl.style.height = 'auto';
+      contentTextareaEl.style.height = `${contentTextareaEl.scrollHeight}px`;
+    }
+  }, [data]);
 
   useEffect(() => {
     if (firstListItemRef.current) {
@@ -124,22 +141,6 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         timer: 1500
       });
     }
-  };
-
-  // textarea 높이 변경
-  const handleChange = e => {
-    e.target.style.height = 'auto';
-    e.target.style.height = `${e.target.scrollHeight}px`;
-  };
-
-  const handleTitleChange = e => {
-    handleChange(e);
-    handleWriteTitle(e);
-  };
-
-  const handleContentChange = e => {
-    handleChange(e);
-    handleWriteContent(e);
   };
 
   // 이미지 추가
@@ -286,7 +287,8 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
           id="title"
           placeholder="제목을 입력해주세요"
           value={data.title}
-          onChange={handleTitleChange}
+          onChange={handleWriteTitle}
+          ref={titleTextareaRef}
         ></textarea>
       </div>
       <textarea
@@ -294,7 +296,8 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
         id="content"
         placeholder="글을 작성해서 레이서 동료들과 생각을 공유해보세요! "
         value={data.content}
-        onChange={handleContentChange}
+        onChange={handleWriteContent}
+        ref={contentTextareaRef}
       ></textarea>
       {showPostImage && (
         <ul className="file-upload">
