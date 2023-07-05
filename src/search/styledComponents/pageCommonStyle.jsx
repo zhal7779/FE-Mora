@@ -21,10 +21,16 @@ export const NoDataWrapper = styled.div`
 
 export const SchedulePageWrapper = styled.main`
   width: 1024px;
-  height: 100%;
+  height: 100vh;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10rem;
+  }
 `;
 
 export const OpenProfilePageWrapper = styled.main`
