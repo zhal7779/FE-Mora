@@ -31,7 +31,7 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
               </div>
               <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
                 <p className='all_view'>모두 보기</p>
-                <RightIcon stroke='#242424' />
+                <RightIcon stroke='var(--main-font-color)' />
               </div>
             </Style.AddView>
           )}
@@ -71,7 +71,7 @@ export default SearchResultProfile;
 const Container = styled.section`
   width: 700px;
   height: inherit;
-  background: #ffffff;
+  background: var(--main-white);
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
 `;
@@ -93,7 +93,6 @@ const Content = styled.div`
     width: 4.6rem;
     height: 4.6rem;
     border-radius: 50%;
-    color: #242424;
     margin-right: 1.6rem;
     object-fit: cover;
   }

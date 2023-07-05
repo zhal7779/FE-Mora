@@ -59,7 +59,6 @@ const Container = styled.div`
         padding-bottom: 4rem;
       }
       strong {
-        color: #242424;
         font-weight: 600;
         padding-bottom: 1rem;
       }

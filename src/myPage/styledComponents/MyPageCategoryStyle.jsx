@@ -18,8 +18,8 @@ export const CategoryContainer = styled.section`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding: 2rem;
     width: 100%;
-    padding: 0, 2rem;
     height: auto;
   }
 
@@ -30,6 +30,7 @@ export const CategoryContainer = styled.section`
     font-size: 2.4rem;
     line-height: 2.9rem;
     color: #242424;
+
     @media (max-width: 768px) {
       display: none;
     }
@@ -38,6 +39,7 @@ export const CategoryContainer = styled.section`
   .category-list {
     padding-top: 36px;
     padding-bottom: 18px;
+
     @media (max-width: 768px) {
       padding: 0;
     }

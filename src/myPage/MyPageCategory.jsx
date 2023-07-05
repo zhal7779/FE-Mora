@@ -9,6 +9,7 @@ const MyPageCategory = ({ handleCategorySelect, selectedCategory, categories }) 
 
   const handleLogout = () => {
     sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem('userRefreshToken');
     queryClient.invalidateQueries('mainProfileData');
     navigate('/');
   };

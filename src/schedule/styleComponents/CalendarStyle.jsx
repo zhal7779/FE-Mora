@@ -23,15 +23,15 @@ export const Container = styled.section`
     .fc .fc-toolbar-title {
       font-size: 2.2rem;
       font-weight: 600;
-      color: #242424;
+      color: var(--main-font-color);
       margin: 0px;
     }
     // 헤더 today, prev,next 버튼색상 변경
     .fc-button-primary {
-      background: #d6c9ff;
+      background: var(--light-purple);
     }
     .fc-today-button {
-      background: #7353ea !important;
+      background: var(--dark-purple) !important;
     }
 
     .fc-button {
@@ -48,7 +48,7 @@ export const Container = styled.section`
     .fc-icon-chevron-left,
     .fc-icon-chevron-right {
       &::before {
-        color: #616161;
+        color: var(--dark-gray);
       }
     }
     //cell 커서

@@ -57,11 +57,11 @@ const CalendarModal = ({ onModal, date }) => {
         <Style.Content>
           <div className='date'>
             <span onClick={() => handleDateChange('sub')}>
-              <LeftIcon stroke='#ffffff' />
+              <LeftIcon stroke='var(--main-white)' />
             </span>
             <h5>{formatDate}</h5>
             <span onClick={() => handleDateChange('add')}>
-              <RightIcon stroke='#ffffff' />
+              <RightIcon stroke='var(--main-white)' />
             </span>
           </div>
           <span className='close_btn' onClick={handleClickClose}>

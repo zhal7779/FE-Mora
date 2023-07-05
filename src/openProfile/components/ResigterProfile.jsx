@@ -40,7 +40,6 @@ const Container = styled.div`
 const TextContent = styled.div`
   margin-top: 6rem;
   font-size: 2.5rem;
-  color: #242424;
   padding-top: 4rem;
   padding-bottom: 3rem;
   div {

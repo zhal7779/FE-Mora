@@ -18,7 +18,7 @@ export const NavContainer = styled.nav`
   z-index: 1;
   position: fixed;
   top: 17.7rem;
-  background: #ffffff;
+  background: var(--main-white);
   width: 100%;
   border-bottom: #cbd5e1 1px solid;
 `;
@@ -40,6 +40,6 @@ export const SearchNavItem = styled.div`
     font-weight: 700;
     padding: 1.6rem;
     cursor: pointer;
-    color: ${(props) => (props.active ? '#242424' : '#bdbdbd')};
+    color: ${(props) => (props.active ? 'var(--main-font-color)' : 'var(--light-gray)')};
   }
 `;

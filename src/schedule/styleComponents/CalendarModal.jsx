@@ -32,7 +32,7 @@ export const Content = styled.div`
     padding: 3rem;
     background: #fdfdff;
     h5 {
-      color: #616161;
+      color: var(--dark-gray);
       font-size: 1.8rem;
       font-weight: 700;
       padding: 0 1rem;
@@ -56,7 +56,7 @@ export const Content = styled.div`
     top: 0;
     right: 0;
     margin: 0.5rem 1rem;
-    color: #616161;
+    color: var(--dark-gray);
     font-size: 2.4rem;
     cursor: pointer;
   }
@@ -77,7 +77,7 @@ export const Main = styled.div`
     }
     p {
       font-size: 1.6rem;
-      color: #616161;
+      color: var(--dark-gray);
     }
   }
   .main {
@@ -88,7 +88,7 @@ export const Main = styled.div`
       display: block;
       width: 100%;
       height: 1.8rem;
-      background: #d6c9ff;
+      background: var(--light-purple);
       border-radius: 10px 10px 0px 0px;
     }
     .main_text {
@@ -96,7 +96,6 @@ export const Main = styled.div`
       h5 {
         font-size: 1.6rem;
         font-weight: 700;
-        color: #242424;
         padding-bottom: 2rem;
       }
       div {
@@ -106,7 +105,6 @@ export const Main = styled.div`
         gap: 1rem;
 
         p {
-          color: #242424;
           font-size: 1.4rem;
           line-height: 140%;
           .link_box {

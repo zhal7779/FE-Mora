@@ -10,7 +10,7 @@ export const Container = styled.section`
   .header_title {
     display: flex;
     justify-content: space-between;
-    border: #d8e0e9 solid 1px;
+    border: var(--blue-gray) solid 1px;
     border-radius: 4px;
     background: #fdfdfd;
     h4 {
@@ -32,7 +32,7 @@ export const Container = styled.section`
     align-items: center;
     p {
       font-size: 1.6rem;
-      color: #616161;
+      color: var(--dark-gray);
     }
   }
 `;
@@ -56,7 +56,6 @@ export const Content = styled.div`
     h5 {
       font-weight: 700;
       font-size: 1.5rem;
-      color: #242424;
     }
     span {
       display: flex;
@@ -80,7 +79,6 @@ export const Content = styled.div`
     p {
       font-weight: 400;
       font-size: 15px;
-      color: #242424;
       line-height: 120%;
     }
   }

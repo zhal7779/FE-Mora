@@ -83,7 +83,6 @@ const Content = styled.div`
   justify-content: space-between;
   border-bottom: 1px #cbd5e1 solid;
   padding: 2rem 1.6rem;
-  color: #242424;
   cursor: pointer;
   &:hover {
     background: rgba(233, 233, 238, 0.4);
@@ -100,10 +99,7 @@ const Content = styled.div`
       font-weight: 600;
       strong {
         margin-right: 1rem;
-        color: #7353ea;
-      }
-      h2 {
-        color: #242424;
+        color: var(--dark-purple);
       }
     }
 
@@ -135,12 +131,11 @@ const Content = styled.div`
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0;
-    color: #242424;
     div {
       display: flex;
       gap: 1rem;
       p {
-        color: #bdbdbd;
+        color: var(--light-gray);
       }
     }
   }

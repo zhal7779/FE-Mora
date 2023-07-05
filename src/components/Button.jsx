@@ -35,10 +35,10 @@ export default Button;
 
 const BaseButton = styled.button`
   display: inline-block;
-  width: auto;
+  width: 9.8rem;
   height: 3.8rem;
-  padding: 9px 21px 9px 21px;
-  border-radius: 7px;
+  padding: 0.7rem 1.5rem 0.9rem 1.5rem;
+  border-radius: 0.7rem;
   font-style: normal;
   font-weight: 700;
   font-size: 1.5rem;
@@ -71,5 +71,5 @@ const DarkPurpleButton = styled(BaseButton)``;
 const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
   border: 1px solid #b9b9b9;
-  padding: 8px 20px 9px 20px;
+  padding: 0.6rem 1.5rem 0.9rem 1.5rem;
 `;

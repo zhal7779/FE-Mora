@@ -4,7 +4,6 @@ export const AddView = styled.div`
   justify-content: space-between;
   font-size: 1.8rem;
   font-weight: 700;
-  color: #242424;
   padding: 2rem;
   div {
     display: flex;

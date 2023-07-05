@@ -27,7 +27,7 @@ const Pagination = ({ pages, currentPage, clickPage }) => {
   return (
     <Container>
       <button className='prev_button' onClick={handlePrevButton}>
-        <LeftIcon stroke='#ffffff' />
+        <LeftIcon stroke='var(--main-white)' />
       </button>
       {Array.from({ length: pages }, (_, index) => (
         <PageNumber
@@ -39,7 +39,7 @@ const Pagination = ({ pages, currentPage, clickPage }) => {
         </PageNumber>
       ))}
       <button className='next_button' onClick={handleNextButton}>
-        <RightIcon stroke='#ffffff' />
+        <RightIcon stroke='var(--main-white)' />
       </button>
     </Container>
   );
@@ -68,7 +68,7 @@ const Container = styled.div`
 `;
 const PageNumber = styled.p`
   cursor: pointer;
-  color: #616161;
+  color: var(--dark-gray);
 
   padding: 0 0.5rem;
   ${({ isActive }) =>

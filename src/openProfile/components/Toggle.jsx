@@ -54,7 +54,7 @@ const Container = styled.div`
   align-items: center;
   > .toggle_text {
     font-size: 1.3rem;
-    color: #616161;
+    color: var(--dark-gray);
     padding-right: 1rem;
   }
 `;
@@ -70,7 +70,7 @@ const ToggleContainer = styled.span`
   }
 
   > .toggle__checked {
-    background: #d6c9ff;
+    background: var(--light-purple);
     transition: 0.5s;
   }
 
@@ -81,7 +81,7 @@ const ToggleContainer = styled.span`
     width: 1.8rem;
     height: 1.8rem;
     border-radius: 50%;
-    background-color: #ffffff;
+    background-color: var(--main-white);
     transition: 0.5s;
   }
   > .toggle__checked {
