@@ -54,9 +54,9 @@ export const DetailContainer = styled.section`
           li {
             width: 100%;
             padding: 4px 10px;
-            font-size: 14px;
+            font-size: 1.4rem;
             font-weight: 500;
-            line-height: 22px;
+            line-height: 2.2rem;
             color: #acacac;
             cursor: pointer;
             transition: 0.2s;

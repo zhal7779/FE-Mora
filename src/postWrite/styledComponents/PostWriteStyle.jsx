@@ -55,9 +55,9 @@ export const WriteContainer = styled.div`
         align-items: center;
 
         padding: 4px 16px;
-        font-size: 14px;
+        font-size: 1.4rem;
         font-weight: 500;
-        line-height: 22px;
+        line-height: 2.2rem;
         color: #acacac;
         cursor: pointer;
         transition: 0.2s;
@@ -91,14 +91,16 @@ export const WriteContainer = styled.div`
       min-height: 36px;
       margin-bottom: 30px;
       font-weight: 600;
-      font-size: 25px;
+      font-size: 2.5rem;
+      line-height: 3.2rem;
     }
 
     &#content {
       min-height: 300px;
       height: auto;
-      font-weight: 500;
-      font-size: 18px;
+      font-weight: 400;
+      font-size: 1.8rem;
+      line-height: 2.5rem;
       border-bottom: 1px solid #e2e8f0;
       padding-bottom: 20px;
     }
@@ -227,7 +229,7 @@ export const WriteContainer = styled.div`
       align-items: center;
       justify-content: center;
 
-      font-size: 13px;
+      font-size: 1.3rem;
       line-height: 1.8rem;
       color: #acb2b9;
       border: 1px dashed #d7dce4;

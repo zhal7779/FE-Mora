@@ -38,6 +38,7 @@ export const PostContainer = styled.section`
 
   & > ul {
     padding-bottom: 100px;
+    min-height: 100vh;
   }
 
   .list {
