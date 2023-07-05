@@ -32,6 +32,7 @@ export const FooterStyle = styled.footer`
     p {
       padding: 0 3rem;
       font-size: 1.3rem;
+      font-weight: 600;
       color: var(--dark-gray);
       cursor: pointer;
     }

@@ -2,38 +2,40 @@ import React from 'react';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { NonmemberWrapper } from '../search/styledComponents/pageCommonStyle';
 import rabbitImg from '../assets/images/main-banner-img.png';
 import logo from '../assets/images/logo2.png';
 const NonmemberPage = () => {
   return (
-    <NonmemberWrapper>
-      <Container>
-        <img src={rabbitImg} />
-        <div>
-          <span>
-            <img src={logo} />
-            <strong>모여라 레이서 회원만 이용 가능합니다.</strong>
-            <p>로그인 후 이용해주세요.</p>
-            <Link to='/login'>
-              <Button value='로그인하러 가기' color='darkPurple'></Button>
-            </Link>
-          </span>
-        </div>
-      </Container>
-    </NonmemberWrapper>
+    <Container>
+      <img src={rabbitImg} />
+      <div>
+        <span>
+          <img src={logo} />
+          <strong>모여라 레이서 회원만 이용 가능합니다.</strong>
+          <p>이용을 원하시면 로그인 후 이용해주세요.</p>
+          <Link to='/login'>
+            <Button value='로그인하러 가기' color='darkPurple'></Button>
+          </Link>
+        </span>
+      </div>
+    </Container>
   );
 };
 
 export default NonmemberPage;
 
 const Container = styled.div`
-  height: 100%;
-  margin: 20rem 2rem;
+  width: 1024px;
+  height: 100vh;
   display: flex;
-  justify-content: space-between;
+  margin: 0 auto 0 auto;
+  align-items: center;
+  justify-content: center;
+  background: #eeeafe;
+  border-left: #cbd5e1 1px solid;
+  border-right: #cbd5e1 1px solid;
   img {
-    width: 46rem;
+    height: 46rem;
   }
   div {
     display: flex;
@@ -41,7 +43,6 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-
     span {
       display: flex;
       flex-direction: column;
@@ -55,16 +56,33 @@ const Container = styled.div`
       border: solid #cbd5e1 1px;
       box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
       img {
-        width: 20rem;
-        padding-bottom: 4rem;
+        height: 4rem;
+        margin-bottom: 5rem;
       }
       strong {
         font-weight: 600;
-        padding-bottom: 1rem;
+        padding-bottom: 2rem;
       }
       p {
         color: rgb(96, 94, 160);
-        padding-bottom: 3rem;
+        padding-bottom: 5rem;
+        font-size: 1.8rem;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    height: 100%;
+    width: 100%;
+    gap: 6rem;
+    border: none;
+    img {
+      height: 36rem;
+      margin-bottom: 8rem;
+    }
+    div {
+      span {
+        padding: 5rem;
       }
     }
   }
