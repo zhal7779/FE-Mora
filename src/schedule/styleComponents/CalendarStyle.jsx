@@ -20,7 +20,7 @@ export const Container = styled.section`
     }
     //헤더 2023년 6월
     .fc .fc-toolbar-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 600;
       color: var(--main-font-color);
       margin: 0px;
