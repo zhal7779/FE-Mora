@@ -14,11 +14,19 @@ export const Container = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 82.4rem;
+  width: 54%;
   height: 50.4rem;
   border-radius: 4px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   background: #fdfdff;
+  @media (max-width: 768px) {
+    width: 74%;
+    height: 40.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    width: 64%;
+    height: 45.4rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -84,6 +92,7 @@ export const Main = styled.div`
     background: #eeeafe;
     border-radius: 10px;
     margin: 0 5rem 3rem 5rem;
+
     .header_span {
       display: block;
       width: 100%;
@@ -139,6 +148,26 @@ export const Main = styled.div`
     }
     &::-webkit-scrollbar-track {
       background: transparent;
+    }
+  }
+  @media (max-width: 768px) {
+    .main {
+      margin: 0 2rem 2rem 2rem;
+    }
+    .no_schedule {
+      img {
+        width: 18rem;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    .main {
+      margin: 0 3rem 2rem 3rem;
+    }
+    .no_schedule {
+      img {
+        width: 22rem;
+      }
     }
   }
 `;

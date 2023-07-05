@@ -35,6 +35,10 @@ export const Container = styled.section`
       color: var(--dark-gray);
     }
   }
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 2.4rem;
+  }
 `;
 
 export const Content = styled.div`

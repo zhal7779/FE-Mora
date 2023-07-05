@@ -7,7 +7,7 @@ export const HeaderStyle = styled.header`
     left: 0;
     right: 0;
     top: 0;
-    z-index: 90;
+    z-index: 100;
     background: var(--main-white);
     border-bottom: #cbd5e1 1px solid;
     height: 6rem;
@@ -127,7 +127,7 @@ export const HeaderStyle = styled.header`
       border-radius: 5px;
       margin: 0.5rem 0 0.5rem 0;
       &:hover {
-        background-color: var(--light-purple);
+        background: #f7f5ff;
       }
       p {
         justify-content: center;
@@ -139,7 +139,8 @@ export const HeaderStyle = styled.header`
       justify-content: center;
     }
     .menu-item.active {
-      border: none;
+      border: #cbd5e1 1px solid;
+      background: #eeeafe;
     }
 
     .side-content {

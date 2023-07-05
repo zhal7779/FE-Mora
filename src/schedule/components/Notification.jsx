@@ -43,7 +43,6 @@ const Notification = () => {
       }
     });
   };
-  console.log(data);
 
   return (
     <Style.Container>
