@@ -1,16 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
 import RankingList from './RankingList';
+import { useWindowSize } from '../../header/components/useWindowSize';
+import Button from '../../components/Button';
+import { useState } from 'react';
+import RankingModal from './RankingModal';
 
 const RankingContent = ({ data }) => {
+  const { isSize } = useWindowSize();
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const modalOpenOrClose = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+
   return (
     <Container>
-      <TitleContent>
-        <h5>모여라 레이서 TOP10🔥</h5>
-        <p>지난 24시간 동안</p>
-        <p>가장 인기가 좋았던 게시물을 만나보세요.</p>
-      </TitleContent>
-      <RankingList data={data} />
+      {isSize ? (
+        <>
+          <TitleContent>
+            <h5>모여라 레이서 TOP10🔥</h5>
+            <p>지난 24시간 동안</p>
+            <p>가장 인기가 좋았던 게시물을 만나보세요.</p>
+          </TitleContent>
+          <RankingList data={data} />
+        </>
+      ) : (
+        <>
+          {isOpenModal && <RankingModal data={data} modalOpenOrClose={modalOpenOrClose} />}
+          <TitleContent>
+            <h5>모여라 레이서 TOP10🔥</h5>
+            <p>지난 24시간 동안</p>
+            <p>가장 인기가 좋았던 게시물을 만나보세요.</p>
+          </TitleContent>
+          <div className='button-content'>
+            <Button value='인기게시글 보기' color='darkPurple' onClick={modalOpenOrClose} />
+          </div>
+        </>
+      )}
     </Container>
   );
 };
@@ -26,6 +53,18 @@ const Container = styled.section`
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
   height: 100%;
+  @media (max-width: 768px) {
+    position: static;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 3rem;
+    .button-content {
+      /* flex-direction: column !important; */
+    }
+  }
 `;
 const TitleContent = styled.div`
   padding-bottom: 0.5rem;

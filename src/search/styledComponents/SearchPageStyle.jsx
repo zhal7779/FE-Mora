@@ -13,6 +13,9 @@ export const ProfileWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 export const NavContainer = styled.nav`
   z-index: 1;

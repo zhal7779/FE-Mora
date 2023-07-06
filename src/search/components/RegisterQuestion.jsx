@@ -70,9 +70,8 @@ const Container = styled.span`
     height: 15.4rem;
     position: static;
     flex-direction: row-reverse;
-    padding: 0 4rem;
+    padding: 0 1.4rem;
     justify-content: space-between;
-    /* margin: 0 2.4rem; */
   }
 `;
 

@@ -75,7 +75,7 @@ const Container = styled.section`
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
   @media (max-width: 768px) {
-    width: 100%;
+    width: 90%;
   }
 `;
 

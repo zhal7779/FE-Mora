@@ -59,8 +59,6 @@ const Content = styled.div`
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    &:hover {
-    }
   }
   .text_content {
     display: flex;
@@ -85,5 +83,7 @@ const Content = styled.div`
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
     }
+  }
+  @media (max-width: 768px) {
   }
 `;
