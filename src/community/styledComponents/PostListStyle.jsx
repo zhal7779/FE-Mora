@@ -123,6 +123,8 @@ export const PostContainer = styled.section`
       display: flex;
       flex-wrap: wrap;
       gap: 0.8rem;
+      max-height: 58px;
+      overflow: hidden;
 
       li {
         display: flex;
@@ -137,6 +139,10 @@ export const PostContainer = styled.section`
         span {
           margin-right: 4px;
         }
+      }
+
+      @media (max-width: 375px) {
+        max-height: 54px;
       }
     }
   }
