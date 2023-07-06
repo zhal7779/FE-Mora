@@ -4,7 +4,6 @@ export const Container = styled.section`
   margin-top: 10rem;
   width: 67%;
   height: 100%;
-  overflow-y: auto;
   div {
     //토,일 색상 변경
     .fc-day-sat a {
@@ -21,7 +20,7 @@ export const Container = styled.section`
     }
     //헤더 2023년 6월
     .fc .fc-toolbar-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 600;
       color: var(--main-font-color);
       margin: 0px;
@@ -82,6 +81,12 @@ export const Container = styled.section`
       display: flex;
       justify-content: center;
     }
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+
+    padding: 0 2.4rem;
+    margin-top: 6rem;
   }
 `;
 export const EventColor = styled.div`

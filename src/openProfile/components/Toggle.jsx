@@ -65,7 +65,7 @@ const ToggleContainer = styled.span`
   > .toggle_container {
     width: 4.6rem;
     height: 2.4rem;
-    border-radius: 20px;
+    border-radius: 2rem;
     background: #e9e9ee;
   }
 
@@ -76,8 +76,8 @@ const ToggleContainer = styled.span`
 
   > .toggle_circle {
     position: absolute;
-    top: 3px;
-    left: 4px;
+    top: 0.3rem;
+    left: 0.4rem;
     width: 1.8rem;
     height: 1.8rem;
     border-radius: 50%;
@@ -85,7 +85,7 @@ const ToggleContainer = styled.span`
     transition: 0.5s;
   }
   > .toggle__checked {
-    left: 24px;
+    left: 2.4rem;
     transition: 0.5s;
   }
 `;

@@ -48,14 +48,14 @@ const Header = () => {
     async () => {
       const url = `${URL}/api/users/refresh-token`;
       const userToken = sessionStorage.getItem('userToken');
-      const refeshToken = sessionStorage.getItem('userRefreshToken');
+      const userRefreshToken = sessionStorage.getItem('userRefreshToken');
 
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userToken}`,
-          refresh: refeshToken,
+          refresh: userRefreshToken,
         },
       });
 
@@ -176,9 +176,6 @@ const Header = () => {
       ) : (
         <Style.HeaderStyle>
           <div className='container'>
-            <div className='modal-content'>
-              {onModal ? <AlarmModal handleClose={handleModalClick} /> : ''}
-            </div>
             <nav className='content'>
               <div className='main-content'>
                 <div className='logo' onClick={!isSize ? () => setMenuOpen(false) : undefined}>
@@ -223,7 +220,7 @@ const Header = () => {
                       />
                     )}
                   </div>
-                  <div onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                  <div>
                     {token ? (
                       <>
                         <BellIcon
@@ -260,6 +257,9 @@ const Header = () => {
                 <BarsIcon style={{ fill: '#7353ea' }} onClick={handleMenuOpen} />
               </div>
             </nav>
+            <div className='modal-content'>
+              {onModal ? <AlarmModal handleClose={handleModalClick} /> : ''}
+            </div>
           </div>
         </Style.HeaderStyle>
       )}
