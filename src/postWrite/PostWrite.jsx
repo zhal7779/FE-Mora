@@ -7,7 +7,7 @@ import IconImageDelete from '../assets/icons/icon-delete-image.svg';
 import IconHashtagDelete from '../assets/icons/icon-delete-hashtag.svg';
 import IconAddImage from '../assets/icons/icon-add-lightgray.svg';
 import { useQuery, useMutation } from 'react-query';
-import { getDetail } from '../postDetail/service/postDetailService';
+import { fetchPostDetail } from '../postDetail/api/apis';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 const BASE_URL = process.env.REACT_APP_URL;
@@ -21,7 +21,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const titleTextareaRef = useRef(null);
   const contentTextareaRef = useRef(null);
   const { data: detail } = useQuery(['detail', postId], () =>
-    getDetail(postId)
+    fetchPostDetail(postId)
   );
 
   // textarea 높이 유동적 변경
