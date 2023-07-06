@@ -15,9 +15,9 @@ const BASE_URL = process.env.REACT_APP_URL;
 const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const [showCategory, setShowCategory] = useState(false);
   const [popularHashtags, setPopularHashtags] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
   const [inputValue, setInputValue] = useState('');
-  const firstListItemRef = useRef(null);
+  const [index, setIndex] = useState(-1);
+  const popularHashtagRef = useRef(null);
   const titleTextareaRef = useRef(null);
   const contentTextareaRef = useRef(null);
   const { data: detail } = useQuery(['detail', postId], () =>
@@ -41,11 +41,10 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   }, [data]);
 
   useEffect(() => {
-    if (firstListItemRef.current) {
-      firstListItemRef.current.focus();
+    if (index !== -1) {
+      setInputValue(popularHashtags[index]);
     }
-    console.log(firstListItemRef.current);
-  }, []);
+  }, [index]);
 
   // 게시글 수정일 경우 해당 게시글의 콘텐츠 내용 보여주기
   useEffect(() => {
@@ -188,6 +187,15 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
 
   // 해쉬태그 추가
   const handleAddHashtag = hashtag => {
+    if (data.hashtags.includes(hashtag)) {
+      Swal.fire({
+        icon: 'warning',
+        title: '이미 추가된 해쉬태그입니다.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
     if (hashtag.length !== 0) {
       setData(prevData => ({
         ...prevData,
@@ -199,7 +207,7 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
   const handleHashtagKeyPress = e => {
     if (e.key === 'Enter') {
       handleAddHashtag(e.target.value);
-      e.target.value = '';
+      setInputValue('');
     }
   };
 
@@ -210,37 +218,24 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
 
   // 키보드로 해쉬태그 선택
   const handleHashtagKeyDown = e => {
-    const currentListItem = firstListItemRef.current;
-    console.log(currentListItem);
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      const nextListItem = currentListItem.nextElementSibling;
-      console.log(nextListItem);
-
-      if (nextListItem) {
-        nextListItem.focus();
-        setInputValue(nextListItem.textContent);
-
-        setSelectedItem(nextListItem);
+    if (popularHashtags.length > 0) {
+      switch (e.key) {
+        case 'ArrowDown': //키보드 아래 키
+          setIndex(index + 1);
+          if (popularHashtagRef.current?.childElementCount === index + 1)
+            setIndex(0);
+          break;
+        case 'ArrowUp': //키보드 위에 키
+          setIndex(index - 1);
+          if (index <= 0) {
+            setIndex(popularHashtags.length - 1);
+          }
+          break;
+        case 'Escape': // esc key를 눌렀을때,
+          setPopularHashtags([]);
+          setIndex(-1);
+          break;
       }
-    }
-
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      const previousListItem = currentListItem.previousElementSibling;
-      console.log(previousListItem);
-
-      if (previousListItem) {
-        previousListItem.focus();
-        setInputValue(previousListItem.textContent);
-
-        setSelectedItem(previousListItem);
-      }
-    }
-
-    if (e.key === 'Enter') {
-      e.preventDefault();
     }
   };
 
@@ -358,12 +353,11 @@ const PostWrite = ({ showPostImage, data, setData, postId }) => {
             onKeyDown={handleHashtagKeyDown}
           />
           {popularHashtags.length > 0 && inputValue !== '' && (
-            <ul className="hashtags-popular">
-              {popularHashtags.map((hashtag, index) => (
+            <ul className="hashtags-popular" ref={popularHashtagRef}>
+              {popularHashtags.map((hashtag, idx) => (
                 <li
-                  key={index}
-                  ref={index === 0 ? firstListItemRef : null}
-                  className={selectedItem === index ? 'selected' : ''}
+                  key={idx}
+                  className={index === idx ? 'selected' : ''}
                   onClick={() => handleHashtagOnClick(hashtag)}
                 >
                   {hashtag}

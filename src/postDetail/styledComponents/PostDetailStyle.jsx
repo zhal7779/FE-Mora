@@ -158,7 +158,7 @@ export const DetailContainer = styled.section`
       font-size: 1.6rem;
       line-height: 2.5rem;
 
-      span {
+      & > span {
         display: block;
         width: 100%;
       }
@@ -199,7 +199,7 @@ export const DetailContainer = styled.section`
         border: 1px solid rgb(216, 224, 233);
         border-radius: 20px;
 
-        span {
+        & > span {
           margin-right: 4px;
         }
       }
