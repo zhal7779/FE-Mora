@@ -48,14 +48,14 @@ const Header = () => {
     async () => {
       const url = `${URL}/api/users/refresh-token`;
       const userToken = sessionStorage.getItem('userToken');
-      const refeshToken = sessionStorage.getItem('userRefreshToken');
+      const userRefreshToken = sessionStorage.getItem('userRefreshToken');
 
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userToken}`,
-          refresh: refeshToken,
+          refresh: userRefreshToken,
         },
       });
 
