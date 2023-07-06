@@ -8,8 +8,22 @@ const moveDiagonally = keyframes`
 
   to {
     transform: translate(100%, -65%) scale(1);
-    opacity: 1;
+    opacity: 1;  
   }
+
+`;
+
+const moveDiagonallyMobile = keyframes`
+  from {
+    transform: translate(-100%, -200%) scale(0.1);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(85%, 0%) scale(1.3);
+    opacity: 1;  
+  }
+
 `;
 
 const shakeAnimation = keyframes`
@@ -46,19 +60,24 @@ export const BannerContainer = styled.section`
 
     &-side {
       position: relative;
-      padding-top: 260px;
+      padding-top: 290px;
 
       font-size: 4.8rem;
       font-weight: 700;
       color: #fff;
-      line-height: 6.2rem;
+      line-height: 6.4rem;
+      word-break: keep-all;
 
       z-index: 1;
 
       span {
+        display: block;
+        padding-bottom: 14px;
+
         font-size: 2.2rem;
-        line-height: 2.4rem;
+        line-height: 2.8rem;
         font-weight: 500;
+        word-break: keep-all;
         color: #fff;
       }
     }
@@ -88,5 +107,22 @@ export const BannerContainer = styled.section`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .main-slogan {
+      height: 100vh;
+
+      &-side {
+        padding-top: 220px;
+        font-size: 4.5rem;
+        line-height: 6.1rem;
+      }
+    }
+
+    .main-image {
+      transform: translate(85%, 0%) scale(1.3);
+      animation: ${moveDiagonallyMobile} 1.6s ease-in-out;
+    }
   }
 `;

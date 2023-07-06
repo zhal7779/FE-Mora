@@ -6,7 +6,7 @@ export const Nodata = styled.div`
   align-items: center;
   padding: 20rem;
   p {
-    color: #616161;
+    color: var(--dark-gray);
     font-size: 1.6rem;
   }
 `;
@@ -15,7 +15,7 @@ export const Container = styled.section`
   height: auto;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.8rem;
   background: #fdfdff;
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
   &:hover {
@@ -38,12 +38,12 @@ export const ProfileContent = styled.div`
   h5 {
     font-weight: 700;
     font-size: 2rem;
-    color: #242424;
+
     padding-bottom: 1rem;
   }
   p {
     font-size: 1.3rem;
-    color: #616161;
+    color: var(--dark-gray);
     font-weight: 600;
   }
   .image_icon {
@@ -51,6 +51,7 @@ export const ProfileContent = styled.div`
     height: 6.6rem;
     border-radius: 50%;
     margin-right: 2rem;
+    object-fit: cover;
   }
 `;
 
@@ -58,7 +59,7 @@ export const ChatButton = styled.button`
   font-weight: 700;
   font-size: 1.2rem;
   color: #3c21a0;
-  background: #d6c9ff;
+  background: var(--light-purple);
   border-radius: 4px;
   padding: 0.6rem 1.2rem;
   cursor: pointer;
@@ -105,7 +106,6 @@ export const CareerContent = styled.div`
     display: flex;
     align-items: center;
     font-size: 1.4rem;
-    color: #242424;
     h5 {
       margin: 0 0.5rem 0 1rem;
       font-weight: 700;

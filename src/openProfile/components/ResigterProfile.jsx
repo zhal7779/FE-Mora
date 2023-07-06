@@ -36,11 +36,20 @@ const Container = styled.div`
   top: 0;
   height: 100%;
   margin-bottom: 36rem;
+  background: var(--main-white);
+  @media (max-width: 768px) {
+    position: static;
+    flex-direction: row;
+    margin-bottom: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5rem;
+    padding: 0 2.4rem;
+  }
 `;
 const TextContent = styled.div`
   margin-top: 6rem;
   font-size: 2.5rem;
-  color: #242424;
   padding-top: 4rem;
   padding-bottom: 3rem;
   div {
@@ -57,4 +66,7 @@ const TextContent = styled.div`
 
 const ButtonContent = styled.div`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  @media (max-width: 768px) {
+    margin-top: 5rem;
+  }
 `;

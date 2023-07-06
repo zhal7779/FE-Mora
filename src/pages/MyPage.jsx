@@ -31,13 +31,12 @@ const MyPageContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-  max-width: 1024px;
   padding-top: 60px;
+  max-width: 1024px;
   margin: 0 auto;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
   }
 `;
 

@@ -74,9 +74,10 @@ const Login = () => {
     // 로그인 성공 시 커뮤니티 페이지로 이동
     {
       onSuccess: (data) => {
-        const { token, message: responseMessage } = data;
+        const { token, refreshToken, message: responseMessage } = data;
         if (responseMessage === '로그인에 성공하셨습니다!') {
           sessionStorage.setItem('userToken', token);
+          sessionStorage.setItem('userRefreshToken', refreshToken);
           navigate('/community/post/free');
         } else {
           setMessage(responseMessage);

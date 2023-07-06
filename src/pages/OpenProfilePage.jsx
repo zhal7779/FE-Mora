@@ -11,7 +11,7 @@ const OpenProfilePage = () => {
   return (
     <OpenProfilePageWrapper>
       <ResigterProfile />
-      <div>
+      <div className='content'>
         <ToggleHeader handleProfileRegisterStatus={handleProfileRegisterStatus} />
         <OpenProfile registerstatus={registerstatus} />
       </div>

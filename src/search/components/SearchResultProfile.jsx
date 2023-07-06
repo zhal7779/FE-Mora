@@ -31,7 +31,7 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
               </div>
               <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
                 <p className='all_view'>모두 보기</p>
-                <RightIcon stroke='#242424' />
+                <RightIcon stroke='var(--main-font-color)' />
               </div>
             </Style.AddView>
           )}
@@ -39,8 +39,8 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
             data.map((item) => (
               <Content key={item.user_id}>
                 <div>
-                  <div className='img_content'>
-                    <img className='img__content' src={item.img_path}></img>
+                  <div className='img-container'>
+                    <img className='img-content' src={item.img_path} alt='프로필'></img>
                   </div>
                   <div className='text_content'>
                     <h4>{item.User.name}</h4>
@@ -71,7 +71,7 @@ export default SearchResultProfile;
 const Container = styled.section`
   width: 700px;
   height: inherit;
-  background: #ffffff;
+  background: var(--main-white);
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
 `;
@@ -84,17 +84,17 @@ const Content = styled.div`
   div {
     display: flex;
   }
-  .img_content {
+  .img-container {
     align-items: center;
   }
-  .img__content {
+  .img-content {
     display: flex;
     align-items: center;
     width: 4.6rem;
     height: 4.6rem;
     border-radius: 50%;
-    color: #242424;
     margin-right: 1.6rem;
+    object-fit: cover;
   }
   .skill {
     display: flex;

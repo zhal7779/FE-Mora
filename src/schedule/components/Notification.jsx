@@ -29,7 +29,9 @@ const Notification = () => {
     []
   );
 
-  const { data } = useQuery(['notice', searchValue, page], () => fetchNotice(page, searchValue));
+  const { data, isSuccess } = useQuery(['notice', searchValue, page], () =>
+    fetchNotice(page, searchValue)
+  );
 
   //더보기 Open, close
   const handleClickView = (id) => {
@@ -49,38 +51,46 @@ const Notification = () => {
         <img src={rabbitImg} />
       </div>
       <Input width='100%' value={inputValue} onChange={handleOnChange} />
-      {data && data.objArr && data.objArr.length > 0 ? (
-        data.objArr.map((item) => (
-          <Style.Content key={item.id}>
-            <div className='title' onClick={() => handleClickView(item.id)}>
-              <h5>📢 [{item.title}]</h5>
-              <span>
-                {view.includes(item.id) ? (
-                  <UpIcon stroke='#ffffff' strokeWidth='2.6' width='18' height='20' />
-                ) : (
-                  <DownIcon stroke='#ffffff' strokeWidth='2.6' width='18' height='20' />
-                )}
-              </span>
-            </div>
-            {view.includes(item.id) && (
-              <div className='main_text'>
-                <p>{item.content}</p>
-              </div>
-            )}
-          </Style.Content>
-        ))
-      ) : (
+      {isSuccess && data && data.objArr.length === 0 ? (
         <div className='no_data'>
           <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
           <p>해당하는 공지사항이 없습니다.</p>
         </div>
-      )}
-      {data && data.objArr && data.objArr.length > 0 && (
-        <Pagination
-          pages={data.totalPages}
-          currentPage={data.currentPage}
-          clickPage={handleClickPage}
-        />
+      ) : (
+        <>
+          {data &&
+            data.objArr.map((item) => (
+              <Style.Content key={item.id}>
+                <div className='title' onClick={() => handleClickView(item.id)}>
+                  <h5>📢 [{item.title}]</h5>
+                  <span>
+                    {view.includes(item.id) ? (
+                      <UpIcon stroke='var(--main-white)' strokeWidth='2.6' width='18' height='20' />
+                    ) : (
+                      <DownIcon
+                        stroke='var(--main-white)'
+                        strokeWidth='2.6'
+                        width='18'
+                        height='20'
+                      />
+                    )}
+                  </span>
+                </div>
+                {view.includes(item.id) && (
+                  <div className='main_text'>
+                    <p>{item.content}</p>
+                  </div>
+                )}
+              </Style.Content>
+            ))}
+          {data && (
+            <Pagination
+              pages={data.totalPages}
+              currentPage={data.currentPage}
+              clickPage={handleClickPage}
+            />
+          )}
+        </>
       )}
     </Style.Container>
   );

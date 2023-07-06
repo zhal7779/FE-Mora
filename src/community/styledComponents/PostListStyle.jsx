@@ -35,10 +35,13 @@ export const PostContainer = styled.section`
       }
     }
   }
-  ul {
+
+  & > ul {
     padding-bottom: 100px;
+    min-height: 100vh;
   }
-  li {
+
+  .list {
     border-top: 1px solid #e0e0e0;
     padding: 0 16px;
 
@@ -50,7 +53,7 @@ export const PostContainer = styled.section`
       border-bottom: 1px solid #e0e0e0;
     }
 
-    .list-time {
+    &-time {
       padding-top: 24px;
       font-weight: 600;
       font-size: 1.2rem;
@@ -72,9 +75,9 @@ export const PostContainer = styled.section`
       overflow: hidden;
     }
 
-    .list-content {
-      margin-bottom: 30px;
+    &-content {
       max-height: 80px;
+      margin-bottom: 10px;
 
       font-weight: 400;
       font-size: 1.5rem;
@@ -88,13 +91,17 @@ export const PostContainer = styled.section`
       display: -webkit-box;
       -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
+
+      @media (max-width: 768px) {
+        max-height: 77px;
+      }
     }
 
-    .list-info {
+    &-info {
       display: flex;
       justify-content: space-between;
 
-      padding-bottom: 16px;
+      padding: 16px 0;
       font-weight: 600;
       font-size: 1.2rem;
       line-height: 1.5rem;
@@ -111,7 +118,29 @@ export const PostContainer = styled.section`
         }
       }
     }
+
+    &-hashtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 4px 8px;
+        font-size: 1.3rem;
+        color: rgb(66, 66, 66);
+        background: rgb(255, 255, 255);
+        border: 1px solid rgb(216, 224, 233);
+        border-radius: 16px;
+
+        span {
+          margin-right: 4px;
+        }
+      }
+    }
   }
+
   .no-data {
     display: flex;
     flex-direction: column;
@@ -119,10 +148,15 @@ export const PostContainer = styled.section`
     align-items: center;
 
     height: calc(100vh - 460px);
-    margin: 40px 0;
+    padding-top: 140px;
     font-size: 1.5rem;
     color: #616161;
     border-radius: 8px;
+
+    @media (max-width: 768px) {
+      height: calc(100vh - 100px);
+      padding: 0 0 100px 0;
+    }
   }
 `;
 

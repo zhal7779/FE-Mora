@@ -4,7 +4,6 @@ export const Container = styled.section`
   margin-top: 10rem;
   width: 67%;
   height: 100%;
-  overflow-y: auto;
   div {
     //토,일 색상 변경
     .fc-day-sat a {
@@ -21,17 +20,17 @@ export const Container = styled.section`
     }
     //헤더 2023년 6월
     .fc .fc-toolbar-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 600;
-      color: #242424;
+      color: var(--main-font-color);
       margin: 0px;
     }
     // 헤더 today, prev,next 버튼색상 변경
     .fc-button-primary {
-      background: #d6c9ff;
+      background: var(--light-purple);
     }
     .fc-today-button {
-      background: #7353ea !important;
+      background: var(--dark-purple) !important;
     }
 
     .fc-button {
@@ -48,7 +47,7 @@ export const Container = styled.section`
     .fc-icon-chevron-left,
     .fc-icon-chevron-right {
       &::before {
-        color: #616161;
+        color: var(--dark-gray);
       }
     }
     //cell 커서
@@ -82,6 +81,12 @@ export const Container = styled.section`
       display: flex;
       justify-content: center;
     }
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+
+    padding: 0 2.4rem;
+    margin-top: 6rem;
   }
 `;
 export const EventColor = styled.div`

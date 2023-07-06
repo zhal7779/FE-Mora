@@ -14,11 +14,19 @@ export const Container = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 82.4rem;
+  width: 54%;
   height: 50.4rem;
   border-radius: 4px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   background: #fdfdff;
+  @media (max-width: 768px) {
+    width: 74%;
+    height: 40.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    width: 64%;
+    height: 45.4rem;
+  }
 `;
 
 export const Content = styled.div`
@@ -32,7 +40,7 @@ export const Content = styled.div`
     padding: 3rem;
     background: #fdfdff;
     h5 {
-      color: #616161;
+      color: var(--dark-gray);
       font-size: 1.8rem;
       font-weight: 700;
       padding: 0 1rem;
@@ -56,7 +64,7 @@ export const Content = styled.div`
     top: 0;
     right: 0;
     margin: 0.5rem 1rem;
-    color: #616161;
+    color: var(--dark-gray);
     font-size: 2.4rem;
     cursor: pointer;
   }
@@ -77,18 +85,19 @@ export const Main = styled.div`
     }
     p {
       font-size: 1.6rem;
-      color: #616161;
+      color: var(--dark-gray);
     }
   }
   .main {
     background: #eeeafe;
     border-radius: 10px;
     margin: 0 5rem 3rem 5rem;
+
     .header_span {
       display: block;
       width: 100%;
       height: 1.8rem;
-      background: #d6c9ff;
+      background: var(--light-purple);
       border-radius: 10px 10px 0px 0px;
     }
     .main_text {
@@ -96,7 +105,6 @@ export const Main = styled.div`
       h5 {
         font-size: 1.6rem;
         font-weight: 700;
-        color: #242424;
         padding-bottom: 2rem;
       }
       div {
@@ -106,7 +114,6 @@ export const Main = styled.div`
         gap: 1rem;
 
         p {
-          color: #242424;
           font-size: 1.4rem;
           line-height: 140%;
           .link_box {
@@ -141,6 +148,26 @@ export const Main = styled.div`
     }
     &::-webkit-scrollbar-track {
       background: transparent;
+    }
+  }
+  @media (max-width: 768px) {
+    .main {
+      margin: 0 2rem 2rem 2rem;
+    }
+    .no_schedule {
+      img {
+        width: 18rem;
+      }
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    .main {
+      margin: 0 3rem 2rem 3rem;
+    }
+    .no_schedule {
+      img {
+        width: 22rem;
+      }
     }
   }
 `;

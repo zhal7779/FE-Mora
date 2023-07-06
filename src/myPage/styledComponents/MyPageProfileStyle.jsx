@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const introContainer = styled.section`
   width: 100%;
-  padding: 34px 0 60px 0;
-
-  @media (max-width: 768px) {
-    padding: 34px 20px 60px 20px;
-  }
+  padding: 3.5rem 2rem;
 
   .imgAndButtons {
     display: flex;
@@ -25,9 +21,9 @@ export const introContainer = styled.section`
     }
   }
   .buttons-container {
-    width: 21rem;
+    width: 20rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   .modal-container {
     display: flex;
@@ -94,7 +90,7 @@ export const introContainer = styled.section`
 
 export const ListContainer = styled.section`
   @media (max-width: 768px) {
-    padding: 34px 20px 60px 20px;
+    padding: 3.5rem 2rem;
   }
 
   ul {
@@ -149,9 +145,9 @@ export const ListContainer = styled.section`
 `;
 
 export const PostContainer = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  max-width: 728px;
 `;
 
 export const ButtonLink = styled(Link)`

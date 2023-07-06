@@ -2,10 +2,12 @@ import * as Style from './styledComponents/PostCommentStyle';
 import Button from '../components/Button';
 import IconMore from '../assets/icons/icon-more.svg';
 import formatTime from '../community/utils/formatTime';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { fetchComments, postComment, deleteComment } from './api/apis';
 import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 const BASE_URL = process.env.REACT_APP_URL;
 
 const PostComment = ({ postId }) => {
@@ -13,8 +15,18 @@ const PostComment = ({ postId }) => {
   const [commentData, setCommentData] = useState('');
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentData, setEditCommentData] = useState('');
+  const textareaRef = useRef(null);
   const queryClient = useQueryClient();
   const decodedToken = jwt_decode(sessionStorage.getItem('userToken'));
+
+  // textarea 높이 유동적 변경
+  useEffect(() => {
+    const textareaEl = textareaRef.current;
+    if (textareaEl) {
+      textareaEl.style.height = 'auto';
+      textareaEl.style.height = `${textareaEl.scrollHeight}px`;
+    }
+  });
 
   //댓글 조회 api
   const fetchComments = async () => {
@@ -35,57 +47,27 @@ const PostComment = ({ postId }) => {
     return result;
   };
 
+  // 댓글 조회
   const { data: comments, isLoading, isError, error } = useQuery(
     ['comments'],
     fetchComments
   );
 
-  // 댓글 등록/수정 api
-  const postComment = async registerData => {
-    const response = await fetch(`${BASE_URL}/api/comments`, {
-      method: editCommentId ? 'PATCH' : 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+  // 댓글 등록/수정
+  const { mutate: postCommentMutate } = useMutation(
+    (registerData, editCommentId) => postComment(registerData, editCommentId),
+    {
+      onSuccess: () => {
+        console.log('댓글이 성공적으로 등록되었습니다.');
+        queryClient.invalidateQueries(['comments']);
       },
-      body: JSON.stringify(registerData)
-    });
-
-    if (!response.ok) {
-      throw new Error('댓글 등록에 실패하였습니다.');
+      onError: error => {
+        console.error('댓글 등록에 실패하였습니다.', error);
+      }
     }
+  );
 
-    const result = await response.json();
-    return result;
-  };
-
-  const { mutate: postCommentMutate } = useMutation(postComment, {
-    onSuccess: () => {
-      console.log('댓글이 성공적으로 등록되었습니다.');
-      queryClient.invalidateQueries(['comments']);
-    },
-    onError: error => {
-      console.error('댓글 등록에 실패하였습니다.', error);
-    }
-  });
-
-  // 댓글 삭제 api
-  const deleteComment = async commentId => {
-    const response = await fetch(`${BASE_URL}/api/comments`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-      },
-      body: JSON.stringify({ comment_id: commentId })
-    });
-    if (!response.ok) {
-      throw new Error('댓글 삭제에 실패했습니다.');
-    }
-
-    return await response.json();
-  };
-
+  // 댓글 삭제
   const { mutate: deleteCommentMutate } = useMutation(deleteComment, {
     onSuccess: () => {
       console.log('댓글 삭제에 성공했습니다.');
@@ -135,7 +117,7 @@ const PostComment = ({ postId }) => {
           comment_id: editCommentId,
           content: editCommentData
         };
-        postCommentMutate(registerData);
+        postCommentMutate(registerData, editCommentId);
         setEditCommentId(null);
         setEditCommentData('');
       } catch (error) {
@@ -147,7 +129,7 @@ const PostComment = ({ postId }) => {
           content: commentData,
           board_id: postId
         };
-        postCommentMutate(registerData);
+        postCommentMutate(registerData, editCommentId);
         setCommentData('');
       } catch (error) {
         console.log(error);
@@ -246,6 +228,7 @@ const PostComment = ({ postId }) => {
                       id="comment-edit"
                       value={editCommentData}
                       onChange={handleContentChange}
+                      ref={textareaRef}
                     ></textarea>
                     <div className="edit-btns">
                       <button

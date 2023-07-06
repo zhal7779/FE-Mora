@@ -22,7 +22,7 @@ const Container = styled.section`
   top: 100px;
   width: 27%;
   padding: 2rem 1.6rem;
-  background: #ffffff;
+  background: var(--main-white);
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
   height: 100%;
@@ -33,7 +33,6 @@ const TitleContent = styled.div`
   h5 {
     font-weight: 700;
     font-size: 1.8rem;
-    color: #242424;
     padding-bottom: 1rem;
   }
   p {

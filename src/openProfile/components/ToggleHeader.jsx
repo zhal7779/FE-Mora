@@ -23,11 +23,14 @@ const Container = styled.div`
   height: 24px;
   justify-content: space-between;
   align-items: center;
-  margin: 8rem 0 2rem 0;
+  margin: 8.8rem 0 2.8rem 0;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 4rem 0 2rem 0;
+  }
 
   p {
     font-size: 1.4rem;
-    color: #242424;
     font-weight: 600;
   }
 `;

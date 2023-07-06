@@ -55,9 +55,9 @@ export const WriteContainer = styled.div`
         align-items: center;
 
         padding: 4px 16px;
-        font-size: 14px;
+        font-size: 1.4rem;
         font-weight: 500;
-        line-height: 22px;
+        line-height: 2.2rem;
         color: #acacac;
         cursor: pointer;
         transition: 0.2s;
@@ -85,24 +85,116 @@ export const WriteContainer = styled.div`
   textarea {
     width: 100%;
     overflow: hidden;
+    height: auto;
 
     &#title {
       min-height: 36px;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       font-weight: 600;
-      font-size: 25px;
+      font-size: 2.5rem;
+      line-height: 3.2rem;
     }
 
     &#content {
       min-height: 300px;
-      font-weight: 500;
-      font-size: 18px;
+      height: auto;
+      font-weight: 400;
+      font-size: 1.8rem;
+      line-height: 2.5rem;
       border-bottom: 1px solid #e2e8f0;
       padding-bottom: 20px;
     }
 
     &::placeholder {
       color: #acb2b9;
+    }
+  }
+
+  .hashtags {
+    padding: 20px 0;
+
+    &-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      padding-bottom: 12px;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+        font-size: 1.4rem;
+        color: rgb(66, 66, 66);
+        background: rgb(255, 255, 255);
+        border: 1px solid rgb(216, 224, 233);
+        border-radius: 20px;
+
+        span {
+          margin-right: 4px;
+        }
+
+        .hashtag-delete {
+          width: 18px;
+          height: 18px;
+          margin-left: 6px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+
+    &-input {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      font-size: 1.6rem;
+      border-radius: 4px;
+      color: rgb(66, 66, 66);
+      background: rgb(255, 255, 255);
+      border: 1px solid rgb(200, 210, 223);
+
+      input {
+        font-size: 1.6rem;
+        flex-grow: 1;
+
+        &::placeholder {
+          color: #becbdd;
+        }
+      }
+    }
+
+    &-popular {
+      position: absolute;
+      left: 0;
+      top: 52px;
+
+      width: 100%;
+      border: 1px solid rgb(200, 210, 223);
+      border-radius: 4px;
+
+      li {
+        padding: 18px 20px;
+        cursor: pointer;
+
+        &:first-child::after {
+          position: absolute;
+          right: 20px;
+          content: '가장 많이 사용된 해쉬태그입니다';
+          display: inline-block;
+          color: #becbdd;
+          font-size: 1.4rem;
+        }
+
+        &.selected,
+        &:hover {
+          background-color: #c8d2df22;
+        }
+      }
     }
   }
 
@@ -137,7 +229,7 @@ export const WriteContainer = styled.div`
       align-items: center;
       justify-content: center;
 
-      font-size: 13px;
+      font-size: 1.3rem;
       line-height: 1.8rem;
       color: #acb2b9;
       border: 1px dashed #d7dce4;

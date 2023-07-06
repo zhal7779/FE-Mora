@@ -23,7 +23,7 @@ const SearchBar = ({ handleClose }) => {
             type='text'
             value={input}
             onChange={handleInputChange}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               if ('Enter' === e.key) {
                 handleClickOutside();
                 navigate('/search', { state: input });
@@ -50,7 +50,7 @@ const Container = styled.div`
   position: fixed;
   z-index: 200;
   width: 100%;
-  background: #ffffff;
+  background: var(--main-white);
 `;
 const Content = styled.div`
   max-width: 1280px;
@@ -58,11 +58,10 @@ const Content = styled.div`
   align-items: center;
   margin-left: auto;
   margin-right: auto;
-  padding: 3.2rem 0;
+  padding: 3.2rem;
 `;
 const Input = styled.input`
   padding: 1.4rem;
-  color: #242424;
   font-weight: 500;
   font-size: 3rem;
   width: 100%;
@@ -70,5 +69,9 @@ const Input = styled.input`
   outline: none;
   ::placeholder {
     color: #94a3b8;
+  }
+  @media (max-width: 768px) {
+    font-size: 2.6rem;
+    padding: 1.2rem;
   }
 `;

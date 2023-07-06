@@ -13,6 +13,7 @@ const AlarmModal = ({ handleClose }) => {
   const [alarmStatus, setAlarmStauts] = useState([]);
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
+  console.log(data);
   const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
   //모달 리스트 open, close
   const handleContentClick = (id) => {
@@ -45,80 +46,93 @@ const AlarmModal = ({ handleClose }) => {
         <Style.Scroll>
           {data && data.length > 1 ? (
             <>
-              {data.map((item) => (
-                <Style.Content key={item.id}>
-                  <Style.ShowContent onClick={() => handleContentClick(item.id)}>
-                    <div>
-                      {item.checked === 1 || alarmStatus.includes(item.id) ? (
-                        <span style={{ background: '#EEEAFE' }}></span>
-                      ) : item.type === 'COMMENT' ? (
-                        <span style={{ background: '#aa8dff' }}></span>
-                      ) : item.type === 'PLAN' ? (
-                        <span></span>
-                      ) : (
-                        ''
-                      )}
-                      {item.type === 'COMMENT' ? (
-                        <>
-                          <Style.ImageIcon
-                            src={item['AlertFromUser.UserDetail.img_path']}
-                          ></Style.ImageIcon>
-                          <strong>{item['AlertFromUser.name']}</strong>
-                          <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
-                        </>
-                      ) : item.type === 'PLAN' ? (
-                        <div className='planAlarm'>
-                          <strong>[{item.planTitle}] </strong>
-                          <p> 일정 시작 1시간 전입니다. </p>
+              {data.map(
+                (item) =>
+                  item.id && (
+                    <Style.Content key={item.id}>
+                      <Style.ShowContent onClick={() => handleContentClick(item.id)}>
+                        <div>
+                          {item.checked === 1 || alarmStatus.includes(item.id) ? (
+                            <span style={{ background: '#EEEAFE' }}></span>
+                          ) : item.type === 'COMMENT' ? (
+                            <span style={{ background: '#aa8dff' }}></span>
+                          ) : item.type === 'PLAN' ? (
+                            <span></span>
+                          ) : (
+                            ''
+                          )}
+                          {item.type === 'COMMENT' ? (
+                            <>
+                              <Style.ImageIcon
+                                src={item['AlertFromUser.UserDetail.img_path']}
+                              ></Style.ImageIcon>
+                              <strong>{item['AlertFromUser.name']}</strong>
+                              <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                            </>
+                          ) : item.type === 'PLAN' ? (
+                            <div className='planAlarm'>
+                              <strong>[{item.planTitle}] </strong>
+                              <p> 일정 시작 1시간 전입니다. </p>
+                            </div>
+                          ) : (
+                            ''
+                          )}
                         </div>
+                        <div>
+                          {hiddenContent.includes(item.id) ? (
+                            <UpIcon
+                              stroke='var(--dark-gray)'
+                              strokeWidth='2'
+                              width='22'
+                              height='22'
+                            />
+                          ) : (
+                            <DownIcon
+                              stroke='var(--dark-gray)'
+                              strokeWidth='2'
+                              width='22'
+                              height='22'
+                            />
+                          )}
+                        </div>
+                      </Style.ShowContent>
+                      {hiddenContent.includes(item.id) ? (
+                        <Style.HiddenContent>
+                          <div style={{ border: '1px solid #e0e0e0' }}>
+                            {item.type === 'COMMENT' ? (
+                              <p>{item.commentContent}</p>
+                            ) : item.type === 'PLAN' ? (
+                              <p>{item.planContent}</p>
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                          <div style={{ background: 'transparent' }}>
+                            {item.type === 'COMMENT' ? (
+                              <div className='title_div'>
+                                <PostIcon />
+                                <Link to={'/community/' + item.boardId}>
+                                  <h5>{item.boardTitle}</h5>
+                                </Link>
+                              </div>
+                            ) : item.type === 'PLAN' ? (
+                              <div className='title_div'>
+                                <span>일정</span>
+                                <Link to={'/schedule'}>
+                                  <h5>{item.planTitle}</h5>
+                                </Link>
+                              </div>
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        </Style.HiddenContent>
                       ) : (
                         ''
                       )}
-                    </div>
-                    <div>
-                      {hiddenContent.includes(item.id) ? (
-                        <UpIcon />
-                      ) : (
-                        <DownIcon stroke='#616161' strokeWidth='2' width='22' height='22' />
-                      )}
-                    </div>
-                  </Style.ShowContent>
-                  {hiddenContent.includes(item.id) ? (
-                    <Style.HiddenContent>
-                      <div style={{ border: '1px solid #e0e0e0' }}>
-                        {item.type === 'COMMENT' ? (
-                          <p>{item.commentContent}</p>
-                        ) : item.type === 'PLAN' ? (
-                          <p>{item.planContent}</p>
-                        ) : (
-                          ''
-                        )}
-                      </div>
-                      <div style={{ background: 'transparent' }}>
-                        {item.type === 'COMMENT' ? (
-                          <div className='title_div'>
-                            <PostIcon />
-                            <Link to={'/community/' + item.boardId}>
-                              <h5>{item.boardTitle}</h5>
-                            </Link>
-                          </div>
-                        ) : item.type === 'PLAN' ? (
-                          <div className='title_div'>
-                            <span>일정</span>
-                            <Link to={'/schedule'}>
-                              <h5>{item.planTitle}</h5>
-                            </Link>
-                          </div>
-                        ) : (
-                          ''
-                        )}
-                      </div>
-                    </Style.HiddenContent>
-                  ) : (
-                    ''
-                  )}
-                </Style.Content>
-              ))}
+                    </Style.Content>
+                  )
+              )}
             </>
           ) : (
             <Style.Nodata>
