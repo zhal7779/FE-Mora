@@ -12,6 +12,12 @@ export const SearchPageWrapper = styled.main`
     flex-direction: column;
     gap: 5rem;
   }
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 5rem;
+    align-items: center;
+  }
 `;
 
 export const NoDataWrapper = styled.div`

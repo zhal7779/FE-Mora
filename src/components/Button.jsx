@@ -35,7 +35,8 @@ export default Button;
 
 const BaseButton = styled.button`
   display: inline-block;
-  width: 9.8rem;
+  /* width: 9.8rem; */
+  width: auto;
   height: 3.8rem;
   padding: 0.7rem 1.5rem 0.9rem 1.5rem;
   border-radius: 0.7rem;

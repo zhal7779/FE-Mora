@@ -8,7 +8,6 @@ import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
 const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
-  console.log(data);
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
     if (type === 'free') {
@@ -91,6 +90,9 @@ const Container = styled.section`
   border: 1px #cbd5e1 solid;
   background: #ffffff;
   height: inherit;
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const Content = styled.div`
