@@ -8,7 +8,6 @@ import { fetchComments, postComment, deleteComment } from './api/apis';
 import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
-const BASE_URL = process.env.REACT_APP_URL;
 
 const PostComment = ({ postId }) => {
   const [commentOption, setCommentOption] = useState(null);
@@ -28,34 +27,14 @@ const PostComment = ({ postId }) => {
     }
   });
 
-  //댓글 조회 api
-  const fetchComments = async () => {
-    const response = await fetch(
-      `${BASE_URL}/api/boards/detail/${postId}/comments`,
-      {
-        headers: {
-          authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-        }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('댓글을 불러오는데 실패했습니다.');
-    }
-
-    const result = await response.json();
-    return result;
-  };
-
   // 댓글 조회
-  const { data: comments, isLoading, isError, error } = useQuery(
-    ['comments'],
-    fetchComments
+  const { data: comments } = useQuery(['comments'], () =>
+    fetchComments(postId)
   );
 
   // 댓글 등록/수정
   const { mutate: postCommentMutate } = useMutation(
-    (registerData, editCommentId) => postComment(registerData, editCommentId),
+    registerData => postComment(registerData, editCommentId),
     {
       onSuccess: () => {
         console.log('댓글이 성공적으로 등록되었습니다.');
@@ -117,7 +96,7 @@ const PostComment = ({ postId }) => {
           comment_id: editCommentId,
           content: editCommentData
         };
-        postCommentMutate(registerData, editCommentId);
+        postCommentMutate(registerData);
         setEditCommentId(null);
         setEditCommentData('');
       } catch (error) {
@@ -129,7 +108,7 @@ const PostComment = ({ postId }) => {
           content: commentData,
           board_id: postId
         };
-        postCommentMutate(registerData, editCommentId);
+        postCommentMutate(registerData);
         setCommentData('');
       } catch (error) {
         console.log(error);
@@ -168,14 +147,6 @@ const PostComment = ({ postId }) => {
     setEditCommentData(commentContent);
     setCommentOption(null);
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
 
   return (
     <Style.CommentContainer>

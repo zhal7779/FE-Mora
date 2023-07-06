@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/PostDetailStyle';
 import IconLike from '../assets/icons/icon-like.svg';
@@ -9,7 +9,6 @@ import { fetchPostDetail, deletePost, toggleLike } from './api/apis';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
-const BASE_URL = process.env.REACT_APP_URL;
 
 const PostDetail = ({ postId }) => {
   const [postOption, setPostOption] = useState(false);
@@ -23,7 +22,7 @@ const PostDetail = ({ postId }) => {
   );
 
   // 게시글 삭제
-  const { mutate: deletePostMutate } = useMutation(deletePost, {
+  const { mutate: deletePostMutate } = useMutation(() => deletePost(postId), {
     onSuccess: () => {
       console.log('게시글 삭제에 성공했습니다.');
       navigate(-1);
@@ -34,33 +33,19 @@ const PostDetail = ({ postId }) => {
     }
   });
 
-  // 좋아요 등록, 취소 api
-  const toggleLike = async () => {
-    const response = await fetch(`${BASE_URL}/api/likes`, {
-      method: detail.user_like ? 'DELETE' : 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-      },
-      body: JSON.stringify({ board_id: postId })
-    });
-    if (!response.ok) {
-      throw new Error('좋아요 처리에 실패했습니다.');
-    }
-
-    return await response.json();
-  };
-
   // 좋아요 등록, 취소
-  const { mutate: toggleLikeMutate } = useMutation(toggleLike, {
-    onSuccess: () => {
-      console.log('좋아요 처리에 성공했습니다.');
-      queryClient.invalidateQueries(['detail']);
-    },
-    onError: error => {
-      console.error(error);
+  const { mutate: toggleLikeMutate } = useMutation(
+    () => toggleLike(detail.user_like, postId),
+    {
+      onSuccess: () => {
+        console.log('좋아요 처리에 성공했습니다.');
+        queryClient.invalidateQueries(['detail']);
+      },
+      onError: error => {
+        console.error(error);
+      }
     }
-  });
+  );
 
   const handleClickLike = () => {
     toggleLikeMutate();
