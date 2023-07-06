@@ -35,10 +35,10 @@ const Header = () => {
       <Content>
         <MenuContainer>
           <Link to='/admin/posts'>
-            <LogoIcon />
+            <LogoIcon className='morae-logo' />
           </Link>
         </MenuContainer>
-        <AdminInfoBlock>
+        <AdminInfoBlock className='user-logo'>
           <img src={DefaultImg} alt='기본 이미지' width={40} />
           <AdminName>{name ? `${name}님` : ''}</AdminName>
         </AdminInfoBlock>
