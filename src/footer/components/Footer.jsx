@@ -9,18 +9,19 @@ import { ReactComponent as TelephoneIcon } from '../../assets/icons/telephone-fi
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-at.svg';
 import { useWindowSize } from '../../header/components/useWindowSize';
 const Footer = () => {
-  const { logo } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
+  const { logo, mobileSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
+  console.log(mobileSize);
   return (
     <FooterStyle>
       <div className='content'>
         <div className='main-content'>
           <div className='logo-content'>{logo}</div>
-          <div>
+          <div className='main-items'>
             <p>개인정보처리방침</p>
             <p>이용약관</p>
             <p>이용안내</p>
           </div>
-          <div>
+          <div className='icons'>
             <button>
               <InstagramIcon />
             </button>
@@ -55,11 +56,18 @@ const Footer = () => {
           <div className='sub-items'>
             <strong>COMPANY INFORMATIONS</strong>
             <p>COMPANY : 모여라 레이서 </p>
-            <p>CREATORS : 이민영, 이성호, 이혜정, 김윤지, 임지성, 김지우, 연정환 </p>
+            {mobileSize ? (
+              <>
+                <p>CREATORS :이민영, 이성호, 이혜정, 김윤지, </p>
+                <p>임지성, 김지우, 연정환</p>
+              </>
+            ) : (
+              <p>CREATORS : 이민영, 이성호, 이혜정, 김윤지, 임지성, 김지우, 연정환 </p>
+            )}
           </div>
         </div>
         <div className='copyright'>
-          Copyright ⓒ 2023 - 2023 Moyeora Elice Inc. All Rights Reserved.
+          <p>Copyright ⓒ 2023 - 2023 Moyeora Elice Inc. All Rights Reserved.</p>
         </div>
       </div>
     </FooterStyle>

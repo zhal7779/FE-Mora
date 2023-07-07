@@ -75,6 +75,9 @@ const Container = styled.section`
   border: 1px #cbd5e1 solid;
   border-radius: 4px;
   background: #ffffff;
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 const Content = styled.div`
   width: 100%;

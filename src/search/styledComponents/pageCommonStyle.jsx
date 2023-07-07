@@ -12,6 +12,12 @@ export const SearchPageWrapper = styled.main`
     flex-direction: column;
     gap: 5rem;
   }
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 5rem;
+    align-items: center;
+  }
 `;
 
 export const NoDataWrapper = styled.div`
@@ -44,8 +50,14 @@ export const OpenProfilePageWrapper = styled.main`
     width: 100%;
     height: 100%;
     margin-bottom: 10rem;
-    .content {
+    .profile_content {
       margin: 0 2.4rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .profile_content {
+      margin: 0 1rem;
     }
   }
 `;

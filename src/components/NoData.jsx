@@ -27,4 +27,19 @@ const Content = styled.div`
     color: var(--dark-gray);
     font-size: 1.4rem;
   }
+  @media (max-width: 768px) {
+    img {
+      width: 28rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin: 6rem 0;
+    strong {
+      font-size: 1.5rem;
+    }
+    img {
+      width: 20rem;
+    }
+  }
 `;

@@ -41,7 +41,7 @@ const Header = () => {
     }
   }, [token, mainProfileData]);
 
-  console.log(mainProfileData);
+  // console.log(mainProfileData);
 
   // 리프레쉬 토큰 요청 Mutation 선언
   const refreshMutation = useMutation(
@@ -131,9 +131,9 @@ const Header = () => {
   useEffect(() => {
     if (location.pathname === '/') {
       setMenu(0);
-    } else if (location.pathname === '/community/post/free') {
+    } else if (location.pathname.startsWith('/community/')) {
       setMenu(1);
-    } else if (location.pathname === '/schedule/notice') {
+    } else if (location.pathname.startsWith('/schedule/')) {
       setMenu(2);
     } else if (location.pathname === '/openprofile') {
       setMenu(3);
