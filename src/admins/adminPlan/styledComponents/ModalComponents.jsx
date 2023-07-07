@@ -26,6 +26,11 @@ export const ModalContentBlock = styled.div`
   background-color: #ffffff;
 
   z-index: 3;
+
+  @media (max-width: 376px) {
+    width: 300px;
+    padding: 30px 40px;
+  }
 `;
 export const ModalTitle = styled.h3`
   display: block;
@@ -56,6 +61,10 @@ export const ModalContentInput = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  @media (max-width: 376px) {
+    margin-bottom: 16px;
   }
 `;
 export const ModalContentTextarea = styled.textarea`
