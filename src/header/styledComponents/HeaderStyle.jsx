@@ -97,6 +97,7 @@ export const HeaderStyle = styled.header`
     display: none;
     cursor: pointer;
   }
+
   @media (max-width: 768px) {
     .container {
       height: auto;
@@ -151,6 +152,16 @@ export const HeaderStyle = styled.header`
     }
     .nav-toggle {
       display: block;
+    }
+  }
+  @media (max-width: 480px) {
+    .menu-container {
+      p {
+        padding: 1.4rem 1rem 1.4rem 1rem;
+      }
+    }
+    .menu-content {
+      padding: 0 1rem;
     }
   }
 `;

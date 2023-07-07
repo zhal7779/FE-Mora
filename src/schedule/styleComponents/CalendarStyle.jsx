@@ -82,7 +82,7 @@ export const Container = styled.section`
       justify-content: center;
     }
   }
-  @media (min-width: 320px) and (max-width: 480px) {
+  @media (max-width: 480px) {
     width: 100%;
     padding: 0 1rem;
     margin-top: 2rem;

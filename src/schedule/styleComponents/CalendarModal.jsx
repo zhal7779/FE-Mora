@@ -132,7 +132,7 @@ export const Container = styled.div`
       background: transparent;
     }
   }
-  @media (min-width: 320px) and (max-width: 480px) {
+  @media (max-width: 480px) {
     width: 84%;
     height: 35.4rem;
     .date {

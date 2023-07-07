@@ -40,7 +40,7 @@ export const Container = styled.section`
       color: var(--dark-gray);
     }
   }
-  @media (min-width: 320px) and (max-width: 480px) {
+  @media (max-width: 480px) {
     padding: 0 1rem;
     width: 100%;
     margin-top: 2rem;
@@ -48,6 +48,10 @@ export const Container = styled.section`
       div {
         padding: 1.5rem 0 0 2rem;
       }
+      .main-items {
+        flex-direction: column;
+      }
+
       p {
         display: flex;
         font-size: 1.5rem;
@@ -117,7 +121,7 @@ export const Content = styled.div`
       line-height: 120%;
     }
   }
-  @media (min-width: 320px) and (max-width: 480px) {
+  @media (max-width: 480px) {
     .title {
       padding: 1.4rem 2rem;
       h5 {
