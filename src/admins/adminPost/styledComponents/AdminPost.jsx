@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 
 const normalWidth = '250px';
+const smallWidth = '230px';
 
 export const PostGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, ${normalWidth});
-  column-gap: 35px;
+  column-gap: 25px;
   row-gap: 50px;
   margin-bottom: 200px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 580px) {
+    grid-template-columns: repeat(1, ${smallWidth});
+    row-gap: 35px;
+  }
+  @media (min-width: 580px) and (max-width: 768px) {
     grid-template-columns: repeat(2, ${normalWidth});
     column-gap: 35px;
     row-gap: 50px;
@@ -42,16 +47,26 @@ export const PostLayout = styled.div`
 
   border-radius: 6px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  @media (max-width: 580px) {
+    width: ${smallWidth};
+    height: 200px;
+  }
 `;
 export const PostImage = styled.div`
-  margin-bottom: 20px;
-
   & img {
     width: ${normalWidth};
-    height: 140px;
+    min-height: 140px;
+    max-height: 140px;
     object-fit: cover;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+    margin-bottom: 20px;
+
+    @media (max-width: 580px) {
+      width: ${smallWidth};
+      margin-bottom: 10px;
+    }
   }
   & div {
     width: 100%;
@@ -95,6 +110,17 @@ export const PostInfoBlock = styled.div`
     background-color: #f45757;
     color: #fff;
   }
+
+  @media (max-width: 580px) {
+    & .info:first-child {
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+    & .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
 `;
 export const ScrollTopButton = styled.img`
   position: fixed;
@@ -104,8 +130,18 @@ export const ScrollTopButton = styled.img`
   width: 80px;
   height: 80px;
 
-  font-size: 1.4rem;
-  font-weight: bold;
+  @media (max-width: 580px) {
+    bottom: 20px;
+    right: 10px;
 
-  color: #fff;
+    width: 40px;
+    height: 40px;
+  }
+  @media (min-width: 580px) and (max-width: 768px) {
+    bottom: 40px;
+    right: 30px;
+
+    width: 60px;
+    height: 60px;
+  }
 `;
