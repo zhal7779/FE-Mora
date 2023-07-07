@@ -13,15 +13,20 @@ export const Container = styled.section`
     border: var(--blue-gray) solid 1px;
     border-radius: 4px;
     background: #fdfdfd;
-    h4 {
-      padding: 4rem 0 0 3rem;
+    div {
+      padding: 3rem 0 0 5rem;
+    }
+    p {
       font-size: 2rem;
       font-weight: 600;
       margin-bottom: 1rem;
     }
+    .sub-p {
+      margin-left: 9rem;
+    }
     img {
       width: 12rem;
-      margin-right: 2rem;
+      margin-right: 5rem;
     }
   }
   .no_data {
@@ -35,9 +40,35 @@ export const Container = styled.section`
       color: var(--dark-gray);
     }
   }
-  @media (max-width: 768px) {
+  @media (min-width: 320px) and (max-width: 480px) {
+    padding: 0 1rem;
+    width: 100%;
+    margin-top: 2rem;
+    .header_title {
+      div {
+        padding: 1.5rem 0 0 2rem;
+      }
+      p {
+        display: flex;
+        font-size: 1.5rem;
+      }
+      .sub-p {
+        margin-left: 4rem;
+      }
+      img {
+        width: 8rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+  @media (min-width: 480px) and (max-width: 768px) {
     width: 100%;
     padding: 0 2.4rem;
+    .header_title {
+      .sub-p {
+        margin-left: 4rem;
+      }
+    }
   }
 `;
 
@@ -82,8 +113,21 @@ export const Content = styled.div`
     border: #e2e8f0 solid 1px;
     p {
       font-weight: 400;
-      font-size: 15px;
+      font-size: 1.5rem;
       line-height: 120%;
+    }
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    .title {
+      padding: 1.4rem 2rem;
+      h5 {
+        font-size: 1.4rem;
+      }
+    }
+    .main_text {
+      p {
+        font-size: 1.4rem;
+      }
     }
   }
 `;

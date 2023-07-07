@@ -41,7 +41,7 @@ const Header = () => {
     }
   }, [token, mainProfileData]);
 
-  console.log(mainProfileData);
+  // console.log(mainProfileData);
 
   // 리프레쉬 토큰 요청 Mutation 선언
   const refreshMutation = useMutation(
