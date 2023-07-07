@@ -25,9 +25,9 @@ const SearchResultBar = ({ handleSubSearch, menu, count }) => {
 
   return (
     <Container>
-      <MainDiv>
+      <div className='main-div'>
         <Content>
-          <SubSearchContent>
+          <div className='sub-search-content'>
             <SearchIcon style={{ width: '2.4rem', height: '2.4rem', stroke: '#94a3b8' }} />
             <input
               type='text'
@@ -37,12 +37,12 @@ const SearchResultBar = ({ handleSubSearch, menu, count }) => {
               onKeyDown={handleSearchResult}
               autoFocus
             ></input>
-          </SubSearchContent>
+          </div>
         </Content>
-      </MainDiv>
-      <MainDiv>
+      </div>
+      <div className='main-div'>
         <Content>
-          <ResultTextContent>
+          <div className='result-text-content'>
             <p>{resultKeyword} 검색결과 </p>
             {menu === 1 ? (
               <p> {count.total}건</p>
@@ -57,9 +57,9 @@ const SearchResultBar = ({ handleSubSearch, menu, count }) => {
             ) : (
               <p>{count.question}건</p>
             )}
-          </ResultTextContent>
+          </div>
         </Content>
-      </MainDiv>
+      </div>
     </Container>
   );
 };
@@ -71,40 +71,56 @@ const Container = styled.div`
   top: 6rem;
   left: 0;
   background: var(--main-white);
-`;
-const MainDiv = styled.div`
-  border-bottom: #cbd5e1 1px solid;
+  .main-div {
+    border-bottom: #cbd5e1 1px solid;
+  }
 `;
 const Content = styled.div`
   max-width: 1024px;
   display: flex;
   margin-left: auto;
   margin-right: auto;
-`;
-const SubSearchContent = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  input {
-    padding: 1.6rem;
+  .sub-search-content {
     width: 100%;
-    font-weight: 500;
-    font-size: 2.4rem;
-    border: none;
-    outline: none;
-    ::placeholder {
-      color: #94a3b8;
-    }
-  }
-`;
-const ResultTextContent = styled.div`
-  display: flex;
-  margin: 1.8rem 0;
-  gap: 1.4rem;
-  p {
-    font-weight: 600;
-    font-size: 1.6rem;
     display: flex;
     align-items: center;
+    input {
+      padding: 1.6rem;
+      width: 100%;
+      font-weight: 500;
+      font-size: 2.4rem;
+      border: none;
+      outline: none;
+      ::placeholder {
+        color: #94a3b8;
+      }
+    }
+  }
+  .result-text-content {
+    display: flex;
+    margin: 1.8rem 0;
+    gap: 1.4rem;
+    p {
+      font-weight: 600;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+  @media (max-width: 768px) {
+    max-width: 100%;
+    .sub-search-content {
+      margin-left: 2rem;
+      input {
+        font-size: 2.2rem;
+        padding: 1.4rem;
+      }
+    }
+    .result-text-content {
+      margin-left: 2rem;
+      p {
+        font-size: 1.5rem;
+      }
+    }
   }
 `;

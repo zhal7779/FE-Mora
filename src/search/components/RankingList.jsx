@@ -7,19 +7,20 @@ const RankingList = ({ data }) => {
     <>
       {data &&
         data.map((item, index) => (
-          <Content key={item.id} rank={index + 1}>
-            <p className='ranking'>{index + 1}</p>
-            <img className='image_icon' src={item.User.img_path} alt='프로필'></img>
-            <div>
-              <Link to={'/community/' + item.id}>
+          <Link to={'/community/' + item.id} key={item.id}>
+            <Content rank={index + 1}>
+              <p className='ranking'>{index + 1}</p>
+              <img className='image_icon' src={item.User.img_path} alt='프로필'></img>
+              <div>
                 <h5 className='title'>{item.title}</h5>
-              </Link>
-              <div className='text_content'>
-                <h5>{item.User.name}</h5>
-                <p> {item.User.position}</p>
+
+                <div className='text_content'>
+                  <h5>{item.User.name}</h5>
+                  <p> {item.User.position}</p>
+                </div>
               </div>
-            </div>
-          </Content>
+            </Content>
+          </Link>
         ))}
     </>
   );
@@ -29,7 +30,7 @@ export default RankingList;
 
 const Content = styled.div`
   padding: 1.6rem 0;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid var(--blue-gray);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -37,7 +38,7 @@ const Content = styled.div`
     font-size: 2.4rem;
     font-weight: 700;
     color: ${(props) => (props.rank >= 4 ? 'var(--dark-gray)' : '#7353ea')};
-    margin-right: 1rem;
+    margin: ${(props) => (props.rank < 10 ? '0 1rem 0 0.5rem' : '0 0 0 0.5rem')};
     margin-bottom: 1rem;
   }
 
@@ -46,6 +47,10 @@ const Content = styled.div`
     height: 4rem;
     border-radius: 50%;
     object-fit: cover;
+  }
+
+  div {
+    margin-right: 0.5rem;
   }
   .title {
     ${(props) => props}
@@ -84,6 +89,13 @@ const Content = styled.div`
       -webkit-box-orient: vertical;
     }
   }
+  &:hover {
+    background: rgba(233, 233, 238, 0.4);
+    transition: 0.2s ease-out;
+  }
   @media (max-width: 768px) {
+    .title {
+      width: 100%;
+    }
   }
 `;

@@ -50,11 +50,12 @@ const ModalContainer = styled.div`
     padding: 2rem 0;
     background: var(--main-white);
     border-radius: 12px 12px 0 0;
+    border-bottom: 2px solid var(--blue-gray);
   }
   .main-content {
     flex: 1;
     margin: 6rem 0 1rem 0;
-    padding: 0 2rem;
+    padding: 0 3rem;
     overflow-y: auto;
     &::-webkit-scrollbar {
       width: 0.8rem;
