@@ -60,13 +60,22 @@ const Container = styled.section`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 2rem 3rem;
+    padding: 2rem 2rem;
+
     .button-content {
-      /* flex-direction: column !important; */
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
   }
 `;
 const TitleContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding-bottom: 0.5rem;
   width: 100%;
   h5 {
