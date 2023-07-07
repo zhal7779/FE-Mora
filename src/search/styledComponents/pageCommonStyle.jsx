@@ -54,4 +54,10 @@ export const OpenProfilePageWrapper = styled.main`
       margin: 0 2.4rem;
     }
   }
+
+  @media (max-width: 480px) {
+    .content {
+      margin: 0 1rem;
+    }
+  }
 `;
