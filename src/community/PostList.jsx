@@ -7,9 +7,8 @@ import formatTime from './utils/formatTime';
 import useDebounce from './hooks/useDebounce';
 import { fetchPosts } from './api/apis';
 
-const FILTER_BY_LATEST = '최신순';
-const FILTER_BY_VIEW = '조회순';
-const FILTER_BY_LIKE = '좋아요순';
+const FILTER_BY_LATEST = 'new';
+const FILTER_BY_VIEW = 'view';
 
 const PostList = ({ selectedCategoryId, searchTerm }) => {
   const [currentFilter, setCurrentFilter] = useState(FILTER_BY_LATEST);
@@ -26,12 +25,13 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
     hasNextPage,
     isFetchingNextPage
   } = useInfiniteQuery(
-    ['posts', selectedCategoryId, debouncedSearchTerm],
+    ['posts', selectedCategoryId, debouncedSearchTerm, currentFilter],
     ({ pageParam = 0 }) =>
       fetchPosts({
         page: pageParam,
         view: 10,
         keyword: debouncedSearchTerm,
+        sort: currentFilter,
         selectedCategoryId
       }),
     {
@@ -64,37 +64,10 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
     };
   }, [isFetchingNextPage, fetchNextPage, hasNextPage]);
 
+  // 게시글 순서 필터
   const handleFilterChange = filter => {
     setCurrentFilter(filter);
   };
-
-  // 게시글 필터
-  // const filteredData = data
-  //   .filter(post => {
-  //     console.log(post);
-  //     post.category === selectedCategoryId;
-  //   })
-  //   .filter(post => {
-  //     if (searchTerm === '') return true;
-
-  //     const lowerCaseTitle = post.title ? post.title.toLowerCase() : '';
-  //     const lowerCaseContent = post.content ? post.content.toLowerCase() : '';
-  //     const lowerCaseSearchTerm = debouncedSearchTerm.toLowerCase();
-
-  //     return (
-  //       lowerCaseTitle.includes(lowerCaseSearchTerm) ||
-  //       lowerCaseContent.includes(lowerCaseSearchTerm)
-  //     );
-  //   })
-  //   .sort((a, b) => {
-  //     if (currentFilter === FILTER_BY_LATEST) {
-  //       return new Date(b.created_at) - new Date(a.created_at);
-  //     } else if (currentFilter === FILTER_BY_VIEW) {
-  //       return b.view_cnt - a.view_cnt;
-  //     } else {
-  //       return b.like_cnt - a.like_cnt;
-  //     }
-  //   });
 
   return (
     <Style.PostContainer>
@@ -115,7 +88,7 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
                   }`}
                   onClick={() => handleFilterChange(FILTER_BY_LATEST)}
                 >
-                  {FILTER_BY_LATEST}
+                  최신순
                 </button>
                 <button
                   className={`filter-by-view ${
@@ -123,15 +96,7 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
                   }`}
                   onClick={() => handleFilterChange(FILTER_BY_VIEW)}
                 >
-                  {FILTER_BY_VIEW}
-                </button>
-                <button
-                  className={`filter-by-like ${
-                    currentFilter === FILTER_BY_LIKE ? 'active' : ''
-                  }`}
-                  onClick={() => handleFilterChange(FILTER_BY_LIKE)}
-                >
-                  {FILTER_BY_LIKE}
+                  조회순
                 </button>
               </div>
               <ul>
