@@ -3,20 +3,45 @@ import { ModalButton } from './ModalComponents';
 
 // 테이블 요소들
 export const tableRowSetting = `
-display: grid;
-grid-template-columns: 8rem 17rem 17rem 12rem 12rem 7rem 7rem;
-grid-template-rows: 5rem;
-justify-items: center;
-align-items: center;
+  display: grid;
+  grid-template-columns: 8rem 17rem 17rem 12rem 12rem 7rem 7rem;
+  grid-template-rows: 5rem;
+  justify-items: center;
+  align-items: center;
 
-& > span {
-	font-size: 1.4rem;
-}`;
+  & > span {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 376px) {
+    grid-template-columns: 70px 110px 50px 50px;
+    & > span {
+      font-size: 1.4rem;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    grid-template-columns: 115px 220px 100px 100px;
+  }
+`;
 export const TableRowInfo = styled.div`
   ${tableRowSetting}
   border-bottom: 1px solid #000;
 
   font-weight: 'bold';
+
+  @media (max-width: 376px) {
+    & .관리자,
+    & .시작일,
+    & .종료일 {
+      display: none;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    & .관리자,
+    & .시작일,
+    & .종료일 {
+      display: none;
+    }
+  }
 `;
 export const PlanListBlock = styled.ul`
   margin-bottom: 20rem;
@@ -37,6 +62,30 @@ export const PlanInfo = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  @media (max-width: 376px) {
+    & .name,
+    & .start-date,
+    & .end-date {
+      display: none;
+    }
+    & .title {
+      max-width: 50px;
+    }
+    & .content {
+      max-width: 80px;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    & .name,
+    & .start-date,
+    & .end-date {
+      display: none;
+    }
+    & .title {
+      max-width: 8rem;
+    }
   }
 `;
 export const TableTitleBlock = styled.div`

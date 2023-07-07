@@ -3,20 +3,44 @@ import { ModalButton } from './ModalComponents';
 
 // 테이블 요소들
 const tableRowSetting = `
-display: grid;
-grid-template-columns: 9rem 20rem 20rem 13rem 9rem 9rem;
-grid-template-rows: 5rem;
-justify-items: center;
-align-items: center;
+  display: grid;
+  grid-template-columns: 9rem 20rem 20rem 13rem 9rem 9rem;
+  grid-template-rows: 5rem;
+  justify-items: center;
+  align-items: center;
 
-& > span {
-	font-size: 1.4rem;
-}`;
+  & > span {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 376px) {
+    grid-template-columns: 180px 50px 50px;
+    & > span {
+      font-size: 1.4rem;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    grid-template-columns: 115px 220px 100px 100px;
+  }
+`;
 export const TableRowInfo = styled.div`
   ${tableRowSetting}
   border-bottom: 1px solid #000;
 
   font-weight: 'bold';
+
+  @media (max-width: 376px) {
+    & .관리자,
+    & .내용,
+    & .등록날짜 {
+      display: none;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    & .관리자,
+    & .등록날짜 {
+      display: none;
+    }
+  }
 `;
 export const NotificationListBlock = styled.ul`
   min-height: 615px;
@@ -36,6 +60,26 @@ export const NotificationInfo = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  @media (max-width: 376px) {
+    & .name,
+    & .content,
+    & .created-date {
+      display: none;
+    }
+    & .title {
+      max-width: 13rem;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    & .name,
+    & .created-date {
+      display: none;
+    }
+    & .title {
+      max-width: 8rem;
+    }
   }
 `;
 export const TableTitleBlock = styled.div`
