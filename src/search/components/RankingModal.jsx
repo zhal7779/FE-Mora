@@ -54,6 +54,7 @@ const ModalContainer = styled.div`
   }
   .main-content {
     flex: 1;
+
     margin: 6rem 0 1rem 0;
     padding: 0 3rem;
     overflow-y: auto;
@@ -68,6 +69,18 @@ const ModalContainer = styled.div`
     }
     &::-webkit-scrollbar-track {
       background: transparent;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 90%;
+    height: 70vh;
+    .title-content {
+      padding: 1.6rem 0;
+    }
+    .main-content {
+      margin: 5.4rem 0 1rem 0;
+      padding: 0 1.8rem;
     }
   }
 `;

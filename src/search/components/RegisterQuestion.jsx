@@ -9,7 +9,7 @@ const RegisterQuestion = ({ type }) => {
     <Container>
       {type === 'study' ? (
         <>
-          <CatImage src={catImg} />
+          <img className='cat-img-content' src={catImg} />
           <div>
             <strong>아직 스터디를 못 구하셨나요?</strong>
             <p>함께 공부할 스터디를 찾아볼까요?</p>
@@ -20,7 +20,7 @@ const RegisterQuestion = ({ type }) => {
         </>
       ) : type === 'Q&A' ? (
         <>
-          <HelpImage src={helpImg} style={{ paddingBottom: '1rem' }} />
+          <img className='help-img-content' src={helpImg} style={{ paddingBottom: '1rem' }} />
           <div>
             <strong>궁금한 내용을 해결하지 못했나요?</strong>
             <p>레이서 Q&A에서 빠른 답변을 드려요.</p>
@@ -65,6 +65,14 @@ const Container = styled.span`
     color: #64748b;
     margin-bottom: 2rem;
   }
+  .cat-img-content {
+    width: 16rem;
+    margin-bottom: 2rem;
+  }
+  .help-img-content {
+    width: 16rem;
+    margin-bottom: 2rem;
+  }
   @media (max-width: 768px) {
     width: 90%;
     height: 15.4rem;
@@ -72,21 +80,25 @@ const Container = styled.span`
     flex-direction: row-reverse;
     padding: 0 1.4rem;
     justify-content: space-between;
+    .cat-img-content {
+      margin: 3rem 0 0 0;
+    }
+    .help-img-content {
+      margin: 1rem 0 0 0;
+    }
   }
-`;
-
-const CatImage = styled.img`
-  width: 16rem;
-  margin-bottom: 2rem;
-  @media (max-width: 768px) {
-    margin: 3rem 0 0 0;
-  }
-`;
-
-const HelpImage = styled.img`
-  width: 16rem;
-  margin-bottom: 2rem;
-  @media (max-width: 768px) {
-    margin: 1rem 0 0 0;
+  @media (max-width: 480px) {
+    flex-direction: column;
+    height: auto;
+    font-size: 1.5rem;
+    padding: 1.4rem 1.2rem;
+    .cat-img-content {
+      width: 9rem;
+      /* margin: 5.7rem 0 0 0; */
+    }
+    .help-img-content {
+      width: 10rem;
+      /* margin: 1rem 0 0 0; */
+    }
   }
 `;

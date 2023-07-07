@@ -98,4 +98,8 @@ const Content = styled.div`
       width: 100%;
     }
   }
+
+  @media (max-width: 480px) {
+    padding: 1.2rem 0;
+  }
 `;

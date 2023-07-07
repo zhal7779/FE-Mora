@@ -60,4 +60,9 @@ export const SearchNavItem = styled.div`
       padding: 1.6rem 0.8rem;
     }
   }
+  @media (max-width: 480px) {
+    p {
+      /* font-size: 1rem; */
+    }
+  }
 `;

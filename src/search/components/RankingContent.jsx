@@ -69,7 +69,9 @@ const Container = styled.section`
       align-items: center;
     }
   }
-  @media (min-width: 768px) and (max-width: 1200px) {
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 1.6rem;
   }
 `;
 const TitleContent = styled.div`

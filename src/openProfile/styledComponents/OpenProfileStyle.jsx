@@ -128,6 +128,7 @@ export const Container = styled.section`
       padding: 1.6rem 1rem 0 1rem;
     }
     .profile-content {
+      margin-bottom: 1rem;
       h5 {
         font-size: 1.6rem;
         padding-bottom: 0.7rem;
@@ -161,6 +162,19 @@ export const Container = styled.section`
       .sub_text {
         padding-left: 4rem;
       }
+    }
+    .skill-content {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      div {
+        font-size: 1.1rem;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .content {
+      padding: 1.6rem 1.6rem 0 1.6rem;
     }
   }
 `;
