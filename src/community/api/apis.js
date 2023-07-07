@@ -1,9 +1,9 @@
 const BASE_URL = process.env.REACT_APP_URL;
 
 // 게시글 리스트 조회 api
-export const fetchPosts = async ({ selectedCategoryId, page, view }) => {
+export const fetchPosts = async ({ selectedCategoryId, page, view, keyword }) => {
   const response = await fetch(
-    `${BASE_URL}/api/boards/${selectedCategoryId}?page=${page}&size=${view}`,
+    `${BASE_URL}/api/boards/${selectedCategoryId}?page=${page}&size=${view}&keyword=${keyword}`,
     {
       headers: {
         authorization: `Bearer ${sessionStorage.getItem('userToken')}`,

@@ -26,9 +26,14 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
     hasNextPage,
     isFetchingNextPage
   } = useInfiniteQuery(
-    ['posts', selectedCategoryId],
+    ['posts', selectedCategoryId, debouncedSearchTerm],
     ({ pageParam = 0 }) =>
-      fetchPosts({ page: pageParam, view: 10, selectedCategoryId }),
+      fetchPosts({
+        page: pageParam,
+        view: 10,
+        keyword: debouncedSearchTerm,
+        selectedCategoryId
+      }),
     {
       getNextPageParam: lastPage => {
         return lastPage.currentPage < lastPage.totalPages
