@@ -64,11 +64,11 @@ export const MenuBarUl = styled.ul`
 
   display: none;
 
-  @media (max-width: 375px) {
+  @media (max-width: 376px) {
     display: block;
     top: 53px;
   }
-  @media (min-width: 375px) and (max-width: 768px) {
+  @media (min-width: 376px) and (max-width: 768px) {
     display: block;
   }
 `;
@@ -92,7 +92,7 @@ export const MenuBarLi = styled.li`
     background-color: var(--light-purple);
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 376px) {
     font-size: 1.4rem;
     height: 40px;
   }
