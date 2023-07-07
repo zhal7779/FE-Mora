@@ -14,13 +14,9 @@ const InnerContainer = styled.div`
   padding-right: 2.4rem;
   margin: 0 auto;
 
-  /* @media (max-width: 375px) {
+  @media (max-width: 768px) {
+    padding: 0;
   }
-  @media (min-width: 375px) and (max-width: 768px) {
-  }
-  @media (min-width: 768px) and (max-width: 1200px) {
-    gap: 1rem;
-  } */
 `;
 
 export { Container, InnerContainer };

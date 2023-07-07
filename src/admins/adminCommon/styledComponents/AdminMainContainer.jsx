@@ -6,7 +6,7 @@ const AdminMainContainer = styled.div`
   padding-top: 3.6rem;
 
   @media (max-width: 768px) {
-    max-width: 768px;
+    max-width: 535px;
   }
 `;
 
