@@ -5,8 +5,8 @@ import IconPostImage from '../assets/icons/icon-post-img.svg';
 import Button from '../components/Button';
 import { useMutation, useQueryClient } from 'react-query';
 import { useEffect } from 'react';
+import { registerPost } from './api/apis';
 import Swal from 'sweetalert2';
-const BASE_URL = process.env.REACT_APP_URL;
 
 const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   const navigate = useNavigate();
@@ -18,26 +18,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
     }
   }, [postId]);
 
-  // 게시글 등록/수정 api
-  const registerPost = async postData => {
-    const response = await fetch(`${BASE_URL}/api/boards`, {
-      method: postId ? 'PUT' : 'POST',
-      body: JSON.stringify(postData),
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('게시글 등록에 실패하였습니다.');
-    }
-
-    const result = response.json();
-    return result;
-  };
-
-  const { mutate } = useMutation(registerPost, {
+  const { mutate } = useMutation(postData => registerPost(postId, postData), {
     onSuccess: boardId => {
       queryClient.invalidateQueries(['posts']);
       if (!postId) {

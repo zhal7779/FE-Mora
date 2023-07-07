@@ -23,6 +23,10 @@ export const SideBar = styled.div`
     font-size: 1.2rem;
     font-weight: 900;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const SideBarButtonBlock = styled.button`
   width: 8rem;

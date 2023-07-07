@@ -1,31 +1,13 @@
 import * as Style from './styledComponents/RecommendPostStyle';
 import { useQuery } from 'react-query';
-import Button from '../components/Button';
-const BASE_URL = process.env.REACT_APP_URL;
 import { Link } from 'react-router-dom';
+import { fetchRecommendPosts } from './api/apis';
+import Button from '../components/Button';
 
 const RecommendPost = ({ searchTerm, selectedCategoryId }) => {
-  const fetchPosts = async () => {
-    const response = await fetch(
-      `${BASE_URL}/api/boards/${selectedCategoryId}?page=0&size=100`,
-      {
-        headers: {
-          authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-        }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('게시글을 불러오는데 실패했습니다.');
-    }
-
-    const result = await response.json();
-    return result;
-  };
-
   const { data, isLoading, isError, error, isSuccess } = useQuery(
     ['posts', selectedCategoryId],
-    fetchPosts
+    fetchRecommendPosts
   );
 
   if (isError) {

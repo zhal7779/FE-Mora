@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import formatTime from './utils/formatTime';
 import useDebounce from './hooks/useDebounce';
-const BASE_URL = process.env.REACT_APP_URL;
+import { fetchPosts } from './api/apis';
 
 const FILTER_BY_LATEST = '최신순';
 const FILTER_BY_VIEW = '조회순';
@@ -15,24 +15,6 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
   const [currentFilter, setCurrentFilter] = useState(FILTER_BY_LATEST);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const loadMoreRef = useRef(null);
-
-  const fetchPosts = async ({ page, view }) => {
-    const response = await fetch(
-      `${BASE_URL}/api/boards/${selectedCategoryId}?page=${page}&size=${view}`,
-      {
-        headers: {
-          authorization: `Bearer ${sessionStorage.getItem('userToken')}`
-        }
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('게시글을 불러오는데 실패했습니다.');
-    }
-
-    const result = await response.json();
-    return result;
-  };
 
   const {
     data,
@@ -45,7 +27,8 @@ const PostList = ({ selectedCategoryId, searchTerm }) => {
     isFetchingNextPage
   } = useInfiniteQuery(
     ['posts', selectedCategoryId],
-    ({ pageParam = 0 }) => fetchPosts({ page: pageParam, view: 10 }),
+    ({ pageParam = 0 }) =>
+      fetchPosts({ page: pageParam, view: 10, selectedCategoryId }),
     {
       getNextPageParam: lastPage => {
         return lastPage.currentPage < lastPage.totalPages

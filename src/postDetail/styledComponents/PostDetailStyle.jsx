@@ -192,7 +192,7 @@ export const DetailContainer = styled.section`
       li {
         display: flex;
         align-items: center;
-        padding: 4px 10px;
+        padding: 2px 10px;
         font-size: 1.4rem;
         color: rgb(66, 66, 66);
         background: rgb(255, 255, 255);

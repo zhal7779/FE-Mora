@@ -85,14 +85,14 @@ const Header = () => {
 
   // useEffect로 10분에 한 번씩 refreshMutation 실행
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refreshMutation.mutate();
-  //   }, 2000);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshMutation.mutate();
+    }, 600000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   //알림 api 30초에 한 번씩 재호출
   useEffect(() => {
