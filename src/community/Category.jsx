@@ -13,7 +13,7 @@ const Category = ({ selectedCategoryId, setSelectedCategoryId }) => {
       <div className="category-title">
         <h2>토끼굴🐰</h2>
         <Link to="/write">
-          <Button value="글 작성하기" color="darkPurple" />
+          <Button value="작성하기" color="darkPurple" />
         </Link>
       </div>
       <div className="category-list">

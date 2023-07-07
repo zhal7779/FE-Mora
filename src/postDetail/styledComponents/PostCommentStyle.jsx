@@ -169,7 +169,6 @@ export const CommentContainer = styled.div`
           padding-bottom: 20px;
           font-size: 1.5rem;
           line-height: 2.2rem;
-          word-break: keep-all;
         }
 
         .comment-option {
@@ -209,9 +208,9 @@ export const CommentContainer = styled.div`
             li {
               width: 100%;
               padding: 4px 10px;
-              font-size: 14px;
+              font-size: 1.4rem;
               font-weight: 500;
-              line-height: 22px;
+              line-height: 2.2rem;
               color: #acacac;
               cursor: pointer;
               transition: 0.2s;

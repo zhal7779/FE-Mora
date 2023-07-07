@@ -9,8 +9,8 @@ const Input = ({ width, onChange, value }) => {
 
   return (
     <InputContainer width={width} onChange={onChange} value={value}>
-      <SearchIcon src={searchIcon} alt='Search' />
-      <InputElement type='text' placeholder='키워드를 입력해주세요' />
+      <SearchIcon src={searchIcon} alt="Search" />
+      <InputElement type="text" placeholder="키워드를 입력해주세요" />
     </InputContainer>
   );
 };
@@ -31,8 +31,8 @@ const InputElement = styled.input`
   border-radius: 4px;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 23px;
+  font-size: 1.6rem;
+  line-height: 2.3rem;
   color: #242424;
 `;
 

@@ -38,10 +38,10 @@ const AdminTableBody = ({ users }) => {
       {users.map((data, idx) => {
         return (
           <UserInfo className='user-info' key={idx}>
-            <span>{data.name}</span>
+            <span className='name'>{data.name}</span>
             <span className='email'>{data.email}</span>
             <span className='password'>**********</span>
-            <span>{data.createdAt.slice(0, 10)}</span>
+            <span className='created-date'>{data.createdAt.slice(0, 10)}</span>
             <span>
               <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
                 보기

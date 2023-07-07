@@ -49,7 +49,7 @@ export const RecommendContainer = styled.section`
 
   .recommend-title {
     margin-bottom: 32px;
-    height: 38px;
+    height: 36px;
     font-weight: 600;
     font-size: 1.6rem;
     line-height: 1.9rem;
@@ -79,6 +79,25 @@ export const RecommendContainer = styled.section`
       p:first-of-type {
         margin-right: 10px;
       }
+    }
+  }
+
+  @media (max-width: 425px) {
+    ul {
+      flex-direction: column;
+
+      li {
+        width: 100%;
+        height: 146px;
+
+        &:first-of-type {
+          margin: 0 0 12px 0;
+        }
+      }
+    }
+
+    .recommend-title {
+      margin-bottom: 20px;
     }
   }
 `;

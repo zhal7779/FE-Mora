@@ -3,20 +3,44 @@ import { ModalButton } from './ModalComponents';
 
 // 테이블 요소들
 const tableRowSetting = `
-display: grid;
-grid-template-columns: 10rem 22rem 16rem 16rem 8rem 8rem;
-grid-template-rows: 5rem;
-justify-items: center;
-align-items: center;
+  display: grid;
+  grid-template-columns: 100px 220px 160px 160px 80px 80px;
+  grid-template-rows: 5rem;
+  justify-items: center;
+  align-items: center;
 
-& > span {
-	font-size: 1.4rem;
-}`;
+  & > span {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 376px) {
+    grid-template-columns: 180px 50px 50px;
+    & > span {
+      font-size: 1.4rem;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    grid-template-columns: 115px 220px 100px 100px;
+  }
+`;
 export const TableRowInfo = styled.div`
   ${tableRowSetting}
   border-bottom: 1px solid #000;
 
   font-weight: 'bold';
+
+  @media (max-width: 376px) {
+    & .이름,
+    & .비밀번호,
+    & .가입날짜 {
+      display: none;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    & .비밀번호,
+    & .가입날짜 {
+      display: none;
+    }
+  }
 `;
 export const UserInfo = styled.li`
   ${tableRowSetting}
@@ -28,7 +52,7 @@ export const UserInfo = styled.li`
 
   & .email,
   & .password {
-    max-width: 16rem;
+    max-width: 140px;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -36,6 +60,20 @@ export const UserInfo = styled.li`
   }
   & .password {
     max-width: 13rem;
+  }
+
+  @media (max-width: 376px) {
+    & .name,
+    & .password,
+    & .created-date {
+      display: none;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    & .password,
+    & .created-date {
+      display: none;
+    }
   }
 `;
 export const TableTitleBlock = styled.div`

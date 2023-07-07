@@ -3,20 +3,36 @@ import { ModalButton } from './ModalComponents';
 
 // 테이블 요소들
 const tableRowSetting = `
-display: grid;
-grid-template-columns: repeat(5, 16rem);
-grid-template-rows: 5rem;
-justify-items: center;
-align-items: center;
+  display: grid;
+  grid-template-columns: repeat(5, 16rem);
+  grid-template-rows: 5rem;
+  justify-items: center;
+  align-items: center;
 
-& > span {
-	font-size: 1.4rem;
-}`;
+  & > span {
+    font-size: 1.4rem;
+  }
+  @media (max-width: 376px) {
+    grid-template-columns: 70px 90px 60px 60px;
+    & > span {
+      font-size: 1.4rem;
+    }
+  }
+  @media (min-width: 376px) and (max-width: 768px) {
+    grid-template-columns: 115px 200px 110px 110px;
+  }
+`;
 export const TableRowInfo = styled.div`
   ${tableRowSetting}
   border-bottom: 1px solid #000;
 
   font-weight: 'bold';
+
+  @media (max-width: 768px) {
+    & .생성일자 {
+      display: none;
+    }
+  }
 `;
 export const TrackListBlock = styled.ul`
   min-height: 615px;
@@ -36,6 +52,12 @@ export const TrackInfo = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    & .created-date {
+      display: none;
+    }
   }
 `;
 export const TableTitleBlock = styled.div`

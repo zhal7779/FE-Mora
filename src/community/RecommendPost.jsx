@@ -1,8 +1,35 @@
 import * as Style from './styledComponents/RecommendPostStyle';
+import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
+import { fetchRecommendPosts } from './api/apis';
+import Button from '../components/Button';
 
-const RecommendPost = ({ searchTerm, selectedCategoryId, data }) => {
-  const sortedData = data
+const RecommendPost = ({ searchTerm, selectedCategoryId }) => {
+  const { data, isLoading, isError, error, isSuccess } = useQuery(
+    ['posts', selectedCategoryId],
+    fetchRecommendPosts
+  );
+
+  if (isError) {
+    return (
+      <div>
+        {error.message}⚠️
+        <div>
+          모여라레이서는 회원 전용 서비스입니다! <br />
+          혹시 로그인을 깜빡하셨나요?
+          <Link to="/login">
+            <Button value="로그인하기" color="darkPurple" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return <div>Loading...⏳</div>;
+  }
+
+  const sortedData = data.objArr
     .filter(post => post.category === selectedCategoryId)
     .sort((a, b) => b.like_cnt + b.view_cnt - (a.like_cnt + a.view_cnt));
 
@@ -10,7 +37,7 @@ const RecommendPost = ({ searchTerm, selectedCategoryId, data }) => {
 
   return (
     <Style.RecommendContainer>
-      {searchTerm === '' && recommendPostData.length > 0 ? (
+      {searchTerm === '' && isSuccess ? (
         <>
           <h3>추천 게시글</h3>
           <ul>

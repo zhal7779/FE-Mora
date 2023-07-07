@@ -44,9 +44,9 @@ const AdminTableBody = ({ tracks }) => {
       {tracks.map((data, idx) => {
         return (
           <TrackInfo className='user-info' key={idx}>
-            <span className='title'>{data.name}</span>
-            <span className='content'>{`1~${data.phase}`}</span>
-            <span>{data.createdAt.slice(0, 10)}</span>
+            <span className='name'>{data.name}</span>
+            <span className='phase'>{`1~${data.phase}`}</span>
+            <span className='created-date'>{data.createdAt.slice(0, 10)}</span>
             <span>
               <DetailBtn
                 className='detail-btn'
