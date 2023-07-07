@@ -64,9 +64,12 @@ export const MenuBarUl = styled.ul`
 
   display: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 375px) {
     display: block;
-    top: 58px;
+    top: 53px;
+  }
+  @media (min-width: 375px) and (max-width: 768px) {
+    display: block;
   }
 `;
 export const MenuBarLi = styled.li`
