@@ -42,14 +42,16 @@ export const NavContainer = styled.nav`
   .swiper-button-next {
     position: fixed;
     top: 19.6rem;
+    background-color: var(--main-white);
   }
   .swiper-button-prev {
-    left: var(--swiper-navigation-sides-offset, 2px);
+    left: var(--swiper-navigation-sides-offset, 0px);
     right: auto;
   }
 
   .swiper-button-next {
-    right: var(--swiper-navigation-sides-offset, 2px);
+    padding: 0.2rem;
+    right: var(--swiper-navigation-sides-offset, 0px);
     left: auto;
   }
 
@@ -65,17 +67,24 @@ export const NavContainer = styled.nav`
   @media (max-width: 480px) {
     top: 17rem;
     .content {
-      padding: 1.2rem 1.8rem;
+      padding: 0 1.4rem;
     }
     .mobile-nav-item {
-      font-size: 1.4rem;
+      padding: 1.7rem 0;
+      font-size: 1.3rem;
       font-weight: 700;
       cursor: pointer;
-      color: var(--light-gray);
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: auto 0;
+      p {
+        line-height: 1.2;
+        width: auto;
+        color: var(--dark-gray);
+      }
+    }
+    .mobile-nav-item.active p {
+      color: #522bae;
     }
   }
 `;
