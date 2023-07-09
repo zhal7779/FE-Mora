@@ -20,6 +20,16 @@ import {
 } from '../search/api/searchAPI';
 import { useQueries } from 'react-query';
 import NoData from '../components/NoData';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import SwiperCore from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { useWindowSize } from '../header/components/useWindowSize';
+
+// SwiperCore.use();
+
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
   const { state } = useLocation();
@@ -30,12 +40,14 @@ const SearchPage = () => {
     setSearchKeyword(subResult);
   };
 
-  //menu === 1 ?전체보기(프로필 5개, 게시물 10개, 레이서 Q&A 10개)
-  //menu === 2? 프로필
-  //menu === 3? 자유 게시판
-  //menu === 4? 지식고유
-  //menu === 5? 스터디 모집
-  //menu === 6? 레이서 Q&A
+  const menuItems = [
+    { id: 1, text: '전체' },
+    { id: 2, text: '프로필' },
+    { id: 3, text: '자유 게시판' },
+    { id: 4, text: '지식 공유' },
+    { id: 5, text: '스터디 모집' },
+    { id: 6, text: '레이서 Q&A' },
+  ];
 
   const [searchMenu, setSearchMenu] = useState(() => {
     const storedMenu = localStorage.getItem('searchMenu');
@@ -125,32 +137,50 @@ const SearchPage = () => {
   const sliceStudyData = sliceArray(resultData.study, 0, 4);
   const sliceQuestionData = sliceArray(resultData.question, 0, 4);
 
+  const { mobileSize } = useWindowSize();
   return (
     <>
       <Style.NavContainer>
-        <Style.Content>
-          <Style.SearchNav>
-            <Style.SearchNavItem onClick={() => handleMenuClick(1)} active={searchMenu === 1}>
-              <p>전체</p>
-            </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(2)} active={searchMenu === 2}>
-              <p>프로필</p>
-            </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(3)} active={searchMenu === 3}>
-              <p>자유 게시판</p>
-            </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(4)} active={searchMenu === 4}>
-              <p>지식 공유</p>
-            </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(5)} active={searchMenu === 5}>
-              <p>스터디 모집</p>
-            </Style.SearchNavItem>
-            <Style.SearchNavItem onClick={() => handleMenuClick(6)} active={searchMenu === 6}>
-              <p>레이서 Q&A</p>
-            </Style.SearchNavItem>
-          </Style.SearchNav>
-        </Style.Content>
+        {mobileSize ? (
+          <Swiper
+            className='content'
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={50}
+            slidesPerView={4}
+            navigation
+          >
+            <div className='search-nav'>
+              {menuItems.map((menu) => (
+                <SwiperSlide
+                  key={menu.id}
+                  className='mobile-nav-item'
+                  // className={searchMenu === menu.id ? 'active' : ''}
+                  // active={searchMenu === menu.id}
+                  onClick={() => handleMenuClick(menu.id)}
+                >
+                  <p>{menu.text}</p>
+                </SwiperSlide>
+              ))}
+            </div>
+          </Swiper>
+        ) : (
+          <div className='content'>
+            <div className='search-nav'>
+              {menuItems.map((menu) => (
+                <Style.NavItem
+                  key={menu.id}
+                  className={searchMenu === menu.id ? 'active' : ''}
+                  active={searchMenu === menu.id}
+                  onClick={() => handleMenuClick(menu.id)}
+                >
+                  <p>{menu.text}</p>
+                </Style.NavItem>
+              ))}
+            </div>
+          </div>
+        )}
       </Style.NavContainer>
+
       <SearchContext.Provider value={searchKeyword}>
         <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>
