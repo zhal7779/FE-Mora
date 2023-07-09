@@ -145,7 +145,6 @@ const SearchPage = () => {
           <Swiper
             className='content'
             modules={[Navigation, Pagination, Scrollbar, A11y]}
-            spaceBetween={50}
             slidesPerView={4}
             navigation
           >
@@ -153,9 +152,8 @@ const SearchPage = () => {
               {menuItems.map((menu) => (
                 <SwiperSlide
                   key={menu.id}
-                  className='mobile-nav-item'
-                  // className={searchMenu === menu.id ? 'active' : ''}
-                  // active={searchMenu === menu.id}
+                  // className='mobile-nav-item'
+                  className={`mobile-nav-item ${searchMenu === menu.id ? 'active' : ''}`}
                   onClick={() => handleMenuClick(menu.id)}
                 >
                   <p>{menu.text}</p>
