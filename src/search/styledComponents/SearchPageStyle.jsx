@@ -24,28 +24,63 @@ export const NavContainer = styled.nav`
   background: var(--main-white);
   width: 100%;
   border-bottom: #cbd5e1 1px solid;
+  .content {
+    max-width: 1024px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .search-nav {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .swiper-wrapper {
+    display: flex;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: fixed;
+    top: 19.6rem;
+  }
+  .swiper-button-prev {
+    left: var(--swiper-navigation-sides-offset, 2px);
+    right: auto;
+  }
+
+  .swiper-button-next {
+    right: var(--swiper-navigation-sides-offset, 2px);
+    left: auto;
+  }
+
   @media (max-width: 768px) {
     top: 17rem;
+    .content {
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
-`;
-export const Content = styled.div`
-  max-width: 1024px;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  @media (max-width: 768px) {
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  @media (max-width: 480px) {
+    top: 17rem;
+    .content {
+      padding: 1.2rem 1.8rem;
+    }
+    .mobile-nav-item {
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--light-gray);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto 0;
+    }
   }
 `;
 
-export const SearchNav = styled.div`
-  display: flex;
-  gap: 0.8rem;
-`;
-export const SearchNavItem = styled.div`
+export const NavItem = styled.div`
   ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
     font-size: 1.6rem;
@@ -58,11 +93,6 @@ export const SearchNavItem = styled.div`
     p {
       font-size: 1.5rem;
       padding: 1.6rem 0.8rem;
-    }
-  }
-  @media (max-width: 480px) {
-    p {
-      /* font-size: 1rem; */
     }
   }
 `;
