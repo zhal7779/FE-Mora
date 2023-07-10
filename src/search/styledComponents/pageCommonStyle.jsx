@@ -17,6 +17,10 @@ export const SearchPageWrapper = styled.main`
     width: 100%;
     gap: 5rem;
     align-items: center;
+    > div {
+      width: 100%;
+      align-items: center;
+    }
   }
 `;
 

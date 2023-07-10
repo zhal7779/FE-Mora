@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
-import { useWindowSize } from '../../header/components/useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const ResigterProfile = () => {
   const { mobileSize } = useWindowSize();

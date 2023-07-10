@@ -6,7 +6,7 @@ import { ReactComponent as MediaLogoIcon } from '../../assets/icons/logo2.svg';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../../assets/icons/fi_bell.svg';
 import { ReactComponent as BarsIcon } from '../../assets/icons/bars-solid.svg';
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 import SearchBar from '../../components/SearchBar';
 import AlarmModal from '../../alarm/components/AlarmModal';
 import { useQuery, useMutation } from 'react-query';

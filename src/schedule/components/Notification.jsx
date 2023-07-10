@@ -8,7 +8,7 @@ import { fetchNotice } from '../api/scheduleApi';
 import Pagination from './Pagination';
 import Input from '../../components/Input';
 import { SearchDebounce } from './SearchDebounce';
-import { useWindowSize } from '../../header/components/useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 const Notification = () => {
   //검색창 인풋
   const [inputValue, setInputValue] = useState('');

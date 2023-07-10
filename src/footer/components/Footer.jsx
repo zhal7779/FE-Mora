@@ -7,7 +7,7 @@ import { ReactComponent as FacebookIcon } from '../../assets/icons/u_facebook.sv
 import { ReactComponent as GithubIcon } from '../../assets/icons/u_github.svg';
 import { ReactComponent as TelephoneIcon } from '../../assets/icons/telephone-fill.svg';
 import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-at.svg';
-import { useWindowSize } from '../../header/components/useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 const Footer = () => {
   const { logo, mobileSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
   console.log(mobileSize);

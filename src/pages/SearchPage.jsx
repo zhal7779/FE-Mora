@@ -22,13 +22,10 @@ import { useQueries } from 'react-query';
 import NoData from '../components/NoData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useWindowSize } from '../header/components/useWindowSize';
-
-// SwiperCore.use();
+import { useWindowSize } from '../hooks/useWindowSize';
 
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
@@ -67,6 +64,7 @@ const SearchPage = () => {
       localStorage.removeItem('searchMenu');
     };
   }, [searchMenu]);
+
   const popularProfileData = useQueries([
     {
       queryKey: ['popular'],
@@ -104,10 +102,10 @@ const SearchPage = () => {
   ]);
   //데이터 개수
   const openProfileCount = popularProfileData[1]?.data?.length || 0;
-  const freeCount = freeKnowledgeData[0]?.data?.length || 0;
-  const knowledgeCount = freeKnowledgeData[1]?.data?.length || 0;
-  const studyCount = studyQuestionData[0]?.data?.length || 0;
-  const questionCount = studyQuestionData[1]?.data?.length || 0;
+  const freeCount = freeKnowledgeData[0]?.data?.objArr?.length || 0;
+  const knowledgeCount = freeKnowledgeData[1]?.data?.objArr?.length || 0;
+  const studyCount = studyQuestionData[0]?.data?.objArr?.length || 0;
+  const questionCount = studyQuestionData[1]?.data?.objArr?.length || 0;
   const totalCount = freeCount + knowledgeCount + studyCount + questionCount;
   // SearchResultBar에 검색결과 ${count}건에 전달해줄 데이터
   const countArr = {
@@ -121,11 +119,12 @@ const SearchPage = () => {
   //컴포넌트들에 전달할 데이터들
   const resultData = {
     openProfile: openProfileCount > 0 ? popularProfileData[1].data : [],
-    free: freeCount > 0 ? freeKnowledgeData[0].data : [],
-    knowledge: knowledgeCount > 0 ? freeKnowledgeData[1].data : [],
-    study: studyCount > 0 ? studyQuestionData[0].data : [],
-    question: questionCount > 0 ? studyQuestionData[1].data : [],
+    free: freeCount > 0 ? freeKnowledgeData[0].data.objArr : [],
+    knowledge: knowledgeCount > 0 ? freeKnowledgeData[1].data.objArr : [],
+    study: studyCount > 0 ? studyQuestionData[0].data.objArr : [],
+    question: questionCount > 0 ? studyQuestionData[1].data.objArr : [],
   };
+  console.log(resultData);
 
   //전달할 데이터 잘라주는 함수, 전체페이지 보여주는 데이터
   const sliceArray = (array, start, end) => {
@@ -152,7 +151,6 @@ const SearchPage = () => {
               {menuItems.map((menu) => (
                 <SwiperSlide
                   key={menu.id}
-                  // className='mobile-nav-item'
                   className={`mobile-nav-item ${searchMenu === menu.id ? 'active' : ''}`}
                   onClick={() => handleMenuClick(menu.id)}
                 >
@@ -178,7 +176,6 @@ const SearchPage = () => {
           </div>
         )}
       </Style.NavContainer>
-
       <SearchContext.Provider value={searchKeyword}>
         <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>
