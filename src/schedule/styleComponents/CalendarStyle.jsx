@@ -82,7 +82,17 @@ export const Container = styled.section`
       justify-content: center;
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 0 1rem;
+    margin-top: 2rem;
+    div {
+      .fc .fc-toolbar-title {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  @media (min-width: 480px) and (max-width: 768px) {
     width: 100%;
 
     padding: 0 2.4rem;

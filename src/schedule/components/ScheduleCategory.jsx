@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CategoryContainer } from '../../community/styledComponents/CategoryStyle';
 import { ReactComponent as MegaphoneIcon } from '../../assets/icons/u_megaphone.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/u_calendar-alt.svg';
-import { useWindowSize } from '../../header/components/useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const ScheduleCategory = ({ setMenu }) => {
   const [selectedCategory, setSelectedCategory] = useState('notice');

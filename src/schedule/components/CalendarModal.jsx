@@ -54,7 +54,7 @@ const CalendarModal = ({ onModal, date }) => {
     <>
       <Style.Background onClick={handleClickClose} />
       <Style.Container>
-        <Style.Content>
+        <div>
           <div className='date'>
             <span onClick={() => handleDateChange('sub')}>
               <LeftIcon stroke='var(--main-white)' />
@@ -64,18 +64,15 @@ const CalendarModal = ({ onModal, date }) => {
               <RightIcon stroke='var(--main-white)' />
             </span>
           </div>
-          <span className='close_btn' onClick={handleClickClose}>
-            &times;
-          </span>
-        </Style.Content>
-        <Style.Main>
+        </div>
+        <div className='main-content'>
           <div className='scroll'>
             {data !== undefined ? (
               data.length > 0 ? (
                 data.map((item) => (
                   <div className='main' key={item.id}>
-                    <span className='header_span'></span>
-                    <div className='main_text'>
+                    <span className='header-span'></span>
+                    <div className='main-text'>
                       <h5>📆 [{item.title}]</h5>
                       <div>
                         <p>
@@ -86,7 +83,7 @@ const CalendarModal = ({ onModal, date }) => {
                           <p>
                             관련 링크
                             <br />
-                            <div className='link_box'>
+                            <div className='link-box'>
                               {item.PlanLinks.map((link) => (
                                 <a href={link.url} target='_blank'>
                                   {link.url}
@@ -103,7 +100,7 @@ const CalendarModal = ({ onModal, date }) => {
                   </div>
                 ))
               ) : (
-                <div className='no_schedule'>
+                <div className='no-schedule'>
                   <img src={rabbitImg} alt='No schedule' />
                   <p>해당 날짜는 일정이 없습니다.</p>
                 </div>
@@ -112,7 +109,7 @@ const CalendarModal = ({ onModal, date }) => {
               ''
             )}
           </div>
-        </Style.Main>
+        </div>
       </Style.Container>
     </>
   );

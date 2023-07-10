@@ -5,7 +5,11 @@ const AdminTableHead = () => {
   return (
     <TableRowInfo className='table-row-info'>
       {tableColumnData.map((columnName, idx) => {
-        return <span key={columnName + idx}>{columnName}</span>;
+        return (
+          <span key={columnName + idx} className={columnName}>
+            {columnName}
+          </span>
+        );
       })}
     </TableRowInfo>
   );

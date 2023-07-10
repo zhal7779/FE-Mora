@@ -38,11 +38,11 @@ const AdminTableBody = ({ plans }) => {
       {plans.map((data, idx) => {
         return (
           <PlanInfo className='user-info' key={idx}>
-            <span>{data.Admin.name}</span>
+            <span className='name'>{data.Admin.name}</span>
             <span className='title'>{data.title}</span>
             <span className='content'>{data.content}</span>
-            <span>{data.startDate.slice(0, 10)}</span>
-            <span>{data.endDate.slice(0, 10)}</span>
+            <span className='start-date'>{data.startDate.slice(0, 10)}</span>
+            <span className='end-date'>{data.endDate.slice(0, 10)}</span>
             <span>
               <DetailBtn className='detail-btn' onClick={() => handleDetailClick(data.id)}>
                 보기

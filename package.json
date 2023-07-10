@@ -23,8 +23,10 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
+    "sass": "^1.63.6",
     "styled-components": "^5.3.11",
     "sweetalert2": "^11.7.12",
+    "swiper": "^10.0.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

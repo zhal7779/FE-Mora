@@ -70,8 +70,13 @@ const Input = styled.input`
   ::placeholder {
     color: #94a3b8;
   }
+
   @media (max-width: 768px) {
     font-size: 2.6rem;
     padding: 1.2rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    padding: 0.6rem;
   }
 `;

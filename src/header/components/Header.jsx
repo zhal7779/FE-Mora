@@ -6,7 +6,7 @@ import { ReactComponent as MediaLogoIcon } from '../../assets/icons/logo2.svg';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 import { ReactComponent as BellIcon } from '../../assets/icons/fi_bell.svg';
 import { ReactComponent as BarsIcon } from '../../assets/icons/bars-solid.svg';
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 import SearchBar from '../../components/SearchBar';
 import AlarmModal from '../../alarm/components/AlarmModal';
 import { useQuery, useMutation } from 'react-query';
@@ -41,7 +41,7 @@ const Header = () => {
     }
   }, [token, mainProfileData]);
 
-  console.log(mainProfileData);
+  // console.log(mainProfileData);
 
   // 리프레쉬 토큰 요청 Mutation 선언
   const refreshMutation = useMutation(
@@ -85,14 +85,14 @@ const Header = () => {
 
   // useEffect로 10분에 한 번씩 refreshMutation 실행
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     refreshMutation.mutate();
-  //   }, 2000);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshMutation.mutate();
+    }, 600000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   //알림 api 30초에 한 번씩 재호출
   useEffect(() => {
@@ -131,9 +131,9 @@ const Header = () => {
   useEffect(() => {
     if (location.pathname === '/') {
       setMenu(0);
-    } else if (location.pathname === '/community/post/free') {
+    } else if (location.pathname.startsWith('/community/')) {
       setMenu(1);
-    } else if (location.pathname === '/schedule/notice') {
+    } else if (location.pathname.startsWith('/schedule/')) {
       setMenu(2);
     } else if (location.pathname === '/openprofile') {
       setMenu(3);

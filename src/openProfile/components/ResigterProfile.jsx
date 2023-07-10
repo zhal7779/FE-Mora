@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const ResigterProfile = () => {
+  const { mobileSize } = useWindowSize();
   return (
     <Container>
       <TextContent>
@@ -20,7 +22,11 @@ const ResigterProfile = () => {
       </TextContent>
       <ButtonContent>
         <Link to='/mypage'>
-          <Button value={'오픈 프로필 작성하기'} color='darkPurple' />
+          {mobileSize ? (
+            <Button value='작성하기' color='darkPurple' />
+          ) : (
+            <Button value='오픈 프로필 작성하기' color='darkPurple' />
+          )}
         </Link>
       </ButtonContent>
     </Container>
@@ -37,14 +43,18 @@ const Container = styled.div`
   height: 100%;
   margin-bottom: 36rem;
   background: var(--main-white);
+
   @media (max-width: 768px) {
     position: static;
     flex-direction: row;
     margin-bottom: 0;
     align-items: center;
     justify-content: space-between;
-    gap: 5rem;
     padding: 0 2.4rem;
+  }
+  @media (max-width: 480px) {
+    align-items: center;
+    padding: 0 1.4rem;
   }
 `;
 const TextContent = styled.div`
@@ -61,6 +71,9 @@ const TextContent = styled.div`
   }
   strong {
     font-weight: 700;
+  }
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
   }
 `;
 
