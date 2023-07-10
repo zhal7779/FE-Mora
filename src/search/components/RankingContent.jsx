@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import RankingList from './RankingList';
-import { useWindowSize } from '../../header/components/useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 import Button from '../../components/Button';
 import { useState } from 'react';
 import RankingModal from './RankingModal';

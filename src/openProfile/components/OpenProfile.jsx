@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
-import { useObserver } from './useObserver';
+import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
 
 const OpenProfile = ({ registerstatus }) => {

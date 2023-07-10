@@ -41,8 +41,9 @@ export const NavContainer = styled.nav`
   .swiper-button-prev,
   .swiper-button-next {
     position: fixed;
-    top: 19.6rem;
+    top: 18.6rem;
     background-color: var(--main-white);
+    padding: 2rem 0;
   }
   .swiper-button-prev {
     left: var(--swiper-navigation-sides-offset, 0px);
@@ -50,7 +51,6 @@ export const NavContainer = styled.nav`
   }
 
   .swiper-button-next {
-    padding: 0.2rem;
     right: var(--swiper-navigation-sides-offset, 0px);
     left: auto;
   }
@@ -82,6 +82,12 @@ export const NavContainer = styled.nav`
         width: auto;
         color: var(--dark-gray);
       }
+    }
+    .mobile-nav-item.active {
+      background: #eeeafe;
+      border-radius: 5px;
+      padding: 1rem 0;
+      margin: 0.7rem 0;
     }
     .mobile-nav-item.active p {
       color: #522bae;

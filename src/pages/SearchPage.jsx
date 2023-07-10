@@ -22,13 +22,10 @@ import { useQueries } from 'react-query';
 import NoData from '../components/NoData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useWindowSize } from '../header/components/useWindowSize';
-
-// SwiperCore.use();
+import { useWindowSize } from '../hooks/useWindowSize';
 
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
@@ -152,7 +149,6 @@ const SearchPage = () => {
               {menuItems.map((menu) => (
                 <SwiperSlide
                   key={menu.id}
-                  // className='mobile-nav-item'
                   className={`mobile-nav-item ${searchMenu === menu.id ? 'active' : ''}`}
                   onClick={() => handleMenuClick(menu.id)}
                 >
@@ -178,7 +174,6 @@ const SearchPage = () => {
           </div>
         )}
       </Style.NavContainer>
-
       <SearchContext.Provider value={searchKeyword}>
         <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>

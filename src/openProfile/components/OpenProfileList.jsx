@@ -4,7 +4,7 @@ import { ReactComponent as BriefcaseIcon } from '../../assets/icons/u_briefcase-
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { coffeeChatConfirm } from './CoffeeChatConfrim';
-import { useWindowSize } from '../../header/components/useWindowSize';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const OpenProfileList = ({
   data,
