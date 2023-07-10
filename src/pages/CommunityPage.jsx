@@ -20,10 +20,10 @@ const CommunityPage = () => {
       />
       <PostContainer>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        {/* <RecommendPost
+        <RecommendPost
           searchTerm={searchTerm}
           selectedCategoryId={selectedCategoryId}
-        /> */}
+        />
         <PostList
           selectedCategoryId={selectedCategoryId}
           searchTerm={searchTerm}

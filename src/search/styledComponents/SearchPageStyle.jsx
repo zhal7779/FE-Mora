@@ -13,6 +13,9 @@ export const ProfileWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 export const NavContainer = styled.nav`
   z-index: 1;
@@ -21,19 +24,78 @@ export const NavContainer = styled.nav`
   background: var(--main-white);
   width: 100%;
   border-bottom: #cbd5e1 1px solid;
-`;
-export const Content = styled.div`
-  max-width: 1024px;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
+  .content {
+    max-width: 1024px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .search-nav {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .swiper-wrapper {
+    display: flex;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: fixed;
+    top: 18.6rem;
+    background-color: var(--main-white);
+    padding: 2rem 0;
+  }
+  .swiper-button-prev {
+    left: var(--swiper-navigation-sides-offset, 0px);
+    right: auto;
+  }
+
+  .swiper-button-next {
+    right: var(--swiper-navigation-sides-offset, 0px);
+    left: auto;
+  }
+
+  @media (max-width: 768px) {
+    top: 17rem;
+    .content {
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 480px) {
+    top: 17rem;
+    .content {
+      padding: 0 1.4rem;
+    }
+    .mobile-nav-item {
+      padding: 1.7rem 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        line-height: 1.2;
+        width: auto;
+        color: var(--dark-gray);
+      }
+    }
+    .mobile-nav-item.active {
+      background: #eeeafe;
+      border-radius: 5px;
+      padding: 1rem 0;
+      margin: 0.7rem 0;
+    }
+    .mobile-nav-item.active p {
+      color: #522bae;
+    }
+  }
 `;
 
-export const SearchNav = styled.div`
-  display: flex;
-  gap: 0.8rem;
-`;
-export const SearchNavItem = styled.div`
+export const NavItem = styled.div`
   ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
     font-size: 1.6rem;
@@ -41,5 +103,11 @@ export const SearchNavItem = styled.div`
     padding: 1.6rem;
     cursor: pointer;
     color: ${(props) => (props.active ? 'var(--main-font-color)' : 'var(--light-gray)')};
+  }
+  @media (max-width: 768px) {
+    p {
+      font-size: 1.5rem;
+      padding: 1.6rem 0.8rem;
+    }
   }
 `;

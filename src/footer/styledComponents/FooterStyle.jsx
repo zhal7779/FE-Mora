@@ -69,12 +69,43 @@ export const FooterStyle = styled.footer`
   .copyright {
     display: flex;
     justify-content: center;
-    font-size: 1.3rem;
-    color: var(--dark-gray);
-    padding-top: 2rem;
+    p {
+      font-size: 1.3rem;
+      color: var(--dark-gray);
+      padding-top: 2rem;
+    }
   }
+  @media (max-width: 480px) {
+    .main-content {
+      flex-direction: column;
+      gap: 1rem;
+      .logo-content {
+        justify-content: center;
+      }
+      .main-items {
+        flex-direction: column;
+      }
+      .icons {
+        justify-content: center;
+      }
+    }
+    .sub-content {
+      flex-direction: column;
+    }
+    .sub-items {
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
 
-  @media (max-width: 768px) {
+      align-items: center;
+    }
+    .copyright {
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  @media (min-width: 480px) and (max-width: 768px) {
     .main-content {
       flex-direction: column;
       div {
@@ -82,8 +113,7 @@ export const FooterStyle = styled.footer`
         padding: 1rem;
       }
     }
-    .logo-content {
-    }
+
     .sub-content {
       flex-direction: column;
     }

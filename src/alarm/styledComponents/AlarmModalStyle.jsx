@@ -27,6 +27,10 @@ export const Container = styled.section`
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  @media (max-width: 480px) {
+    width: 80%;
+    height: 56%;
+  }
 `;
 export const HeaderContent = styled.div`
   padding: 1.4rem 1.8rem;

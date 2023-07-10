@@ -8,6 +8,7 @@ import { fetchNotice } from '../api/scheduleApi';
 import Pagination from './Pagination';
 import Input from '../../components/Input';
 import { SearchDebounce } from './SearchDebounce';
+import { useWindowSize } from '../../hooks/useWindowSize';
 const Notification = () => {
   //검색창 인풋
   const [inputValue, setInputValue] = useState('');
@@ -47,7 +48,11 @@ const Notification = () => {
   return (
     <Style.Container>
       <div className='header_title'>
-        <h4>엘리스에 올라온 중요한 공지사항이에요!</h4>
+        <div>
+          <p>엘리스에 올라온</p>
+          <p className='sub-p'> 중요한 공지사항이에요!</p>
+        </div>
+
         <img src={rabbitImg} />
       </div>
       <Input width='100%' value={inputValue} onChange={handleOnChange} />

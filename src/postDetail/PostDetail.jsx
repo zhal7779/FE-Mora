@@ -17,16 +17,19 @@ const PostDetail = ({ postId }) => {
   const decodedToken = jwt_decode(sessionStorage.getItem('userToken'));
 
   // 게시글 상세 조회
-  const { status, data: detail, error } = useQuery(['detail', postId], () =>
-    fetchPostDetail(postId)
+  const { status, data: detail, error } = useQuery(
+    ['detail', postId],
+    () => fetchPostDetail(postId),
+    {
+      refetchOnWindowFocus: false
+    }
   );
 
   // 게시글 삭제
   const { mutate: deletePostMutate } = useMutation(() => deletePost(postId), {
     onSuccess: () => {
       console.log('게시글 삭제에 성공했습니다.');
-      navigate(-1);
-      queryClient.invalidateQueries(['posts']);
+      navigate('/community/post/free');
     },
     onError: error => {
       console.error(error);

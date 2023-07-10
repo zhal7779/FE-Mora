@@ -9,14 +9,14 @@ const NonmemberPage = () => {
     <Container>
       <img src={rabbitImg} />
       <div>
-        <span>
+        <div className='content'>
           <img src={logo} />
           <strong>모여라 레이서 회원만 이용 가능합니다.</strong>
           <p>이용을 원하시면 로그인 후 이용해주세요.</p>
           <Link to='/login'>
             <Button value='로그인하러 가기' color='darkPurple'></Button>
           </Link>
-        </span>
+        </div>
       </div>
     </Container>
   );
@@ -43,7 +43,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    span {
+    .content {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -70,19 +70,51 @@ const Container = styled.div`
       }
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
     flex-direction: column-reverse;
     height: 100%;
     width: 100%;
     gap: 6rem;
     border: none;
     img {
+      height: 30rem;
+      margin-bottom: 6rem;
+    }
+
+    div {
+      .content {
+        padding: 5rem;
+        margin-left: 0;
+        padding: 4rem 1.6rem;
+        img {
+          height: 3.4rem;
+          margin-bottom: 3rem;
+        }
+        strong {
+          font-size: 1.8rem;
+        }
+        p {
+          font-size: 1.5rem;
+          padding-bottom: 3rem;
+        }
+      }
+    }
+  }
+  @media (min-width: 480px) and (max-width: 768px) {
+    flex-direction: column-reverse;
+    height: 100%;
+    width: 100%;
+    gap: 6rem;
+    border: none;
+
+    img {
       height: 36rem;
       margin-bottom: 8rem;
     }
     div {
-      span {
+      .content {
         padding: 5rem;
+        margin-left: 0;
       }
     }
   }

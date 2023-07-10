@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import IconGoBack from '../assets/icons/icon-go-back.svg';
 import IconPostImage from '../assets/icons/icon-post-img.svg';
 import Button from '../components/Button';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useEffect } from 'react';
 import { registerPost } from './api/apis';
 import Swal from 'sweetalert2';
 
 const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (postId) {
@@ -20,7 +19,6 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
 
   const { mutate } = useMutation(postData => registerPost(postId, postData), {
     onSuccess: boardId => {
-      queryClient.invalidateQueries(['posts']);
       if (!postId) {
         navigate(`/community/${boardId}`);
       } else {
