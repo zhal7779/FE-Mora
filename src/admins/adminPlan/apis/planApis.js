@@ -1,4 +1,4 @@
-import { changePlanForm } from '../utils/camelToSnake';
+import { changePlanForm } from '../utils/changePlanForm';
 import { snakeToCamel } from '../../adminCommon/utils/variableName';
 
 const domainPort = process.env.REACT_APP_URL;
