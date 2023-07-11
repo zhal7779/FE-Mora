@@ -101,11 +101,14 @@ const SearchPage = () => {
     },
   ]);
   //데이터 개수
+  const getCount = (data, defaultCount) =>
+    data?.isSuccess ? data?.data?.totalItems || 0 : defaultCount;
+
   const openProfileCount = popularProfileData[1]?.data?.length || 0;
-  const freeCount = freeKnowledgeData[0]?.data?.totalItems || 0;
-  const knowledgeCount = freeKnowledgeData[1]?.data?.totalItems || 0;
-  const studyCount = studyQuestionData[0]?.data?.totalItems || 0;
-  const questionCount = studyQuestionData[1]?.data?.totalItems || 0;
+  const freeCount = getCount(freeKnowledgeData[0], 0);
+  const knowledgeCount = getCount(freeKnowledgeData[1], 0);
+  const studyCount = getCount(studyQuestionData[0], 0);
+  const questionCount = getCount(studyQuestionData[1], 0);
   const totalCount = openProfileCount + freeCount + knowledgeCount + studyCount + questionCount;
 
   // SearchResultBar에 검색결과 ${count}건에 전달해줄 데이터
@@ -179,103 +182,106 @@ const SearchPage = () => {
       <SearchContext.Provider value={searchKeyword}>
         <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>
-          {searchMenu === 1 ? (
-            <SearchPageWrapper>
-              {resultData.openProfile.length === 0 &&
-              resultData.free.length === 0 &&
-              resultData.knowledge.length === 0 &&
-              resultData.study.length === 0 &&
-              resultData.question.length === 0 ? (
-                <NoDataWrapper>
-                  <NoData />
-                </NoDataWrapper>
-              ) : (
-                <div>
-                  {resultData.openProfile.length > 0 ? (
-                    <SearchResultProfile
-                      data={sliceOpenProfileData}
-                      count={openProfileCount}
-                      receiveMenu={setSearchMenu}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
+          <SearchPageWrapper>
+            {searchMenu === 1 ? (
+              <>
+                {resultData.openProfile.length === 0 &&
+                resultData.free.length === 0 &&
+                resultData.knowledge.length === 0 &&
+                resultData.study.length === 0 &&
+                resultData.question.length === 0 ? (
+                  <NoDataWrapper>
+                    <NoData />
+                  </NoDataWrapper>
+                ) : (
+                  <div>
+                    {resultData.openProfile.length > 0 ? (
+                      <SearchResultProfile
+                        data={sliceOpenProfileData}
+                        count={openProfileCount}
+                        receiveMenu={setSearchMenu}
+                        simple={'simple'}
+                      />
+                    ) : (
+                      ''
+                    )}
 
-                  {resultData.free.length > 0 ? (
-                    <SearchResultPost
-                      data={sliceFreeData}
-                      count={freeCount}
-                      receiveMenu={setSearchMenu}
-                      type={'free'}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                  {resultData.knowledge.length > 0 ? (
-                    <SearchResultPost
-                      data={sliceKnowledgeData}
-                      count={knowledgeCount}
-                      receiveMenu={setSearchMenu}
-                      type={'Knowledge'}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                  {resultData.study.length > 0 ? (
-                    <SearchResultPost
-                      data={sliceStudyData}
-                      count={studyCount}
-                      receiveMenu={setSearchMenu}
-                      type={'study'}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                  {resultData.question.length ? (
-                    <SearchResultQnA
-                      data={sliceQuestionData}
-                      count={questionCount}
-                      receiveMenu={setSearchMenu}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                </div>
-              )}
-              <RankingContent data={popularProfileData[0].data} />
-            </SearchPageWrapper>
-          ) : searchMenu === 2 ? (
-            <Style.ProfileWrapper>
-              <SearchResultProfile data={resultData.openProfile} />
-            </Style.ProfileWrapper>
-          ) : searchMenu === 3 ? (
-            <SearchPageWrapper>
-              <SearchResultPost data={resultData.free} type={'free'} />
-              <RankingContent data={popularProfileData[0].data} />
-            </SearchPageWrapper>
-          ) : searchMenu === 4 ? (
-            <SearchPageWrapper>
-              <SearchResultPost data={resultData.knowledge} type={'Knowledge'} />
-              <RankingContent data={popularProfileData[0].data} />
-            </SearchPageWrapper>
-          ) : searchMenu === 5 ? (
-            <SearchPageWrapper>
-              <SearchResultPost data={resultData.study} type={'study'} />
-              <RegisterQuestion type={'study'} />
-            </SearchPageWrapper>
-          ) : searchMenu === 6 ? (
-            <SearchPageWrapper>
-              <SearchResultQnA data={resultData.question} />
-              <RegisterQuestion type={'Q&A'} />
-            </SearchPageWrapper>
-          ) : (
-            ''
-          )}
+                    {resultData.free.length > 0 ? (
+                      <SearchResultPost
+                        data={sliceFreeData}
+                        count={freeCount}
+                        receiveMenu={setSearchMenu}
+                        type={'free'}
+                        simple={'simple'}
+                      />
+                    ) : (
+                      ''
+                    )}
+                    {resultData.knowledge.length > 0 ? (
+                      <SearchResultPost
+                        data={sliceKnowledgeData}
+                        count={knowledgeCount}
+                        receiveMenu={setSearchMenu}
+                        type={'Knowledge'}
+                        simple={'simple'}
+                      />
+                    ) : (
+                      ''
+                    )}
+                    {resultData.study.length > 0 ? (
+                      <SearchResultPost
+                        data={sliceStudyData}
+                        count={studyCount}
+                        receiveMenu={setSearchMenu}
+                        type={'study'}
+                        simple={'simple'}
+                      />
+                    ) : (
+                      ''
+                    )}
+                    {resultData.question.length ? (
+                      <SearchResultQnA
+                        data={sliceQuestionData}
+                        count={questionCount}
+                        receiveMenu={setSearchMenu}
+                        simple={'simple'}
+                      />
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                )}
+                <RankingContent data={popularProfileData[0].data} />
+              </>
+            ) : searchMenu === 2 ? (
+              <>
+                <SearchResultProfile data={resultData.openProfile} />
+                <RankingContent data={popularProfileData[0].data} />
+              </>
+            ) : searchMenu === 3 ? (
+              <>
+                <SearchResultPost data={resultData.free} type={'free'} />
+                <RankingContent data={popularProfileData[0].data} />
+              </>
+            ) : searchMenu === 4 ? (
+              <>
+                <SearchResultPost data={resultData.knowledge} type={'Knowledge'} />
+                <RankingContent data={popularProfileData[0].data} />
+              </>
+            ) : searchMenu === 5 ? (
+              <>
+                <SearchResultPost data={resultData.study} type={'study'} />
+                <RegisterQuestion type={'study'} />
+              </>
+            ) : searchMenu === 6 ? (
+              <>
+                <SearchResultQnA data={resultData.question} />
+                <RegisterQuestion type={'Q&A'} />
+              </>
+            ) : (
+              ''
+            )}
+          </SearchPageWrapper>
         </Style.Container>
       </SearchContext.Provider>
     </>
