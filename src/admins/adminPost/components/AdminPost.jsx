@@ -82,7 +82,7 @@ export const AdminPost = ({ keyword }) => {
                   <PostImage className='image'>
                     {post.Photos.length > 0 ? (
                       <img
-                        src={post.Photos[0].img_path}
+                        src={post.Photos[0].imgPath}
                         alt={'img'}
                         className='img-tag'
                         onError={(e) => (e.target.src = images[Math.floor((idx % 15) / 3)])}
@@ -102,7 +102,7 @@ export const AdminPost = ({ keyword }) => {
 
                 <PostInfoBlock className='writer view-cnt created-at'>
                   <span className='writer info six-one'>{post.User.name}</span>
-                  <span className='view-cnt info six-one'>조회수: {post.view_cnt}</span>
+                  <span className='view-cnt info six-one'>조회수: {post.viewCnt}</span>
                   <span className='created-at info six-one'>
                     작성일: {post.createdAt.slice(0, 10)}
                   </span>
