@@ -87,15 +87,15 @@ const AdminPostDetail = ({ postId }) => {
             </ul>
           </div>
         </div>
-        <p className='view'>조회 {data.view_cnt}</p>
+        <p className='view'>조회 {data.viewCnt}</p>
       </div>
 
       <div className='writer'>
         <div className='writer-img'>
-          {data.Photos[0]?.img_path !== null ? (
-            <img src={data.Photos[0]?.img_path} alt='작성자 프로필' />
+          {data.User.imgPath !== null ? (
+            <img src={data.User.imgPath} alt='작성자 프로필' />
           ) : (
-            <img src={UserProfile} alt='작성자 프로필' />
+            <img src={UserProfile} alt='작성자 대체 프로필' />
           )}
         </div>
         <div className='writer-info'>
@@ -111,8 +111,8 @@ const AdminPostDetail = ({ postId }) => {
         {data.Photos.length > 0 && (
           <ul className='content-img'>
             {data.Photos.map((image, idx) => (
-              <li key={idx + image.img_path}>
-                <img src={image.img_path} alt={image.origin_name} />
+              <li key={idx + image.imgPath}>
+                <img src={image.imgPath} alt={image.originName} />
               </li>
             ))}
           </ul>
@@ -135,7 +135,7 @@ const AdminPostDetail = ({ postId }) => {
           <CommentContentBlock key={comment.id}>
             <UserInfo>
               <p className='user-name'>{comment.User.name}</p>
-              <p className='create-at'>{comment.created_at.slice(0, 10)}</p>
+              <p className='create-at'>{comment.createdAt.slice(0, 10)}</p>
               <DeleteComment className='delete-btn' onClick={() => handleDeleteComment(comment.id)}>
                 삭제
               </DeleteComment>

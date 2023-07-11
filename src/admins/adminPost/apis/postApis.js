@@ -25,6 +25,10 @@ export const fetchReadPostInfoDetail = async (id) => {
   });
   const data = await response.json();
 
+  serverToClient(data);
+  serverToClient(data.User);
+  data.Photos.map((photo) => serverToClient(photo));
+  console.log(data);
   return data;
 };
 
