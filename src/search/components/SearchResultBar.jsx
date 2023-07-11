@@ -74,6 +74,9 @@ const Container = styled.div`
   .main-div {
     border-bottom: #cbd5e1 1px solid;
   }
+  @media (max-width: 480px) {
+    top: 6.7rem;
+  }
 `;
 const Content = styled.div`
   max-width: 1024px;
@@ -120,6 +123,19 @@ const Content = styled.div`
       margin-left: 2rem;
       p {
         font-size: 1.5rem;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    .sub-search-content {
+      input {
+        font-size: 1.8rem;
+        padding: 1.2rem;
+      }
+    }
+    .result-text-content {
+      p {
+        font-size: 1.4rem;
       }
     }
   }

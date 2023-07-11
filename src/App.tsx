@@ -44,7 +44,6 @@ const App = () => {
             <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
-                <Route path='/' exact element={<MainPage />} />
                 <Route path='/community/post/:category' element={<CommunityPage />} />
                 <Route path='/community/:board_id' element={<PostDetailPage />} />
                 <Route path='/search' element={<SearchPage />} />
@@ -52,6 +51,7 @@ const App = () => {
                 <Route path='/openprofile' element={<OpenProfilePage />} />
                 <Route path='/mypage' element={<MyPage />} />
                 <Route path='/nonmember' element={<NonmemberPage />} />
+                <Route path='/' element={<MainPage />} />
               </Route>
               <Route element={<LoginLayout />}>
                 <Route path='/login' element={<Login />} />
@@ -72,9 +72,9 @@ const App = () => {
                 <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
                 <Route path='/write' element={<PostWritePage />} />
               </Route>
-              <Route path='/admin/' element={<AdminLogIn />} exact />
-              <Route path='/admin/login' element={<AdminLogIn />} />
+              <Route path='/admin/' element={<AdminLogIn />} />
               <Route path='/admin/signin' element={<AdminSignIn />} />
+              <Route path='/admin/login' element={<AdminLogIn />} />
             </Routes>
           </Router>
         </React.StrictMode>

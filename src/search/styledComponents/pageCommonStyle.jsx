@@ -22,6 +22,9 @@ export const SearchPageWrapper = styled.main`
       align-items: center;
     }
   }
+  @media (max-width: 480px) {
+    margin: 21.7rem auto 0 auto;
+  }
 `;
 
 export const NoDataWrapper = styled.div`

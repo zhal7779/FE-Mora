@@ -16,6 +16,9 @@ export const ProfileWrapper = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
+  @media (max-width: 480px) {
+    margin-top: 21.7rem;
+  }
 `;
 export const NavContainer = styled.nav`
   z-index: 1;
@@ -41,7 +44,7 @@ export const NavContainer = styled.nav`
   .swiper-button-prev,
   .swiper-button-next {
     position: fixed;
-    top: 18.6rem;
+    top: 18.3rem;
     background-color: var(--main-white);
     padding: 2rem 0;
   }
@@ -59,13 +62,14 @@ export const NavContainer = styled.nav`
     top: 17rem;
     .content {
       max-width: 100%;
+
       display: flex;
       align-items: center;
       justify-content: center;
     }
   }
   @media (max-width: 480px) {
-    top: 17rem;
+    top: 16.7rem;
     .content {
       padding: 0 1.4rem;
     }
