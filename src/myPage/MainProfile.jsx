@@ -80,9 +80,11 @@ const MainProfile = () => {
             </div>
 
             <div className='buttons-container'>
-              <Style.ButtonLink to='/mypage/edit'>
-                <Button color='darkPurple' value='수정하기' />
-              </Style.ButtonLink>
+              <Button
+                color='darkPurple'
+                value='수정하기'
+                onClick={() => navigate('/mypage/edit')}
+              />
               <Button color='white' value='탈퇴하기' onClick={openModal} />
             </div>
           </div>

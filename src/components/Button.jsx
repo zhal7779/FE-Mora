@@ -38,7 +38,7 @@ const BaseButton = styled.button`
   /* width: 9.8rem; */
   width: auto;
   height: 3.8rem;
-  padding: 0.7rem 1.5rem 0.9rem 1.5rem;
+  padding: 0.7rem 2rem 0.9rem 2rem;
   border-radius: 0.7rem;
   font-style: normal;
   font-weight: 700;
@@ -72,5 +72,5 @@ const DarkPurpleButton = styled(BaseButton)``;
 const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
   border: 1px solid #b9b9b9;
-  padding: 0.6rem 1.5rem 0.9rem 1.5rem;
+  padding: 0.6rem 2rem 0.9rem 2rem;
 `;
