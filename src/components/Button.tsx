@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const Button = ({ value, color, onClick }) => {
+type ButtonProps = {
+  value: string;
+  color: string;
+  onClick?: any;
+};
+
+const Button = ({ value, color, onClick }: ButtonProps) => {
   let ButtonComponent;
 
   switch (color) {
@@ -48,23 +54,39 @@ const BaseButton = styled.button`
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
   box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
   background: ${({ color }) =>
-    color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};
+    color === 'darkPurple'
+      ? '#7353ea'
+      : color === 'lightPurple'
+      ? '#d6c9ff'
+      : '#ffffff'};
 
   &:hover {
     background: ${({ color }) =>
-      color === 'darkPurple' ? '#5e3de4' : color === 'lightPurple' ? '#c5b4fc' : '#f1f1f1'};
+      color === 'darkPurple'
+        ? '#5e3de4'
+        : color === 'lightPurple'
+        ? '#c5b4fc'
+        : '#f1f1f1'};
     transition: all 0.2s ease-in-out;
   }
 
   &:not(:hover) {
     background: ${({ color }) =>
-      color === 'darkPurple' ? '#7353ea' : color === 'lightPurple' ? '#d6c9ff' : '#ffffff'};
+      color === 'darkPurple'
+        ? '#7353ea'
+        : color === 'lightPurple'
+        ? '#d6c9ff'
+        : '#ffffff'};
     transition: all 0.2s ease-in-out;
   }
 
   &:active {
     background: ${({ color }) =>
-      color === 'darkPurple' ? '#532eda' : color === 'lightPurple' ? '#b39cfc' : '#eaeaea'};
+      color === 'darkPurple'
+        ? '#532eda'
+        : color === 'lightPurple'
+        ? '#b39cfc'
+        : '#eaeaea'};
   }
 `;
 
