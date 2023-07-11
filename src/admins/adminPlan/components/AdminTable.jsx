@@ -28,22 +28,9 @@ const AdminTable = () => {
     setEnrollModal(!enrollModal);
   };
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading } = useQuery(
     ['admin', 'plan', 'get', yearMonth],
-    async () => await fetchReadPlanInfo(yearMonth),
-    {
-      select: (data) => {
-        const newPlans = data.map((plan) => {
-          const newPlan = { ...plan };
-          newPlan.startDate = plan.start_date;
-          newPlan.endDate = plan.end_date;
-          delete newPlan.start_date;
-          delete newPlan.end_date;
-          return newPlan;
-        });
-        return newPlans;
-      },
-    }
+    async () => await fetchReadPlanInfo(yearMonth)
   );
 
   if (isLoading) return <LoadingComponent search={'2023-06'} title={'일정'} />;
@@ -71,12 +58,6 @@ const AdminTable = () => {
 
       <AdminTableHead />
       <AdminTableBody plans={data} />
-
-      {/* <PageNation
-        totalPages={data.totalPages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      /> */}
     </>
   );
 };

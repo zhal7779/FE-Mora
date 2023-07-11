@@ -56,8 +56,8 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
     setUpdatable(false);
   };
 
-  const { data, isLoading, error } = useQuery(
-    ['admin', 'plan', 'detail', 'get'],
+  const { data, isLoading } = useQuery(
+    ['admin', 'plan', 'detail', 'get', id],
     () => fetchReadPlanInfoDetail(id),
     {
       onSuccess(data) {
@@ -66,10 +66,9 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
           newLinks += `${link.url}\n`;
         });
         setContents({
-          title: data.title,
-          content: data.content,
-          startDate: data.start_date.slice(0, 10),
-          endDate: data.end_date.slice(0, 10),
+          ...data,
+          startDate: data.startDate.slice(0, 10),
+          endDate: data.endDate.slice(0, 10),
           links: newLinks,
         });
       },
@@ -86,7 +85,6 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
   );
 
   if (isLoading) return <span>로딩중...</span>;
-
   if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
   return (

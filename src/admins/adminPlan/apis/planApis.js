@@ -1,4 +1,5 @@
 import { changePlanForm } from '../utils/clientToServer';
+import { serverToClient } from '../../adminCommon/utils/variableName';
 
 const domainPort = process.env.REACT_APP_URL;
 
@@ -10,6 +11,7 @@ export const fetchReadPlanInfo = async (yearMonth) => {
   });
   const data = await response.json();
 
+  data.map((obj) => serverToClient(obj));
   return data;
 };
 
@@ -20,6 +22,7 @@ export const fetchReadPlanInfoDetail = async (id) => {
   });
   const data = await response.json();
 
+  serverToClient(data);
   return data;
 };
 
@@ -27,7 +30,6 @@ export const fetchReadPlanInfoDetail = async (id) => {
 export const fetchCreatePlan = async (newPlan) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const plan = changePlanForm(newPlan);
-  console.log(plan);
 
   const response = await fetch(`${domainPort}/api/plans`, {
     method: 'POST',
@@ -46,7 +48,6 @@ export const fetchCreatePlan = async (newPlan) => {
 export const fetchUpdatePlan = async (id, newPlan) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const plan = changePlanForm(newPlan);
-
   const response = await fetch(`${domainPort}/api/plans/${id}`, {
     method: 'PATCH',
     headers: {
