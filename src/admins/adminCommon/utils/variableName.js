@@ -11,7 +11,7 @@ export const snakeToCamel = (obj) => {
   });
 };
 
-export const clientToServer = (obj) => {
+export const camelToSnake = (obj) => {
   Object.keys(obj).map((keyName) => {
     const matchedKeyName = keyName.match(/[A-Z]/g);
 
