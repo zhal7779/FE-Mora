@@ -1,3 +1,5 @@
+import { serverToClient } from '../../adminCommon/utils/variableName';
+
 const domainPort = process.env.REACT_APP_URL;
 
 // READ
@@ -10,6 +12,9 @@ export const fetchReadPostInfo = async ({ page, view, content }) => {
     }
   );
   const data = await response.json();
+
+  data.objArr.map((obj) => serverToClient(obj));
+  data.objArr.map((obj) => obj.Photos.map((photo) => serverToClient(photo)));
   return data;
 };
 
