@@ -34,7 +34,7 @@ const Header = () => {
       setName(decodedToken.name);
       setToken(sessionToken);
     } else if (pathname !== '/admin/signin') {
-      // navigate('/admin/login');
+      navigate('/admin/login');
     }
   }, []);
 

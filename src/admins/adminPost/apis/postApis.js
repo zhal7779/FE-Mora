@@ -28,7 +28,7 @@ export const fetchReadPostInfoDetail = async (id) => {
   snakeToCamel(data);
   snakeToCamel(data.User);
   data.Photos.map((photo) => snakeToCamel(photo));
-  console.log(data);
+
   return data;
 };
 

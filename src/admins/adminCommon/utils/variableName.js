@@ -15,7 +15,6 @@ export const camelToSnake = (obj) => {
   Object.keys(obj).map((keyName) => {
     const matchedKeyName = keyName.match(/[A-Z]/g);
 
-    // mysql 자동 생성 변수라서 바꿔주면 안 됨.
     if (matchedKeyName && matchedKeyName !== 'createdAt' && matchedKeyName !== 'updatedAt') {
       const toChangeKeyName = keyName.replace(/[A-Z]/g, (match) => '_' + match[0].toLowerCase());
 
