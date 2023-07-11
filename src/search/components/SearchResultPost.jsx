@@ -62,9 +62,9 @@ const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
                     <KeywordHighlight content={item.content} keyword={keyword} />
                   </p>
                   <div className='hashtags'>
-                    {item.Hashtags.map((hashtag, index) => (
-                      <h3 key={index}>#{hashtag.title}</h3>
-                    ))}
+                    {item.Hashtags.map((hashtag, index) =>
+                      hashtag && hashtag.length > 0 ? <h3 key={index}>#{hashtag}</h3> : null
+                    )}
                   </div>
                   <div className='sub_content'>
                     <p>댓글 {item.comment_cnt}</p>

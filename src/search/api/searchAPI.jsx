@@ -1,4 +1,4 @@
-const token = sessionStorage.getItem('userToken');
+const Token = sessionStorage.getItem('userToken');
 
 // 게시글 top10 조회
 export const fetchPopular = async () => {
@@ -33,7 +33,7 @@ export const fetchFreeSearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Token}`,
       },
     }
   );
@@ -48,7 +48,7 @@ export const fetchKnowledgeSearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Token}`,
       },
     }
   );
@@ -64,7 +64,7 @@ export const fetchStudySearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Token}`,
       },
     }
   );
@@ -80,7 +80,7 @@ export const fetchQuestionSearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Token}`,
       },
     }
   );

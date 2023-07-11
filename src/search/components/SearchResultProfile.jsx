@@ -124,4 +124,11 @@ const Content = styled.div`
     color: #94a3b8;
   }
   border-bottom: 1px #cbd5e1 solid;
+  @media (max-width: 430px) {
+    flex-direction: column;
+    gap: 2rem;
+    .button_content {
+      margin-left: 6.2rem;
+    }
+  }
 `;

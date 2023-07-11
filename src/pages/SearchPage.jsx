@@ -39,11 +39,11 @@ const SearchPage = () => {
 
   const menuItems = [
     { id: 1, text: '전체' },
-    { id: 2, text: '프로필' },
+    { id: 2, text: '오픈 프로필' },
     { id: 3, text: '자유 게시판' },
     { id: 4, text: '지식 공유' },
     { id: 5, text: '스터디 모집' },
-    { id: 6, text: '레이서 Q&A' },
+    { id: 6, text: 'Q&A' },
   ];
 
   const [searchMenu, setSearchMenu] = useState(() => {
@@ -102,15 +102,16 @@ const SearchPage = () => {
   ]);
   //데이터 개수
   const openProfileCount = popularProfileData[1]?.data?.length || 0;
-  const freeCount = freeKnowledgeData[0]?.data?.objArr?.length || 0;
-  const knowledgeCount = freeKnowledgeData[1]?.data?.objArr?.length || 0;
-  const studyCount = studyQuestionData[0]?.data?.objArr?.length || 0;
-  const questionCount = studyQuestionData[1]?.data?.objArr?.length || 0;
-  const totalCount = freeCount + knowledgeCount + studyCount + questionCount;
+  const freeCount = freeKnowledgeData[0]?.data?.totalItems || 0;
+  const knowledgeCount = freeKnowledgeData[1]?.data?.totalItems || 0;
+  const studyCount = studyQuestionData[0]?.data?.totalItems || 0;
+  const questionCount = studyQuestionData[1]?.data?.totalItems || 0;
+  const totalCount = openProfileCount + freeCount + knowledgeCount + studyCount + questionCount;
+
   // SearchResultBar에 검색결과 ${count}건에 전달해줄 데이터
   const countArr = {
-    openProfile: openProfileCount,
     total: totalCount,
+    openProfile: openProfileCount,
     free: freeCount,
     knowledge: knowledgeCount,
     study: studyCount,
@@ -124,7 +125,6 @@ const SearchPage = () => {
     study: studyCount > 0 ? studyQuestionData[0].data.objArr : [],
     question: questionCount > 0 ? studyQuestionData[1].data.objArr : [],
   };
-  console.log(resultData);
 
   //전달할 데이터 잘라주는 함수, 전체페이지 보여주는 데이터
   const sliceArray = (array, start, end) => {

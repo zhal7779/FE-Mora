@@ -47,7 +47,7 @@ const SearchResultBar = ({ handleSubSearch, menu, count }) => {
             {menu === 1 ? (
               <p> {count.total}건</p>
             ) : menu === 2 ? (
-              <p> {count.free}건</p>
+              <p> {count.openProfile}건</p>
             ) : menu === 3 ? (
               <p>{count.free}건</p>
             ) : menu === 4 ? (
