@@ -49,7 +49,7 @@ export const RecommendContainer = styled.section`
 
   .recommend-title {
     margin-bottom: 32px;
-    height: 36px;
+    height: 33px;
     font-weight: 600;
     font-size: 1.6rem;
     line-height: 1.9rem;
