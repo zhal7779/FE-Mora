@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/PostDetailStyle';
 import IconLike from '../assets/icons/icon-like.svg';
