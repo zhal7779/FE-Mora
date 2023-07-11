@@ -1,4 +1,4 @@
-export const serverToClient = (obj) => {
+export const snakeToCamel = (obj) => {
   Object.keys(obj).map((keyName) => {
     const matchedKeyName = keyName.match(/_[a-z]/g);
 

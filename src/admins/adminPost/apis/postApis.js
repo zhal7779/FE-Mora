@@ -1,4 +1,4 @@
-import { serverToClient } from '../../adminCommon/utils/variableName';
+import { snakeToCamel } from '../../adminCommon/utils/variableName';
 
 const domainPort = process.env.REACT_APP_URL;
 
@@ -13,8 +13,8 @@ export const fetchReadPostInfo = async ({ page, view, content }) => {
   );
   const data = await response.json();
 
-  data.objArr.map((obj) => serverToClient(obj));
-  data.objArr.map((obj) => obj.Photos.map((photo) => serverToClient(photo)));
+  data.objArr.map((obj) => snakeToCamel(obj));
+  data.objArr.map((obj) => obj.Photos.map((photo) => snakeToCamel(photo)));
   return data;
 };
 
@@ -25,9 +25,9 @@ export const fetchReadPostInfoDetail = async (id) => {
   });
   const data = await response.json();
 
-  serverToClient(data);
-  serverToClient(data.User);
-  data.Photos.map((photo) => serverToClient(photo));
+  snakeToCamel(data);
+  snakeToCamel(data.User);
+  data.Photos.map((photo) => snakeToCamel(photo));
   console.log(data);
   return data;
 };

@@ -1,5 +1,5 @@
 import { changePlanForm } from '../utils/clientToServer';
-import { serverToClient } from '../../adminCommon/utils/variableName';
+import { snakeToCamel } from '../../adminCommon/utils/variableName';
 
 const domainPort = process.env.REACT_APP_URL;
 
@@ -11,7 +11,7 @@ export const fetchReadPlanInfo = async (yearMonth) => {
   });
   const data = await response.json();
 
-  data.map((obj) => serverToClient(obj));
+  data.map((obj) => snakeToCamel(obj));
   return data;
 };
 
@@ -22,7 +22,7 @@ export const fetchReadPlanInfoDetail = async (id) => {
   });
   const data = await response.json();
 
-  serverToClient(data);
+  snakeToCamel(data);
   return data;
 };
 
