@@ -1,5 +1,5 @@
-import PostDetail from '../postDetail/PostDetail';
-import PostComment from './../postDetail/PostComment';
+import PostDetail from '../postDetail/components/PostDetail';
+import PostComment from '../postDetail/components/PostComment';
 import { useParams } from 'react-router-dom';
 
 const PostDetailPage = () => {

@@ -1,7 +1,7 @@
-import HeaderWrite from '../postWrite/HeaderWrite';
-import PostWrite from '../postWrite/PostWrite';
-import ImageWrite from '../postWrite/ImageWrite';
-import HashtagWrite from '../postWrite/HashtagWrite';
+import HeaderWrite from '../postWrite/components/HeaderWrite';
+import PostWrite from '../postWrite/components/PostWrite';
+import ImageWrite from '../postWrite/components/ImageWrite';
+import HashtagWrite from '../postWrite/components/HashtagWrite';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
