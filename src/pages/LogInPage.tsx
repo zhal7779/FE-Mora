@@ -14,7 +14,7 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [showLittleText, setShowLittleText] = useState(false);
   const navigate = useNavigate();
-  const emailInputRef = useRef(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   // 로그인 POST 요청 Mutation 실행
   const handleLogin = async () => {

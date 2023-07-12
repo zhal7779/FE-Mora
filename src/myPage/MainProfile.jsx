@@ -13,14 +13,24 @@ const URL = process.env.REACT_APP_URL;
 const MainProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState('');
+  const userToken = sessionStorage.getItem('userToken');
   const navigate = useNavigate();
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
+
+  // 유저 토큰이 없으면 로그인 페이지로
+  useEffect(() => {
+    if (!userToken) {
+      navigate('/login');
+    }
+  }, []);
 
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch(`${URL}/api/users/mypage`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
     }).then((response) => response.json())
   );
 
@@ -40,10 +50,7 @@ const MainProfile = () => {
 
     const response = await fetch(url, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
       body: JSON.stringify({ password }),
     });
 
@@ -62,13 +69,6 @@ const MainProfile = () => {
       console.log(error);
     }
   };
-
-  // 유저 토큰이 없으면 로그인 페이지로
-  useEffect(() => {
-    if (!sessionStorage.getItem('userToken')) {
-      navigate('/login');
-    }
-  }, []);
 
   return (
     <Style.introContainer>

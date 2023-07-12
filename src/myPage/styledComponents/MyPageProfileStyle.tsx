@@ -89,6 +89,9 @@ export const introContainer = styled.section`
 `;
 
 export const ListContainer = styled.section`
+  width: 100%;
+  padding: 0 2rem;
+
   @media (max-width: 768px) {
     padding: 3.5rem 2rem;
   }

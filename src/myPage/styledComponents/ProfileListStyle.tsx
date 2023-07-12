@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SkillButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 
   .badge {
     position: relative;
@@ -21,7 +21,7 @@ export const SkillButtonContainer = styled.div`
 export const CareerButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 
   .badge {
     position: relative;
@@ -43,7 +43,7 @@ export const CareerButtonContainer = styled.div`
 export const LinkButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 
   .badge {
     position: relative;

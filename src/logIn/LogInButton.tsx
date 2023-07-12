@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const LoginButton = ({ value, color, onClick }) => {
+interface LoginButtonProps {
+  value: string;
+  color: string;
+  onClick: () => void;
+}
+
+const LoginButton = ({ value, color, onClick }: LoginButtonProps) => {
   let ButtonComponent;
 
   switch (color) {

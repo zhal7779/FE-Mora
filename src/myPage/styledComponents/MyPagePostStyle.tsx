@@ -1,13 +1,9 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const ListContainer = styled.section`
   width: 100%;
-  padding: 34px 24px 60px 24px;
+  padding: 3.5rem 2rem;
 
-  @media (max-width: 768px) {
-    padding: 34px 20px 60px 20px;
-  }
   h2 {
     padding: 3.75rem 0;
     font-weight: 600;
@@ -15,9 +11,11 @@ export const ListContainer = styled.section`
     line-height: 2.9rem;
   }
   ul {
-    padding-bottom: 100px;
+    width: 100%;
+    padding-bottom: 10rem;
   }
   li {
+    width: 100%;
     border: 1px solid #e0e0e0;
     border-radius: 1rem;
     margin-bottom: 2rem;
@@ -109,11 +107,4 @@ export const ListContainer = styled.section`
 export const PostContainer = styled.section`
   display: flex;
   flex-direction: column;
-  min-width: 768px;
-  max-width: 738px;
-`;
-
-export const ButtonLink = styled(Link)`
-  width: 10rem;
-  height: 4rem;
 `;

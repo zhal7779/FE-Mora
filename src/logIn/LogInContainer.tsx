@@ -1,7 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const LoginContainer = ({ children }) => {
+interface LoginContainerProps {
+  children: React.ReactNode;
+}
+
+const LoginContainer = ({ children }: LoginContainerProps) => {
   return <StyledLoginContainer>{children}</StyledLoginContainer>;
 };
 

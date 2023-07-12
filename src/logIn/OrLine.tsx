@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface OrLineTextProps {
+  text: string;
+}
+
 const OrLine = styled.div`
   border-bottom: 1px solid #bdbdbd;
   width: 35rem;
@@ -16,7 +20,7 @@ const OrText = styled.span`
   padding: 0 1rem 0 1rem;
 `;
 
-const OrLineText = ({ text }) => {
+const OrLineText = ({ text }: OrLineTextProps) => {
   return (
     <>
       <OrLine />
