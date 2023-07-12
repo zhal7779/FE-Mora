@@ -20,7 +20,7 @@ const moveDiagonallyMobile = keyframes`
   }
 
   to {
-    transform: translate(85%, 0%) scale(1.3);
+    transform: translate(80%, 0%) scale(1.2);
     opacity: 1;  
   }
 
@@ -110,18 +110,18 @@ export const BannerContainer = styled.section`
   }
 
   @media (max-width: 768px) {
-    .main-slogan {
-      height: 100vh;
+    height: calc(100vh - 60px);
 
+    .main-slogan {
       &-side {
-        padding-top: 220px;
+        padding-top: 150px;
         font-size: 4.5rem;
         line-height: 6.1rem;
       }
     }
 
     .main-image {
-      transform: translate(85%, 0%) scale(1.3);
+      transform: translate(80%, 0%) scale(1.2);
       animation: ${moveDiagonallyMobile} 1.6s ease-in-out;
     }
   }

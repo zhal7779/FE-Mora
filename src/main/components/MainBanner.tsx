@@ -1,8 +1,8 @@
-import * as Style from './styledComponents/MainBannerStyle';
-import BannerImg from '../assets/images/main-banner-img.png';
-import Button from '../components/Button';
+import * as Style from '../styledComponents/MainBannerStyle';
+import BannerImg from '../../assets/images/main-banner-img.png';
+import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
-import BannerBackgroundImg from '../assets/images/background-effect-img.svg';
+import BannerBackgroundImg from '../../assets/images/background-effect-img.svg';
 
 const MainBanner = () => {
   return (
