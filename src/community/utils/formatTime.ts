@@ -1,8 +1,8 @@
-const formatTime = time => {
+const formatTime = (time: string) => {
   const date = new Date(time);
   const now = new Date();
 
-  const diffMilliseconds = now - date;
+  const diffMilliseconds = now.getTime() - date.getTime();
   const diffSeconds = Math.floor(diffMilliseconds / 1000);
   const diffMinutes = Math.floor(diffSeconds / 60);
   const diffHours = Math.floor(diffMinutes / 60);
@@ -21,7 +21,11 @@ const formatTime = time => {
     return `${diffDays}일 전`;
   }
 
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
   return date.toLocaleDateString('ko-KR', options);
 };
 
