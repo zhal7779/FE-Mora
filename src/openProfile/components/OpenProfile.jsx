@@ -23,7 +23,6 @@ const OpenProfile = ({ registerstatus }) => {
           ? lastPage.currentPage + 1
           : undefined;
       },
-      // staleTime: 500,
       keepPreviousData: true,
     }
   );

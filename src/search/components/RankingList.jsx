@@ -47,6 +47,7 @@ const Content = styled.div`
     height: 4rem;
     border-radius: 50%;
     object-fit: cover;
+    flex-shrink: 0;
   }
 
   div {
@@ -57,7 +58,7 @@ const Content = styled.div`
     font-weight: 600;
     font-size: 1.4rem;
     cursor: pointer;
-    width: 15.9rem;
+    width: 14.8rem;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;
@@ -80,7 +81,7 @@ const Content = styled.div`
       font-weight: 700;
       font-size: 1rem;
       color: #605ea0;
-      width: 11rem;
+      width: 10rem;
       text-overflow: ellipsis;
       overflow: hidden;
       word-break: break-word;
@@ -95,7 +96,12 @@ const Content = styled.div`
   }
   @media (max-width: 768px) {
     .title {
-      width: 100%;
+      width: auto;
+    }
+    .text_content {
+      p {
+        width: auto;
+      }
     }
   }
 
