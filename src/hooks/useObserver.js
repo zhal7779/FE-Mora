@@ -11,7 +11,7 @@ export const useObserver = (observerRef, fetchNextPage, hasNextPage) => {
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1,
+        threshold: 1,
       }
     );
 

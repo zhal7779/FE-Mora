@@ -20,8 +20,8 @@ const RankingContent = ({ data }) => {
         <>
           <TitleContent>
             <h5>모여라 레이서 TOP10🔥</h5>
-            <p>지난 24시간 동안</p>
-            <p>가장 인기가 좋았던 게시물을 만나보세요.</p>
+            <p>모여라 레이서에서</p>
+            <p>가장 인기가 많은 게시물을 만나보세요.</p>
           </TitleContent>
           <RankingList data={data} />
         </>
@@ -30,8 +30,8 @@ const RankingContent = ({ data }) => {
           {isOpenModal && <RankingModal data={data} modalOpenOrClose={modalOpenOrClose} />}
           <TitleContent>
             <h5>모여라 레이서 TOP10🔥</h5>
-            <p>지난 24시간 동안</p>
-            <p>가장 인기가 좋았던 게시물을 만나보세요.</p>
+            <p>모여라 레이서에서</p>
+            <p>가장 인기가 많은 게시물을 만나보세요.</p>
           </TitleContent>
           <div className='button-content'>
             <Button value='인기게시글 보기' color='darkPurple' onClick={modalOpenOrClose} />

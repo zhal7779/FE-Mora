@@ -2,20 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { ChatButton } from '../../openProfile/styledComponents/OpenProfileStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
-import * as Style from '../styledComponents/AddView';
+import * as Style from '../styledComponents/SearchPostStyle';
 import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
+const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
   //검색후 데이터에 키워드 하이라이트 줄 변수
   const keyword = useContext(SearchContext);
 
   //모두보기 클릭시 메뉴 2번 프로필 보기로 이동
   const handleAllView = () => {
-    receiveMenu(2);
+    receiveMenu('openProfile');
   };
+  console.lo;
 
   return (
     <Container>
@@ -23,7 +24,7 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
         <NoData />
       ) : (
         <>
-          {data && simple === 'simple' && (
+          {data && type === 'simple' && (
             <Style.AddView>
               <div>
                 <p className='title'>프로필</p>
@@ -43,7 +44,9 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
                     <img className='img-content' src={item.img_path} alt='프로필'></img>
                   </div>
                   <div className='text_content'>
-                    <h4>{item.User.name}</h4>
+                    <h4>
+                      <KeywordHighlight content={item.User.name} keyword={keyword} />
+                    </h4>
                     <h5>
                       <KeywordHighlight content={item.position} keyword={keyword} />
                     </h5>
@@ -124,4 +127,11 @@ const Content = styled.div`
     color: #94a3b8;
   }
   border-bottom: 1px #cbd5e1 solid;
+  @media (max-width: 430px) {
+    flex-direction: column;
+    gap: 2rem;
+    .button_content {
+      margin-left: 6.2rem;
+    }
+  }
 `;

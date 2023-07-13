@@ -44,15 +44,15 @@ const SearchResultBar = ({ handleSubSearch, menu, count }) => {
         <Content>
           <div className='result-text-content'>
             <p>{resultKeyword} 검색결과 </p>
-            {menu === 1 ? (
+            {menu === 'all' ? (
               <p> {count.total}건</p>
-            ) : menu === 2 ? (
-              <p> {count.free}건</p>
-            ) : menu === 3 ? (
+            ) : menu === 'openProfile' ? (
+              <p> {count.openProfile}건</p>
+            ) : menu === 'free' ? (
               <p>{count.free}건</p>
-            ) : menu === 4 ? (
+            ) : menu === 'Knowledge' ? (
               <p>{count.knowledge}건</p>
-            ) : menu === 5 ? (
+            ) : menu === 'study' ? (
               <p>{count.study}건</p>
             ) : (
               <p>{count.question}건</p>
@@ -73,6 +73,9 @@ const Container = styled.div`
   background: var(--main-white);
   .main-div {
     border-bottom: #cbd5e1 1px solid;
+  }
+  @media (max-width: 480px) {
+    top: 6.7rem;
   }
 `;
 const Content = styled.div`
@@ -120,6 +123,19 @@ const Content = styled.div`
       margin-left: 2rem;
       p {
         font-size: 1.5rem;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    .sub-search-content {
+      input {
+        font-size: 1.8rem;
+        padding: 1.2rem;
+      }
+    }
+    .result-text-content {
+      p {
+        font-size: 1.4rem;
       }
     }
   }
