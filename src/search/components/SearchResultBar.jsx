@@ -44,15 +44,15 @@ const SearchResultBar = ({ handleSubSearch, menu, count }) => {
         <Content>
           <div className='result-text-content'>
             <p>{resultKeyword} 검색결과 </p>
-            {menu === 1 ? (
+            {menu === 'all' ? (
               <p> {count.total}건</p>
-            ) : menu === 2 ? (
+            ) : menu === 'openProfile' ? (
               <p> {count.openProfile}건</p>
-            ) : menu === 3 ? (
+            ) : menu === 'free' ? (
               <p>{count.free}건</p>
-            ) : menu === 4 ? (
+            ) : menu === 'Knowledge' ? (
               <p>{count.knowledge}건</p>
-            ) : menu === 5 ? (
+            ) : menu === 'study' ? (
               <p>{count.study}건</p>
             ) : (
               <p>{count.question}건</p>

@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { ChatButton } from '../../openProfile/styledComponents/OpenProfileStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
-import * as Style from '../styledComponents/AddView';
+import * as Style from '../styledComponents/SearchPostStyle';
 import { KeywordHighlight } from './KeywordHighlight';
 import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
+const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
   //검색후 데이터에 키워드 하이라이트 줄 변수
   const keyword = useContext(SearchContext);
 
@@ -23,7 +23,7 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
         <NoData />
       ) : (
         <>
-          {data && simple === 'simple' && (
+          {data && type === 'simple' && (
             <Style.AddView>
               <div>
                 <p className='title'>프로필</p>
