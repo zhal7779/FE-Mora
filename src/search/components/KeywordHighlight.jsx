@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 
-//검색 키워드 하이라이팅 컴포넌트
+// 검색 키워드 하이라이팅 컴포넌트
 export const KeywordHighlight = ({ content, keyword }) => {
-  return content.includes(keyword) ? (
+  const regex = new RegExp(`(${keyword})`, 'gi');
+  const parts = content.split(regex);
+
+  return (
     <span>
-      {content.split(keyword)[0]}
-      <Highlight>{keyword}</Highlight>
-      {content.split(keyword)[1]}
+      {parts.map((part, index) =>
+        part.toLowerCase() === keyword.toLowerCase() ? (
+          <Highlight key={index}>{part}</Highlight>
+        ) : (
+          part
+        )
+      )}
     </span>
-  ) : (
-    <span>{content}</span>
   );
 };
 

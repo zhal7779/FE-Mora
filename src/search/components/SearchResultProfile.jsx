@@ -16,6 +16,7 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
   const handleAllView = () => {
     receiveMenu('openProfile');
   };
+  console.lo;
 
   return (
     <Container>
@@ -43,7 +44,9 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
                     <img className='img-content' src={item.img_path} alt='프로필'></img>
                   </div>
                   <div className='text_content'>
-                    <h4>{item.User.name}</h4>
+                    <h4>
+                      <KeywordHighlight content={item.User.name} keyword={keyword} />
+                    </h4>
                     <h5>
                       <KeywordHighlight content={item.position} keyword={keyword} />
                     </h5>
