@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const Button = ({ value, color, onClick }) => {
+interface LoginButtonProps {
+  value: string;
+  color: string;
+  onClick: () => void;
+}
+
+const LoginButton = ({ value, color, onClick }: LoginButtonProps) => {
   let ButtonComponent;
 
   switch (color) {
@@ -17,33 +23,27 @@ const Button = ({ value, color, onClick }) => {
       ButtonComponent = DarkPurpleButton;
       break;
   }
-  // 이렇게 props 적용해서 쓰기
-  // <Button value='버튼 안 내용' color='lightPurple' />
-  // <Button value='팀버튼 입니다' color='darkPurple' />
-  // <Button value='벤자민 버튼 입니다' color='white' />
 
   return (
-    <div>
-      <ButtonComponent onClick={onClick} color={color}>
-        {value}
-      </ButtonComponent>
-    </div>
+    <ButtonComponent onClick={onClick} color={color}>
+      {value}
+    </ButtonComponent>
   );
 };
 
-export default Button;
+export default LoginButton;
 
 const BaseButton = styled.button`
   display: inline-block;
-  /* width: 9.8rem; */
-  width: auto;
-  height: 3.8rem;
-  padding: 0.7rem 1.5rem 0.9rem 1.5rem;
-  border-radius: 0.7rem;
+  width: 35.2rem;
+  height: 48px;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1.2rem;
   font-style: normal;
-  font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 2.2rem;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
   text-align: center;
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
   box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
@@ -67,10 +67,10 @@ const BaseButton = styled.button`
       color === 'darkPurple' ? '#532eda' : color === 'lightPurple' ? '#b39cfc' : '#eaeaea'};
   }
 `;
-
 const DarkPurpleButton = styled(BaseButton)``;
 const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
-  border: 1px solid #b9b9b9;
-  padding: 0.6rem 1.5rem 0.9rem 1.5rem;
+  border: 1px solid #424242;
+  padding: 8px 21px 9px 21px;
+  margin-bottom: 1.5rem;
 `;

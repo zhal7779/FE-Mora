@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const LoginButton = ({ value, color, onClick }) => {
+interface ButtonProps {
+  value: string;
+  color: 'darkPurple' | 'lightPurple' | 'white';
+  onClick?: () => void;
+}
+
+const Button = ({ value, color, onClick }: ButtonProps) => {
   let ButtonComponent;
 
   switch (color) {
@@ -19,25 +25,27 @@ const LoginButton = ({ value, color, onClick }) => {
   }
 
   return (
-    <ButtonComponent onClick={onClick} color={color}>
-      {value}
-    </ButtonComponent>
+    <div>
+      <ButtonComponent onClick={onClick} color={color}>
+        {value}
+      </ButtonComponent>
+    </div>
   );
 };
 
-export default LoginButton;
+export default Button;
 
 const BaseButton = styled.button`
   display: inline-block;
-  width: 35.2rem;
-  height: 48px;
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
-  border-radius: 1.2rem;
+  /* width: 9.8rem; */
+  width: auto;
+  height: 3.8rem;
+  padding: 0.7rem 2rem 0.9rem 2rem;
+  border-radius: 0.7rem;
   font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
   text-align: center;
   color: ${({ color }) => (color === 'white' ? '#242424' : '#ffffff')};
   box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
@@ -61,10 +69,10 @@ const BaseButton = styled.button`
       color === 'darkPurple' ? '#532eda' : color === 'lightPurple' ? '#b39cfc' : '#eaeaea'};
   }
 `;
+
 const DarkPurpleButton = styled(BaseButton)``;
 const LightPurpleButton = styled(BaseButton)``;
 const WhiteButton = styled(BaseButton)`
-  border: 1px solid #424242;
-  padding: 8px 21px 9px 21px;
-  margin-bottom: 1.5rem;
+  border: 1px solid #b9b9b9;
+  padding: 0.6rem 2rem 0.9rem 2rem;
 `;

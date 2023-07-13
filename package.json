@@ -14,8 +14,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.4.1",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
     "date-fns": "^2.30.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
@@ -31,8 +29,14 @@
     "styled-components": "^5.3.11",
     "sweetalert2": "^11.7.12",
     "swiper": "^10.0.3",
+<<<<<<< HEAD
     "typescript": "^4.5.2",
+=======
+>>>>>>> a356ee7f7ce0e4a35ae28f9b207ceafea7e98951
     "web-vitals": "^2.1.4"
+  },
+  "overrides": {
+    "typescript": "^5.1.6"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,6 +57,10 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.8.8"
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@types/styled-components": "^5.1.26",
+    "prettier": "^2.8.8",
+    "typescript": "^5.1.6"
   }
 }

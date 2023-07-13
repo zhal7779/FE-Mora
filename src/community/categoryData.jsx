@@ -16,7 +16,7 @@ export const categories = [
   },
   {
     id: 'question',
-    name: '레이서 Q&A',
+    name: 'Q&A',
     icon: require('../assets/icons/icon-category04.svg').default
   }
 ];

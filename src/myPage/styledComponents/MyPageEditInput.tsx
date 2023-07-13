@@ -1,6 +1,22 @@
 import styled from 'styled-components';
 
-const MyPageEditInput = ({ title, type, placeholder, name, onChange, value }) => {
+interface MyPageEditInputProps {
+  title: string;
+  type: string;
+  placeholder: string;
+  name: string;
+  onChange: () => void;
+  value: string;
+}
+
+const MyPageEditInput = ({
+  title,
+  type,
+  placeholder,
+  name,
+  onChange,
+  value,
+}: MyPageEditInputProps) => {
   return (
     <MyPageEditInputContainer>
       <MyPageEditInputText>{title}</MyPageEditInputText>

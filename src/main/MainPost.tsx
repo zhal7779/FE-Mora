@@ -1,23 +1,37 @@
 import * as Style from './styledComponents/MainPostStyle';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { fetchMainPosts } from './api/apis';
 import Swal from 'sweetalert2';
-const BASE_URL = process.env.REACT_APP_URL;
+
+type DataType = {
+  id: number;
+  category: string;
+  title: string;
+  content: string;
+  writer: string;
+  like_cnt: number;
+  view_cnt: number;
+  comment_cnt: number;
+  updatedAt: string;
+  createdAt: string;
+  User: UserType;
+  Photos: string;
+  Hashtags: string[];
+};
+
+type UserType = {
+  name: string;
+  email: string;
+  position: string;
+  generation: string;
+  img_path: string;
+};
 
 const MainPost = () => {
   const navigate = useNavigate();
-  const fetchMainPosts = async () => {
-    const response = await fetch(`${BASE_URL}/api/boards/popular`);
 
-    if (!response.ok) {
-      throw new Error('게시글을 불러오는데 실패했습니다.');
-    }
-
-    const result = await response.json();
-    return result;
-  };
-
-  const { data, isLoading, isError, error } = useQuery(
+  const { data, isLoading, isError, error } = useQuery<DataType[], Error>(
     ['popular'],
     fetchMainPosts
   );
@@ -30,7 +44,7 @@ const MainPost = () => {
     return <Style.Status>Loading...⏳</Style.Status>;
   }
 
-  const handleClick = postId => {
+  const handleClick = (postId: number) => {
     if (sessionStorage.getItem('userToken')) {
       navigate(`/community/${postId}`);
     } else {
@@ -51,7 +65,7 @@ const MainPost = () => {
         <p>모여라레이서에서 가장 인기가 많은 게시물을 만나보세요.</p>
       </div>
       <ul className="post-list">
-        {data.map((post, index) => (
+        {data?.map((post, index) => (
           <li key={post.id} onClick={() => handleClick(post.id)}>
             <p className="rank">{index + 1}</p>
             <div>

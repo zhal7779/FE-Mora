@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styledComponents/MyPageProfileStyle';
 import * as Style2 from './styledComponents/ProfileListStyle';
@@ -9,65 +8,55 @@ const URL = process.env.REACT_APP_URL;
 const ProfileList = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const userToken = sessionStorage.getItem('userToken');
 
-  // 현재 나의 스킬 불러오기
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
+
   const { data: mySkillList, isLoading: isSkillLoading } = useQuery(
     'mySkillList',
     fetchMySkillList
   );
 
-  // 현재 나의 커리어 불러오기
   const { data: myCareerList, isLoading: isCareerLoading } = useQuery(
     'myCareerList',
     fetchMyCareerList
   );
 
-  // 현재 나의 교육 불러오기
   const { data: myEduList, isLoading: isEduLoading } = useQuery('myEduList', fetchMyEduList);
 
-  // 현재 나의 링크 불러오기
   const { data: myLinkList, isLoading: isLinkLoading } = useQuery('myLinkList', fetchMyLinkList);
 
-  // 현재 나의 스킬 불러오기
+  // 현재 나의 스킬 불러오기 함수
   async function fetchMySkillList() {
     const response = await fetch(`${URL}/api/skills/myskill`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
     });
     return response.json();
   }
 
-  // 현재 나의 커리어 불러오기
+  // 현재 나의 커리어 불러오기 함수
   async function fetchMyCareerList() {
     const response = await fetch(`${URL}/api/careers`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
     });
     return response.json();
   }
 
-  // 현재 나의 교육 불러오기
+  // 현재 나의 교육 불러오기 함수
   async function fetchMyEduList() {
     const response = await fetch(`${URL}/api/educations`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
     });
     return response.json();
   }
 
-  // 현재 나의 링크 불러오기
+  // 현재 나의 링크 불러오기 함수
   async function fetchMyLinkList() {
     const response = await fetch(`${URL}/api/links`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
     });
     return response.json();
   }
@@ -76,10 +65,7 @@ const ProfileList = () => {
   async function handleRemoveCareer(careerId) {
     const response = await fetch(`${URL}/api/careers/delete`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
       body: JSON.stringify({ id: careerId }),
     });
 
@@ -92,10 +78,7 @@ const ProfileList = () => {
   async function handleRemoveEdu(eduId) {
     const response = await fetch(`${URL}/api/educations`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
       body: JSON.stringify({ id: eduId }),
     });
 
@@ -108,10 +91,7 @@ const ProfileList = () => {
   async function handleRemoveLink(linkId) {
     const response = await fetch(`${URL}/api/links/delete`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
       body: JSON.stringify({ linkId: linkId }),
     });
 

@@ -6,23 +6,24 @@ import noDataImage from '../assets/images/no-data-image.svg';
 const URL = process.env.REACT_APP_URL;
 
 const MyPostList = () => {
+  const userToken = sessionStorage.getItem('userToken');
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
   const queries = useQueries([
     {
       queryKey: 'myPostListData',
       queryFn: () =>
         fetch(`${URL}/api/users/mypage/board`, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-          },
+          headers: headers,
         }).then((response) => response.json()),
     },
     {
       queryKey: 'mainProfileData',
       queryFn: () =>
         fetch(`${URL}/api/users/mypage`, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-          },
+          headers: headers,
         }).then((response) => response.json()),
     },
   ]);

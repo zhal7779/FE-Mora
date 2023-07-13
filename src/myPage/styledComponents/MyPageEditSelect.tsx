@@ -1,6 +1,22 @@
 import styled from 'styled-components';
 
-const MyPageEditSelect = ({ title, options, name, onChange, value, disabled }) => {
+interface MyPageEditSelectProps {
+  title: string;
+  options: { value: string; label: string }[];
+  name: string;
+  onChange: () => void;
+  value: string;
+  disabled?: boolean;
+}
+
+const MyPageEditSelect = ({
+  title,
+  options,
+  name,
+  onChange,
+  value,
+  disabled,
+}: MyPageEditSelectProps) => {
   return (
     <MyPageEditSelectContainer>
       <MyPageEditSelectText>{title}</MyPageEditSelectText>

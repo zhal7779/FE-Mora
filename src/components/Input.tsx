@@ -1,23 +1,33 @@
-import React from 'react';
 import styled from 'styled-components';
 import searchIcon from '../assets/icons/u_search.svg';
 
-const Input = ({ width, onChange, value }) => {
-  // 이렇게 props 적용해서 쓰기
-  // <Input width='50%' />
-  // <Input width='75%' />
+interface InputProps {
+  width: string;
+  onChange: () => void;
+  value: string;
+}
 
+const Input = ({ width, onChange, value }: InputProps) => {
   return (
-    <InputContainer width={width} onChange={onChange} value={value}>
-      <SearchIcon src={searchIcon} alt="Search" />
-      <InputElement type="text" placeholder="키워드를 입력해주세요" />
+    <InputContainer width={width}>
+      <SearchIcon src={searchIcon} alt='Search' />
+      <InputElement
+        type='text'
+        placeholder='키워드를 입력해주세요'
+        value={value}
+        onChange={onChange}
+      />
     </InputContainer>
   );
 };
 
 export default Input;
 
-const InputContainer = styled.div`
+interface InputContainerProps {
+  width: string;
+}
+
+const InputContainer = styled.div<InputContainerProps>`
   position: relative;
   width: ${({ width }) => width};
 `;

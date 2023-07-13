@@ -1,7 +1,20 @@
 import styled from 'styled-components';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Ref } from 'react';
 
-const LoginInput = ({ title, type, placeholder, name, onChange, value, onKeyDown }, ref) => {
+interface LoginInputProps {
+  title: string;
+  type: string;
+  placeholder: string;
+  name: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
+const LoginInput = (
+  { title, type, placeholder, name, onChange, value, onKeyDown }: LoginInputProps,
+  ref: Ref<HTMLInputElement>
+) => {
   return (
     <LoginInputContainer>
       <LoginText>{title}</LoginText>

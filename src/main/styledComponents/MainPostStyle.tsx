@@ -104,7 +104,7 @@ export const PostContainer = styled.section`
 
         &-text {
           width: calc(100% - 155px);
-          height: 65px;
+          height: 6.5rem;
 
           font-size: 1.6rem;
           line-height: 2.2rem;
@@ -138,7 +138,6 @@ export const PostContainer = styled.section`
         @media (max-width: 768px) {
           &-text {
             width: 100%;
-            height: 61px;
           }
 
           &-img {

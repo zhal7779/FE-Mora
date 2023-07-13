@@ -1,6 +1,12 @@
 import styled, { keyframes, css } from 'styled-components';
 
-const StyledLittleText = styled.p`
+interface LittleTextProps {
+  onClick?: () => void;
+  wiggle?: boolean;
+  text?: string;
+}
+
+const StyledLittleText = styled.p<LittleTextProps>`
   font-style: normal;
   font-weight: 350;
   font-size: 1.7rem;
@@ -42,7 +48,7 @@ const wiggleAnimation = keyframes`
   }
 `;
 
-const LittleText = ({ text, onClick, wiggle }) => {
+const LittleText = ({ text, onClick, wiggle }: LittleTextProps) => {
   return (
     <StyledLittleText onClick={onClick} wiggle={wiggle}>
       {text}
