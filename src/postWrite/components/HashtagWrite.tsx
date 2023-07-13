@@ -1,14 +1,18 @@
 import * as Style from '../styledComponents/HashtagWriteStyle';
 import { useState, useEffect, useRef } from 'react';
 import IconHashtagDelete from '../../assets/icons/icon-delete-hashtag.svg';
+import { writeProps } from '../types/types';
 import Swal from 'sweetalert2';
 const BASE_URL = process.env.REACT_APP_URL;
 
-const HashtagWrite = ({ data, setData }) => {
+const HashtagWrite = ({
+  data,
+  setData
+}: Pick<writeProps, 'data' | 'setData'>) => {
   const [popularHashtags, setPopularHashtags] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [index, setIndex] = useState(-1);
-  const popularHashtagRef = useRef(null);
+  const popularHashtagRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     if (index !== -1) {
@@ -17,7 +21,7 @@ const HashtagWrite = ({ data, setData }) => {
   }, [index]);
 
   // 인기 해쉬태그 조회 api
-  const fetchHashtags = async keyword => {
+  const fetchHashtags = async (keyword: string): Promise<string[]> => {
     const response = await fetch(`${BASE_URL}/api/hashtags?keyword=${keyword}`);
 
     if (!response.ok) {
@@ -26,17 +30,20 @@ const HashtagWrite = ({ data, setData }) => {
 
     const result = await response.json();
     setPopularHashtags(result);
+    return result;
   };
 
   // 해쉬태그 change핸들러
-  const handleChangeHashtag = async e => {
+  const handleChangeHashtag = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
 
     if (inputValue.length > 0) {
       try {
         await fetchHashtags(inputValue);
-      } catch {
+      } catch (error) {
         console.error(error);
       }
     }
@@ -52,7 +59,7 @@ const HashtagWrite = ({ data, setData }) => {
   };
 
   // 해쉬태그 추가
-  const handleAddHashtag = hashtag => {
+  const handleAddHashtag = (hashtag: string) => {
     if (data.hashtags.includes(hashtag)) {
       Swal.fire({
         icon: 'warning',
@@ -70,36 +77,37 @@ const HashtagWrite = ({ data, setData }) => {
     }
   };
 
-  const handleHashtagKeyPress = e => {
+  const handleHashtagKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
     if (e.key === 'Enter') {
-      handleAddHashtag(e.target.value);
+      handleAddHashtag(target.value);
       setInputValue('');
       setIndex(-1);
     }
   };
 
-  const handleHashtagOnClick = selectedHashtag => {
+  const handleHashtagOnClick = (selectedHashtag: string) => {
     handleAddHashtag(selectedHashtag);
     setInputValue('');
     setIndex(-1);
   };
 
   // 키보드로 해쉬태그 선택
-  const handleHashtagKeyDown = e => {
+  const handleHashtagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (popularHashtags.length > 0) {
       switch (e.key) {
-        case 'ArrowDown': //키보드 아래 키
+        case 'ArrowDown': // up key
           setIndex(index + 1);
           if (popularHashtagRef.current?.childElementCount === index + 1)
             setIndex(0);
           break;
-        case 'ArrowUp': //키보드 위에 키
+        case 'ArrowUp': // down key
           setIndex(index - 1);
           if (index <= 0) {
             setIndex(popularHashtags.length - 1);
           }
           break;
-        case 'Escape': // esc key를 눌렀을때,
+        case 'Escape': // esc key
           setPopularHashtags([]);
           setIndex(-1);
           break;
@@ -108,7 +116,7 @@ const HashtagWrite = ({ data, setData }) => {
   };
 
   // 해쉬태그 삭제
-  const handleHashtagDelete = index => {
+  const handleHashtagDelete = (index: number) => {
     setData(prevData => {
       const updatedHashtags = [...prevData.hashtags];
       updatedHashtags.splice(index, 1);
