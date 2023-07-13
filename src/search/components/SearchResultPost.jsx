@@ -21,36 +21,35 @@ const SearchResultPost = ({ data, count, simple, receiveMenu, type, hasNextPage,
       receiveMenu('question');
     }
   };
-  console.log(data);
 
   return (
     <Container>
-      {data && data.pageParams === undefined ? (
-        <NoData />
-      ) : (
-        <Content>
-          {data && simple === 'simple' && (
-            <Style.AddView>
-              <div>
-                {type === 'free' ? (
-                  <p className='title'>자유 게시판</p>
-                ) : type === 'Knowledge' ? (
-                  <p className='title'>지식 공유</p>
-                ) : type === 'study' ? (
-                  <p className='title'>스터디 모집</p>
-                ) : (
-                  <p className='title'>레이서 Q&A</p>
-                )}
-                <p className='total_count'>{count}</p>
-              </div>
-              <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
-                <p className='all_view'>모두 보기</p>
-                <RightIcon stroke='#242424' />
-              </div>
-            </Style.AddView>
-          )}
-          {data &&
-            data.pages.map((page) =>
+      <Content>
+        {data && simple === 'simple' && (
+          <Style.AddView>
+            <div>
+              {type === 'free' ? (
+                <p className='title'>자유 게시판</p>
+              ) : type === 'Knowledge' ? (
+                <p className='title'>지식 공유</p>
+              ) : type === 'study' ? (
+                <p className='title'>스터디 모집</p>
+              ) : (
+                <p className='title'>레이서 Q&A</p>
+              )}
+              <p className='total_count'>{count}</p>
+            </div>
+            <div style={{ cursor: 'pointer' }} onClick={handleAllView}>
+              <p className='all_view'>모두 보기</p>
+              <RightIcon stroke='#242424' />
+            </div>
+          </Style.AddView>
+        )}
+        {data &&
+          data.pages.map((page) =>
+            page.totalItems === 0 ? (
+              <NoData />
+            ) : (
               page.objArr.map((item) => (
                 <li key={item.id}>
                   <Link to={'/community/' + item.id}>
@@ -87,10 +86,10 @@ const SearchResultPost = ({ data, count, simple, receiveMenu, type, hasNextPage,
                   </Link>
                 </li>
               ))
-            )}
-          {hasNextPage && <div ref={observerRef}></div>}
-        </Content>
-      )}
+            )
+          )}
+        {hasNextPage && <div ref={observerRef}></div>}
+      </Content>
     </Container>
   );
 };

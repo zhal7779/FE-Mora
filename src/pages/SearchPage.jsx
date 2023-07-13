@@ -143,7 +143,7 @@ const SearchPage = () => {
   const { mobileSize } = useWindowSize();
 
   const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
-    ['freeSearch', searchKeyword],
+    ['infinite', searchKeyword, searchMenu],
     ({ pageParam = 0 }) =>
       fetchFreeSearch({ menu: searchMenu, page: pageParam, keyword: searchKeyword }),
     {
@@ -154,6 +154,8 @@ const SearchPage = () => {
       },
     }
   );
+  const SliceData = sliceArray(data.pages.objArr, 0, 4);
+  console.log(SliceData);
 
   const observerRef = useRef(null);
   useObserver(observerRef, fetchNextPage, hasNextPage);
@@ -258,10 +260,11 @@ const SearchPage = () => {
                       ''
                     )}
                     {resultData.question.length ? (
-                      <SearchResultQnA
+                      <SearchResultPost
                         data={sliceQuestionData}
                         count={questionCount}
                         receiveMenu={setSearchMenu}
+                        type={'Q&A'}
                         simple={'simple'}
                       />
                     ) : (
