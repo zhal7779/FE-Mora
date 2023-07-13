@@ -14,7 +14,7 @@ const SearchResultProfile = ({ data, count, simple, receiveMenu }) => {
 
   //모두보기 클릭시 메뉴 2번 프로필 보기로 이동
   const handleAllView = () => {
-    receiveMenu(2);
+    receiveMenu('openProfile');
   };
 
   return (

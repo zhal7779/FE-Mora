@@ -27,7 +27,6 @@ const OpenProfile = ({ registerstatus }) => {
       keepPreviousData: true,
     }
   );
-  console.log(data);
 
   const observerRef = useRef(null);
   //무한스크롤 DOM요소 가시성 감지 함수

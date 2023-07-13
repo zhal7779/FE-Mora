@@ -7,23 +7,28 @@ import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
+
+const SearchResultPost = ({ data, count, simple, receiveMenu, type, hasNextPage, observerRef }) => {
   const keyword = useContext(SearchContext);
   const handleAllView = () => {
     if (type === 'free') {
-      receiveMenu(3);
+      receiveMenu('free');
     } else if (type === 'Knowledge') {
-      receiveMenu(4);
+      receiveMenu('Knowledge');
+    } else if (type === 'study') {
+      receiveMenu('study');
     } else {
-      receiveMenu(5);
+      receiveMenu('question');
     }
   };
+  console.log(data);
+
   return (
     <Container>
-      {data && data.length === 0 ? (
+      {data && data.pageParams === undefined ? (
         <NoData />
       ) : (
-        <>
+        <Content>
           {data && simple === 'simple' && (
             <Style.AddView>
               <div>
@@ -31,8 +36,10 @@ const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
                   <p className='title'>자유 게시판</p>
                 ) : type === 'Knowledge' ? (
                   <p className='title'>지식 공유</p>
-                ) : (
+                ) : type === 'study' ? (
                   <p className='title'>스터디 모집</p>
+                ) : (
+                  <p className='title'>레이서 Q&A</p>
                 )}
                 <p className='total_count'>{count}</p>
               </div>
@@ -43,40 +50,46 @@ const SearchResultPost = ({ data, count, simple, receiveMenu, type }) => {
             </Style.AddView>
           )}
           {data &&
-            data.length &&
-            data.map((item) => (
-              <Link to={'/community/' + item.id}>
-                <Content key={item.id}>
-                  {type === 'free' ? (
-                    <span className='subject'>자유</span>
-                  ) : type === 'Knowledge' ? (
-                    <span className='subject'>지식/정보</span>
-                  ) : (
-                    <span className='subject'>스터디/모임</span>
-                  )}
-
-                  <h3>
-                    <KeywordHighlight content={item.title} keyword={keyword} />
-                  </h3>
-                  <p>
-                    <KeywordHighlight content={item.content} keyword={keyword} />
-                  </p>
-                  <div className='hashtags'>
-                    {item.Hashtags.map((hashtag, index) =>
-                      hashtag && hashtag.length > 0 ? <h3 key={index}>#{hashtag}</h3> : null
+            data.pages.map((page) =>
+              page.objArr.map((item) => (
+                <li key={item.id}>
+                  <Link to={'/community/' + item.id}>
+                    {type === 'free' ? (
+                      <span className='subject'>자유</span>
+                    ) : type === 'Knowledge' ? (
+                      <span className='subject'>지식/정보</span>
+                    ) : type === 'study' ? (
+                      <span className='subject'>스터디/모임</span>
+                    ) : (
+                      <span className='subject'>Q&A</span>
                     )}
-                  </div>
-                  <div className='sub_content'>
-                    <p>댓글 {item.comment_cnt}</p>
-                    <div>
-                      <p>좋아요 {item.like_cnt}</p>
-                      <p>조회 {item.view_cnt}</p>
+                    <div className='title-content'>
+                      {type === 'Q&A' && <strong>Q</strong>}
+                      <h3>
+                        <KeywordHighlight content={item.title} keyword={keyword} />
+                      </h3>
                     </div>
-                  </div>
-                </Content>
-              </Link>
-            ))}
-        </>
+                    <p>
+                      <KeywordHighlight content={item.content} keyword={keyword} />
+                    </p>
+                    <div className='hashtags'>
+                      {item.Hashtags.map((hashtag, index) =>
+                        hashtag && hashtag.length > 0 ? <h3 key={index}>#{hashtag}</h3> : null
+                      )}
+                    </div>
+                    <div className='sub_content'>
+                      <p>댓글 {item.comment_cnt}</p>
+                      <div>
+                        <p>좋아요 {item.like_cnt}</p>
+                        <p>조회 {item.view_cnt}</p>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))
+            )}
+          {hasNextPage && <div ref={observerRef}></div>}
+        </Content>
       )}
     </Container>
   );
@@ -94,64 +107,73 @@ const Container = styled.section`
     width: 90%;
   }
 `;
-
-const Content = styled.div`
-  padding: 2rem;
-  border-bottom: 1px #cbd5e1 solid;
-  cursor: pointer;
-  &:hover {
-    background: rgba(233, 233, 238, 0.4);
-    transition: 0.2s ease-out;
-  }
-  .subject {
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    background: #eeeafe;
-    color: #a58cf5;
-    font-weight: 600;
-    font-size: 1rem;
-  }
-  h3 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    padding: 1.6rem 0;
-  }
-  p {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    font-size: 1.4rem;
-    line-height: 140%;
-  }
-
-  .hashtags {
-    display: flex;
-    padding-top: 1.6rem;
-    h3 {
-      color: #94a3b8;
-      margin-right: 1rem;
-      font-size: 1.2rem;
-      font-weight: 500;
+const Content = styled.ul`
+  li {
+    padding: 2rem;
+    border-bottom: 1px #cbd5e1 solid;
+    cursor: pointer;
+    &:hover {
+      background: rgba(233, 233, 238, 0.4);
+      transition: 0.2s ease-out;
     }
-  }
-  .sub_content {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    margin-bottom: 0;
-    p {
+    .subject {
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      background: #eeeafe;
+      color: #a58cf5;
+      font-weight: 600;
       font-size: 1rem;
     }
-    div {
+    .title-content {
       display: flex;
-      gap: 1rem;
+      align-items: center;
+      font-size: 1.6rem;
+      strong {
+        font-weight: 600;
+        margin-right: 1rem;
+        color: var(--dark-purple);
+      }
+    }
+    h3 {
+      padding: 1rem 0;
+    }
+    p {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      font-size: 1.4rem;
+      line-height: 140%;
+    }
+
+    .hashtags {
+      display: flex;
+      padding-top: 1rem;
+      h3 {
+        color: #94a3b8;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+    }
+    .sub_content {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-bottom: 0;
       p {
         font-size: 1rem;
-        color: var(--light-gray);
+      }
+      div {
+        display: flex;
+        gap: 1rem;
+        p {
+          font-size: 1rem;
+          color: var(--light-gray);
+        }
       }
     }
   }

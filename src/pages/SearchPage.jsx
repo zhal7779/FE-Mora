@@ -5,9 +5,7 @@ import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
 import { useState, useEffect, useRef } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
-import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
-
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
 import {
@@ -39,20 +37,20 @@ const SearchPage = () => {
   };
 
   const menuItems = [
-    { id: 1, text: '전체' },
-    { id: 2, text: '오픈 프로필' },
-    { id: 3, text: '자유 게시판' },
-    { id: 4, text: '지식 공유' },
-    { id: 5, text: '스터디 모집' },
-    { id: 6, text: 'Q&A' },
+    { id: 'all', text: '전체' },
+    { id: 'openProfile', text: '오픈 프로필' },
+    { id: 'free', text: '자유 게시판' },
+    { id: 'Knowledge', text: '지식 공유' },
+    { id: 'study', text: '스터디 모집' },
+    { id: 'question', text: 'Q&A' },
   ];
 
   const [searchMenu, setSearchMenu] = useState(() => {
     const storedMenu = localStorage.getItem('searchMenu');
-    return storedMenu ? parseInt(storedMenu) : 1;
+    return storedMenu ? parseInt(storedMenu) : 'all';
   });
-  const handleMenuClick = (num) => {
-    setSearchMenu(num);
+  const handleMenuClick = (menuId) => {
+    setSearchMenu(menuId);
   };
 
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
@@ -101,23 +99,6 @@ const SearchPage = () => {
       enabled: freeKnowledgeData[0]?.isSuccess && freeKnowledgeData[1]?.isSuccess,
     },
   ]);
-  const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
-    'freeSearch',
-    ({ pageParam = 0 }) => fetchFreeSearch(pageParam, searchKeyword),
-    {
-      getNextPageParam: (lastPage) => {
-        return lastPage.currentPage + 1 < lastPage.totalPages
-          ? lastPage.currentPage + 1
-          : undefined;
-      },
-      staleTime: 500,
-      // keepPreviousData: true,
-    }
-  );
-
-  const observerRef = useRef(null);
-  useObserver(observerRef, fetchNextPage, hasNextPage);
-  console.log(data);
 
   //데이터 개수
   const getCount = (data, defaultCount) =>
@@ -139,6 +120,7 @@ const SearchPage = () => {
     study: studyCount,
     question: questionCount,
   };
+
   //컴포넌트들에 전달할 데이터들
   const resultData = {
     openProfile: openProfileCount > 0 ? popularProfileData[1].data : [],
@@ -159,6 +141,23 @@ const SearchPage = () => {
   const sliceQuestionData = sliceArray(resultData.question, 0, 4);
 
   const { mobileSize } = useWindowSize();
+
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
+    ['freeSearch', searchKeyword],
+    ({ pageParam = 0 }) =>
+      fetchFreeSearch({ menu: searchMenu, page: pageParam, keyword: searchKeyword }),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.currentPage + 1 < lastPage.totalPages
+          ? lastPage.currentPage + 1
+          : undefined;
+      },
+    }
+  );
+
+  const observerRef = useRef(null);
+  useObserver(observerRef, fetchNextPage, hasNextPage);
+
   return (
     <>
       <Style.NavContainer>
@@ -202,7 +201,7 @@ const SearchPage = () => {
         <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>
           <SearchPageWrapper>
-            {searchMenu === 1 ? (
+            {searchMenu === 'all' ? (
               <>
                 {resultData.openProfile.length === 0 &&
                 resultData.free.length === 0 &&
@@ -272,35 +271,67 @@ const SearchPage = () => {
                 )}
                 <RankingContent data={popularProfileData[0].data} />
               </>
-            ) : searchMenu === 2 ? (
+            ) : searchMenu === 'openProfile' ? (
               <>
                 <SearchResultProfile data={resultData.openProfile} />
                 <RankingContent data={popularProfileData[0].data} />
               </>
-            ) : searchMenu === 3 ? (
+            ) : searchMenu === 'free' ? (
               <>
-                {isSuccess &&
-                  data.pages.map((page) => (
-                    <>
-                      <SearchResultPost data={page.objArr} type={'free'} />
-                      <div ref={observerRef}></div>
-                    </>
-                  ))}
+                {isSuccess && (
+                  <>
+                    <SearchResultPost
+                      data={data}
+                      type={'free'}
+                      hasNextPage={hasNextPage}
+                      observerRef={observerRef}
+                    />
+                  </>
+                )}
                 <RankingContent data={popularProfileData[0].data} />
               </>
-            ) : searchMenu === 4 ? (
+            ) : searchMenu === 'Knowledge' ? (
               <>
-                <SearchResultPost data={resultData.knowledge} type={'Knowledge'} />
+                {isSuccess && (
+                  <>
+                    <SearchResultPost
+                      data={data}
+                      type={'knowledge'}
+                      hasNextPage={hasNextPage}
+                      observerRef={observerRef}
+                    />
+                  </>
+                )}
+
                 <RankingContent data={popularProfileData[0].data} />
               </>
-            ) : searchMenu === 5 ? (
+            ) : searchMenu === 'study' ? (
               <>
-                <SearchResultPost data={resultData.study} type={'study'} />
+                {isSuccess && (
+                  <>
+                    <SearchResultPost
+                      data={data}
+                      type={'study'}
+                      hasNextPage={hasNextPage}
+                      observerRef={observerRef}
+                    />
+                  </>
+                )}
+
                 <RegisterQuestion type={'study'} />
               </>
-            ) : searchMenu === 6 ? (
+            ) : searchMenu === 'question' ? (
               <>
-                <SearchResultQnA data={resultData.question} />
+                {isSuccess && (
+                  <>
+                    <SearchResultPost
+                      data={data}
+                      type={'Q&A'}
+                      hasNextPage={hasNextPage}
+                      observerRef={observerRef}
+                    />
+                  </>
+                )}
                 <RegisterQuestion type={'Q&A'} />
               </>
             ) : (

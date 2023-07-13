@@ -1,5 +1,3 @@
-const Token = sessionStorage.getItem('userToken');
-
 // 게시글 top10 조회
 export const fetchPopular = async () => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/boards/popular`, {
@@ -26,14 +24,14 @@ export const fetchProfileSearch = async (keyword) => {
   return data;
 };
 //자유게시판 검색
-export const fetchFreeSearch = async (page, keyword) => {
+export const fetchFreeSearch = async ({ menu, page, keyword }) => {
   const response = await fetch(
-    `${process.env.REACT_APP_URL}/api/boards/free?page=${page}&size=5&keyword=${keyword}`,
+    `${process.env.REACT_APP_URL}/api/boards/${menu}?page=${page}&size=5&keyword=${keyword}`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
     }
   );
@@ -48,7 +46,7 @@ export const fetchKnowledgeSearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
     }
   );
@@ -64,7 +62,7 @@ export const fetchStudySearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
     }
   );
@@ -80,7 +78,7 @@ export const fetchQuestionSearch = async (keyword) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
+        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
       },
     }
   );
