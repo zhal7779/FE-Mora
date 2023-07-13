@@ -5,10 +5,11 @@ import HashtagWrite from '../postWrite/components/HashtagWrite';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { responseFormData } from '../postWrite/types/types';
 
 const PostWritePage = () => {
   const [showPostImage, setShowPostImage] = useState(false);
-  const [data, setData] = useState({
+  const [data, setData] = useState<responseFormData>({
     category: '',
     title: '',
     content: '',
