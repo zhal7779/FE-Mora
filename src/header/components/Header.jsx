@@ -19,11 +19,11 @@ const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
   const [userImg, setUserImg] = useState('');
-
+  //30초마다 알림 갱신
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
-    enabled: false,
+    enabled: true,
+    refetchInterval: 30 * 1000,
   });
-
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch(`${URL}/api/users/mypage`, {
@@ -40,8 +40,6 @@ const Header = () => {
       setUserImg(mainProfileData?.UserDetail?.img_path || '');
     }
   }, [token, mainProfileData]);
-
-  // console.log(mainProfileData);
 
   // 리프레쉬 토큰 요청 Mutation 선언
   const refreshMutation = useMutation(
@@ -94,23 +92,12 @@ const Header = () => {
     };
   }, []);
 
-  //알림 api 30초에 한 번씩 재호출
-  useEffect(() => {
-    const interval = setInterval(() => {
-      alarmRefetch();
-    }, 30000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
   // token 값이 있으면  초기 상태값 1
 
   const [menu, setMenu] = useState(() => {
     const storedMenu = localStorage.getItem('menu');
-    return storedMenu ? parseInt(storedMenu) : token ? 1 : 0;
+    return storedMenu ? parseInt(storedMenu) : token ? 'community' : 'main';
   });
 
   useEffect(() => {
@@ -121,29 +108,34 @@ const Header = () => {
     };
   }, [menu]);
 
-  //메뉴 상태 변경
-  //menu === 0 ? 로고
-  //menu === 1 ? 토끼굴
-  //menu === 2 ? 정비소
-  //menu === 3 ?오픈프로필
-  //menu === 4 ? 검색창 사용불가
-  //menu === 5 ? 마이페이지
   useEffect(() => {
     if (location.pathname === '/') {
-      setMenu(0);
+      setMenu('main');
     } else if (location.pathname.startsWith('/community/')) {
-      setMenu(1);
+      setMenu('community');
     } else if (location.pathname.startsWith('/schedule/')) {
-      setMenu(2);
+      setMenu('schedule');
     } else if (location.pathname === '/openprofile') {
-      setMenu(3);
+      setMenu('openprofile');
     } else if (location.pathname === '/search') {
-      setMenu(4);
+      setMenu('search');
     } else if (location.pathname === '/mypage') {
-      setMenu(5);
+      setMenu('mypage');
     }
   }, [location.pathname]);
 
+  // 메뉴 렌더링 함수
+  const renderMenuItem = (menuName, link, text) => {
+    const isActive = menu === menuName;
+    const linkToRender = token ? link : '/nonmember';
+    return (
+      <div className={`menu-item ${isActive ? 'active' : ''}`}>
+        <Link to={linkToRender}>
+          <p>{text}</p>
+        </Link>
+      </div>
+    );
+  };
   //검색창 on
   const [onSearch, setOnSearch] = useState(false);
   const handleSearchClick = (boolean) => {
@@ -152,8 +144,8 @@ const Header = () => {
 
   //모달 open,close
   const [onModal, setOnModal] = useState(false);
-  const handleModalClick = (boolean) => {
-    setOnModal(boolean);
+  const handleModalClick = () => {
+    setOnModal(!onModal);
   };
 
   const { logo, isSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
@@ -187,23 +179,9 @@ const Header = () => {
                       className='menu-content'
                       onClick={!isSize ? () => setMenuOpen(false) : undefined}
                     >
-                      <div className={menu === 1 ? 'menu-item active' : 'menu-item'}>
-                        <Link to={token ? '/community/post/free' : '/nonmember'}>
-                          <p>토끼굴</p>
-                        </Link>
-                      </div>
-
-                      <div className={menu === 2 ? 'menu-item active' : 'menu-item'}>
-                        <Link to={token ? '/schedule/notice' : '/nonmember'}>
-                          <p>정비소</p>
-                        </Link>
-                      </div>
-
-                      <div className={menu === 3 ? 'menu-item active' : 'menu-item'}>
-                        <Link to={token ? '/openprofile' : '/nonmember'}>
-                          <p>레이서 오픈 프로필</p>
-                        </Link>
-                      </div>
+                      {renderMenuItem('community', '/community/post/free', '토끼굴')}
+                      {renderMenuItem('schedule', '/schedule/notice', '정비소')}
+                      {renderMenuItem('openprofile', '/openprofile', '레이서 오픈 프로필')}
                     </div>
                   </div>
                 )}
@@ -211,12 +189,12 @@ const Header = () => {
               {menuOpen && (
                 <div className='side-content'>
                   <div onClick={!isSize ? () => setMenuOpen(false) : undefined}>
-                    {menu === 4 || !token ? (
+                    {menu === 'search' || !token ? (
                       <SearchIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
                     ) : (
                       <SearchIcon
                         onClick={() => handleSearchClick(true)}
-                        style={{ stroke: '#242424' }}
+                        style={{ stroke: 'var(--main-font-color)' }}
                       />
                     )}
                   </div>
@@ -224,8 +202,8 @@ const Header = () => {
                     {token ? (
                       <>
                         <BellIcon
-                          onClick={() => handleModalClick(true)}
-                          style={{ stroke: '#242424' }}
+                          onClick={handleModalClick}
+                          style={{ stroke: 'var(--main-font-color)' }}
                         />
                         {data &&
                           data.length > 0 &&
@@ -258,7 +236,7 @@ const Header = () => {
               </div>
             </nav>
             <div className='modal-content'>
-              {onModal ? <AlarmModal handleClose={handleModalClick} /> : ''}
+              {onModal && <AlarmModal handleModalClick={handleModalClick} />}
             </div>
           </div>
         </Style.HeaderStyle>
