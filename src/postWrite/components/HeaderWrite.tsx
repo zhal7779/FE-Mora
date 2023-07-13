@@ -6,9 +6,18 @@ import Button from '../../components/Button';
 import { useMutation } from 'react-query';
 import { useEffect } from 'react';
 import { registerPost } from '../api/apis';
+import { requestFormData, writeProps } from '../types/types';
 import Swal from 'sweetalert2';
 
-const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
+const WriteHeader = ({
+  showPostImage,
+  setShowPostImage,
+  data,
+  postId
+}: Pick<
+  writeProps,
+  'showPostImage' | 'setShowPostImage' | 'data' | 'postId'
+>) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +26,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
     }
   }, [postId]);
 
-  const { mutate } = useMutation(postData => registerPost(postId, postData), {
+  const { mutate } = useMutation(registerPost, {
     onSuccess: boardId => {
       if (!postId) {
         navigate(`/community/${boardId}`);
@@ -35,7 +44,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
     const { category, title, content, hashtags, images } = data;
     const imgArr = images.map(img => img.img_path);
 
-    const postData = {
+    const postData: requestFormData = {
       category: category,
       title: title,
       content: content,
@@ -81,7 +90,7 @@ const WriteHeader = ({ showPostImage, setShowPostImage, data, postId }) => {
       }).then(result => {
         if (result.isConfirmed) {
           try {
-            mutate(postData);
+            mutate({ postId, postData });
           } catch (error) {
             console.error(error);
           }
