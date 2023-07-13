@@ -34,7 +34,7 @@ export const NoDataWrapper = styled.div`
 
 export const SchedulePageWrapper = styled.main`
   width: 1024px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
@@ -48,7 +48,7 @@ export const SchedulePageWrapper = styled.main`
 
 export const OpenProfilePageWrapper = styled.main`
   width: 1024px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;

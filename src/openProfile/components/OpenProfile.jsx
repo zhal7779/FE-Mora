@@ -23,15 +23,15 @@ const OpenProfile = ({ registerstatus }) => {
           ? lastPage.currentPage + 1
           : undefined;
       },
-      staleTime: 500,
-      // keepPreviousData: true,
+      // staleTime: 500,
+      keepPreviousData: true,
     }
   );
+  console.log(data);
 
   const observerRef = useRef(null);
   //무한스크롤 DOM요소 가시성 감지 함수
   useObserver(observerRef, fetchNextPage, hasNextPage);
-
   // 오픈프로필 등록하거나 커피챗 신청시 refetch
   useEffect(() => {
     const profileRefetch = async () => {

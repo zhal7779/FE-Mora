@@ -1,7 +1,7 @@
 //오픈프로필 조회
 export const getProfile = async (page) => {
   const response = await fetch(
-    `${process.env.REACT_APP_URL}/api/users/open-profile?page=${page}&size=5
+    `${process.env.REACT_APP_URL}/api/users/open-profile?page=${page}&size=3
   `,
     {
       method: 'GET',

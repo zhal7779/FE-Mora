@@ -70,7 +70,7 @@ export const HeaderStyle = styled.header`
       cursor: pointer;
       .alarm {
         position: absolute;
-        right: 0.1rem;
+        right: 1rem;
         width: 1.1rem;
         height: 1.1rem;
         border-radius: 50%;
@@ -146,6 +146,9 @@ export const HeaderStyle = styled.header`
       justify-content: center;
       div {
         padding: 1rem 2rem 2rem 2rem;
+        .alarm {
+          right: 2rem;
+        }
       }
     }
     .nav-toggle {

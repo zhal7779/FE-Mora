@@ -26,9 +26,9 @@ export const fetchProfileSearch = async (keyword) => {
   return data;
 };
 //자유게시판 검색
-export const fetchFreeSearch = async (keyword) => {
+export const fetchFreeSearch = async (page, keyword) => {
   const response = await fetch(
-    `${process.env.REACT_APP_URL}/api/boards/free?page=0&size=5&keyword=${keyword}`,
+    `${process.env.REACT_APP_URL}/api/boards/free?page=${page}&size=5&keyword=${keyword}`,
     {
       method: 'GET',
       headers: {

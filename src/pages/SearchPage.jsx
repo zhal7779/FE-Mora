@@ -3,7 +3,7 @@ import { SearchPageWrapper, NoDataWrapper } from '../search/styledComponents/pag
 import SearchResultBar from '../search/components/SearchResultBar';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
 import SearchResultQnA from '../search/components/SearchResultQnA';
 import SearchResultPost from '../search/components/SearchResultPost';
@@ -18,7 +18,7 @@ import {
   fetchStudySearch,
   fetchQuestionSearch,
 } from '../search/api/searchAPI';
-import { useQueries } from 'react-query';
+import { useQueries, useInfiniteQuery } from 'react-query';
 import NoData from '../components/NoData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -26,6 +26,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { useObserver } from '../hooks/useObserver';
 
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
@@ -100,6 +101,24 @@ const SearchPage = () => {
       enabled: freeKnowledgeData[0]?.isSuccess && freeKnowledgeData[1]?.isSuccess,
     },
   ]);
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
+    'freeSearch',
+    ({ pageParam = 0 }) => fetchFreeSearch(pageParam, searchKeyword),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.currentPage + 1 < lastPage.totalPages
+          ? lastPage.currentPage + 1
+          : undefined;
+      },
+      staleTime: 500,
+      // keepPreviousData: true,
+    }
+  );
+
+  const observerRef = useRef(null);
+  useObserver(observerRef, fetchNextPage, hasNextPage);
+  console.log(data);
+
   //데이터 개수
   const getCount = (data, defaultCount) =>
     data?.isSuccess ? data?.data?.totalItems || 0 : defaultCount;
@@ -260,7 +279,13 @@ const SearchPage = () => {
               </>
             ) : searchMenu === 3 ? (
               <>
-                <SearchResultPost data={resultData.free} type={'free'} />
+                {isSuccess &&
+                  data.pages.map((page) => (
+                    <>
+                      <SearchResultPost data={page.objArr} type={'free'} />
+                      <div ref={observerRef}></div>
+                    </>
+                  ))}
                 <RankingContent data={popularProfileData[0].data} />
               </>
             ) : searchMenu === 4 ? (
