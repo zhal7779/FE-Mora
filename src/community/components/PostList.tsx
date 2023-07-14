@@ -3,7 +3,7 @@ import noDataImg from '../../assets/images/no-data-image.svg';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
-import formatTime from '../utils/formatTime';
+import formatTime from '../../utils/formatTime';
 import useDebounce from '../hooks/useDebounce';
 import { fetchPosts } from '../api/apis';
 import { communityProps } from '../types/types';

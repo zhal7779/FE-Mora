@@ -1,7 +1,7 @@
 import * as Style from '../styledComponents/PostCommentStyle';
 import Button from '../../components/Button';
 import IconMore from '../../assets/icons/icon-more.svg';
-import formatTime from '../../community/utils/formatTime';
+import formatTime from '../../utils/formatTime';
 import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { fetchComments, postComment, deleteComment } from '../api/apis';

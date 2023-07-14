@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Style from '../styledComponents/PostDetailStyle';
 import IconLike from '../../assets/icons/icon-like.svg';
 import UserProfile from '../../assets/images/rabbitProfile.png';
-import formatTime from '../../community/utils/formatTime';
+import formatTime from '../../utils/formatTime';
 import IconMore from '../../assets/icons/icon-more.svg';
 import { fetchPostDetail, deletePost, toggleLike } from '../api/apis';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
