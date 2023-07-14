@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { ReactNode } from 'react';
 
-const Modal = ({ width, children }) => {
+const Modal = ({ width, children }: { width: string; children: ReactNode }) => {
   return (
     <>
       <ModalContainer style={{ width: width }}>
@@ -28,10 +29,10 @@ const ModalContainer = styled.div`
 `;
 
 const ModalBg = styled.div`
-  position: fixed; /* 수정된 부분 */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* 수정된 부분 */
+  width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
 
