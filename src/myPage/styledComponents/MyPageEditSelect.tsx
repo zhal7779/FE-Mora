@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 interface MyPageEditSelectProps {
   title: string;
-  options: { value: string; label: string }[];
+  options: (Option | string)[];
   name: string;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   value: string;
   disabled?: boolean;
 }
@@ -22,11 +27,20 @@ const MyPageEditSelect = ({
       <MyPageEditSelectText>{title}</MyPageEditSelectText>
       <SelectContainer>
         <Select name={name} onChange={onChange} value={value} disabled={disabled}>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
+          {options.map((option) => {
+            if (typeof option === 'string') {
+              return (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              );
+            }
+            return (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            );
+          })}
         </Select>
       </SelectContainer>
     </MyPageEditSelectContainer>

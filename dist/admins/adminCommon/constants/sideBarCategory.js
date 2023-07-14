@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NOTIFICATION_BUTTON = exports.POSTS_BUTTON = exports.TRACK_BUTTON = exports.PLAN_BUTTON = exports.USER_BUTTON = void 0;
+const USER_BUTTON = 'UserButton';
+exports.USER_BUTTON = USER_BUTTON;
+const PLAN_BUTTON = 'PlanButton';
+exports.PLAN_BUTTON = PLAN_BUTTON;
+const TRACK_BUTTON = 'TrackButton';
+exports.TRACK_BUTTON = TRACK_BUTTON;
+const POSTS_BUTTON = 'PostsButton';
+exports.POSTS_BUTTON = POSTS_BUTTON;
+const NOTIFICATION_BUTTON = 'NotificationButton';
+exports.NOTIFICATION_BUTTON = NOTIFICATION_BUTTON;
