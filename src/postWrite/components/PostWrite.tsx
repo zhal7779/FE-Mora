@@ -53,7 +53,7 @@ const PostWrite = ({
   // 카테고리 선택
   const handleSelectCategory = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
-    setData({ ...data, category: target.getAttribute('id') });
+    setData({ ...data, category: target.getAttribute('id') as string });
     setShowCategory(false);
   };
 

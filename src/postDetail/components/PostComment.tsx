@@ -5,18 +5,20 @@ import formatTime from '../../utils/formatTime';
 import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { fetchComments, postComment, deleteComment } from '../api/apis';
+import { commentData, token } from '../types/types';
 import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 
-const PostComment = ({ postId }) => {
-  const [commentOption, setCommentOption] = useState(null);
+const PostComment = ({ postId }: { postId: string }) => {
+  const [commentOption, setCommentOption] = useState<number | null>(null);
   const [commentData, setCommentData] = useState('');
-  const [editCommentId, setEditCommentId] = useState(null);
+  const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [editCommentData, setEditCommentData] = useState('');
-  const textareaRef = useRef(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
-  const decodedToken = jwt_decode(sessionStorage.getItem('userToken'));
+  const userToken = sessionStorage.getItem('userToken');
+  const decodedToken: token | null = userToken ? jwt_decode(userToken) : null;
 
   // textarea 높이 유동적 변경
   useEffect(() => {
@@ -28,23 +30,20 @@ const PostComment = ({ postId }) => {
   });
 
   // 댓글 조회
-  const { data: comments } = useQuery(['comments'], () =>
+  const { data: comments } = useQuery<commentData[]>(['comments'], () =>
     fetchComments(postId)
   );
 
   // 댓글 등록/수정
-  const { mutate: postCommentMutate } = useMutation(
-    registerData => postComment(registerData, editCommentId),
-    {
-      onSuccess: () => {
-        console.log('댓글이 성공적으로 등록되었습니다.');
-        queryClient.invalidateQueries(['comments']);
-      },
-      onError: error => {
-        console.error('댓글 등록에 실패하였습니다.', error);
-      }
+  const { mutate: postCommentMutate } = useMutation(postComment, {
+    onSuccess: () => {
+      console.log('댓글이 성공적으로 등록되었습니다.');
+      queryClient.invalidateQueries(['comments']);
+    },
+    onError: error => {
+      console.error('댓글 등록에 실패하였습니다.', error);
     }
-  );
+  });
 
   // 댓글 삭제
   const { mutate: deleteCommentMutate } = useMutation(deleteComment, {
@@ -58,7 +57,7 @@ const PostComment = ({ postId }) => {
     }
   });
 
-  const handleContentChange = e => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
     if (editCommentId) {
@@ -96,7 +95,7 @@ const PostComment = ({ postId }) => {
           comment_id: editCommentId,
           content: editCommentData
         };
-        postCommentMutate(registerData);
+        postCommentMutate({ registerData, editCommentId });
         setEditCommentId(null);
         setEditCommentData('');
       } catch (error) {
@@ -108,7 +107,7 @@ const PostComment = ({ postId }) => {
           content: commentData,
           board_id: postId
         };
-        postCommentMutate(registerData);
+        postCommentMutate({ registerData, editCommentId });
         setCommentData('');
       } catch (error) {
         console.log(error);
@@ -117,7 +116,7 @@ const PostComment = ({ postId }) => {
   };
 
   // 댓글 삭제 핸들러
-  const handleDeleteComment = commentId => {
+  const handleDeleteComment = (commentId: string) => {
     Swal.fire({
       icon: 'question',
       title: '댓글을 삭제하시겠습니까?',
@@ -126,7 +125,7 @@ const PostComment = ({ postId }) => {
       confirmButtonColor: 'red',
       cancelButtonText: '취소'
     }).then(result => {
-      if (!sessionStorage.getItem('userToken')) {
+      if (!userToken) {
         return;
       } else if (result.isConfirmed) {
         try {
@@ -142,7 +141,7 @@ const PostComment = ({ postId }) => {
   };
 
   // 댓글 수정
-  const handleEditComment = (commentId, commentContent) => {
+  const handleEditComment = (commentId: string, commentContent: string) => {
     setEditCommentId(commentId);
     setEditCommentData(commentContent);
     setCommentOption(null);
@@ -171,7 +170,7 @@ const PostComment = ({ postId }) => {
         <h3>댓글👀</h3>
         {comments !== undefined && comments.length > 0 ? (
           <ul className="comment-content-list">
-            {comments.map((comment, index) => (
+            {comments.map((comment: commentData, index: number) => (
               <li key={comment.id}>
                 <div className="writer">
                   <div className="writer-img">
@@ -228,13 +227,11 @@ const PostComment = ({ postId }) => {
                     })}
                   </p>
                 )}
-                {decodedToken.id === comment.commenter && (
+                {decodedToken?.id === comment.commenter && (
                   <div className="comment-option">
                     <button
                       onClick={() =>
-                        setCommentOption(
-                          index === commentOption ? 'null' : index
-                        )
+                        setCommentOption(index === commentOption ? null : index)
                       }
                     >
                       <img src={IconMore} alt="열기" />

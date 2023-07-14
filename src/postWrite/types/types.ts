@@ -5,11 +5,11 @@ export type writeProps = {
   setData: Dispatch<SetStateAction<responseFormData>>;
   showPostImage: boolean;
   setShowPostImage: Dispatch<SetStateAction<boolean>>;
-  postId: string | null;
+  postId: string;
 };
 
 export type responseFormData = {
-  category: string | null;
+  category: string;
   title: string;
   content: string;
   hashtags: string[];
@@ -17,7 +17,7 @@ export type responseFormData = {
 };
 
 export type requestFormData = {
-  category: string | null;
+  category: string;
   title: string;
   content: string;
   hashtags: string[];
@@ -30,20 +30,6 @@ export type imageData = {
 };
 
 export type registerPostParams = {
-  postId: string | null;
+  postId: string;
   postData: requestFormData;
 };
-// export type fetchPostProps = {
-//   selectedCategoryId: string;
-//   page: number;
-//   view: number;
-//   keyword?: string;
-//   sort: string;
-// };
-
-// export type paginationData = {
-//   currentPage: number;
-//   objArr: postData[];
-//   totalItems: number;
-//   totalPages: number;
-// };
