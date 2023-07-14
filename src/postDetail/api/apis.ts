@@ -3,7 +3,7 @@ const BASE_URL = process.env.REACT_APP_URL;
 
 // 게시글 상세 조회 api
 export const fetchPostDetail = async (
-  postId: string
+  postId: string | null
 ): Promise<communityPostData> => {
   const storedToken = sessionStorage.getItem('userToken');
   const response = await fetch(`${BASE_URL}/api/boards/detail/${postId}`, {

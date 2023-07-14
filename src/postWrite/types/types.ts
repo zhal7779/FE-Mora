@@ -30,6 +30,6 @@ export type imageData = {
 };
 
 export type registerPostParams = {
-  postId: string;
+  postId: string | null;
   postData: requestFormData;
 };

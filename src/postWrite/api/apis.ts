@@ -11,7 +11,7 @@ export const registerPost = async ({
   postData
 }: registerPostParams): Promise<responseFormData> => {
   const response = await fetch(`${BASE_URL}/api/boards`, {
-    method: postId ? 'PUT' : 'POST',
+    method: postId === null ? 'POST' : 'PUT',
     body: JSON.stringify(postData),
     headers: {
       'Content-Type': 'application/json',
