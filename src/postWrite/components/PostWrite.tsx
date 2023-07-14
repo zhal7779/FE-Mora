@@ -16,16 +16,32 @@ const PostWrite = ({
   const [showCategory, setShowCategory] = useState(false);
   const titleTextareaRef = useRef(null);
   const contentTextareaRef = useRef(null);
-  const { data: detail } = useQuery(['detail', postId], () =>
-    fetchPostDetail(postId)
-  );
+
+  // 게시글 수정일 경우 해당 게시글의 콘텐츠 내용 보여주기
+  useEffect(() => {
+    if (postId !== null) {
+      const fetchData = async () => {
+        const detail = await fetchPostDetail(postId);
+
+        setData(prevData => ({
+          ...prevData,
+          category: detail.category,
+          title: detail.title,
+          content: detail.content,
+          hashtags: detail.Hashtags,
+          images: detail.Photos
+        }));
+      };
+
+      fetchData();
+    }
+  }, [postId]);
 
   // textarea 높이 유동적 변경
   const textareaHeight = (el: HTMLElement) => {
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;
   };
-
   useEffect(() => {
     if (titleTextareaRef.current) {
       textareaHeight(titleTextareaRef.current);
@@ -35,20 +51,6 @@ const PostWrite = ({
       textareaHeight(contentTextareaRef.current);
     }
   }, [data]);
-
-  // 게시글 수정일 경우 해당 게시글의 콘텐츠 내용 보여주기
-  useEffect(() => {
-    if (detail) {
-      setData(prevData => ({
-        ...prevData,
-        category: detail.category,
-        title: detail.title,
-        content: detail.content,
-        hashtags: detail.Hashtags,
-        images: detail.Photos
-      }));
-    }
-  }, [detail, setData]);
 
   // 카테고리 선택
   const handleSelectCategory = (e: React.MouseEvent<HTMLElement>) => {
