@@ -2,13 +2,13 @@ import * as Style from '../styledComponents/MainPostStyle';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { fetchMainPosts } from '../api/apis';
-import { postData } from '../../@types/post/postDataType';
 import Swal from 'sweetalert2';
+import { mainPostData } from '../types/types';
 
 const MainPost = () => {
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, error } = useQuery<postData[], Error>(
+  const { data, isLoading, isError, error } = useQuery<mainPostData[], Error>(
     ['popular'],
     fetchMainPosts
   );
@@ -61,7 +61,7 @@ const MainPost = () => {
                 </div>
                 {post.Photos.length > 0 && (
                   <div className="content-img">
-                    <img src={post.Photos[0]} alt="이미지 미리보기" />
+                    <img src={post.Photos} alt="이미지 미리보기" />
                   </div>
                 )}
                 <div className="count">
