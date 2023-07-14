@@ -19,7 +19,7 @@ const PostWritePage = () => {
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const postId = searchParams.get('postId');
+  const postId = searchParams.get('postId') as string;
 
   return (
     <PostWriteContainer>
