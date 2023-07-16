@@ -10,7 +10,6 @@ import { ReactComponent as EmailIcon } from '../../assets/icons/envelope-at.svg'
 import { useWindowSize } from '../../hooks/useWindowSize';
 const Footer = () => {
   const { logo, mobileSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
-  console.log(mobileSize);
   return (
     <FooterStyle>
       <div className='content'>

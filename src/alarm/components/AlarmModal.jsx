@@ -6,14 +6,13 @@ import { ReactComponent as PostIcon } from '../../assets/icons/post.svg';
 import { useQuery } from 'react-query';
 import { getAlert, patchAlert } from '../api/alarmApi';
 import { Link } from 'react-router-dom';
-const AlarmModal = ({ handleClose }) => {
+const AlarmModal = ({ handleModalClick }) => {
   //더보기 상태
   const [hiddenContent, setHiddenContent] = useState([]);
   // 알림 읽음 여부 상태
   const [alarmStatus, setAlarmStauts] = useState([]);
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
-  console.log(data);
   const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
   //모달 리스트 open, close
   const handleContentClick = (id) => {
@@ -32,10 +31,6 @@ const AlarmModal = ({ handleClose }) => {
       }
     });
   };
-  const handleClickOutside = () => {
-    handleClose(false);
-  };
-  console.log(data);
 
   return (
     <>
@@ -142,7 +137,7 @@ const AlarmModal = ({ handleClose }) => {
           )}
         </Style.Scroll>
       </Style.Container>
-      <Style.Background onClick={handleClickOutside} />
+      <Style.Background onClick={handleModalClick} />
     </>
   );
 };

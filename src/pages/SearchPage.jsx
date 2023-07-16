@@ -3,22 +3,13 @@ import { SearchPageWrapper, NoDataWrapper } from '../search/styledComponents/pag
 import SearchResultBar from '../search/components/SearchResultBar';
 import RankingContent from '../search/components/RankingContent';
 import SearchResultProfile from '../search/components/SearchResultProfile';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import RegisterQuestion from '../search/components/RegisterQuestion';
-import SearchResultQnA from '../search/components/SearchResultQnA';
-import SearchResultPost from '../search/components/SearchResultPost';
-
+import SearchPost from '../search/components/SearchPost';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
-import {
-  fetchPopular,
-  fetchProfileSearch,
-  fetchFreeSearch,
-  fetchKnowledgeSearch,
-  fetchStudySearch,
-  fetchQuestionSearch,
-} from '../search/api/searchAPI';
-import { useQueries } from 'react-query';
+import { fetchPopular, fetchSearchProfile, fetchSearchPost } from '../search/api/searchAPI';
+import { useQuery, useQueries, useInfiniteQuery } from 'react-query';
 import NoData from '../components/NoData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -26,7 +17,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useWindowSize } from '../hooks/useWindowSize';
-
+import { useObserver } from '../hooks/useObserver';
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
   const { state } = useLocation();
@@ -38,20 +29,21 @@ const SearchPage = () => {
   };
 
   const menuItems = [
-    { id: 1, text: '전체' },
-    { id: 2, text: '프로필' },
-    { id: 3, text: '자유 게시판' },
-    { id: 4, text: '지식 공유' },
-    { id: 5, text: '스터디 모집' },
-    { id: 6, text: '레이서 Q&A' },
+    { id: 'all', text: '전체' },
+    { id: 'openProfile', text: '오픈 프로필' },
+    { id: 'free', text: '자유 게시판' },
+    { id: 'Knowledge', text: '지식 공유' },
+    { id: 'study', text: '스터디 모집' },
+    { id: 'question', text: 'Q&A' },
   ];
 
   const [searchMenu, setSearchMenu] = useState(() => {
     const storedMenu = localStorage.getItem('searchMenu');
-    return storedMenu ? parseInt(storedMenu) : 1;
+    return storedMenu ? parseInt(storedMenu) : 'all';
   });
-  const handleMenuClick = (num) => {
-    setSearchMenu(num);
+  const handleMenuClick = (menuId) => {
+    setSearchMenu(menuId);
+    localStorage.setItem('searchMenu', menuId);
   };
 
   // 새로고침시 menu 상태값 유지 위해 로컬스토리지 사용,
@@ -65,78 +57,80 @@ const SearchPage = () => {
     };
   }, [searchMenu]);
 
-  const popularProfileData = useQueries([
-    {
-      queryKey: ['popular'],
-      queryFn: fetchPopular,
-    },
-    {
-      queryKey: ['openProfile', searchKeyword],
-      queryFn: () => fetchProfileSearch(searchKeyword),
-    },
-  ]);
+  const { data: popularData } = useQuery(['popular'], fetchPopular);
 
-  const freeKnowledgeData = useQueries([
+  const openProfileData = useQuery(
+    ['openProfile', searchKeyword],
+    () => fetchSearchProfile(searchKeyword),
+    {
+      enabled: Boolean(searchKeyword),
+    }
+  );
+
+  const SearchPostData = useQueries([
     {
       queryKey: ['free', searchKeyword],
-      queryFn: () => fetchFreeSearch(searchKeyword),
-      enabled: popularProfileData[0]?.isSuccess && popularProfileData[1]?.isSuccess,
+      queryFn: () => fetchSearchPost({ menu: 'free', page: 0, keyword: searchKeyword }),
+      enabled: Boolean(searchKeyword),
     },
     {
       queryKey: ['Knowledge', searchKeyword],
-      queryFn: () => fetchKnowledgeSearch(searchKeyword),
-      enabled: popularProfileData[0]?.isSuccess && popularProfileData[1]?.isSuccess,
+      queryFn: () => fetchSearchPost({ menu: 'Knowledge', page: 0, keyword: searchKeyword }),
+      enabled: Boolean(searchKeyword),
     },
-  ]);
-  const studyQuestionData = useQueries([
     {
       queryKey: ['study', searchKeyword],
-      queryFn: () => fetchStudySearch(searchKeyword),
-      enabled: freeKnowledgeData[0]?.isSuccess && freeKnowledgeData[1]?.isSuccess,
+      queryFn: () => fetchSearchPost({ menu: 'study', page: 0, keyword: searchKeyword }),
+      enabled: Boolean(searchKeyword),
     },
     {
       queryKey: ['question', searchKeyword],
-      queryFn: () => fetchQuestionSearch(searchKeyword),
-      enabled: freeKnowledgeData[0]?.isSuccess && freeKnowledgeData[1]?.isSuccess,
+      queryFn: () => fetchSearchPost({ menu: 'question', page: 0, keyword: searchKeyword }),
+      enabled: Boolean(searchKeyword),
     },
   ]);
-  //데이터 개수
-  const openProfileCount = popularProfileData[1]?.data?.length || 0;
-  const freeCount = freeKnowledgeData[0]?.data?.objArr?.length || 0;
-  const knowledgeCount = freeKnowledgeData[1]?.data?.objArr?.length || 0;
-  const studyCount = studyQuestionData[0]?.data?.objArr?.length || 0;
-  const questionCount = studyQuestionData[1]?.data?.objArr?.length || 0;
-  const totalCount = freeCount + knowledgeCount + studyCount + questionCount;
-  // SearchResultBar에 검색결과 ${count}건에 전달해줄 데이터
-  const countArr = {
-    openProfile: openProfileCount,
-    total: totalCount,
-    free: freeCount,
-    knowledge: knowledgeCount,
-    study: studyCount,
-    question: questionCount,
-  };
-  //컴포넌트들에 전달할 데이터들
-  const resultData = {
-    openProfile: openProfileCount > 0 ? popularProfileData[1].data : [],
-    free: freeCount > 0 ? freeKnowledgeData[0].data.objArr : [],
-    knowledge: knowledgeCount > 0 ? freeKnowledgeData[1].data.objArr : [],
-    study: studyCount > 0 ? studyQuestionData[0].data.objArr : [],
-    question: questionCount > 0 ? studyQuestionData[1].data.objArr : [],
-  };
-  console.log(resultData);
 
-  //전달할 데이터 잘라주는 함수, 전체페이지 보여주는 데이터
-  const sliceArray = (array, start, end) => {
-    return array && array.length > 0 ? array.slice(start, end) : [];
+  const getCount = (data) => (data.isSuccess ? data.data?.totalItems || 0 : 0);
+
+  const countArr = {
+    openProfile: openProfileData.data?.length || 0,
+    free: getCount(SearchPostData[0]),
+    knowledge: getCount(SearchPostData[1]),
+    study: getCount(SearchPostData[2]),
+    question: getCount(SearchPostData[3]),
   };
-  const sliceOpenProfileData = sliceArray(resultData.openProfile, 0, 3);
-  const sliceFreeData = sliceArray(resultData.free, 0, 4);
-  const sliceKnowledgeData = sliceArray(resultData.knowledge, 0, 4);
-  const sliceStudyData = sliceArray(resultData.study, 0, 4);
-  const sliceQuestionData = sliceArray(resultData.question, 0, 4);
+
+  countArr.total = Object.values(countArr).reduce((acc, count) => acc + count, 0);
+
+  const sliceArray = (array, start, end) =>
+    array && array.length > 0 ? array.slice(start, end) : [];
+
+  const simpleData = {
+    openProfile: countArr.openProfile > 0 ? sliceArray(openProfileData.data, 0, 3) : [],
+    free: countArr.free > 0 ? sliceArray(SearchPostData[0].data.objArr, 0, 4) : [],
+    knowledge: countArr.knowledge > 0 ? sliceArray(SearchPostData[1].data.objArr, 0, 4) : [],
+    study: countArr.study > 0 ? sliceArray(SearchPostData[2].data.objArr, 0, 4) : [],
+    question: countArr.question > 0 ? sliceArray(SearchPostData[3].data.objArr, 0, 4) : [],
+  };
+
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
+    ['infinite', searchKeyword, searchMenu],
+    ({ pageParam = 0 }) =>
+      fetchSearchPost({ menu: searchMenu, page: pageParam, keyword: searchKeyword }),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.currentPage + 1 < lastPage.totalPages
+          ? lastPage.currentPage + 1
+          : undefined;
+      },
+    }
+  );
+
+  const observerRef = useRef(null);
+  useObserver(observerRef, fetchNextPage, hasNextPage);
 
   const { mobileSize } = useWindowSize();
+
   return (
     <>
       <Style.NavContainer>
@@ -179,103 +173,104 @@ const SearchPage = () => {
       <SearchContext.Provider value={searchKeyword}>
         <SearchResultBar handleSubSearch={handleSubSearch} menu={searchMenu} count={countArr} />
         <Style.Container>
-          {searchMenu === 1 ? (
-            <SearchPageWrapper>
-              {resultData.openProfile.length === 0 &&
-              resultData.free.length === 0 &&
-              resultData.knowledge.length === 0 &&
-              resultData.study.length === 0 &&
-              resultData.question.length === 0 ? (
-                <NoDataWrapper>
-                  <NoData />
-                </NoDataWrapper>
-              ) : (
-                <div>
-                  {resultData.openProfile.length > 0 ? (
-                    <SearchResultProfile
-                      data={sliceOpenProfileData}
-                      count={openProfileCount}
-                      receiveMenu={setSearchMenu}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-
-                  {resultData.free.length > 0 ? (
-                    <SearchResultPost
-                      data={sliceFreeData}
-                      count={freeCount}
-                      receiveMenu={setSearchMenu}
-                      type={'free'}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                  {resultData.knowledge.length > 0 ? (
-                    <SearchResultPost
-                      data={sliceKnowledgeData}
-                      count={knowledgeCount}
-                      receiveMenu={setSearchMenu}
-                      type={'Knowledge'}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                  {resultData.study.length > 0 ? (
-                    <SearchResultPost
-                      data={sliceStudyData}
-                      count={studyCount}
-                      receiveMenu={setSearchMenu}
-                      type={'study'}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                  {resultData.question.length ? (
-                    <SearchResultQnA
-                      data={sliceQuestionData}
-                      count={questionCount}
-                      receiveMenu={setSearchMenu}
-                      simple={'simple'}
-                    />
-                  ) : (
-                    ''
-                  )}
-                </div>
-              )}
-              <RankingContent data={popularProfileData[0].data} />
-            </SearchPageWrapper>
-          ) : searchMenu === 2 ? (
-            <Style.ProfileWrapper>
-              <SearchResultProfile data={resultData.openProfile} />
-            </Style.ProfileWrapper>
-          ) : searchMenu === 3 ? (
-            <SearchPageWrapper>
-              <SearchResultPost data={resultData.free} type={'free'} />
-              <RankingContent data={popularProfileData[0].data} />
-            </SearchPageWrapper>
-          ) : searchMenu === 4 ? (
-            <SearchPageWrapper>
-              <SearchResultPost data={resultData.knowledge} type={'Knowledge'} />
-              <RankingContent data={popularProfileData[0].data} />
-            </SearchPageWrapper>
-          ) : searchMenu === 5 ? (
-            <SearchPageWrapper>
-              <SearchResultPost data={resultData.study} type={'study'} />
-              <RegisterQuestion type={'study'} />
-            </SearchPageWrapper>
-          ) : searchMenu === 6 ? (
-            <SearchPageWrapper>
-              <SearchResultQnA data={resultData.question} />
-              <RegisterQuestion type={'Q&A'} />
-            </SearchPageWrapper>
-          ) : (
-            ''
-          )}
+          <SearchPageWrapper>
+            {searchMenu === 'all' ? (
+              <>
+                {countArr.total === 0 ? (
+                  <NoDataWrapper>
+                    <NoData />
+                  </NoDataWrapper>
+                ) : (
+                  <div>
+                    {countArr.openProfile > 0 && (
+                      <SearchResultProfile
+                        data={simpleData.openProfile}
+                        count={countArr.openProfile}
+                        receiveMenu={setSearchMenu}
+                        type={'simple'}
+                      />
+                    )}
+                    {countArr.free > 0 && (
+                      <SearchPost
+                        data={simpleData.free}
+                        count={countArr.free}
+                        receiveMenu={setSearchMenu}
+                        menu={'free'}
+                        type={'simple'}
+                      />
+                    )}
+                    {countArr.knowledge > 0 && (
+                      <SearchPost
+                        data={simpleData.knowledge}
+                        count={countArr.knowledge}
+                        receiveMenu={setSearchMenu}
+                        menu={'Knowledge'}
+                        type={'simple'}
+                      />
+                    )}
+                    {countArr.study > 0 && (
+                      <SearchPost
+                        data={simpleData.study}
+                        count={countArr.study}
+                        receiveMenu={setSearchMenu}
+                        menu={'study'}
+                        type={'simple'}
+                      />
+                    )}
+                    {countArr.question > 0 && (
+                      <SearchPost
+                        data={simpleData.question}
+                        count={countArr.question}
+                        receiveMenu={setSearchMenu}
+                        menu={'question'}
+                        type={'simple'}
+                      />
+                    )}
+                  </div>
+                )}
+                <RankingContent data={popularData} />
+              </>
+            ) : (
+              <>
+                {isSuccess && (
+                  <>
+                    {searchMenu === 'openProfile' ? (
+                      <SearchResultProfile data={openProfileData.data} />
+                    ) : searchMenu === 'free' ||
+                      searchMenu === 'Knowledge' ||
+                      searchMenu === 'study' ||
+                      searchMenu === 'question' ? (
+                      <SearchPost
+                        type={'detail'}
+                        data={data}
+                        menu={
+                          searchMenu === 'free'
+                            ? 'free'
+                            : searchMenu === 'Knowledge'
+                            ? 'knowledge'
+                            : searchMenu === 'study'
+                            ? 'study'
+                            : 'Q&A'
+                        }
+                        hasNextPage={hasNextPage}
+                        observerRef={observerRef}
+                      />
+                    ) : null}
+                    {searchMenu === 'openProfile' ||
+                    searchMenu === 'free' ||
+                    searchMenu === 'Knowledge' ? (
+                      <RankingContent data={popularData} />
+                    ) : null}
+                    {searchMenu === 'study' ? (
+                      <RegisterQuestion type={'study'} />
+                    ) : searchMenu === 'question' ? (
+                      <RegisterQuestion type={'Q&A'} />
+                    ) : null}
+                  </>
+                )}
+              </>
+            )}
+          </SearchPageWrapper>
         </Style.Container>
       </SearchContext.Provider>
     </>
