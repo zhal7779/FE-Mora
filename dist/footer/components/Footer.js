@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_runtime_1 = require("react/jsx-runtime");
+const react_1 = __importDefault(require("react"));
+const FooterStyle_1 = require("../styledComponents/FooterStyle");
+const logo1_svg_1 = require("../../assets/icons/logo1.svg");
+const logo2_svg_1 = require("../../assets/icons/logo2.svg");
+const instagram_svg_1 = require("../../assets/icons/instagram.svg");
+const u_facebook_svg_1 = require("../../assets/icons/u_facebook.svg");
+const u_github_svg_1 = require("../../assets/icons/u_github.svg");
+const telephone_fill_svg_1 = require("../../assets/icons/telephone-fill.svg");
+const envelope_at_svg_1 = require("../../assets/icons/envelope-at.svg");
+const useWindowSize_1 = require("../../hooks/useWindowSize");
+const Footer = () => {
+    const { logo, mobileSize } = (0, useWindowSize_1.useWindowSize)((0, jsx_runtime_1.jsx)(logo1_svg_1.ReactComponent, {}), (0, jsx_runtime_1.jsx)(logo2_svg_1.ReactComponent, {}));
+    console.log(mobileSize);
+    return ((0, jsx_runtime_1.jsx)(FooterStyle_1.FooterStyle, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'content' }, { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'main-content' }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: 'logo-content' }, { children: logo })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'main-items' }, { children: [(0, jsx_runtime_1.jsx)("p", { children: "\uAC1C\uC778\uC815\uBCF4\uCC98\uB9AC\uBC29\uCE68" }), (0, jsx_runtime_1.jsx)("p", { children: "\uC774\uC6A9\uC57D\uAD00" }), (0, jsx_runtime_1.jsx)("p", { children: "\uC774\uC6A9\uC548\uB0B4" })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'icons' }, { children: [(0, jsx_runtime_1.jsx)("button", { children: (0, jsx_runtime_1.jsx)(instagram_svg_1.ReactComponent, {}) }), (0, jsx_runtime_1.jsx)("button", { children: (0, jsx_runtime_1.jsx)(u_facebook_svg_1.ReactComponent, {}) }), (0, jsx_runtime_1.jsx)("button", { children: (0, jsx_runtime_1.jsx)(u_github_svg_1.ReactComponent, {}) })] }))] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'sub-content' }, { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'sub-items' }, { children: [(0, jsx_runtime_1.jsx)("strong", { children: "CUSTOMER SUPPORT CENTER" }), (0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'customer-content' }, { children: [(0, jsx_runtime_1.jsx)(telephone_fill_svg_1.ReactComponent, { style: { marginTop: '1rem' } }), (0, jsx_runtime_1.jsx)("p", { children: "02-1234-5678" })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'customer-content' }, { children: [(0, jsx_runtime_1.jsx)(envelope_at_svg_1.ReactComponent, { style: { marginTop: '1rem' } }), (0, jsx_runtime_1.jsx)("p", { children: " elice@elice.com" })] }))] })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'sub-items' }, { children: [(0, jsx_runtime_1.jsx)("strong", { children: "OPERATING HOURS" }), (0, jsx_runtime_1.jsx)("p", { children: "MON - FRI AM 09:30 - PM 05:30 " }), (0, jsx_runtime_1.jsx)("p", { children: "LUNCH PM 12:00 - 13:00" }), (0, jsx_runtime_1.jsx)("p", { children: " SAT, SUN, HOLIDAY OFF" })] })), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'sub-items' }, { children: [(0, jsx_runtime_1.jsx)("strong", { children: "COMPANY INFORMATIONS" }), (0, jsx_runtime_1.jsx)("p", { children: "COMPANY : \uBAA8\uC5EC\uB77C \uB808\uC774\uC11C " }), mobileSize ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("p", { children: "CREATORS :\uC774\uBBFC\uC601, \uC774\uC131\uD638, \uC774\uD61C\uC815, \uAE40\uC724\uC9C0, " }), (0, jsx_runtime_1.jsx)("p", { children: "\uC784\uC9C0\uC131, \uAE40\uC9C0\uC6B0, \uC5F0\uC815\uD658" })] })) : ((0, jsx_runtime_1.jsx)("p", { children: "CREATORS : \uC774\uBBFC\uC601, \uC774\uC131\uD638, \uC774\uD61C\uC815, \uAE40\uC724\uC9C0, \uC784\uC9C0\uC131, \uAE40\uC9C0\uC6B0, \uC5F0\uC815\uD658 " }))] }))] })), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: 'copyright' }, { children: (0, jsx_runtime_1.jsx)("p", { children: "Copyright \u24D2 2023 - 2023 Moyeora Elice Inc. All Rights Reserved." }) }))] })) }));
+};
+exports.default = Footer;

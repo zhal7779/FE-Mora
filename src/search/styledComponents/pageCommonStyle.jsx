@@ -22,6 +22,9 @@ export const SearchPageWrapper = styled.main`
       align-items: center;
     }
   }
+  @media (max-width: 480px) {
+    margin: 21.7rem auto 0 auto;
+  }
 `;
 
 export const NoDataWrapper = styled.div`
@@ -31,7 +34,7 @@ export const NoDataWrapper = styled.div`
 
 export const SchedulePageWrapper = styled.main`
   width: 1024px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
@@ -45,7 +48,7 @@ export const SchedulePageWrapper = styled.main`
 
 export const OpenProfilePageWrapper = styled.main`
   width: 1024px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;

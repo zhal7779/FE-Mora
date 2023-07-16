@@ -91,14 +91,14 @@ const Container = styled.span`
     flex-direction: column;
     height: auto;
     font-size: 1.5rem;
-    padding: 1.4rem 1.2rem;
+    padding: 1.4rem 1.2rem 1.4rem 1.2rem;
     .cat-img-content {
       width: 9rem;
-      /* margin: 5.7rem 0 0 0; */
+      margin: 1rem 0 1rem 0;
     }
     .help-img-content {
       width: 10rem;
-      /* margin: 1rem 0 0 0; */
+      margin: 0;
     }
   }
 `;

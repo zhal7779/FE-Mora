@@ -44,54 +44,42 @@ const App = () => {
             <ScrollToTop />
             <Routes>
               <Route element={<MainLayout />}>
-                <Route
-                  path="/community/post/:category"
-                  element={<CommunityPage />}
-                />
-                <Route
-                  path="/community/:board_id"
-                  element={<PostDetailPage />}
-                />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/schedule/:category" element={<SchedulePage />} />
-                <Route path="/openprofile" element={<OpenProfilePage />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/nonmember" element={<NonmemberPage />} />
-                <Route path="/" element={<MainPage />} />
+                <Route path='/community/post/:category' element={<CommunityPage />} />
+                <Route path='/community/:board_id' element={<PostDetailPage />} />
+                <Route path='/search' element={<SearchPage />} />
+                <Route path='/schedule/:category' element={<SchedulePage />} />
+                <Route path='/openprofile' element={<OpenProfilePage />} />
+                <Route path='/mypage' element={<MyPage />} />
+                <Route path='/nonmember' element={<NonmemberPage />} />
+                <Route path='/' element={<MainPage />} />
               </Route>
               <Route element={<LoginLayout />}>
-                <Route path="/login" element={<Login />} />
-                <Route path="/quiz" element={<Quiz />} />
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/mypage/edit" element={<MyPageEditPage />} />
-                <Route path="/mypage/skill" element={<MyPageSkillPage />} />
-                <Route path="/mypage/career" element={<MyPageCareerPage />} />
-                <Route path="/mypage/education" element={<MyPageEduPage />} />
-                <Route path="/mypage/link" element={<MyPageLinkPage />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/quiz' element={<Quiz />} />
+                <Route path='/signin' element={<Signin />} />
+                <Route path='/mypage/edit' element={<MyPageEditPage />} />
+                <Route path='/mypage/skill' element={<MyPageSkillPage />} />
+                <Route path='/mypage/career' element={<MyPageCareerPage />} />
+                <Route path='/mypage/education' element={<MyPageEduPage />} />
+                <Route path='/mypage/link' element={<MyPageLinkPage />} />
               </Route>
               <Route element={<AdminLayout />}>
-                <Route path="/admin/users" element={<AdminUser />} />
-                <Route path="/admin/plans" element={<AdminPlanPage />} />
-                <Route path="/admin/posts" element={<AdminPostPage />} />
-                <Route path="/admin/tracks" element={<AdminTrackPage />} />
-                <Route
-                  path="/admin/notifications"
-                  element={<AdminNotificationPage />}
-                />
-                <Route
-                  path="/admin/posts/detail/:boardId"
-                  element={<AdminPostDetailPage />}
-                />
-                <Route path="/write" element={<PostWritePage />} />
+                <Route path='/admin/users' element={<AdminUser />} />
+                <Route path='/admin/plans' element={<AdminPlanPage />} />
+                <Route path='/admin/posts' element={<AdminPostPage />} />
+                <Route path='/admin/tracks' element={<AdminTrackPage />} />
+                <Route path='/admin/notifications' element={<AdminNotificationPage />} />
+                <Route path='/admin/posts/detail/:boardId' element={<AdminPostDetailPage />} />
+                <Route path='/write' element={<PostWritePage />} />
               </Route>
-              <Route path="/admin/login" element={<AdminLogIn />} />
-              <Route path="/admin/signin" element={<AdminSignIn />} />
-              <Route path="/admin/" element={<AdminLogIn />} />
+              <Route path='/admin/login' element={<AdminLogIn />} />
+              <Route path='/admin/signin' element={<AdminSignIn />} />
+              <Route path='/admin/' element={<AdminLogIn />} />
             </Routes>
           </Router>
         </React.StrictMode>
 
-        <ReactQueryDevtools initialIsOpen={true} position="bottom-right" />
+        <ReactQueryDevtools initialIsOpen={true} position='bottom-right' />
       </QueryClientProvider>
     </React.StrictMode>
   );
