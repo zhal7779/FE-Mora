@@ -1,12 +1,17 @@
 import * as Style from '../styledComponents/ImageWriteStyle';
 import { useMutation } from 'react-query';
 import { postImage } from '../api/apis';
+import { writeProps } from '../types/types';
 import IconImageDelete from '../../assets/icons/icon-delete-image.svg';
 import IconAddImage from '../../assets/icons/icon-add-lightgray.svg';
 
-const ImageWrite = ({ showPostImage, data, setData }) => {
+const ImageWrite = ({
+  showPostImage,
+  data,
+  setData
+}: Pick<writeProps, 'showPostImage' | 'data' | 'setData'>) => {
   // 이미지 등록 mutation
-  const { mutate } = useMutation(imgFormData => postImage(imgFormData), {
+  const { mutate } = useMutation(postImage, {
     onSuccess: data => {
       console.log('게시글 이미지 등록에 성공했습니다.');
 
@@ -24,16 +29,17 @@ const ImageWrite = ({ showPostImage, data, setData }) => {
   });
 
   // 이미지 추가
-  const handleAddImage = e => {
+  const handleAddImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imgFormData = new FormData();
-    const img = e.target.files[0];
-    imgFormData.append('img', img);
-
-    mutate(imgFormData);
+    if (e.target.files) {
+      const img = e.target.files[0];
+      imgFormData.append('img', img);
+      mutate(imgFormData);
+    }
   };
 
   // 이미지 삭제
-  const handleImageDelete = index => {
+  const handleImageDelete = (index: number) => {
     setData(prevData => {
       const updatedImages = [...prevData.images];
       updatedImages.splice(index, 1);

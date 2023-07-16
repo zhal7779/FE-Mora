@@ -3,7 +3,9 @@ import PostComment from '../postDetail/components/PostComment';
 import { useParams } from 'react-router-dom';
 
 const PostDetailPage = () => {
-  const { board_id } = useParams();
+  const { board_id }: { board_id: string } = useParams() as {
+    board_id: string;
+  };
 
   return (
     <>

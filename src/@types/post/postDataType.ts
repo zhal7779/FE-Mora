@@ -10,11 +10,11 @@ export type postData = {
   updatedAt: string;
   createdAt: string;
   User: user;
-  Photos: string[];
   Hashtags: string[];
+  user_like?: boolean;
 };
 
-type user = {
+export type user = {
   name: string;
   email: string;
   position: string;

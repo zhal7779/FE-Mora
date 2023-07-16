@@ -5,22 +5,43 @@ import { useState, useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { categories } from '../../community/data/categoryData';
 import { fetchPostDetail } from '../../postDetail/api/apis';
+import { writeProps } from '../types/types';
 import Swal from 'sweetalert2';
 
-const PostWrite = ({ data, setData, postId }) => {
+const PostWrite = ({
+  data,
+  setData,
+  postId
+}: Pick<writeProps, 'data' | 'setData' | 'postId'>) => {
   const [showCategory, setShowCategory] = useState(false);
   const titleTextareaRef = useRef(null);
   const contentTextareaRef = useRef(null);
-  const { data: detail } = useQuery(['detail', postId], () =>
-    fetchPostDetail(postId)
-  );
+
+  // 게시글 수정일 경우 해당 게시글의 콘텐츠 내용 보여주기
+  useEffect(() => {
+    if (postId !== null) {
+      const fetchData = async () => {
+        const detail = await fetchPostDetail(postId);
+
+        setData(prevData => ({
+          ...prevData,
+          category: detail.category,
+          title: detail.title,
+          content: detail.content,
+          hashtags: detail.Hashtags,
+          images: detail.Photos
+        }));
+      };
+
+      fetchData();
+    }
+  }, [postId]);
 
   // textarea 높이 유동적 변경
-  const textareaHeight = el => {
+  const textareaHeight = (el: HTMLElement) => {
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;
   };
-
   useEffect(() => {
     if (titleTextareaRef.current) {
       textareaHeight(titleTextareaRef.current);
@@ -31,28 +52,15 @@ const PostWrite = ({ data, setData, postId }) => {
     }
   }, [data]);
 
-  // 게시글 수정일 경우 해당 게시글의 콘텐츠 내용 보여주기
-  useEffect(() => {
-    if (detail) {
-      setData(prevData => ({
-        ...prevData,
-        category: detail.category,
-        title: detail.title,
-        content: detail.content,
-        hashtags: detail.Hashtags,
-        images: detail.Photos
-      }));
-    }
-  }, [detail, setData]);
-
   // 카테고리 선택
-  const handleSelectCategory = e => {
-    setData({ ...data, category: e.target.getAttribute('name') });
+  const handleSelectCategory = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    setData({ ...data, category: target.getAttribute('id') as string });
     setShowCategory(false);
   };
 
   // 제목 작성
-  const handleWriteTitle = e => {
+  const handleWriteTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     if (inputValue.length <= 100) {
       setData({ ...data, title: inputValue });
@@ -67,7 +75,7 @@ const PostWrite = ({ data, setData, postId }) => {
   };
 
   // 본문 작성
-  const handleWriteContent = e => {
+  const handleWriteContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     if (inputValue.length <= 500) {
       setData({ ...data, content: inputValue });
@@ -90,7 +98,7 @@ const PostWrite = ({ data, setData, postId }) => {
             onClick={() => setShowCategory(!showCategory)}
           >
             {data.category
-              ? categories.find(category => category.id === data.category).name
+              ? categories.find(category => category.id === data.category)?.name
               : '카테고리 선택'}
             {showCategory ? (
               <img src={IconUp} alt="카테고리 목록보기" />
@@ -103,7 +111,7 @@ const PostWrite = ({ data, setData, postId }) => {
               <li
                 key={category.name}
                 onClick={handleSelectCategory}
-                name={category.id}
+                id={category.id}
                 className={data.category === category.name ? 'active' : ''}
               >
                 <img src={category.icon} alt="카테고리 아이콘" />
