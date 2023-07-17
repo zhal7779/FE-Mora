@@ -148,15 +148,15 @@ const Header = () => {
     setOnModal(!onModal);
   };
 
-  const { logo, isSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
+  const { logo, tabletSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
   const [menuOpen, setMenuOpen] = useState(true);
 
   useEffect(() => {
-    if (!isSize) {
+    if (!tabletSize) {
       return setMenuOpen(false);
     }
     setMenuOpen(true);
-  }, [isSize]);
+  }, [tabletSize]);
 
   const handleMenuOpen = () => {
     setMenuOpen(!menuOpen);
@@ -170,14 +170,14 @@ const Header = () => {
           <div className='container'>
             <nav className='content'>
               <div className='main-content'>
-                <div className='logo' onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                <div className='logo' onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
                   <Link to='/'>{logo}</Link>
                 </div>
                 {menuOpen && (
                   <div className='menu-container'>
                     <div
                       className='menu-content'
-                      onClick={!isSize ? () => setMenuOpen(false) : undefined}
+                      onClick={!tabletSize ? () => setMenuOpen(false) : undefined}
                     >
                       {renderMenuItem('community', '/community/post/free', '토끼굴')}
                       {renderMenuItem('schedule', '/schedule/notice', '정비소')}
@@ -188,7 +188,7 @@ const Header = () => {
               </div>
               {menuOpen && (
                 <div className='side-content'>
-                  <div onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                  <div onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
                     {menu === 'search' || !token ? (
                       <SearchIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
                     ) : (
@@ -216,7 +216,7 @@ const Header = () => {
                     )}
                   </div>
                   <Link to={token ? '/mypage' : '/nonmember'}>
-                    <div onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                    <div onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
                       {mainProfileData &&
                       mainProfileData.UserDetail &&
                       mainProfileData.UserDetail.img_path ? (

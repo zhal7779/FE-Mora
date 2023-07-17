@@ -8,8 +8,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "outDir": "./dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["ES6", "DOM"]
   },
-  "include": ["src"],
+  "include": ["src", "custom.d.ts"],
   "exclude": ["node_modules"]
 }

@@ -11,7 +11,7 @@ const ScheduleCategory = ({ setMenu }) => {
     setSelectedCategory(category);
     setMenu(category);
   };
-  const { isSize } = useWindowSize();
+  const { tabletSizeSize } = useWindowSize();
 
   return (
     <CategoryContainer style={{ marginTop: '6rem' }}>
@@ -28,7 +28,7 @@ const ScheduleCategory = ({ setMenu }) => {
               onClick={() => handleCategorySelect('notice')}
               className={selectedCategory === 'notice' ? 'active' : ''}
             >
-              {isSize ? (
+              {tabletSize ? (
                 selectedCategory === 'notice' ? (
                   <MegaphoneIcon fill='#7353EA' />
                 ) : (
@@ -46,7 +46,7 @@ const ScheduleCategory = ({ setMenu }) => {
               onClick={() => handleCategorySelect('calendar')}
               className={selectedCategory === 'calendar' ? 'active' : ''}
             >
-              {isSize ? (
+              {tabletSizeSize ? (
                 selectedCategory === 'calendar' ? (
                   <CalendarIcon fill='#7353EA' />
                 ) : (
