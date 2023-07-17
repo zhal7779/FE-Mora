@@ -1,10 +1,12 @@
 import * as Style from '../styledComponents/MainBannerStyle';
 import BannerImg from '../../assets/images/main-banner-img.png';
 import Button from '../../components/Button';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import BannerBackgroundImg from '../../assets/images/background-effect-img.svg';
 
 const MainBanner = () => {
+  const navigate = useNavigate();
+
   return (
     <Style.BannerContainer>
       <img src={BannerBackgroundImg} alt="배경 이미지" className="bg-img" />
@@ -15,9 +17,11 @@ const MainBanner = () => {
           <br />
           인정한 레이서
           <br /> 필수 커뮤니티, 모레
-          <Link to="/login">
-            <Button value="시작하기" color="darkPurple" />
-          </Link>
+          <Button
+            value="시작하기"
+            color="darkPurple"
+            onClick={() => navigate('/login')}
+          />
         </div>
         <div className="main-image">
           <img src={BannerImg} alt="메인 배너 이미지" />
