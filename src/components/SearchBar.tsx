@@ -3,16 +3,19 @@ import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/icons/fi_search.svg';
 import { useNavigate } from 'react-router-dom';
 
-const SearchBar = ({ handleClose }) => {
+type Props = {
+  handleSearchClick: () => void;
+};
+const SearchBar: React.FC<Props> = ({ handleSearchClick }) => {
   const navigate = useNavigate();
   //input 처리
   const [input, setInput] = useState('');
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   const handleClickOutside = () => {
-    handleClose(false);
+    handleSearchClick();
   };
   return (
     <>

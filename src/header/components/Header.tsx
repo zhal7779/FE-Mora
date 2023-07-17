@@ -13,17 +13,22 @@ import { useQuery, useMutation } from 'react-query';
 import { getAlert } from '../../alarm/api/alarmApi';
 import defaultImg from '../../assets/images/rabbitProfile.png';
 
+type CheckedData = {
+  unchecked: boolean;
+};
+
 const URL = process.env.REACT_APP_URL;
 
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
-  const [userImg, setUserImg] = useState('');
+  const [userImg, setUserImg] = useState<string>('');
   //30초마다 알림 갱신
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
     enabled: true,
     refetchInterval: 30 * 1000,
   });
+  console.log(data);
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch(`${URL}/api/users/mypage`, {
@@ -53,7 +58,7 @@ const Header = () => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userToken}`,
-          refresh: userRefreshToken,
+          ...(userRefreshToken && { refresh: userRefreshToken }),
         },
       });
 
@@ -125,7 +130,7 @@ const Header = () => {
   }, [location.pathname]);
 
   // 메뉴 렌더링 함수
-  const renderMenuItem = (menuName, link, text) => {
+  const renderMenuItem = (menuName: string, link: string, text: string) => {
     const isActive = menu === menuName;
     const linkToRender = token ? link : '/nonmember';
     return (
@@ -138,13 +143,13 @@ const Header = () => {
   };
   //검색창 on
   const [onSearch, setOnSearch] = useState(false);
-  const handleSearchClick = (boolean) => {
-    setOnSearch(boolean);
+  const handleSearchClick = (): void => {
+    setOnSearch(!onSearch);
   };
 
   //모달 open,close
   const [onModal, setOnModal] = useState(false);
-  const handleModalClick = () => {
+  const handleModalClick = (): void => {
     setOnModal(!onModal);
   };
 
@@ -164,7 +169,7 @@ const Header = () => {
   return (
     <>
       {onSearch ? (
-        <SearchBar handleClose={handleSearchClick} />
+        <SearchBar handleSearchClick={handleSearchClick} />
       ) : (
         <Style.HeaderStyle>
           <div className='container'>
@@ -193,7 +198,7 @@ const Header = () => {
                       <SearchIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
                     ) : (
                       <SearchIcon
-                        onClick={() => handleSearchClick(true)}
+                        onClick={() => handleSearchClick()}
                         style={{ stroke: 'var(--main-font-color)' }}
                       />
                     )}
@@ -207,7 +212,7 @@ const Header = () => {
                         />
                         {data &&
                           data.length > 0 &&
-                          data.map((item) =>
+                          data.map((item: CheckedData) =>
                             item.unchecked === true ? <span className='alarm'></span> : ''
                           )}
                       </>

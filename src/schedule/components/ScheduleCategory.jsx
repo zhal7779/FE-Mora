@@ -11,7 +11,7 @@ const ScheduleCategory = ({ setMenu }) => {
     setSelectedCategory(category);
     setMenu(category);
   };
-  const { tabletSizeSize } = useWindowSize();
+  const { tabletSize } = useWindowSize();
 
   return (
     <CategoryContainer style={{ marginTop: '6rem' }}>
@@ -46,7 +46,7 @@ const ScheduleCategory = ({ setMenu }) => {
               onClick={() => handleCategorySelect('calendar')}
               className={selectedCategory === 'calendar' ? 'active' : ''}
             >
-              {tabletSizeSize ? (
+              {tabletSize ? (
                 selectedCategory === 'calendar' ? (
                   <CalendarIcon fill='#7353EA' />
                 ) : (

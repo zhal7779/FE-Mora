@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 interface windowSizeValue {
-  logo: JSX.Element;
+  logo?: JSX.Element;
   tabletSize: boolean;
   mobileSize: boolean;
 }
 
-export const useWindowSize = (wide: JSX.Element, narrow: JSX.Element): windowSizeValue => {
+export const useWindowSize = (wide?: JSX.Element, narrow?: JSX.Element): windowSizeValue => {
   const [mobileSize, setMobileSize] = useState(window.innerWidth <= 480);
   const [tabletSize, setTabletSize] = useState(window.innerWidth > 768);
 
