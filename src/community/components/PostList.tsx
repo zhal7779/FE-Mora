@@ -44,6 +44,7 @@ const PostList = ({
         return lastPage.currentPage < lastPage.totalPages
           ? lastPage.currentPage + 1
           : undefined;
+        // 가장 최근에 불러온 현재 페이지가 전체 페이지보다 작다면 그 다음 페이지 반환
       }
     }
   );
@@ -51,20 +52,21 @@ const PostList = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // 콜백 함수 정의
         if (entry.isIntersecting && !isFetchingNextPage && hasNextPage) {
           fetchNextPage();
         }
       },
-      { threshold: 1 }
+      { threshold: 0 } // 옵션 (관찰 대상 요소가 뷰포트를 교차하는 순간 콜백 함수를 호출)
     );
 
     if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
+      observer.observe(loadMoreRef.current); // 관찰 대상 등록
     }
 
     return () => {
       if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
+        observer.unobserve(loadMoreRef.current); // 관찰 중단
       }
     };
   }, [isFetchingNextPage, fetchNextPage, hasNextPage]);
@@ -137,9 +139,7 @@ const PostList = ({
                 )}
 
                 {hasNextPage && (
-                  <div ref={loadMoreRef}>
-                    {isFetchingNextPage && '로딩 중...'}
-                  </div>
+                  <div className="load-more" ref={loadMoreRef}></div>
                 )}
               </ul>
             </>

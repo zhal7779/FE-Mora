@@ -164,6 +164,10 @@ export const PostContainer = styled.section`
       padding: 0 0 100px 0;
     }
   }
+
+  .load-more {
+    height: 200px;
+  }
 `;
 
 export const Status = styled.div`
