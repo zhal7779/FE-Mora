@@ -1,16 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Toggle from './Toggle';
+import { RegisterProps } from '../interface/openProfileInterface';
 
-const ToggleHeader = ({ handleProfileRegisterStatus }) => {
-  // const [Registerstatus, setRegisterStatus] = useState();
-  const handleRegisterStatus = (status) => {
-    handleProfileRegisterStatus(status);
-  };
+const ToggleHeader: React.FC<RegisterProps> = ({ handleProfileRegisterStatus }) => {
   return (
     <Container>
       <p>오픈 프로필 올리기</p>
-      <Toggle handleRegisterStatus={handleRegisterStatus} />
+      <Toggle handleProfileRegisterStatus={handleProfileRegisterStatus} />
     </Container>
   );
 };

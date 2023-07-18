@@ -1,5 +1,5 @@
 //오픈프로필 조회
-export const getProfile = async (page) => {
+export const getProfile = async (page: number) => {
   const response = await fetch(
     `${process.env.REACT_APP_URL}/api/users/open-profile?page=${page}&size=3
   `,
@@ -17,7 +17,7 @@ export const getProfile = async (page) => {
 
 //오픈프로필 등록
 
-export const putProfile = async (bool) => {
+export const putProfile = async (bool: boolean) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/users/open-profile`, {
     method: 'PUT',
     headers: {
@@ -46,7 +46,7 @@ export const ProfilRegistrStatus = async () => {
 };
 
 // 커피챗 신청
-export const postCoffeeChat = async (id) => {
+export const postCoffeeChat = async (id: string) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/coffeechats`, {
     method: 'POST',
     headers: {

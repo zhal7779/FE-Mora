@@ -13,9 +13,10 @@ import { useQuery, useMutation } from 'react-query';
 import { getAlert } from '../../alarm/api/alarmApi';
 import defaultImg from '../../assets/images/rabbitProfile.png';
 
-type CheckedData = {
+interface CheckedData {
   unchecked: boolean;
-};
+  id: string;
+}
 
 const URL = process.env.REACT_APP_URL;
 
@@ -28,7 +29,6 @@ const Header = () => {
     enabled: true,
     refetchInterval: 30 * 1000,
   });
-  console.log(data);
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery('mainProfileData', () =>
     fetch(`${URL}/api/users/mypage`, {
@@ -213,7 +213,11 @@ const Header = () => {
                         {data &&
                           data.length > 0 &&
                           data.map((item: CheckedData) =>
-                            item.unchecked === true ? <span className='alarm'></span> : ''
+                            item.unchecked === true ? (
+                              <span key={item.id} className='alarm'></span>
+                            ) : (
+                              ''
+                            )
                           )}
                       </>
                     ) : (
