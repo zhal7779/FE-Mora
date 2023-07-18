@@ -13,25 +13,41 @@ import { useQuery, useMutation } from 'react-query';
 import { getAlert } from '../../alarm/api/alarmApi';
 import defaultImg from '../../assets/images/rabbitProfile.png';
 
+interface CheckedData {
+  unchecked: boolean;
+  id: string;
+}
+
 const URL = process.env.REACT_APP_URL;
 
 const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
-  const [userImg, setUserImg] = useState('');
+  const [userImg, setUserImg] = useState<string>('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   //30초마다 알림 갱신
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
-    enabled: true,
+    enabled: isLoggedIn,
     refetchInterval: 30 * 1000,
   });
   // mainProfileData (유저 프로필 정보) 가져오기
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch(`${URL}/api/users/mypage`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
+  const mainProfileDataQuery = useQuery(
+    'mainProfileData',
+    () =>
+      fetch(`${URL}/api/users/mypage`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+        },
+      }).then((response) => response.json()),
+    { enabled: isLoggedIn }
   );
+
   const mainProfileData = mainProfileDataQuery.data;
 
   useEffect(() => {
@@ -53,7 +69,7 @@ const Header = () => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userToken}`,
-          refresh: userRefreshToken,
+          ...(userRefreshToken && { refresh: userRefreshToken }),
         },
       });
 
@@ -125,7 +141,7 @@ const Header = () => {
   }, [location.pathname]);
 
   // 메뉴 렌더링 함수
-  const renderMenuItem = (menuName, link, text) => {
+  const renderMenuItem = (menuName: string, link: string, text: string) => {
     const isActive = menu === menuName;
     const linkToRender = token ? link : '/nonmember';
     return (
@@ -138,25 +154,25 @@ const Header = () => {
   };
   //검색창 on
   const [onSearch, setOnSearch] = useState(false);
-  const handleSearchClick = (boolean) => {
-    setOnSearch(boolean);
+  const handleSearchClick = (): void => {
+    setOnSearch(!onSearch);
   };
 
   //모달 open,close
   const [onModal, setOnModal] = useState(false);
-  const handleModalClick = () => {
+  const handleModalClick = (): void => {
     setOnModal(!onModal);
   };
 
-  const { logo, isSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
+  const { logo, tabletSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
   const [menuOpen, setMenuOpen] = useState(true);
 
   useEffect(() => {
-    if (!isSize) {
+    if (!tabletSize) {
       return setMenuOpen(false);
     }
     setMenuOpen(true);
-  }, [isSize]);
+  }, [tabletSize]);
 
   const handleMenuOpen = () => {
     setMenuOpen(!menuOpen);
@@ -164,20 +180,20 @@ const Header = () => {
   return (
     <>
       {onSearch ? (
-        <SearchBar handleClose={handleSearchClick} />
+        <SearchBar handleSearchClick={handleSearchClick} />
       ) : (
         <Style.HeaderStyle>
           <div className='container'>
             <nav className='content'>
               <div className='main-content'>
-                <div className='logo' onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                <div className='logo' onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
                   <Link to='/'>{logo}</Link>
                 </div>
                 {menuOpen && (
                   <div className='menu-container'>
                     <div
                       className='menu-content'
-                      onClick={!isSize ? () => setMenuOpen(false) : undefined}
+                      onClick={!tabletSize ? () => setMenuOpen(false) : undefined}
                     >
                       {renderMenuItem('community', '/community/post/free', '토끼굴')}
                       {renderMenuItem('schedule', '/schedule/notice', '정비소')}
@@ -188,12 +204,12 @@ const Header = () => {
               </div>
               {menuOpen && (
                 <div className='side-content'>
-                  <div onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                  <div onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
                     {menu === 'search' || !token ? (
                       <SearchIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
                     ) : (
                       <SearchIcon
-                        onClick={() => handleSearchClick(true)}
+                        onClick={() => handleSearchClick()}
                         style={{ stroke: 'var(--main-font-color)' }}
                       />
                     )}
@@ -207,8 +223,12 @@ const Header = () => {
                         />
                         {data &&
                           data.length > 0 &&
-                          data.map((item) =>
-                            item.unchecked === true ? <span className='alarm'></span> : ''
+                          data.map((item: CheckedData) =>
+                            item.unchecked === true ? (
+                              <span key={item.id} className='alarm'></span>
+                            ) : (
+                              ''
+                            )
                           )}
                       </>
                     ) : (
@@ -216,7 +236,7 @@ const Header = () => {
                     )}
                   </div>
                   <Link to={token ? '/mypage' : '/nonmember'}>
-                    <div onClick={!isSize ? () => setMenuOpen(false) : undefined}>
+                    <div onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
                       {mainProfileData &&
                       mainProfileData.UserDetail &&
                       mainProfileData.UserDetail.img_path ? (

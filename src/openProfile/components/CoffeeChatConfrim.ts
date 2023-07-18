@@ -1,6 +1,12 @@
 import Swal from 'sweetalert2';
 
-export const coffeeChatConfirm = (id, name, setCoffeChatStatus, setUserId, coffeeCahtRefetch) => {
+export const coffeeChatConfirm = (
+  id: string,
+  name: string,
+  setCoffeeChatStatus: React.Dispatch<React.SetStateAction<string[]>>,
+  setUserId: (userId: string) => void,
+  coffeeCahtRefetch: () => void
+) => {
   Swal.fire({
     icon: 'question',
     title: `[${name}]님께 커피챗을 보내시겠습니까?`,
@@ -11,13 +17,11 @@ export const coffeeChatConfirm = (id, name, setCoffeChatStatus, setUserId, coffe
     cancelButtonColor: '#EEEAFE',
   }).then((result) => {
     if (result.isConfirmed) {
-      setCoffeChatStatus((prevData) => {
+      setCoffeeChatStatus((prevData) => {
         return [...prevData, id];
       });
       setUserId(id);
       coffeeCahtRefetch();
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      console.log('커피챗 취소');
     }
   });
 };

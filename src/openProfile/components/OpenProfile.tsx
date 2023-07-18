@@ -4,13 +4,15 @@ import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
+import { RegisterStatusProps } from '../interface/openProfileInterface';
 
-const OpenProfile = ({ registerstatus }) => {
+const OpenProfile: React.FC<RegisterStatusProps> = ({ registerStatus }) => {
   const [userId, setUserId] = useState('');
-  const [coffeChatStatus, setCoffeChatStatus] = useState([]);
   //커피챗 쿼리
-  const { data: coffeeChatData, refetch: coffeeCahtRefetch } = useQuery('coffeeChat', () =>
-    postCoffeeChat(userId)
+  const [coffeeChatStatus, setCoffeeChatStatus] = useState<string[]>([]);
+  const { data: coffeeChatData, refetch: coffeeCahtRefetch } = useQuery(
+    ['coffeeChat', coffeeChatStatus],
+    () => postCoffeeChat(userId)
   );
   const queryClient = useQueryClient();
   //오픈프로필 전체 데이터 쿼리, 무한스크롤 적용
@@ -36,7 +38,7 @@ const OpenProfile = ({ registerstatus }) => {
       await queryClient.invalidateQueries('openProfile');
     };
     profileRefetch();
-  }, [registerstatus, coffeeChatData]);
+  }, [registerStatus, coffeeChatData]);
 
   return (
     <>
@@ -51,9 +53,9 @@ const OpenProfile = ({ registerstatus }) => {
             <>
               <OpenProfileList
                 data={page.objArr}
-                coffeChatStatus={coffeChatStatus}
-                setCoffeChatStatus={setCoffeChatStatus}
                 setUserId={setUserId}
+                coffeeChatStatus={coffeeChatStatus}
+                setCoffeeChatStatus={setCoffeeChatStatus}
                 coffeeCahtRefetch={coffeeCahtRefetch}
               />
               <div ref={observerRef}></div>

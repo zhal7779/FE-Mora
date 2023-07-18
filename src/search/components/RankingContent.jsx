@@ -7,7 +7,7 @@ import { useState } from 'react';
 import RankingModal from './RankingModal';
 
 const RankingContent = ({ data }) => {
-  const { isSize } = useWindowSize();
+  const { tabletSize } = useWindowSize();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const modalOpenOrClose = () => {
@@ -16,7 +16,7 @@ const RankingContent = ({ data }) => {
 
   return (
     <Container>
-      {isSize ? (
+      {tabletSize ? (
         <>
           <TitleContent>
             <h5>모여라 레이서 TOP10🔥</h5>
