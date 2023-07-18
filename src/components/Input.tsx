@@ -3,7 +3,7 @@ import searchIcon from '../assets/icons/u_search.svg';
 
 interface InputProps {
   width: string;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }
 

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 interface MyPageEditInputProps {
   title: string;
   type: string;
-  placeholder: string;
+  placeholder?: string;
   name: string;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }
 

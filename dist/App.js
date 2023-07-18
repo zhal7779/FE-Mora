@@ -1,73 +1,44 @@
-import React from 'react';
-import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import CommunityPage from './pages/CommunityPage';
-import PostWritePage from './pages/PostWritePage';
-import PostDetailPage from './pages/PostDetailPage';
-import MainPage from './pages/MainPage';
-import Login from './pages/LogInPage';
-import Signin from './pages/SignInPage';
-import SearchPage from './pages/SearchPage';
-import OpenProfilePage from './pages/OpenProfilePage';
-import Quiz from './pages/QuizPage';
-import MyPage from './pages/MyPage';
-import MyPageEditPage from './pages/MyPageEditPage';
-import MyPageSkillPage from './pages/MyPageSkillPage';
-import MyPageCareerPage from './pages/MyPageCareerPage';
-import MyPageEduPage from './pages/MyPageEduPage';
-import MyPageLinkPage from './pages/MyPageLinkPage';
-import AdminUser from './pages/AdminUserPage';
-import SchedulePage from './pages/SchedulePage';
-import AdminPlanPage from './pages/AdminPlanPage';
-import AdminNotificationPage from './pages/AdminNotificationPage';
-import AdminPostPage from './pages/AdminPostPage';
-import AdminTrackPage from './pages/AdminTrackPage';
-import MainLayout from './MainLayout';
-import LoginLayout from './LoginLayout';
-import AdminLayout from './AdminLayout';
-import NonmemberPage from './pages/NonmemberPage';
-import AdminPostDetailPage from './pages/AdminPostDetailPage';
-import AdminLogIn from './admins/adminLogIn/components/AdminLogIn';
-import AdminSignIn from './admins/adminSignIn/components/AdminSignIn';
-import ScrollToTop from './utils/ScrollToTop';
-const queryClient = new QueryClient();
-const App = () => {
-    return (React.createElement(React.StrictMode, null,
-        React.createElement(QueryClientProvider, { client: queryClient },
-            React.createElement(React.StrictMode, null,
-                React.createElement(Router, null,
-                    React.createElement(ScrollToTop, null),
-                    React.createElement(Routes, null,
-                        React.createElement(Route, { element: React.createElement(MainLayout, null) },
-                            React.createElement(Route, { path: '/', exact: true, element: React.createElement(MainPage, null) }),
-                            React.createElement(Route, { path: '/community/post/:category', element: React.createElement(CommunityPage, null) }),
-                            React.createElement(Route, { path: '/community/:board_id', element: React.createElement(PostDetailPage, null) }),
-                            React.createElement(Route, { path: '/search', element: React.createElement(SearchPage, null) }),
-                            React.createElement(Route, { path: '/schedule/:category', element: React.createElement(SchedulePage, null) }),
-                            React.createElement(Route, { path: '/openprofile', element: React.createElement(OpenProfilePage, null) }),
-                            React.createElement(Route, { path: '/mypage', element: React.createElement(MyPage, null) }),
-                            React.createElement(Route, { path: '/nonmember', element: React.createElement(NonmemberPage, null) })),
-                        React.createElement(Route, { element: React.createElement(LoginLayout, null) },
-                            React.createElement(Route, { path: '/login', element: React.createElement(Login, null) }),
-                            React.createElement(Route, { path: '/quiz', element: React.createElement(Quiz, null) }),
-                            React.createElement(Route, { path: '/signin', element: React.createElement(Signin, null) }),
-                            React.createElement(Route, { path: '/mypage/edit', element: React.createElement(MyPageEditPage, null) }),
-                            React.createElement(Route, { path: '/mypage/skill', element: React.createElement(MyPageSkillPage, null) }),
-                            React.createElement(Route, { path: '/mypage/career', element: React.createElement(MyPageCareerPage, null) }),
-                            React.createElement(Route, { path: '/mypage/education', element: React.createElement(MyPageEduPage, null) }),
-                            React.createElement(Route, { path: '/mypage/link', element: React.createElement(MyPageLinkPage, null) })),
-                        React.createElement(Route, { element: React.createElement(AdminLayout, null) },
-                            React.createElement(Route, { path: '/admin/users', element: React.createElement(AdminUser, null) }),
-                            React.createElement(Route, { path: '/admin/plans', element: React.createElement(AdminPlanPage, null) }),
-                            React.createElement(Route, { path: '/admin/posts', element: React.createElement(AdminPostPage, null) }),
-                            React.createElement(Route, { path: '/admin/tracks', element: React.createElement(AdminTrackPage, null) }),
-                            React.createElement(Route, { path: '/admin/notifications', element: React.createElement(AdminNotificationPage, null) }),
-                            React.createElement(Route, { path: '/admin/posts/detail/:boardId', element: React.createElement(AdminPostDetailPage, null) }),
-                            React.createElement(Route, { path: '/write', element: React.createElement(PostWritePage, null) })),
-                        React.createElement(Route, { path: '/admin/', element: React.createElement(AdminLogIn, null), exact: true }),
-                        React.createElement(Route, { path: '/admin/login', element: React.createElement(AdminLogIn, null) }),
-                        React.createElement(Route, { path: '/admin/signin', element: React.createElement(AdminSignIn, null) })))),
-            React.createElement(ReactQueryDevtools, { initialIsOpen: true, position: 'bottom-right' }))));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-export default App;
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_runtime_1 = require("react/jsx-runtime");
+const react_1 = __importDefault(require("react"));
+const react_router_dom_1 = require("react-router-dom");
+const react_query_1 = require("react-query");
+const devtools_1 = require("react-query/devtools");
+const CommunityPage_1 = __importDefault(require("./pages/CommunityPage"));
+const PostWritePage_1 = __importDefault(require("./pages/PostWritePage"));
+const PostDetailPage_1 = __importDefault(require("./pages/PostDetailPage"));
+const MainPage_1 = __importDefault(require("./pages/MainPage"));
+const LogInPage_1 = __importDefault(require("./pages/LogInPage"));
+const SignInPage_1 = __importDefault(require("./pages/SignInPage"));
+const SearchPage_1 = __importDefault(require("./pages/SearchPage"));
+const OpenProfilePage_1 = __importDefault(require("./pages/OpenProfilePage"));
+const QuizPage_1 = __importDefault(require("./pages/QuizPage"));
+const MyPage_1 = __importDefault(require("./pages/MyPage"));
+const MyPageEditPage_1 = __importDefault(require("./pages/MyPageEditPage"));
+const MyPageSkillPage_1 = __importDefault(require("./pages/MyPageSkillPage"));
+const MyPageCareerPage_1 = __importDefault(require("./pages/MyPageCareerPage"));
+const MyPageEduPage_1 = __importDefault(require("./pages/MyPageEduPage"));
+const MyPageLinkPage_1 = __importDefault(require("./pages/MyPageLinkPage"));
+const AdminUserPage_1 = __importDefault(require("./pages/AdminUserPage"));
+const SchedulePage_1 = __importDefault(require("./pages/SchedulePage"));
+const AdminPlanPage_1 = __importDefault(require("./pages/AdminPlanPage"));
+const AdminNotificationPage_1 = __importDefault(require("./pages/AdminNotificationPage"));
+const AdminPostPage_1 = __importDefault(require("./pages/AdminPostPage"));
+const AdminTrackPage_1 = __importDefault(require("./pages/AdminTrackPage"));
+const MainLayout_1 = __importDefault(require("./MainLayout"));
+const LoginLayout_1 = __importDefault(require("./LoginLayout"));
+const AdminLayout_1 = __importDefault(require("./AdminLayout"));
+const NonmemberPage_1 = __importDefault(require("./pages/NonmemberPage"));
+const AdminPostDetailPage_1 = __importDefault(require("./pages/AdminPostDetailPage"));
+const AdminLogIn_1 = __importDefault(require("./admins/adminLogIn/components/AdminLogIn"));
+const AdminSignIn_1 = __importDefault(require("./admins/adminSignIn/components/AdminSignIn"));
+const ScrollToTop_1 = __importDefault(require("./utils/ScrollToTop"));
+const queryClient = new react_query_1.QueryClient();
+const App = () => {
+    return ((0, jsx_runtime_1.jsx)(react_1.default.StrictMode, { children: (0, jsx_runtime_1.jsxs)(react_query_1.QueryClientProvider, Object.assign({ client: queryClient }, { children: [(0, jsx_runtime_1.jsx)(react_1.default.StrictMode, { children: (0, jsx_runtime_1.jsxs)(react_router_dom_1.BrowserRouter, { children: [(0, jsx_runtime_1.jsx)(ScrollToTop_1.default, {}), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Routes, { children: [(0, jsx_runtime_1.jsxs)(react_router_dom_1.Route, Object.assign({ element: (0, jsx_runtime_1.jsx)(MainLayout_1.default, {}) }, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/community/post/:category", element: (0, jsx_runtime_1.jsx)(CommunityPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/community/:board_id", element: (0, jsx_runtime_1.jsx)(PostDetailPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/search", element: (0, jsx_runtime_1.jsx)(SearchPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/schedule/:category", element: (0, jsx_runtime_1.jsx)(SchedulePage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/openprofile", element: (0, jsx_runtime_1.jsx)(OpenProfilePage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/mypage", element: (0, jsx_runtime_1.jsx)(MyPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/nonmember", element: (0, jsx_runtime_1.jsx)(NonmemberPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/", element: (0, jsx_runtime_1.jsx)(MainPage_1.default, {}) })] })), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Route, Object.assign({ element: (0, jsx_runtime_1.jsx)(LoginLayout_1.default, {}) }, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/login", element: (0, jsx_runtime_1.jsx)(LogInPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/quiz", element: (0, jsx_runtime_1.jsx)(QuizPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/signin", element: (0, jsx_runtime_1.jsx)(SignInPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/mypage/edit", element: (0, jsx_runtime_1.jsx)(MyPageEditPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/mypage/skill", element: (0, jsx_runtime_1.jsx)(MyPageSkillPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/mypage/career", element: (0, jsx_runtime_1.jsx)(MyPageCareerPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/mypage/education", element: (0, jsx_runtime_1.jsx)(MyPageEduPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/mypage/link", element: (0, jsx_runtime_1.jsx)(MyPageLinkPage_1.default, {}) })] })), (0, jsx_runtime_1.jsxs)(react_router_dom_1.Route, Object.assign({ element: (0, jsx_runtime_1.jsx)(AdminLayout_1.default, {}) }, { children: [(0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/users", element: (0, jsx_runtime_1.jsx)(AdminUserPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/plans", element: (0, jsx_runtime_1.jsx)(AdminPlanPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/posts", element: (0, jsx_runtime_1.jsx)(AdminPostPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/tracks", element: (0, jsx_runtime_1.jsx)(AdminTrackPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/notifications", element: (0, jsx_runtime_1.jsx)(AdminNotificationPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/posts/detail/:boardId", element: (0, jsx_runtime_1.jsx)(AdminPostDetailPage_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/write", element: (0, jsx_runtime_1.jsx)(PostWritePage_1.default, {}) })] })), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/login", element: (0, jsx_runtime_1.jsx)(AdminLogIn_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/signin", element: (0, jsx_runtime_1.jsx)(AdminSignIn_1.default, {}) }), (0, jsx_runtime_1.jsx)(react_router_dom_1.Route, { path: "/admin/", element: (0, jsx_runtime_1.jsx)(AdminLogIn_1.default, {}) })] })] }) }), (0, jsx_runtime_1.jsx)(devtools_1.ReactQueryDevtools, { initialIsOpen: true, position: "bottom-right" })] })) }));
+};
+exports.default = App;
