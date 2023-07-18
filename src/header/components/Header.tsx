@@ -24,19 +24,30 @@ const Header = () => {
   const token = sessionStorage.getItem('userToken');
   const location = useLocation();
   const [userImg, setUserImg] = useState<string>('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   //30초마다 알림 갱신
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
-    enabled: true,
+    enabled: isLoggedIn,
     refetchInterval: 30 * 1000,
   });
   // mainProfileData (유저 프로필 정보) 가져오기
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch(`${URL}/api/users/mypage`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
+  const mainProfileDataQuery = useQuery(
+    'mainProfileData',
+    () =>
+      fetch(`${URL}/api/users/mypage`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
+        },
+      }).then((response) => response.json()),
+    { enabled: isLoggedIn }
   );
+
   const mainProfileData = mainProfileDataQuery.data;
 
   useEffect(() => {
