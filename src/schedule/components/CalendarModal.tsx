@@ -1,23 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as LeftIcon } from '../../assets/icons/fi_chevron-left.svg';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
-import * as Style from '../styleComponents/CalendarModal';
+import * as Style from '../styleComponents/CalendarModalStyle';
 import rabbitImg from '../../assets/images/rabbitStudyng.png';
 import { addDays, subDays, format } from 'date-fns';
-import { useQuery, useQueryClient } from 'react-query';
-import { fetchScheduleYMD } from '../api/scheduleApi';
-
-const CalendarModal = ({ onModal, date }) => {
+import { useQuery } from 'react-query';
+import { fetchSchedule } from '../api/scheduleApi';
+interface Props {
+  handleClickOpen: () => void;
+  date: string;
+}
+interface LinkData {
+  url: string;
+  length: number;
+}
+interface CalendarDailyData {
+  id: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  content: string;
+  PlanLinks: [LinkData];
+}
+const CalendarModal = ({ handleClickOpen, date }: Props) => {
   //모달 종료
   const handleClickClose = () => {
-    onModal(false);
+    handleClickOpen();
   };
   const [dateChanged, setDateChaged] = useState(date);
-  const { data } = useQuery(['scheduleYMD', dateChanged], () => fetchScheduleYMD(dateChanged));
+  const { data } = useQuery(['scheduleYMD', dateChanged], () =>
+    fetchSchedule({ type: 'ymd', date: dateChanged })
+  );
 
   const [formatDate, setFormatDate] = useState(date);
   //날짜 포맷터 함수 ex) 2023-06-13 =>  2023년 06월 13일
-  const dateFormatter = (date) => {
+  const dateFormatter = (date: string) => {
     const year = date.slice(0, 4);
     const month = date.slice(5, 7);
     const day = date.slice(8, 10);
@@ -30,11 +47,11 @@ const CalendarModal = ({ onModal, date }) => {
   }, []);
 
   //prev, next 버튼 클릭시 날짜 변경 함수
-  const handleDateChange = async (type) => {
+  const handleDateChange = async (type: string) => {
     const count = 1;
     //현재 날짜
     const currentDate = new Date(dateChanged);
-    let newDate = '';
+    let newDate = new Date();
     //add 일 경우 1일씩 날짜 증가
     if (type === 'add') {
       newDate = addDays(currentDate, count);
@@ -49,7 +66,6 @@ const CalendarModal = ({ onModal, date }) => {
     dateFormatter(formmaterDate);
   };
 
-  console.log(data);
   return (
     <>
       <Style.Background onClick={handleClickClose} />
@@ -69,7 +85,7 @@ const CalendarModal = ({ onModal, date }) => {
           <div className='scroll'>
             {data !== undefined ? (
               data.length > 0 ? (
-                data.map((item) => (
+                data.map((item: CalendarDailyData) => (
                   <div className='main' key={item.id}>
                     <span className='header-span'></span>
                     <div className='main-text'>
@@ -84,7 +100,7 @@ const CalendarModal = ({ onModal, date }) => {
                             관련 링크
                             <br />
                             <div className='link-box'>
-                              {item.PlanLinks.map((link) => (
+                              {item.PlanLinks.map((link: LinkData) => (
                                 <a href={link.url} target='_blank'>
                                   {link.url}
                                   <br />

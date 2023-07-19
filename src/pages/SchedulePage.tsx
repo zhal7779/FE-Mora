@@ -10,7 +10,7 @@ const SchedulePage = () => {
 
   const navigate = useNavigate();
 
-  const handleSetCategory = (category) => {
+  const handleSetCategory = (category: string) => {
     setCategory(category);
   };
   useEffect(() => {
@@ -22,7 +22,7 @@ const SchedulePage = () => {
   }, [category, navigate]);
   return (
     <SchedulePageWrapper>
-      <ScheduleCategory setMenu={handleSetCategory} />
+      <ScheduleCategory handleSetCategory={handleSetCategory} />
       {category === 'notice' ? <Notification /> : category === 'calendar' ? <Calendar /> : null}
     </SchedulePageWrapper>
   );
