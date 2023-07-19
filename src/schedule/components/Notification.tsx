@@ -8,34 +8,38 @@ import { fetchNotice } from '../api/scheduleApi';
 import Pagination from './Pagination';
 import Input from '../../components/Input';
 import { SearchDebounce } from './SearchDebounce';
-import { useWindowSize } from '../../hooks/useWindowSize';
+
+interface NotificationData {
+  id: string;
+  title: string;
+  content: string;
+}
 const Notification = () => {
   //검색창 인풋
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(0);
-  const [view, setView] = useState([]);
+  const [view, setView] = useState<string[]>([]);
 
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     searchDebouncing(e.target.value);
     setInputValue(e.target.value);
   };
-  const handleClickPage = (number) => {
-    setPage(number);
+  const handleClickPage = (page: number) => {
+    setPage(page);
   };
 
   // 디바운스하여 0.3초뒤에 검색 실행
   const searchDebouncing = useCallback(
-    SearchDebounce((inputValue) => setSearchValue(inputValue)),
+    SearchDebounce((inputValue: string) => setSearchValue(inputValue)),
     []
   );
 
   const { data, isSuccess } = useQuery(['notice', searchValue, page], () =>
     fetchNotice(page, searchValue)
   );
-
   //더보기 Open, close
-  const handleClickView = (id) => {
+  const handleClickView = (id: string) => {
     setView((prevContent) => {
       if (!prevContent.includes(id)) {
         return [...prevContent, id];
@@ -64,7 +68,7 @@ const Notification = () => {
       ) : (
         <>
           {data &&
-            data.objArr.map((item) => (
+            data.objArr.map((item: NotificationData) => (
               <Style.Content key={item.id}>
                 <div className='title' onClick={() => handleClickView(item.id)}>
                   <h5>📢 [{item.title}]</h5>
@@ -92,7 +96,7 @@ const Notification = () => {
             <Pagination
               pages={data.totalPages}
               currentPage={data.currentPage}
-              clickPage={handleClickPage}
+              handleClickPage={handleClickPage}
             />
           )}
         </>

@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { CategoryContainer } from '../../community/styledComponents/CategoryStyle';
 import { ReactComponent as MegaphoneIcon } from '../../assets/icons/u_megaphone.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/u_calendar-alt.svg';
 import { useWindowSize } from '../../hooks/useWindowSize';
-
-const ScheduleCategory = ({ setMenu }) => {
-  const [selectedCategory, setSelectedCategory] = useState('notice');
-  const handleCategorySelect = (category) => {
+interface menuData {
+  handleSetCategory: (category: string) => void;
+}
+const ScheduleCategory = ({ handleSetCategory }: menuData) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('notice');
+  const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
-    setMenu(category);
+    handleSetCategory(category);
   };
   const { tabletSize } = useWindowSize();
-
   return (
     <CategoryContainer style={{ marginTop: '6rem' }}>
       <div className='category-title'>
@@ -37,7 +38,6 @@ const ScheduleCategory = ({ setMenu }) => {
               ) : (
                 ''
               )}
-
               <p>공지사항</p>
             </a>
           </li>

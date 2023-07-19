@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { KeywordHighlight } from './KeywordHighlight';
 import { SearchContext } from '../context/SearchContext';
-const SearchPostList = ({ item, menu }) => {
+import { SearchPostData } from '../interface/searchInterface';
+interface Props {
+  menu: string;
+  item: SearchPostData;
+}
+
+const SearchPostList = ({ item, menu }: Props) => {
   const keyword = useContext(SearchContext);
   return (
     <li key={item.id}>
@@ -27,7 +33,7 @@ const SearchPostList = ({ item, menu }) => {
           <KeywordHighlight content={item.content} keyword={keyword} />
         </p>
         <div className='hashtags'>
-          {item.Hashtags.map((hashtag, index) =>
+          {item.Hashtags.map((hashtag, index: number) =>
             hashtag && hashtag.length > 0 ? <h3 key={index}>#{hashtag}</h3> : null
           )}
         </div>

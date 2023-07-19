@@ -5,8 +5,9 @@ import { useWindowSize } from '../../hooks/useWindowSize';
 import Button from '../../components/Button';
 import { useState } from 'react';
 import RankingModal from './RankingModal';
+import { RankingData } from '../interface/searchInterface';
 
-const RankingContent = ({ data }) => {
+const RankingContent = ({ data }: { data: RankingData[] }) => {
   const { tabletSize } = useWindowSize();
 
   const [isOpenModal, setIsOpenModal] = useState(false);

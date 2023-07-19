@@ -23,7 +23,7 @@ interface AlarmData {
   ['AlertFromUser.UserDetail.img_path']: string;
   ['AlertFromUser.name']: string;
 }
-const AlarmModal: React.FC<Props> = ({ handleModalClick }) => {
+const AlarmModal = ({ handleModalClick }: Props) => {
   //더보기 상태
   const [hiddenContent, setHiddenContent] = useState<string[]>([]);
   // 알림 읽음 여부 상태

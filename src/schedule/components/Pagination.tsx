@@ -2,26 +2,31 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LeftIcon } from '../../assets/icons/fi_chevron-left.svg';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
+interface PageData {
+  pages: number;
+  currentPage: number;
+  handleClickPage: (page: number) => void;
+}
 
-const Pagination = ({ pages, currentPage, clickPage }) => {
-  const [pageNumber, setPageNumber] = useState(currentPage + 1);
+const Pagination = ({ pages, currentPage, handleClickPage }: PageData) => {
+  const [pageNumber, setPageNumber] = useState<number>(currentPage + 1);
 
-  const handlePageChange = (newPageNumber) => {
+  const handlePageChange = (newPageNumber: number) => {
     setPageNumber(newPageNumber + 1);
-    clickPage(newPageNumber);
+    handleClickPage(newPageNumber);
   };
   //이전페이지
   const handlePrevButton = () => {
     if (pageNumber > 1) {
       setPageNumber(pageNumber - 1);
-      clickPage(pageNumber - 2);
+      handleClickPage(pageNumber - 2);
     }
   };
   //다음페이지
   const handleNextButton = () => {
     if (pageNumber < pages) {
       setPageNumber(pageNumber + 1);
-      clickPage(pageNumber);
+      handleClickPage(pageNumber);
     }
   };
   return (
@@ -66,10 +71,9 @@ const Container = styled.div`
     }
   }
 `;
-const PageNumber = styled.p`
+const PageNumber = styled.p<{ isActive: boolean }>`
   cursor: pointer;
   color: var(--dark-gray);
-
   padding: 0 0.5rem;
   ${({ isActive }) =>
     isActive &&

@@ -6,7 +6,7 @@ import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
 import { RegisterStatusProps } from '../interface/openProfileInterface';
 
-const OpenProfile: React.FC<RegisterStatusProps> = ({ registerStatus }) => {
+const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
   const [userId, setUserId] = useState('');
   //커피챗 쿼리
   const [coffeeChatStatus, setCoffeeChatStatus] = useState<string[]>([]);
@@ -43,7 +43,7 @@ const OpenProfile: React.FC<RegisterStatusProps> = ({ registerStatus }) => {
   return (
     <>
       {isSuccess &&
-        data.pages.map((page) =>
+        data.pages.map((page, index: number) =>
           page.totalPages === 0 ? (
             <Style.Nodata>
               <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
@@ -52,6 +52,7 @@ const OpenProfile: React.FC<RegisterStatusProps> = ({ registerStatus }) => {
           ) : (
             <>
               <OpenProfileList
+                key={index}
                 data={page.objArr}
                 setUserId={setUserId}
                 coffeeChatStatus={coffeeChatStatus}

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Toggle from './Toggle';
 import { RegisterProps } from '../interface/openProfileInterface';
 
-const ToggleHeader: React.FC<RegisterProps> = ({ handleProfileRegisterStatus }) => {
+const ToggleHeader = ({ handleProfileRegisterStatus }: RegisterProps) => {
   return (
     <Container>
       <p>오픈 프로필 올리기</p>
