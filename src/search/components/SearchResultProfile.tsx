@@ -47,7 +47,7 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }: Props) => {
             </Style.AddView>
           )}
           {data &&
-            data.map((item: any) => (
+            data.map((item: SearchProfileData) => (
               <Content key={item.user_id}>
                 <div>
                   <div className='img-container'>
@@ -60,11 +60,13 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }: Props) => {
                     <h5>
                       <KeywordHighlight content={item.position} keyword={keyword} />
                     </h5>
-                    <div className='skill'>
-                      {item.User.Skills.map((skill: any) => (
-                        <p>#{skill.name} </p>
-                      ))}
-                    </div>
+                    {Array.isArray(item.User.Skills) ? (
+                      <div className='skill'>
+                        {item.User.Skills.map((skill: { name: string }) => (
+                          <p>#{skill.name} </p>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
                 <div className='button_content'>

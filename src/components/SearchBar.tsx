@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 type Props = {
   handleSearchClick: () => void;
 };
-const SearchBar: React.FC<Props> = ({ handleSearchClick }) => {
+const SearchBar = ({ handleSearchClick }: Props) => {
   const navigate = useNavigate();
   //input 처리
   const [input, setInput] = useState('');

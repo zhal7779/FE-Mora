@@ -6,7 +6,7 @@ import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
 import { RegisterStatusProps } from '../interface/openProfileInterface';
 
-const OpenProfile: React.FC<RegisterStatusProps> = ({ registerStatus }) => {
+const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
   const [userId, setUserId] = useState('');
   //커피챗 쿼리
   const [coffeeChatStatus, setCoffeeChatStatus] = useState<string[]>([]);
