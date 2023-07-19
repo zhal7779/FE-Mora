@@ -8,15 +8,25 @@ import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
+import { SearchProfileData } from '../interface/searchInterface';
+
+interface Props {
+  data: SearchProfileData[];
+  count?: number;
+  type?: string;
+  receiveMenu?: (menu: string) => void;
+}
+
+const SearchResultProfile = ({ data, count, type, receiveMenu }: Props) => {
   //검색후 데이터에 키워드 하이라이트 줄 변수
   const keyword = useContext(SearchContext);
 
-  //모두보기 클릭시 메뉴 2번 프로필 보기로 이동
+  //모두보기 클릭시 프로필 보기로 이동
   const handleAllView = () => {
-    receiveMenu('openProfile');
+    if (receiveMenu) {
+      receiveMenu('openProfile');
+    }
   };
-  console.lo;
 
   return (
     <Container>
@@ -37,7 +47,7 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
             </Style.AddView>
           )}
           {data &&
-            data.map((item) => (
+            data.map((item: any) => (
               <Content key={item.user_id}>
                 <div>
                   <div className='img-container'>
@@ -51,7 +61,7 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }) => {
                       <KeywordHighlight content={item.position} keyword={keyword} />
                     </h5>
                     <div className='skill'>
-                      {item.User.Skills.map((skill) => (
+                      {item.User.Skills.map((skill: any) => (
                         <p>#{skill.name} </p>
                       ))}
                     </div>

@@ -3,20 +3,27 @@ import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 import { SearchContext } from '../context/SearchContext';
 import { useContext } from 'react';
+import { CountArrData } from '../interface/searchInterface';
 
-const SearchResultBar = ({ handleSubSearch, menu, count }) => {
+interface Props {
+  handleSubSearch: (keyword: string) => void;
+  menu: string;
+  count: CountArrData;
+}
+
+const SearchResultBar = ({ handleSubSearch, menu, count }: Props) => {
   const keyword = useContext(SearchContext);
   //검색창 input
   const [input, setInput] = useState(keyword);
   //검색결과
   const [resultKeyword, setResultKeyword] = useState(keyword);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   // 검색 결과 전달
-  const handleSearchResult = (e) => {
+  const handleSearchResult = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ('Enter' === e.key) {
       setResultKeyword(input);
       handleSubSearch(input);

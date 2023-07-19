@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { RankingData } from '../interface/searchInterface';
+interface RankContent {
+  rank: number;
+}
 
-const RankingList = ({ data }) => {
+const RankingList = ({ data }: { data: RankingData[] }) => {
   return (
     <>
       {data &&
-        data.map((item, index) => (
+        data.map((item: RankingData, index: number) => (
           <Link to={'/community/' + item.id} key={item.id}>
             <Content rank={index + 1}>
               <p className='ranking'>{index + 1}</p>
@@ -28,7 +32,7 @@ const RankingList = ({ data }) => {
 
 export default RankingList;
 
-const Content = styled.div`
+const Content = styled.div<RankContent>`
   padding: 1.6rem 0;
   border-bottom: 1px solid var(--blue-gray);
   display: flex;
@@ -54,7 +58,7 @@ const Content = styled.div`
     margin-right: 0.5rem;
   }
   .title {
-    ${(props) => props}
+    ${(props) => props.rank}
     font-weight: 600;
     font-size: 1.4rem;
     cursor: pointer;

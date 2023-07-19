@@ -99,7 +99,7 @@ export const NavContainer = styled.nav`
   }
 `;
 
-export const NavItem = styled.div`
+export const NavItem = styled.div<{ active: boolean }>`
   ${(props) => (props.active ? 'border-bottom: 0.3rem solid #522bae;' : '')}
   p {
     font-size: 1.6rem;

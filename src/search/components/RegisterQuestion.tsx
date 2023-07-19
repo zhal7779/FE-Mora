@@ -4,7 +4,7 @@ import helpImg from '../../assets/images/help.png';
 import catImg from '../../assets/images/cat.png';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
-const RegisterQuestion = ({ type }) => {
+const RegisterQuestion = ({ type }: { type: string }) => {
   return (
     <Container>
       {type === 'study' ? (
