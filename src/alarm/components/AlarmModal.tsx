@@ -2,20 +2,38 @@ import React, { useState } from 'react';
 import * as Style from '../styledComponents/AlarmModalStyle';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
-import { ReactComponent as PostIcon } from '../../assets/icons/post.svg';
 import { useQuery } from 'react-query';
 import { getAlert, patchAlert } from '../api/alarmApi';
 import { Link } from 'react-router-dom';
-const AlarmModal = ({ handleModalClick }) => {
+import { useWindowSize } from '../../hooks/useWindowSize';
+
+type Props = {
+  handleModalClick: () => void;
+};
+
+interface AlarmData {
+  checked: number;
+  id: string;
+  type: string;
+  planTitle: string;
+  planContent: string;
+  commentContent: string;
+  boardId: string;
+  boardTitle: string;
+  ['AlertFromUser.UserDetail.img_path']: string;
+  ['AlertFromUser.name']: string;
+}
+const AlarmModal: React.FC<Props> = ({ handleModalClick }) => {
   //더보기 상태
-  const [hiddenContent, setHiddenContent] = useState([]);
+  const [hiddenContent, setHiddenContent] = useState<string[]>([]);
   // 알림 읽음 여부 상태
-  const [alarmStatus, setAlarmStauts] = useState([]);
+  const [alarmStatus, setAlarmStauts] = useState<string[]>([]);
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
+
   const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
   //모달 리스트 open, close
-  const handleContentClick = (id) => {
+  const handleContentClick = (id: string) => {
     setAlarmId(id);
     refetch();
     setAlarmStauts((prevStatus) => {
@@ -31,21 +49,22 @@ const AlarmModal = ({ handleModalClick }) => {
       }
     });
   };
+  const { mobileSize } = useWindowSize();
 
   return (
     <>
       <Style.Container>
-        <Style.HeaderContent>
+        <div className='header-content'>
           <p>알림</p>
-        </Style.HeaderContent>
-        <Style.Scroll>
+        </div>
+        <ul className='contents'>
           {data && data.length > 1 ? (
             <>
               {data.map(
-                (item) =>
+                (item: AlarmData) =>
                   item.id && (
-                    <Style.Content key={item.id}>
-                      <Style.ShowContent onClick={() => handleContentClick(item.id)}>
+                    <li className='content' key={item.id}>
+                      <div className='show-content' onClick={() => handleContentClick(item.id)}>
                         <div>
                           {item.checked === 1 || alarmStatus.includes(item.id) ? (
                             <span style={{ background: '#EEEAFE' }}></span>
@@ -58,16 +77,41 @@ const AlarmModal = ({ handleModalClick }) => {
                           )}
                           {item.type === 'COMMENT' ? (
                             <>
-                              <Style.ImageIcon
+                              <img
+                                className='img-icon'
                                 src={item['AlertFromUser.UserDetail.img_path']}
-                              ></Style.ImageIcon>
-                              <strong>{item['AlertFromUser.name']}</strong>
-                              <p>님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                                alt='프로필 이미지'
+                              ></img>
+                              {mobileSize ? (
+                                <div className='mobile-content'>
+                                  <div>
+                                    <strong>{item['AlertFromUser.name']}</strong>{' '}
+                                    <p> &nbsp; 님이 회원님의 </p>
+                                  </div>
+                                  <p>게시글에 댓글을 달았습니다.</p>
+                                </div>
+                              ) : (
+                                <>
+                                  <strong>{item['AlertFromUser.name']}</strong>
+                                  <p> &nbsp; 님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                                </>
+                              )}
                             </>
                           ) : item.type === 'PLAN' ? (
                             <div className='planAlarm'>
-                              <strong>[{item.planTitle}] </strong>
-                              <p> 일정 시작 1시간 전입니다. </p>
+                              {mobileSize ? (
+                                <div className='mobile-content'>
+                                  <div>
+                                    [<strong>{item.planTitle} </strong>]
+                                  </div>
+                                  <p>일정 시작 1시간 전입니다. </p>
+                                </div>
+                              ) : (
+                                <>
+                                  [<strong>{item.planTitle} </strong>]
+                                  <p> &nbsp; 일정 시작 1시간 전입니다. </p>
+                                </>
+                              )}
                             </div>
                           ) : (
                             ''
@@ -78,21 +122,19 @@ const AlarmModal = ({ handleModalClick }) => {
                             <UpIcon
                               stroke='var(--dark-gray)'
                               strokeWidth='2'
-                              width='22'
-                              height='22'
+                              width={mobileSize ? '18' : '22'}
                             />
                           ) : (
                             <DownIcon
                               stroke='var(--dark-gray)'
                               strokeWidth='2'
-                              width='22'
-                              height='22'
+                              width={mobileSize ? '18' : '22'}
                             />
                           )}
                         </div>
-                      </Style.ShowContent>
+                      </div>
                       {hiddenContent.includes(item.id) ? (
-                        <Style.HiddenContent>
+                        <div className='hidden-content'>
                           <div style={{ border: '1px solid #e0e0e0' }}>
                             {item.type === 'COMMENT' ? (
                               <p>{item.commentContent}</p>
@@ -104,15 +146,15 @@ const AlarmModal = ({ handleModalClick }) => {
                           </div>
                           <div style={{ background: 'transparent' }}>
                             {item.type === 'COMMENT' ? (
-                              <div className='title_div'>
-                                <PostIcon />
+                              <div className='title-div'>
+                                <span style={{ background: '#605EA0' }}>게시글</span>
                                 <Link to={'/community/' + item.boardId}>
                                   <h5>{item.boardTitle}</h5>
                                 </Link>
                               </div>
                             ) : item.type === 'PLAN' ? (
-                              <div className='title_div'>
-                                <span>일정</span>
+                              <div className='title-div'>
+                                <span style={{ background: ' #ed6653' }}>일정</span>
                                 <Link to={'/schedule'}>
                                   <h5>{item.planTitle}</h5>
                                 </Link>
@@ -121,11 +163,11 @@ const AlarmModal = ({ handleModalClick }) => {
                               ''
                             )}
                           </div>
-                        </Style.HiddenContent>
+                        </div>
                       ) : (
                         ''
                       )}
-                    </Style.Content>
+                    </li>
                   )
               )}
             </>
@@ -135,7 +177,7 @@ const AlarmModal = ({ handleModalClick }) => {
               <p>새로운 알림이 없습니다.</p>
             </Style.Nodata>
           )}
-        </Style.Scroll>
+        </ul>
       </Style.Container>
       <Style.Background onClick={handleModalClick} />
     </>

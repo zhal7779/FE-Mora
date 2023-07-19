@@ -7,7 +7,7 @@ import logo from '../assets/images/logo2.png';
 const NonmemberPage = () => {
   return (
     <Container>
-      <img src={rabbitImg} />
+      <img src={rabbitImg} alt='엘리스 토끼' />
       <div>
         <div className='content'>
           <img src={logo} />

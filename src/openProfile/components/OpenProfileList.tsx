@@ -5,28 +5,69 @@ import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.s
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { coffeeChatConfirm } from './CoffeeChatConfrim';
 import { useWindowSize } from '../../hooks/useWindowSize';
+interface TokenData {
+  id: string;
+}
+
+interface SkillsData {
+  name: string;
+}
+interface CareersData {
+  company_name: string;
+  hire_date: string;
+  position: string;
+  resign_date: string;
+  work_year: string;
+}
+interface OpenProfileData {
+  chat_status: boolean;
+  user_id: string;
+  img_path: string;
+  position: string;
+  User: {
+    name: string;
+    Skills: SkillsData;
+  };
+  user_careers: {
+    career_list: CareersData;
+    total_year: string;
+  };
+}
+
+interface Props {
+  data: OpenProfileData;
+  setUserId: (userId: string) => void;
+  coffeeChatStatus: string[];
+  setCoffeeChatStatus: React.Dispatch<React.SetStateAction<string[]>>;
+  coffeeCahtRefetch: () => void;
+}
 
 const OpenProfileList = ({
   data,
-  setCoffeChatStatus,
-  coffeChatStatus,
   setUserId,
+  coffeeChatStatus,
+  setCoffeeChatStatus,
   coffeeCahtRefetch,
-}) => {
+}: Props) => {
   const token = sessionStorage.getItem('userToken');
-  const myId = jwt_decode(token).id;
+  const myId = token && jwt_decode<TokenData>(token).id;
 
-  const [moreView, setMoreView] = useState([]);
+  const [moreView, setMoreView] = useState<string[]>([]);
 
-  const handleMoreViewClick = (id) => {
+  const handleMoreViewClick = (id: string): void => {
     setMoreView((prevMoreView) => {
       if (!prevMoreView.includes(id)) {
         return [...prevMoreView, id];
       }
+      return prevMoreView;
     });
   };
+
+  const dataArray = Array.isArray(data) ? data : [];
+
   const { mobileSize } = useWindowSize();
-  return data.map((item) => (
+
+  return dataArray.map((item: OpenProfileData) => (
     <Style.Container key={item.user_id}>
       <div className='content'>
         <div className='profile-content'>
@@ -47,7 +88,7 @@ const OpenProfileList = ({
             </span>
           </div>
           <div>
-            {coffeChatStatus.includes(item.user_id) || item.chat_status === true ? (
+            {coffeeChatStatus.includes(item.user_id) || item.chat_status === true ? (
               <button className='complete-button'>신청 완료</button>
             ) : myId === item.user_id ? (
               <button className='complete-button'>내 프로필</button>
@@ -57,7 +98,7 @@ const OpenProfileList = ({
                   coffeeChatConfirm(
                     item.user_id,
                     item.User.name,
-                    setCoffeChatStatus,
+                    setCoffeeChatStatus,
                     setUserId,
                     coffeeCahtRefetch
                   )
@@ -69,12 +110,14 @@ const OpenProfileList = ({
           </div>
         </div>
         <div className='skill-content'>
-          {item.User.Skills.map((skill, index) => (
-            <div key={index}>{skill.name}</div>
-          ))}
+          {Array.isArray(item.User.Skills) &&
+            item.User.Skills.map((skill: SkillsData, index: number) => (
+              <div key={index}>{skill.name}</div>
+            ))}
         </div>
         {moreView.includes(item.user_id)
-          ? item.user_careers.career_list.map((careear, index) => (
+          ? Array.isArray(item.user_careers.career_list) &&
+            item.user_careers.career_list.map((careear: CareersData, index: number) => (
               <div className='carrer-content' key={index}>
                 {mobileSize ? (
                   <div className='carrer-text'>
@@ -101,7 +144,8 @@ const OpenProfileList = ({
                 )}
               </div>
             ))
-          : item.user_careers.career_list.slice(0, 2).map((careear, index) => (
+          : Array.isArray(item.user_careers.career_list) &&
+            item.user_careers.career_list.slice(0, 2).map((careear: CareersData, index: number) => (
               <div className='carrer-content' key={index}>
                 {mobileSize ? (
                   <div className='carrer-text'>
@@ -129,12 +173,14 @@ const OpenProfileList = ({
               </div>
             ))}
       </div>
-      {!moreView.includes(item.user_id) && item.user_careers.career_list.length > 2 && (
-        <div className='more-view-button' onClick={() => handleMoreViewClick(item.user_id)}>
-          더 보기
-          <DownIcon stroke='#acacb0' strokeWidth='1' width='19' height='19' />
-        </div>
-      )}
+      {!moreView.includes(item.user_id) &&
+        Array.isArray(item.user_careers.career_list) &&
+        item.user_careers.career_list.length > 2 && (
+          <div className='more-view-button' onClick={() => handleMoreViewClick(item.user_id)}>
+            더 보기
+            <DownIcon stroke='#acacb0' strokeWidth='1' width='19' height='19' />
+          </div>
+        )}
     </Style.Container>
   ));
 };

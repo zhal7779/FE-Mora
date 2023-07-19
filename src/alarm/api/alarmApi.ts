@@ -13,7 +13,7 @@ export const getAlert = async () => {
 
 // 알림 읽음 여부
 
-export const patchAlert = async (id) => {
+export const patchAlert = async (id: string) => {
   const response = await fetch(`${process.env.REACT_APP_URL}/api/alerts/${id}`, {
     method: 'PATCH',
     headers: {
