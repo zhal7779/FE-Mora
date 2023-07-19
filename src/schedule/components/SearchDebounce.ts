@@ -1,12 +1,13 @@
-type SearchDebounceFunction = (callback: (...args: any[]) => void) => (...args: any[]) => void;
+type SearchDebounceFunction = (
+  callback: (inputValue: string) => void
+) => (inputValue: string) => void;
 let timer: number | undefined;
 
 export const SearchDebounce: SearchDebounceFunction = (callback) => {
-  console.log(callback);
-  return (...args) => {
+  return (inputValue) => {
     clearTimeout(timer);
     timer = window.setTimeout(() => {
-      callback(...args);
+      callback(inputValue);
       timer = undefined;
     }, 300);
   };

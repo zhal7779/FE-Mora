@@ -43,7 +43,7 @@ const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
   return (
     <>
       {isSuccess &&
-        data.pages.map((page) =>
+        data.pages.map((page, index: number) =>
           page.totalPages === 0 ? (
             <Style.Nodata>
               <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
@@ -52,6 +52,7 @@ const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
           ) : (
             <>
               <OpenProfileList
+                key={index}
                 data={page.objArr}
                 setUserId={setUserId}
                 coffeeChatStatus={coffeeChatStatus}
