@@ -4,16 +4,28 @@ import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
-import { RegisterStatusProps } from '../interface/openProfileInterface';
+import { RegisterStatusProps } from '../types/openProfileType';
 
 const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
   const [userId, setUserId] = useState('');
+
   //커피챗 쿼리
   const [coffeeChatStatus, setCoffeeChatStatus] = useState<string[]>([]);
-  const { data: coffeeChatData, refetch: coffeeCahtRefetch } = useQuery(
+  const { refetch: coffeeChatRefetch } = useQuery(
     ['coffeeChat', coffeeChatStatus],
-    () => postCoffeeChat(userId)
+    () => postCoffeeChat(userId),
+    {
+      enabled: false,
+    }
   );
+
+  // 커피챗 신청시 유저 아이디를 배열에 추가, 유저아이디 배열을 의존성으로 하여 refetch함.
+  useEffect(() => {
+    if (coffeeChatStatus.length > 0) {
+      coffeeChatRefetch();
+    }
+  }, [coffeeChatStatus, coffeeChatRefetch]);
+
   const queryClient = useQueryClient();
   //오픈프로필 전체 데이터 쿼리, 무한스크롤 적용
   const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
@@ -30,37 +42,35 @@ const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
   );
 
   const observerRef = useRef(null);
-  //무한스크롤 DOM요소 가시성 감지 함수
   useObserver(observerRef, fetchNextPage, hasNextPage);
-  // 오픈프로필 등록하거나 커피챗 신청시 refetch
+
+  // 오픈프로필 등록시 refetch
   useEffect(() => {
     const profileRefetch = async () => {
       await queryClient.invalidateQueries('openProfile');
     };
     profileRefetch();
-  }, [registerStatus, coffeeChatData]);
+  }, [registerStatus]);
 
   return (
     <>
       {isSuccess &&
-        data.pages.map((page, index: number) =>
-          page.totalPages === 0 ? (
-            <Style.Nodata>
+        data.pages.map((page) =>
+          page.totalItems === 0 ? (
+            <Style.Nodata key={page.totalItems}>
               <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
               <p>등록된 오픈 프로필이 없습니다.</p>
             </Style.Nodata>
           ) : (
-            <>
+            <React.Fragment key={page.currentPage}>
               <OpenProfileList
-                key={index}
                 data={page.objArr}
                 setUserId={setUserId}
                 coffeeChatStatus={coffeeChatStatus}
                 setCoffeeChatStatus={setCoffeeChatStatus}
-                coffeeCahtRefetch={coffeeCahtRefetch}
               />
               <div ref={observerRef}></div>
-            </>
+            </React.Fragment>
           )
         )}
     </>

@@ -5,7 +5,7 @@ import { useWindowSize } from '../../hooks/useWindowSize';
 import Button from '../../components/Button';
 import { useState } from 'react';
 import RankingModal from './RankingModal';
-import { RankingData } from '../interface/searchInterface';
+import { RankingData } from '../types/searchType';
 
 const RankingContent = ({ data }: { data: RankingData[] }) => {
   const { tabletSize } = useWindowSize();

@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, useMutation } from 'react-query';
 import styled from 'styled-components';
 import { putProfile, ProfilRegistrStatus } from '../api/openProfileApi';
-import { RegisterProps } from '../interface/openProfileInterface';
+import { RegisterProps } from '../types/openProfileType';
 const Toggle = ({ handleProfileRegisterStatus }: RegisterProps) => {
   //오픈프로필 초기 상태값, 오픈프로필을 올렸다면 true, 내렸다면 false
   const { data: registerStatus, refetch: statusRefetch } = useQuery('status', ProfilRegistrStatus);

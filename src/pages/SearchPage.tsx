@@ -18,7 +18,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useWindowSize } from '../hooks/useWindowSize';
 import { useObserver } from '../hooks/useObserver';
-import { CountArrData } from '../search/interface/searchInterface';
+import { CountArrData } from '../search/types/searchType';
 
 interface QueryData {
   isSuccess: boolean;

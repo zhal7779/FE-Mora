@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { KeywordHighlight } from './KeywordHighlight';
 import { SearchContext } from '../context/SearchContext';
-import { SearchPostData } from '../interface/searchInterface';
+import { SearchPostData } from '../types/searchType';
 interface Props {
   menu: string;
   item: SearchPostData;
