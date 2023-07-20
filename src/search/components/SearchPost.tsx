@@ -3,7 +3,7 @@ import * as Style from '../styledComponents/SearchPostStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import NoData from '../../components/NoData';
 import SearchPostList from './SearchPostList';
-import { SearchPostData } from '../interface/searchInterface';
+import { SearchPostData } from '../types/searchType';
 
 interface Props {
   data: any;

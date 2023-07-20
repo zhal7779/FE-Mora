@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../assets/icons/fi_search.svg';
 import { SearchContext } from '../context/SearchContext';
 import { useContext } from 'react';
-import { CountArrData } from '../interface/searchInterface';
+import { CountArrData } from '../types/searchType';
 
 interface Props {
   handleSubSearch: (keyword: string) => void;

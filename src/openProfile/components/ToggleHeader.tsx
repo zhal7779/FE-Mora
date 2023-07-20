@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Toggle from './Toggle';
-import { RegisterProps } from '../interface/openProfileInterface';
+import { RegisterProps } from '../types/openProfileType';
 
 const ToggleHeader = ({ handleProfileRegisterStatus }: RegisterProps) => {
   return (

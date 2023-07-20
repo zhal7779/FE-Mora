@@ -4,7 +4,7 @@ import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
 import { getProfile, postCoffeeChat } from '../api/openProfileApi';
 import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
-import { RegisterStatusProps } from '../interface/openProfileInterface';
+import { RegisterStatusProps } from '../types/openProfileType';
 
 const OpenProfile = ({ registerStatus }: RegisterStatusProps) => {
   const [userId, setUserId] = useState('');

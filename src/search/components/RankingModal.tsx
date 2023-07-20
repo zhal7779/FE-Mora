@@ -1,7 +1,7 @@
 import React from 'react';
 import RankingList from './RankingList';
 import styled from 'styled-components';
-import { RankingData } from '../interface/searchInterface';
+import { RankingData } from '../types/searchType';
 interface Props {
   data: RankingData[];
   modalOpenOrClose: () => void;

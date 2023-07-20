@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import NoData from '../../components/NoData';
 import { Link } from 'react-router-dom';
-import { SearchProfileData } from '../interface/searchInterface';
+import { SearchProfileData } from '../types/searchType';
 
 interface Props {
   data: SearchProfileData[];
