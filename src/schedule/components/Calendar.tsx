@@ -7,7 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useQuery } from 'react-query';
-import { fetchSchedule } from '../api/scheduleApi';
+import { fetchSchedule } from '../api/apis';
 import { format } from 'date-fns';
 
 interface dateData {

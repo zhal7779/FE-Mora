@@ -3,7 +3,7 @@ import * as Style from '../styledComponents/AlarmModalStyle';
 import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.svg';
 import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
 import { useQuery } from 'react-query';
-import { getAlert, patchAlert } from '../api/alarmApi';
+import { getAlert, patchAlert } from '../api/apis';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from '../../hooks/useWindowSize';
 
@@ -23,6 +23,7 @@ interface AlarmData {
   ['AlertFromUser.UserDetail.img_path']: string;
   ['AlertFromUser.name']: string;
 }
+
 const AlarmModal = ({ handleModalClick }: Props) => {
   //더보기 상태
   const [hiddenContent, setHiddenContent] = useState<string[]>([]);
@@ -31,11 +32,10 @@ const AlarmModal = ({ handleModalClick }: Props) => {
   const [alarmId, setAlarmId] = useState('');
   const { data } = useQuery('alert', getAlert);
 
-  const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId));
+  const { refetch } = useQuery('alertStatus', () => patchAlert(alarmId), { enabled: false });
   //모달 리스트 open, close
   const handleContentClick = (id: string) => {
     setAlarmId(id);
-    refetch();
     setAlarmStauts((prevStatus) => {
       return [...prevStatus, id];
     });
@@ -48,6 +48,9 @@ const AlarmModal = ({ handleModalClick }: Props) => {
         return prevContent.filter((idx) => idx !== id);
       }
     });
+    if (!alarmStatus.includes(id)) {
+      refetch();
+    }
   };
   const { mobileSize } = useWindowSize();
 
@@ -123,12 +126,14 @@ const AlarmModal = ({ handleModalClick }: Props) => {
                               stroke='var(--dark-gray)'
                               strokeWidth='2'
                               width={mobileSize ? '18' : '22'}
+                              height={mobileSize ? '18' : '22'}
                             />
                           ) : (
                             <DownIcon
                               stroke='var(--dark-gray)'
                               strokeWidth='2'
                               width={mobileSize ? '18' : '22'}
+                              height={mobileSize ? '18' : '22'}
                             />
                           )}
                         </div>

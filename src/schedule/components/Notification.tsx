@@ -4,7 +4,7 @@ import { ReactComponent as DownIcon } from '../../assets/icons/fi_chevron-down.s
 import { ReactComponent as UpIcon } from '../../assets/icons/fi_chevron-up.svg';
 import rabbitImg from '../../assets/images/eliceRabbit-removebg-preview.png';
 import { useQuery } from 'react-query';
-import { fetchNotice } from '../api/scheduleApi';
+import { fetchNotice } from '../api/apis';
 import Pagination from './Pagination';
 import Input from '../../components/Input';
 import { SearchDebounce } from './SearchDebounce';
