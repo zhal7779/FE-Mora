@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+//무한스크롤 DOM요소 가시성 감지 함수
 export const useObserver = (observerRef, fetchNextPage, hasNextPage) => {
   useEffect(() => {
     const observer = new IntersectionObserver(

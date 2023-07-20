@@ -45,7 +45,7 @@ const SearchPost = ({ data, count, type, receiveMenu, menu, hasNextPage, observe
               </div>
             </Style.AddView>
             {data.map((item: SearchPostData) => (
-              <SearchPostList item={item} menu={menu} />
+              <SearchPostList key={item.id} item={item} menu={menu} />
             ))}
           </>
         ) : (
@@ -53,9 +53,11 @@ const SearchPost = ({ data, count, type, receiveMenu, menu, hasNextPage, observe
           data.pages &&
           data.pages.map((page: { totalItems: number; objArr: [] }) =>
             page.totalItems === 0 ? (
-              <NoData />
+              <NoData key={page.totalItems} />
             ) : (
-              page.objArr.map((item: SearchPostData) => <SearchPostList item={item} menu={menu} />)
+              page.objArr.map((item: SearchPostData) => (
+                <SearchPostList key={item.id} item={item} menu={menu} />
+              ))
             )
           )
         )}

@@ -4,8 +4,7 @@ export const coffeeChatConfirm = (
   id: string,
   name: string,
   setCoffeeChatStatus: React.Dispatch<React.SetStateAction<string[]>>,
-  setUserId: (userId: string) => void,
-  coffeeCahtRefetch: () => void
+  setUserId: (userId: string) => void
 ) => {
   Swal.fire({
     icon: 'question',
@@ -21,7 +20,6 @@ export const coffeeChatConfirm = (
         return [...prevData, id];
       });
       setUserId(id);
-      coffeeCahtRefetch();
     }
   });
 };
