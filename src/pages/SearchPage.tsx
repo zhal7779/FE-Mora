@@ -8,7 +8,7 @@ import RegisterQuestion from '../search/components/RegisterQuestion';
 import SearchPost from '../search/components/SearchPost';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
-import { fetchPopular, fetchSearchProfile, fetchSearchPost } from '../search/api/searchAPI';
+import { fetchPopular, fetchSearchProfile, fetchSearchPost } from '../search/api/apis';
 import { useQuery, useQueries, useInfiniteQuery } from 'react-query';
 import NoData from '../components/NoData';
 import { Swiper, SwiperSlide } from 'swiper/react';
