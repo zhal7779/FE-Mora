@@ -5,7 +5,7 @@ import * as Style from '../styleComponents/CalendarModalStyle';
 import rabbitImg from '../../assets/images/rabbitStudyng.png';
 import { addDays, subDays, format } from 'date-fns';
 import { useQuery } from 'react-query';
-import { fetchSchedule } from '../api/scheduleApi';
+import { fetchSchedule } from '../api/apis';
 interface Props {
   handleClickOpen: () => void;
   date: string;

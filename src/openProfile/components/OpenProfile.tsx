@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as Style from '../styledComponents/OpenProfileStyle';
 import { useQuery, useQueryClient, useInfiniteQuery } from 'react-query';
-import { getProfile, postCoffeeChat } from '../api/openProfileApi';
+import { getProfile, postCoffeeChat } from '../api/apis';
 import { useObserver } from '../../hooks/useObserver';
 import OpenProfileList from './OpenProfileList';
 import { RegisterStatusProps } from '../types/openProfileType';
