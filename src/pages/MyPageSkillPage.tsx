@@ -15,6 +15,11 @@ const MyPageEdit = () => {
   const [skillList, setSkillList] = useState<string[]>([]); // 검색된 스킬 목록
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const userToken = sessionStorage.getItem('userToken');
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
 
   // 디바운싱으로 요청 수 줄이기
   // 디바운싱 = 여러 이벤트를 한번에 묶어서 처리, 쓰로틀링 = setInterval
@@ -28,32 +33,33 @@ const MyPageEdit = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [skill]);
 
-  // 기존 서버에 등록된 내 스킬 불러오기
-  const fetchMySkillList = async () => {
-    const response = await fetch(`${URL}/api/skills/myskill`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    });
-    if (!response) {
-      throw new Error('Failed to fetch mySkillList');
-    }
-    const data = await response.json();
-    setMySkillList(data); // Update mySkillList with the fetched data
-    return data;
-  };
-
-  const { data: fetchedMySkillList } = useQuery('mySkillList', fetchMySkillList);
+  const fetchedMySkillListQuery = useQuery('mySkillList', () => {
+    return (
+      fetch(`${URL}/api/skills/myskill`, {
+        headers: headers,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch mySkillList');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setMySkillList(data); // Update mySkillList with the fetched data
+          return data;
+        }),
+      {
+        staleTime: Infinity,
+      }
+    );
+  });
+  const { data: fetchedMySkillList } = fetchedMySkillListQuery;
 
   // 검색되는 스킬 리스트 불러오기
   const fetchSkillList = async () => {
     try {
       const response = await fetch(`${URL}/api/skills?keyword=${skill}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-        },
+        headers: headers,
       });
       if (response) {
         const data = await response.json();
