@@ -30,7 +30,6 @@ const PostDetail = ({ postId }: { postId: string }) => {
   // 게시글 삭제
   const { mutate: deletePostMutate } = useMutation(deletePost, {
     onSuccess: () => {
-      console.log('게시글 삭제에 성공했습니다.');
       navigate('/community/post/free');
     },
     onError: error => {
@@ -41,7 +40,6 @@ const PostDetail = ({ postId }: { postId: string }) => {
   // 좋아요 등록, 취소
   const { mutate: toggleLikeMutate } = useMutation(toggleLike, {
     onSuccess: () => {
-      console.log('좋아요 처리에 성공했습니다.');
       queryClient.invalidateQueries(['detail']);
     },
     onError: error => {

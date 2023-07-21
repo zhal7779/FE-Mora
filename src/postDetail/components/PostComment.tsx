@@ -37,7 +37,6 @@ const PostComment = ({ postId }: { postId: string }) => {
   // 댓글 등록/수정
   const { mutate: postCommentMutate } = useMutation(postComment, {
     onSuccess: () => {
-      console.log('댓글이 성공적으로 등록되었습니다.');
       queryClient.invalidateQueries(['comments']);
     },
     onError: error => {
@@ -48,7 +47,6 @@ const PostComment = ({ postId }: { postId: string }) => {
   // 댓글 삭제
   const { mutate: deleteCommentMutate } = useMutation(deleteComment, {
     onSuccess: () => {
-      console.log('댓글 삭제에 성공했습니다.');
       queryClient.invalidateQueries(['comments']);
       setCommentOption(null);
     },
@@ -110,7 +108,7 @@ const PostComment = ({ postId }: { postId: string }) => {
         postCommentMutate({ registerData, editCommentId });
         setCommentData('');
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

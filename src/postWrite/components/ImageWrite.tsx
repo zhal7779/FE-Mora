@@ -13,8 +13,6 @@ const ImageWrite = ({
   // 이미지 등록 mutation
   const { mutate } = useMutation(postImage, {
     onSuccess: data => {
-      console.log('게시글 이미지 등록에 성공했습니다.');
-
       setData(prevFormData => {
         const updatedFormData = {
           ...prevFormData,
