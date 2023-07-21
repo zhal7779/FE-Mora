@@ -34,7 +34,7 @@ const Header = () => {
   //30초마다 알림 갱신
   const { data, refetch: alarmRefetch } = useQuery('alert', getAlert, {
     enabled: isLoggedIn,
-    refetchInterval: 30 * 1000,
+    refetchInterval: 30 * 1000
   });
   // mainProfileData (유저 프로필 정보) 가져오기
   const mainProfileDataQuery = useQuery(
@@ -42,9 +42,9 @@ const Header = () => {
     () =>
       fetch(`${URL}/api/users/mypage`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-        },
-      }).then((response) => response.json()),
+          Authorization: `Bearer ${sessionStorage.getItem('userToken')}`
+        }
+      }).then(response => response.json()),
     { enabled: isLoggedIn }
   );
 
@@ -69,8 +69,8 @@ const Header = () => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userToken}`,
-          ...(userRefreshToken && { refresh: userRefreshToken }),
-        },
+          ...(userRefreshToken && { refresh: userRefreshToken })
+        }
       });
 
       const data = await response.json();
@@ -78,7 +78,7 @@ const Header = () => {
       return { accessToken, refreshToken };
     },
     {
-      onSuccess: (data) => {
+      onSuccess: data => {
         const { accessToken, refreshToken } = data;
         if (accessToken && refreshToken) {
           if (sessionStorage.getItem('userToken')) {
@@ -93,7 +93,7 @@ const Header = () => {
         } else {
           console.log('리프레쉬 토큰 발급 실패');
         }
-      },
+      }
     }
   );
 
@@ -183,30 +183,53 @@ const Header = () => {
         <SearchBar handleSearchClick={handleSearchClick} />
       ) : (
         <Style.HeaderStyle>
-          <div className='container'>
-            <nav className='content'>
-              <div className='main-content'>
-                <div className='logo' onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
-                  <Link to='/'>{logo}</Link>
+          <div className="container">
+            <nav className="content">
+              <div className="main-content">
+                <div
+                  className="logo"
+                  onClick={!tabletSize ? () => setMenuOpen(false) : undefined}
+                >
+                  <Link to="/">
+                    {logo}
+                    <span className="hide">모여라레이서</span>
+                  </Link>
                 </div>
                 {menuOpen && (
-                  <div className='menu-container'>
+                  <div className="menu-container">
                     <div
-                      className='menu-content'
-                      onClick={!tabletSize ? () => setMenuOpen(false) : undefined}
+                      className="menu-content"
+                      onClick={
+                        !tabletSize ? () => setMenuOpen(false) : undefined
+                      }
                     >
-                      {renderMenuItem('community', '/community/post/free', '토끼굴')}
+                      {renderMenuItem(
+                        'community',
+                        '/community/post/free',
+                        '토끼굴'
+                      )}
                       {renderMenuItem('schedule', '/schedule/notice', '정비소')}
-                      {renderMenuItem('openprofile', '/openprofile', '레이서 오픈 프로필')}
+                      {renderMenuItem(
+                        'openprofile',
+                        '/openprofile',
+                        '레이서 오픈 프로필'
+                      )}
                     </div>
                   </div>
                 )}
               </div>
               {menuOpen && (
-                <div className='side-content'>
-                  <div onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
+                <div className="side-content">
+                  <div
+                    onClick={!tabletSize ? () => setMenuOpen(false) : undefined}
+                  >
                     {menu === 'search' || !token ? (
-                      <SearchIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
+                      <SearchIcon
+                        style={{
+                          stroke: 'var(--light-gray)',
+                          cursor: 'default'
+                        }}
+                      />
                     ) : (
                       <SearchIcon
                         onClick={() => handleSearchClick()}
@@ -225,37 +248,57 @@ const Header = () => {
                           data.length > 0 &&
                           data.map((item: CheckedData) =>
                             item.unchecked === true ? (
-                              <span key={item.id} className='alarm'></span>
+                              <span key={item.id} className="alarm"></span>
                             ) : (
                               ''
                             )
                           )}
                       </>
                     ) : (
-                      <BellIcon style={{ stroke: 'var(--light-gray)', cursor: 'default' }} />
+                      <BellIcon
+                        style={{
+                          stroke: 'var(--light-gray)',
+                          cursor: 'default'
+                        }}
+                      />
                     )}
                   </div>
                   <Link to={token ? '/mypage' : '/nonmember'}>
-                    <div onClick={!tabletSize ? () => setMenuOpen(false) : undefined}>
+                    <div
+                      onClick={
+                        !tabletSize ? () => setMenuOpen(false) : undefined
+                      }
+                    >
                       {mainProfileData &&
                       mainProfileData.UserDetail &&
                       mainProfileData.UserDetail.img_path ? (
                         <img
-                          className='img-icon'
-                          src={mainProfileData.UserDetail.img_path || defaultImg}
+                          className="img-icon"
+                          src={
+                            mainProfileData.UserDetail.img_path || defaultImg
+                          }
+                          alt="사용자 프로필"
                         />
                       ) : (
-                        <img className='img-icon' src={defaultImg} />
+                        <img
+                          className="img-icon"
+                          src={defaultImg}
+                          alt="사용자 프로필"
+                        />
                       )}
+                      <span className="hide">프로필</span>
                     </div>
                   </Link>
                 </div>
               )}
-              <div className='nav-toggle'>
-                <BarsIcon style={{ fill: '#7353ea' }} onClick={handleMenuOpen} />
+              <div className="nav-toggle">
+                <BarsIcon
+                  style={{ fill: '#7353ea' }}
+                  onClick={handleMenuOpen}
+                />
               </div>
             </nav>
-            <div className='modal-content'>
+            <div className="modal-content">
               {onModal && <AlarmModal handleModalClick={handleModalClick} />}
             </div>
           </div>
