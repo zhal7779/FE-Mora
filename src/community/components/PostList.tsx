@@ -146,7 +146,6 @@ const PostList = ({
           )}
         </>
       )}
-      {isLoading && <div className="no-data">로딩 중</div>}
       {isError && <div className="no-data">에러: {error.message}</div>}
     </Style.PostContainer>
   );

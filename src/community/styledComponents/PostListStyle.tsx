@@ -153,16 +153,9 @@ export const PostContainer = styled.section`
     justify-content: center;
     align-items: center;
 
-    height: calc(100vh - 460px);
-    padding-top: 140px;
     font-size: 1.5rem;
     color: #616161;
     border-radius: 8px;
-
-    @media (max-width: 768px) {
-      height: calc(100vh - 100px);
-      padding: 0 0 100px 0;
-    }
   }
 
   .load-more {

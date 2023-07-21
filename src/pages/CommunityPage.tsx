@@ -46,6 +46,7 @@ const CommunityContainer = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+    min-height: 100vh;
   }
 `;
 

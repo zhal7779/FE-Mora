@@ -55,6 +55,9 @@ export const CategoryContainer = styled.section`
           }
 
           img {
+            width: 24px;
+            height: 24px;
+
             filter: grayscale(1) brightness(180%);
             transition: 0.2s;
             cursor: pointer;
