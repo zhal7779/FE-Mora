@@ -12,47 +12,50 @@ const Footer = () => {
   const { logo, mobileSize } = useWindowSize(<LogoIcon />, <MediaLogoIcon />);
   return (
     <FooterStyle>
-      <div className='content'>
-        <div className='main-content'>
-          <div className='logo-content'>{logo}</div>
-          <div className='main-items'>
+      <div className="content">
+        <div className="main-content">
+          <div className="logo-content">{logo}</div>
+          <div className="main-items">
             <p>개인정보처리방침</p>
             <p>이용약관</p>
             <p>이용안내</p>
           </div>
-          <div className='icons'>
+          <div className="icons">
             <button>
+              <span className="hide">인스타그램</span>
               <InstagramIcon />
             </button>
             <button>
+              <span className="hide">페이스북</span>
               <FacebookIcon />
             </button>
             <button>
+              <span className="hide">깃허브</span>
               <GithubIcon />
             </button>
           </div>
         </div>
-        <div className='sub-content'>
-          <div className='sub-items'>
+        <div className="sub-content">
+          <div className="sub-items">
             <strong>CUSTOMER SUPPORT CENTER</strong>
             <div>
-              <div className='customer-content'>
+              <div className="customer-content">
                 <TelephoneIcon style={{ marginTop: '1rem' }} />
                 <p>02-1234-5678</p>
               </div>
-              <div className='customer-content'>
+              <div className="customer-content">
                 <EmailIcon style={{ marginTop: '1rem' }} />
                 <p> elice@elice.com</p>
               </div>
             </div>
           </div>
-          <div className='sub-items'>
+          <div className="sub-items">
             <strong>OPERATING HOURS</strong>
             <p>MON - FRI AM 09:30 - PM 05:30 </p>
             <p>LUNCH PM 12:00 - 13:00</p>
             <p> SAT, SUN, HOLIDAY OFF</p>
           </div>
-          <div className='sub-items'>
+          <div className="sub-items">
             <strong>COMPANY INFORMATIONS</strong>
             <p>COMPANY : 모여라 레이서 </p>
             {mobileSize ? (
@@ -61,11 +64,14 @@ const Footer = () => {
                 <p>임지성, 김지우, 연정환</p>
               </>
             ) : (
-              <p>CREATORS : 이민영, 이성호, 이혜정, 김윤지, 임지성, 김지우, 연정환 </p>
+              <p>
+                CREATORS : 이민영, 이성호, 이혜정, 김윤지, 임지성, 김지우,
+                연정환{' '}
+              </p>
             )}
           </div>
         </div>
-        <div className='copyright'>
+        <div className="copyright">
           <p>Copyright ⓒ 2023 - 2023 Moyeora Elice Inc. All Rights Reserved.</p>
         </div>
       </div>
