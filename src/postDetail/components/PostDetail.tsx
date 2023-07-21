@@ -135,7 +135,7 @@ const PostDetail = ({ postId }: { postId: string }) => {
               <ul className="content-img">
                 {detail.Photos.map((image, index) => (
                   <li key={index}>
-                    <img src={image.img_path} alt={image.origin_name} />
+                    <img src={image.img_path} alt={image.img_path} />
                   </li>
                 ))}
               </ul>
