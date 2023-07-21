@@ -8,7 +8,7 @@ import RegisterQuestion from '../search/components/RegisterQuestion';
 import SearchPost from '../search/components/SearchPost';
 import { useLocation } from 'react-router-dom';
 import { SearchContext } from '../search/context/SearchContext';
-import { fetchPopular, fetchSearchProfile, fetchSearchPost } from '../search/api/searchAPI';
+import { fetchPopular, fetchSearchProfile, fetchSearchPost } from '../search/api/apis';
 import { useQuery, useQueries, useInfiniteQuery } from 'react-query';
 import NoData from '../components/NoData';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,14 +18,25 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useWindowSize } from '../hooks/useWindowSize';
 import { useObserver } from '../hooks/useObserver';
+import { CountArrData } from '../search/types/searchType';
+
+interface QueryData {
+  isSuccess: boolean;
+  data:
+    | {
+        totalItems: number;
+      }
+    | undefined;
+}
+
 const SearchPage = () => {
   //메인 검색창에서 받아온 검색 키워드, 검색후 컴포넌트에 키워드를 넘겨 결과에 하이라이팅해줄 state
   const { state } = useLocation();
 
   const [searchKeyword, setSearchKeyword] = useState(state);
 
-  const handleSubSearch = (subResult) => {
-    setSearchKeyword(subResult);
+  const handleSubSearch = (keyword: string) => {
+    setSearchKeyword(keyword);
   };
 
   const menuItems = [
@@ -39,9 +50,9 @@ const SearchPage = () => {
 
   const [searchMenu, setSearchMenu] = useState(() => {
     const storedMenu = localStorage.getItem('searchMenu');
-    return storedMenu ? parseInt(storedMenu) : 'all';
+    return storedMenu || 'all';
   });
-  const handleMenuClick = (menuId) => {
+  const handleMenuClick = (menuId: string) => {
     setSearchMenu(menuId);
     localStorage.setItem('searchMenu', menuId);
   };
@@ -90,9 +101,9 @@ const SearchPage = () => {
     },
   ]);
 
-  const getCount = (data) => (data.isSuccess ? data.data?.totalItems || 0 : 0);
+  const getCount = (data: QueryData) => (data.isSuccess ? data.data?.totalItems || 0 : 0);
 
-  const countArr = {
+  const countArr: CountArrData = {
     openProfile: openProfileData.data?.length || 0,
     free: getCount(SearchPostData[0]),
     knowledge: getCount(SearchPostData[1]),
@@ -102,7 +113,7 @@ const SearchPage = () => {
 
   countArr.total = Object.values(countArr).reduce((acc, count) => acc + count, 0);
 
-  const sliceArray = (array, start, end) =>
+  const sliceArray = (array: [], start: number, end: number) =>
     array && array.length > 0 ? array.slice(start, end) : [];
 
   const simpleData = {

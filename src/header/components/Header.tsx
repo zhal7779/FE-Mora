@@ -10,7 +10,7 @@ import { useWindowSize } from '../../hooks/useWindowSize';
 import SearchBar from '../../components/SearchBar';
 import AlarmModal from '../../alarm/components/AlarmModal';
 import { useQuery, useMutation } from 'react-query';
-import { getAlert } from '../../alarm/api/alarmApi';
+import { getAlert } from '../../alarm/api/apis';
 import defaultImg from '../../assets/images/rabbitProfile.png';
 
 interface CheckedData {

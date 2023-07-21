@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { LegacyRef } from 'react';
 import * as Style from '../styledComponents/SearchPostStyle';
 import { ReactComponent as RightIcon } from '../../assets/icons/fi_chevron-right.svg';
 import NoData from '../../components/NoData';
 import SearchPostList from './SearchPostList';
+import { SearchPostData } from '../types/searchType';
 
-const SearchPost = ({ data, count, type, receiveMenu, menu, hasNextPage, observerRef }) => {
+interface Props {
+  data: any;
+  type: string;
+  menu: string;
+  receiveMenu?: (menu: string) => void;
+  count?: number;
+  hasNextPage?: boolean;
+  observerRef?: LegacyRef<HTMLDivElement> | undefined;
+}
+
+const SearchPost = ({ data, count, type, receiveMenu, menu, hasNextPage, observerRef }: Props) => {
   const handleAllView = () => {
-    receiveMenu(menu);
+    if (receiveMenu) {
+      receiveMenu(menu);
+    }
   };
-
   return (
     <Style.Container>
       <Style.Content>
@@ -32,18 +44,20 @@ const SearchPost = ({ data, count, type, receiveMenu, menu, hasNextPage, observe
                 <RightIcon stroke='#242424' />
               </div>
             </Style.AddView>
-            {data.map((item) => (
-              <SearchPostList item={item} menu={menu} />
+            {data.map((item: SearchPostData) => (
+              <SearchPostList key={item.id} item={item} menu={menu} />
             ))}
           </>
         ) : (
           data &&
           data.pages &&
-          data.pages.map((page) =>
+          data.pages.map((page: { totalItems: number; objArr: [] }) =>
             page.totalItems === 0 ? (
-              <NoData />
+              <NoData key={page.totalItems} />
             ) : (
-              page.objArr.map((item) => <SearchPostList item={item} menu={menu} />)
+              page.objArr.map((item: SearchPostData) => (
+                <SearchPostList key={item.id} item={item} menu={menu} />
+              ))
             )
           )
         )}

@@ -4,33 +4,73 @@ import * as Style from './styledComponents/MyPageProfileStyle';
 import * as Style2 from './styledComponents/ProfileListStyle';
 import profileListData from './data/profileListData.json';
 import { MyCareer, MyEdu, MyLink } from './profileListTypes';
-import {
-  fetchMySkillList,
-  fetchMyCareerList,
-  fetchMyEduList,
-  fetchMyLinkList,
-  handleRemoveCareer,
-  handleRemoveEdu,
-  handleRemoveLink,
-} from './profileListApi';
+import { handleRemoveCareer, handleRemoveEdu, handleRemoveLink } from './profileListApi';
 
 const ProfileList = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const URL = process.env.REACT_APP_URL;
+  const userToken = sessionStorage.getItem('userToken');
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
+
+  // 현재 나의 스킬 불러오기 함수
+  async function fetchMySkillList() {
+    const response = await fetch(`${URL}/api/skills/myskill`, {
+      headers: headers,
+    });
+    return response.json();
+  }
+
+  // 현재 나의 커리어 불러오기 함수
+  async function fetchMyCareerList() {
+    const response = await fetch(`${URL}/api/careers`, {
+      headers: headers,
+    });
+    return response.json();
+  }
+
+  // 현재 나의 교육 불러오기 함수
+  async function fetchMyEduList() {
+    const response = await fetch(`${URL}/api/educations`, {
+      headers: headers,
+    });
+    return response.json();
+  }
+
+  // 현재 나의 링크 불러오기 함수
+  async function fetchMyLinkList() {
+    const response = await fetch(`${URL}/api/links`, {
+      headers: headers,
+    });
+    return response.json();
+  }
 
   const { data: mySkillList, isLoading: isSkillLoading } = useQuery(
     'mySkillList',
-    fetchMySkillList
+    fetchMySkillList,
+    {
+      staleTime: Infinity,
+    }
   );
 
   const { data: myCareerList, isLoading: isCareerLoading } = useQuery(
     'myCareerList',
-    fetchMyCareerList
+    fetchMyCareerList,
+    {
+      staleTime: Infinity,
+    }
   );
 
-  const { data: myEduList, isLoading: isEduLoading } = useQuery('myEduList', fetchMyEduList);
+  const { data: myEduList, isLoading: isEduLoading } = useQuery('myEduList', fetchMyEduList, {
+    staleTime: Infinity,
+  });
 
-  const { data: myLinkList, isLoading: isLinkLoading } = useQuery('myLinkList', fetchMyLinkList);
+  const { data: myLinkList, isLoading: isLinkLoading } = useQuery('myLinkList', fetchMyLinkList, {
+    staleTime: Infinity,
+  });
 
   const removeCareerMutation = useMutation(handleRemoveCareer, {
     onSuccess: () => {

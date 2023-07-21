@@ -18,6 +18,11 @@ const MyPageEdit = () => {
   const [track, setTrack] = useState('');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const userToken = sessionStorage.getItem('userToken');
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${userToken}`,
+  };
 
   // 수정하지 않고 넘길 때는 이전 값 넣어주기
   useEffect(() => {
@@ -45,12 +50,15 @@ const MyPageEdit = () => {
   };
 
   // 기존 내 정보 가져오기
-  const mainProfileDataQuery = useQuery('mainProfileData', () =>
-    fetch(`${URL}/api/users/mypage`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
-    }).then((response) => response.json())
+  const mainProfileDataQuery = useQuery(
+    'mainProfileData',
+    () =>
+      fetch(`${URL}/api/users/mypage`, {
+        headers: headers,
+      }).then((response) => response.json()),
+    {
+      staleTime: Infinity,
+    }
   );
 
   const { data: mainProfileData } = mainProfileDataQuery;
@@ -67,10 +75,7 @@ const MyPageEdit = () => {
   const updateProfileMutation = useMutation<void, Error, UpdatedData>((updatedData) =>
     fetch(`${URL}/api/users/mypage/edit`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('userToken')}`,
-      },
+      headers: headers,
       body: JSON.stringify(updatedData),
     }).then((response) => response.json())
   );

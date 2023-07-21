@@ -39,16 +39,9 @@ interface Props {
   setUserId: (userId: string) => void;
   coffeeChatStatus: string[];
   setCoffeeChatStatus: React.Dispatch<React.SetStateAction<string[]>>;
-  coffeeCahtRefetch: () => void;
 }
 
-const OpenProfileList = ({
-  data,
-  setUserId,
-  coffeeChatStatus,
-  setCoffeeChatStatus,
-  coffeeCahtRefetch,
-}: Props) => {
+const OpenProfileList = ({ data, setUserId, coffeeChatStatus, setCoffeeChatStatus }: Props) => {
   const token = sessionStorage.getItem('userToken');
   const myId = token && jwt_decode<TokenData>(token).id;
 
@@ -95,13 +88,7 @@ const OpenProfileList = ({
             ) : (
               <Style.ChatButton
                 onClick={() =>
-                  coffeeChatConfirm(
-                    item.user_id,
-                    item.User.name,
-                    setCoffeeChatStatus,
-                    setUserId,
-                    coffeeCahtRefetch
-                  )
+                  coffeeChatConfirm(item.user_id, item.User.name, setCoffeeChatStatus, setUserId)
                 }
               >
                 커피챗 신청

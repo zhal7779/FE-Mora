@@ -1,8 +1,12 @@
 import React from 'react';
 import RankingList from './RankingList';
 import styled from 'styled-components';
-
-const RankingModal = ({ data, modalOpenOrClose }) => {
+import { RankingData } from '../types/searchType';
+interface Props {
+  data: RankingData[];
+  modalOpenOrClose: () => void;
+}
+const RankingModal = ({ data, modalOpenOrClose }: Props) => {
   return (
     <>
       <Background onClick={modalOpenOrClose} />
