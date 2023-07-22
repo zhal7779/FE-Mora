@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 
 export const SearchPageWrapper = styled.main`
-  padding: 6rem 0;
-  width: 1024px;
+  padding: 6rem 1rem;
+  max-width: 1024px;
+  width: 100%;
   height: 100%;
   display: flex;
   margin: 22rem auto 0 auto;
   justify-content: space-between;
+  gap: 3rem;
+
   > div {
     display: flex;
     flex-direction: column;
     gap: 5rem;
+    width: 100%;
   }
   @media (max-width: 768px) {
     flex-direction: column-reverse;
@@ -33,7 +37,7 @@ export const NoDataWrapper = styled.div`
 `;
 
 export const SchedulePageWrapper = styled.main`
-  width: 1024px;
+  max-width: 1024px;
   height: 100%;
   display: flex;
   margin: 0 auto;
@@ -47,24 +51,20 @@ export const SchedulePageWrapper = styled.main`
 `;
 
 export const OpenProfilePageWrapper = styled.main`
-  width: 1024px;
+  max-width: 1024px;
   height: 100%;
   display: flex;
   margin: 0 auto;
   justify-content: space-between;
+  .profile_content {
+    width: 100%;
+    max-width: 738px;
+    padding: 3.8rem 2rem;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
     width: 100%;
     height: 100%;
     margin-bottom: 10rem;
-    .profile_content {
-      margin: 0 2.4rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .profile_content {
-      margin: 0 1rem;
-    }
   }
 `;

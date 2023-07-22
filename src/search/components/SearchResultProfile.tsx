@@ -84,7 +84,7 @@ const SearchResultProfile = ({ data, count, type, receiveMenu }: Props) => {
 
 export default SearchResultProfile;
 const Container = styled.section`
-  width: 700px;
+  width: 100%;
   height: inherit;
   background: var(--main-white);
   border: 1px #cbd5e1 solid;

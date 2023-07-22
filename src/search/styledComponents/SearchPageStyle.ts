@@ -29,6 +29,7 @@ export const NavContainer = styled.nav`
   border-bottom: #cbd5e1 1px solid;
   .content {
     max-width: 1024px;
+    padding: 0 0.5rem;
     display: flex;
     margin-left: auto;
     margin-right: auto;

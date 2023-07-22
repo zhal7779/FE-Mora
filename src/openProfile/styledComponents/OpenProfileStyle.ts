@@ -10,7 +10,7 @@ export const Nodata = styled.div`
     font-size: 1.6rem;
   }
 `;
-export const Container = styled.section`
+export const Container = styled.div`
   width: 100%;
   height: auto;
   border: 1px solid #cbd5e1;

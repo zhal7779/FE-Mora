@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-export const Container = styled.section`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 67%;
+  max-width: 738px;
+  width: 100%;
   margin-top: 6rem;
-  padding: 3.8rem 0;
+  padding: 3.8rem 2rem;
   gap: 2rem;
 
   .header_title {

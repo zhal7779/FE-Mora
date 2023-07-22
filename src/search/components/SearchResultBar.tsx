@@ -117,17 +117,23 @@ const Content = styled.div`
       align-items: center;
     }
   }
+  @media (max-width: 1036px) {
+    .sub-search-content {
+      margin-left: 2rem;
+    }
+    .result-text-content {
+      margin-left: 2rem;
+    }
+  }
   @media (max-width: 768px) {
     max-width: 100%;
     .sub-search-content {
-      margin-left: 2rem;
       input {
         font-size: 2.2rem;
         padding: 1.4rem;
       }
     }
     .result-text-content {
-      margin-left: 2rem;
       p {
         font-size: 1.5rem;
       }
