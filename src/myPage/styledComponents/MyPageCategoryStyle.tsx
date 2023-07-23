@@ -81,7 +81,7 @@ export const CategoryContainer = styled.section`
           font-weight: 600;
           font-size: 1.8rem;
           line-height: 2.2rem;
-          color: #bdbdbd;
+          color: #909090;
           transition: 0.2s;
           @media (max-width: 768px) {
             padding-right: 8px;
