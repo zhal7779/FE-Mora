@@ -10,7 +10,7 @@ const NonmemberPage = () => {
       <img src={rabbitImg} alt='엘리스 토끼' />
       <div>
         <div className='content'>
-          <img src={logo} />
+          <img src={logo} alt='모여라 레이서 로고' />
           <strong>모여라 레이서 회원만 이용 가능합니다.</strong>
           <p>이용을 원하시면 로그인 후 이용해주세요.</p>
           <Link to='/login'>
@@ -25,7 +25,8 @@ const NonmemberPage = () => {
 export default NonmemberPage;
 
 const Container = styled.div`
-  width: 1024px;
+  width: 100%;
+  max-width: 1024px;
   height: 100vh;
   display: flex;
   margin: 0 auto 0 auto;
@@ -35,6 +36,7 @@ const Container = styled.div`
   border-left: #cbd5e1 1px solid;
   border-right: #cbd5e1 1px solid;
   img {
+    width: auto;
     height: 46rem;
   }
   div {
@@ -57,6 +59,7 @@ const Container = styled.div`
       box-shadow: rgba(0, 0, 0, 0.2) 1.9px 1.9px 2.6px;
       img {
         height: 4rem;
+        width: auto;
         margin-bottom: 5rem;
       }
       strong {

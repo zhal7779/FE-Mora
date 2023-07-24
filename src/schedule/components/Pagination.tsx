@@ -31,7 +31,7 @@ const Pagination = ({ pages, currentPage, handleClickPage }: PageData) => {
   };
   return (
     <Container>
-      <button className='prev_button' onClick={handlePrevButton}>
+      <button className='btn' aria-label='Previous' onClick={handlePrevButton}>
         <LeftIcon stroke='var(--main-white)' />
       </button>
       {Array.from({ length: pages }, (_, index) => (
@@ -43,7 +43,7 @@ const Pagination = ({ pages, currentPage, handleClickPage }: PageData) => {
           {index + 1}
         </PageNumber>
       ))}
-      <button className='next_button' onClick={handleNextButton}>
+      <button className='btn' aria-label='Next' onClick={handleNextButton}>
         <RightIcon stroke='var(--main-white)' />
       </button>
     </Container>
@@ -58,7 +58,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  button {
+  .btn {
     display: flex;
     justify-content: center;
     align-items: center;

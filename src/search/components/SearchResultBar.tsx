@@ -14,9 +14,10 @@ interface Props {
 const SearchResultBar = ({ handleSubSearch, menu, count }: Props) => {
   const keyword = useContext(SearchContext);
   //검색창 input
-  const [input, setInput] = useState(keyword);
+  const [input, setInput] = useState(keyword ? keyword : '');
+
   //검색결과
-  const [resultKeyword, setResultKeyword] = useState(keyword);
+  const [resultKeyword, setResultKeyword] = useState(keyword ? keyword : '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
