@@ -37,7 +37,7 @@ const MyPageCategory = ({ handleCategorySelect, selectedCategory, categories }: 
               onClick={() => handleCategorySelect(category.name)}
               className={selectedCategory === category.name ? 'active' : ''}
             >
-              <img src={category.icon} alt={category.name} />
+              <img src={category.icon} alt={category.name} width={24} height={24} />
               <p>{category.name}</p>
             </li>
           ))}
