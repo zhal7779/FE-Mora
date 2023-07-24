@@ -31,7 +31,7 @@ export const FooterStyle = styled.footer`
     }
     p {
       padding: 0 3rem;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: var(--dark-gray);
       cursor: pointer;
@@ -51,7 +51,7 @@ export const FooterStyle = styled.footer`
       font-weight: 600;
     }
     p {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: var(--dark-gray);
       padding: 1rem 0 0 0.5rem;
     }
@@ -101,7 +101,7 @@ export const FooterStyle = styled.footer`
     }
     .copyright {
       p {
-        font-size: 1rem;
+        font-size: 1.4rem;
       }
     }
   }

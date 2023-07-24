@@ -3,7 +3,10 @@ import styled from 'styled-components';
 const NoData = () => {
   return (
     <Content>
-      <img src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg' />
+      <img
+        src='http://www.moyeora-racer.com/static/media/no-data-image.7c445de03420d586e6ca540e13c4cd7c.svg'
+        alt='엘리스 토끼'
+      />
       <strong>검색 결과가 없어요.</strong>
       <p>다른 키워드로 검색해보세요!</p>
     </Content>

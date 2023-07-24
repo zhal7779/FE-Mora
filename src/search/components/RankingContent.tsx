@@ -9,7 +9,6 @@ import { RankingData } from '../types/searchType';
 
 const RankingContent = ({ data }: { data: RankingData[] }) => {
   const { tabletSize } = useWindowSize();
-
   const [isOpenModal, setIsOpenModal] = useState(false);
   const modalOpenOrClose = () => {
     setIsOpenModal(!isOpenModal);
@@ -48,7 +47,7 @@ export default RankingContent;
 const Container = styled.section`
   position: sticky;
   top: 100px;
-  width: 27%;
+  width: auto;
   padding: 2rem 1.6rem;
   background: var(--main-white);
   border: 1px #cbd5e1 solid;

@@ -39,7 +39,8 @@ const RegisterQuestion = ({ type }: { type: string }) => {
 export default RegisterQuestion;
 const Container = styled.span`
   position: sticky;
-  width: 30%;
+  width: 100%;
+  max-width: 260px;
   top: 260px;
   height: 100%;
   display: flex;
@@ -49,7 +50,7 @@ const Container = styled.span`
   border-radius: 4px;
   border: 1px solid #cbd5e1;
   background: #ffffff;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   gap: 1rem;
   div {
     display: flex;
@@ -64,24 +65,26 @@ const Container = styled.span`
     font-weight: 500;
     color: #64748b;
     margin-bottom: 2rem;
+    font-size: 1.4rem;
   }
   .cat-img-content {
-    width: 16rem;
+    width: 14rem;
     margin-bottom: 2rem;
   }
   .help-img-content {
-    width: 16rem;
+    width: 14rem;
     margin-bottom: 2rem;
   }
   @media (max-width: 768px) {
     width: 90%;
+    max-width: inherit;
     height: 15.4rem;
     position: static;
     flex-direction: row-reverse;
-    padding: 0 1.4rem;
+    padding: 0 2rem;
     justify-content: space-between;
     .cat-img-content {
-      margin: 3rem 0 0 0;
+      margin: 4rem 0 0 0;
     }
     .help-img-content {
       margin: 1rem 0 0 0;

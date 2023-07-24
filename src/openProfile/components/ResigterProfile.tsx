@@ -34,7 +34,7 @@ const ResigterProfile = () => {
 };
 
 export default ResigterProfile;
-const Container = styled.div`
+const Container = styled.section`
   position: sticky;
   display: flex;
   flex-direction: column;
@@ -43,22 +43,22 @@ const Container = styled.div`
   height: 100%;
   margin-bottom: 36rem;
   background: var(--main-white);
-
+  padding: 6rem 1rem 0;
+  @media (max-width: 1024px) {
+    padding: 6rem 2rem 0;
+  }
   @media (max-width: 768px) {
     position: static;
     flex-direction: row;
     margin-bottom: 0;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2.4rem;
   }
   @media (max-width: 480px) {
     align-items: center;
-    padding: 0 1.4rem;
   }
 `;
 const TextContent = styled.div`
-  margin-top: 6rem;
   font-size: 2.5rem;
   padding-top: 4rem;
   padding-bottom: 3rem;
@@ -79,7 +79,4 @@ const TextContent = styled.div`
 
 const ButtonContent = styled.div`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  @media (max-width: 768px) {
-    margin-top: 5rem;
-  }
 `;

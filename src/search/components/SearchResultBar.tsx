@@ -14,9 +14,10 @@ interface Props {
 const SearchResultBar = ({ handleSubSearch, menu, count }: Props) => {
   const keyword = useContext(SearchContext);
   //검색창 input
-  const [input, setInput] = useState(keyword);
+  const [input, setInput] = useState(keyword ? keyword : '');
+
   //검색결과
-  const [resultKeyword, setResultKeyword] = useState(keyword);
+  const [resultKeyword, setResultKeyword] = useState(keyword ? keyword : '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -117,17 +118,23 @@ const Content = styled.div`
       align-items: center;
     }
   }
+  @media (max-width: 1036px) {
+    .sub-search-content {
+      margin-left: 2rem;
+    }
+    .result-text-content {
+      margin-left: 2rem;
+    }
+  }
   @media (max-width: 768px) {
     max-width: 100%;
     .sub-search-content {
-      margin-left: 2rem;
       input {
         font-size: 2.2rem;
         padding: 1.4rem;
       }
     }
     .result-text-content {
-      margin-left: 2rem;
       p {
         font-size: 1.5rem;
       }

@@ -57,7 +57,7 @@ const Notification = () => {
           <p className='sub-p'> 중요한 공지사항이에요!</p>
         </div>
 
-        <img src={rabbitImg} />
+        <img src={rabbitImg} alt='엘리스 토끼' />
       </div>
       <Input width='100%' value={inputValue} onChange={handleOnChange} />
       {isSuccess && data && data.objArr.length === 0 ? (
