@@ -1,9 +1,9 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 import IconMore from '../../../assets/icons/icon-more.svg';
-import formatTime from '../../../community/utils/formatTime';
+import formatTime from '../../../utils/formatTime';
 import UserProfile from '../../../assets/images/rabbitProfile.png';
 import { fetchDeleteComment, fetchDeletePost, fetchReadPostInfoDetail } from '../apis/postApis';
 import {
