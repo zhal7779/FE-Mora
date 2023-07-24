@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "es2016",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    "lib": ["ES6", "DOM"]
+  },
+  "include": ["src", "custom.d.ts"],
+  "exclude": ["node_modules"]
+}
