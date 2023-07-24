@@ -16,7 +16,7 @@ import {
 export const AdminPost = ({ keyword }) => {
   const observerElement = useRef(null);
 
-  const { data, fetchNextPage, hasNextPage, error, isSuccess } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
     ['admin', 'posts', 'get', 'infinity', keyword],
     ({ pageParam = 0 }) => fetchReadPostInfo({ page: pageParam, view: 18, content: keyword }),
     {
@@ -25,9 +25,6 @@ export const AdminPost = ({ keyword }) => {
           ? lastPage.currentPage + 1
           : undefined;
       },
-      staleTime: 300,
-
-      keepPreviousData: true,
     }
   );
 
