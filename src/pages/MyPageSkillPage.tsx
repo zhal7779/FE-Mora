@@ -34,24 +34,19 @@ const MyPageEdit = () => {
   }, [skill]);
 
   const fetchedMySkillListQuery = useQuery('mySkillList', () => {
-    return (
-      fetch(`${URL}/api/skills/myskill`, {
-        headers: headers,
+    return fetch(`${URL}/api/skills/myskill`, {
+      headers: headers,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch mySkillList');
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Failed to fetch mySkillList');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setMySkillList(data); // Update mySkillList with the fetched data
-          return data;
-        }),
-      {
-        staleTime: Infinity,
-      }
-    );
+      .then((data) => {
+        setMySkillList(data); // Update mySkillList with the fetched data
+        return data;
+      });
   });
   const { data: fetchedMySkillList } = fetchedMySkillListQuery;
 
