@@ -1,5 +1,25 @@
 import styled from 'styled-components';
 
+interface ModalContentProps {
+  type?: string;
+  name?: string;
+  value?: string;
+  className?: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+}
+
+interface ModalHeaderButton {
+  $purple?: boolean;
+  $header?: boolean;
+}
+
+interface ModalButtonProps {
+  className?: string;
+  $purple?: boolean;
+}
+
 export const ModalOverlay = styled.div`
   position: fixed;
 
@@ -47,7 +67,7 @@ export const ModalSubTitle = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
 `;
-export const ModalContentInput = styled.input`
+export const ModalContentInput = styled.input<ModalContentProps>`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -63,7 +83,7 @@ export const ModalContentInput = styled.input`
     outline: none;
   }
 `;
-export const ModalContentTextarea = styled.textarea`
+export const ModalContentTextarea = styled.textarea<ModalContentProps>`
   width: 100%;
   height: 10rem;
   padding: 1rem 1.5rem;
@@ -108,7 +128,7 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
   margin-bottom: 5rem;
 `;
-export const ModalHeaderButton = styled.button`
+export const ModalHeaderButton = styled.button<ModalHeaderButton>`
   padding: 0.6rem 1rem;
   border: none;
   border-radius: 4px;
@@ -119,7 +139,7 @@ export const ModalHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-export const ModalButton = styled.button`
+export const ModalButton = styled.button<ModalButtonProps>`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;

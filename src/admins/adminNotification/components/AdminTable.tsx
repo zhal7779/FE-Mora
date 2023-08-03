@@ -25,7 +25,7 @@ const AdminTable = () => {
     setEnrollModal(!enrollModal);
   };
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading } = useQuery(
     ['admin', 'notification', 'get', currentPage, keyword],
     async () => await fetchReadNotificationInfo(currentPage, 12, keyword)
   );

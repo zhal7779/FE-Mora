@@ -4,10 +4,10 @@ import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarSty
 
 interface SearchBarProps {
   placeholder: string;
-  setYearMonth?: (date: string) => void;
+  setKeyword?: (date: string) => void;
 }
 
-const SearchBar = ({ placeholder, setYearMonth }: SearchBarProps) => {
+const SearchBar = ({ placeholder, setKeyword }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,8 +16,8 @@ const SearchBar = ({ placeholder, setYearMonth }: SearchBarProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (setYearMonth) {
-      setYearMonth(searchTerm);
+    if (setKeyword) {
+      setKeyword(searchTerm);
     }
   };
 

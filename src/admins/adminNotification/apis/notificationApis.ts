@@ -1,7 +1,7 @@
 const domainPort = process.env.REACT_APP_URL;
 
 // READ
-export const fetchReadNotificationInfo = async (page, size, keyword) => {
+export const fetchReadNotificationInfo = async (page: number, size: number, keyword: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(
     `${domainPort}/api/notices?page=${page}&size=${size}&keyword=${keyword}`,
@@ -14,7 +14,7 @@ export const fetchReadNotificationInfo = async (page, size, keyword) => {
   return data;
 };
 
-export const fetchReadNotificationInfoDetail = async (id) => {
+export const fetchReadNotificationInfoDetail = async (id: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
@@ -25,7 +25,9 @@ export const fetchReadNotificationInfoDetail = async (id) => {
 };
 
 // CREATE
-export const fetchCreateNotification = async (newNotification) => {
+export const fetchCreateNotification = async <T extends { [key: string]: any }>(
+  newNotification: T
+) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/notices`, {
     method: 'POST',
@@ -41,7 +43,10 @@ export const fetchCreateNotification = async (newNotification) => {
 };
 
 // UPDATE
-export const fetchUpdateNotification = async (id, newNotification) => {
+export const fetchUpdateNotification = async <T extends { [key: string]: any }>(
+  id: string,
+  newNotification: T
+) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/notices/${id}`, {
     method: 'PATCH',
@@ -58,9 +63,9 @@ export const fetchUpdateNotification = async (id, newNotification) => {
 };
 
 // DELETE
-export const fetchDeleteNotification = async (id) => {
+export const fetchDeleteNotification = async (id: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
-  const response = fetch(`${domainPort}/api/notices/${id}`, {
+  const response = await fetch(`${domainPort}/api/notices/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${adminToken}`,

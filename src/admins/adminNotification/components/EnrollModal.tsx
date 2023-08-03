@@ -16,27 +16,46 @@ import {
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
-const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+interface EnrollModalProps {
+  title: string;
+  enrollModal: boolean;
+  toggleEnrollModal: () => void;
+}
+
+interface ContentsProps {
+  title: string;
+  content: string;
+}
+
+interface TokenData {
+  name: string;
+}
+
+const EnrollModal = ({ title, enrollModal, toggleEnrollModal }: EnrollModalProps) => {
   const [adminName, setAdminName] = useState('');
-  const [contents, setContents] = useState({ title: '', content: '' });
-  const titleInput = useRef(null);
+  const [contents, setContents] = useState<ContentsProps>({ title: '', content: '' });
+  const titleInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const sessionToken = sessionStorage.getItem('adminToken');
-    const decodedToken = jwt_decode(sessionToken);
-    setAdminName(decodedToken.name);
+    const decodedToken = sessionToken && jwt_decode<TokenData>(sessionToken);
+    if (decodedToken) setAdminName(decodedToken.name);
   }, []);
 
   useEffect(() => {
-    titleInput.current.focus();
+    if (titleInput.current) {
+      titleInput.current.focus();
+    }
   }, [enrollModal]);
 
-  const handleFormChange = (e) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const changedValue = e.target.name;
     const newContents = {
       ...contents,
     };
-    newContents[changedValue] = e.target.value;
+    newContents[changedValue as keyof ContentsProps] = e.target.value;
 
     setContents(newContents);
   };
@@ -49,8 +68,8 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   };
 
-  const { mutate: createNotification, error } = useMutation(
-    async () => await fetchCreateNotification(contents),
+  const { mutate: createNotification } = useMutation(
+    async (contents: ContentsProps) => await fetchCreateNotification(contents),
     {
       onError(error) {
         console.error(error);

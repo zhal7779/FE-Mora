@@ -16,19 +16,31 @@ import {
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
-const NotificationModal = ({ id, handleModalCancelClick }) => {
+interface NotificationModalProps {
+  id: string;
+  handleModalCancelClick: () => void;
+}
+
+interface ContentsProps {
+  title: string;
+  content: string;
+}
+
+const NotificationModal = ({ id, handleModalCancelClick }: NotificationModalProps) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ title: '', content: '' });
-  const firstInput = useRef(null);
+  const [contents, setContents] = useState<ContentsProps>({ title: '', content: '' });
+  const firstInput = useRef<HTMLInputElement>(null);
 
   const handleUpdatable = () => {
     setUpdatable(true);
-    if (!updatable) firstInput.current.focus();
+    if (!updatable && firstInput.current) firstInput.current.focus();
   };
 
-  const handleChangeContents = (e) => {
+  const handleChangeContents = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const newContent = { ...contents };
-    newContent[e.target.name] = e.target.value;
+    newContent[e.target.name as keyof ContentsProps] = e.target.value;
     setContents(() => newContent);
   };
 
@@ -46,7 +58,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
     setUpdatable(false);
   };
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading } = useQuery(
     ['admin', 'notification', 'detail', 'get'],
     () => fetchReadNotificationInfoDetail(id),
     {
@@ -56,7 +68,7 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
     }
   );
 
-  const { mutate: updateNotification, error: updateError } = useMutation(
+  const { mutate: updateNotification } = useMutation(
     async () => await fetchUpdateNotification(id, contents),
     {
       onError(updateError) {
@@ -66,8 +78,6 @@ const NotificationModal = ({ id, handleModalCancelClick }) => {
   );
 
   if (isLoading) return <span>로딩중...</span>;
-
-  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
 
   return (
     <>

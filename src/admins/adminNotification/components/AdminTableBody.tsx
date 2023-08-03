@@ -10,11 +10,25 @@ import {
   NotificationListBlock,
 } from '../styledComponents/TableComponent';
 
-const AdminTableBody = ({ notifications }) => {
+interface DataProps {
+  Admin: { name: string; email: string };
+  admin_id: string;
+  content: string;
+  createdAt: string;
+  id: string;
+  title: string;
+  updatedAt: string;
+}
+
+interface NotificationProps {
+  notifications: DataProps[];
+}
+
+const AdminTableBody = ({ notifications }: NotificationProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalNotificationId, setModalNotificationId] = useState('');
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteNotification(id);
@@ -22,7 +36,7 @@ const AdminTableBody = ({ notifications }) => {
     }
   };
 
-  const handleDetailClick = (id) => {
+  const handleDetailClick = (id: string) => {
     setModalNotificationId(id);
     setIsModalOpen(true);
   };
@@ -31,7 +45,7 @@ const AdminTableBody = ({ notifications }) => {
     setIsModalOpen(false);
   };
 
-  const { mutate: deleteNotification, error } = useMutation((id) => fetchDeleteNotification(id), {
+  const { mutate: deleteNotification } = useMutation((id: string) => fetchDeleteNotification(id), {
     onError(error) {
       console.error(error);
     },
@@ -39,7 +53,7 @@ const AdminTableBody = ({ notifications }) => {
 
   return (
     <NotificationListBlock className='user-info-list'>
-      {notifications.map((data, idx) => {
+      {notifications.map((data: DataProps, idx: number) => {
         return (
           <NotificationInfo className='user-info' key={idx}>
             <span className='name'>{data.Admin?.name || '관리자'}</span>
