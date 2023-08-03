@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ModalButton } from './ModalComponents';
+import { ModalButton } from '../../adminCommon/styledComponents/ModalComponents';
 
 // 테이블 요소들
 const tableRowSetting = `
