@@ -15,16 +15,24 @@ import {
   LogInContentInput,
 } from '../styledComponents/LogInModal';
 
+interface AdminInfo {
+  email: string;
+  password: string;
+  [key: string]: string;
+}
+
 const AdminSignIn = () => {
-  const [adminInfo, setAdminInfo] = useState({ email: '', password: '' });
-  const firstInput = useRef(null);
+  const [adminInfo, setAdminInfo] = useState<AdminInfo>({ email: '', password: '' });
+  const firstInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    firstInput.current.focus();
+    if (firstInput.current) {
+      firstInput.current.focus();
+    }
   }, []);
 
-  const handleChangeAdminInfo = (e) => {
+  const handleChangeAdminInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newAdminInfo = { ...adminInfo };
     newAdminInfo[e.target.name] = e.target.value;
 
@@ -43,7 +51,7 @@ const AdminSignIn = () => {
     }
   };
 
-  const { mutate: logInAdmin, error } = useMutation(async () => fetchLogInAdmin(adminInfo), {
+  const { mutate: logInAdmin } = useMutation(async () => fetchLogInAdmin(adminInfo), {
     onSuccess(data) {
       if (Math.floor(data.statusCode / 100) !== 4) {
         alert('로그인 되었습니다.');

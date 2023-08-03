@@ -1,6 +1,6 @@
 const domainPort = process.env.REACT_APP_URL;
 
-export const fetchLogInAdmin = async (adminInfo) => {
+export const fetchLogInAdmin = async <T extends { [key: string]: any }>(adminInfo: T) => {
   const response = await fetch(`${domainPort}/api/admins/login`, {
     method: 'POST',
     headers: {

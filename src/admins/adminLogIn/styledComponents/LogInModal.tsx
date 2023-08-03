@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+interface LogInButtonProps {
+  className?: string;
+  onClick?: () => void;
+  $purple?: boolean;
+}
+
 export const LogInOverlay = styled.div`
   position: fixed;
 
@@ -94,7 +100,7 @@ export const LogInHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-export const LogInButton = styled.button`
+export const LogInButton = styled.button<LogInButtonProps>`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
