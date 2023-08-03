@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+interface SideBarBtnProps {
+  hoverColor: string;
+}
 export const SideBar = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,7 +49,7 @@ export const SideBarButtonBlock = styled.button`
     background-color: #7356b8;
   }
 `;
-export const SideBarBtn = styled.button`
+export const SideBarBtn = styled.button<SideBarBtnProps>`
   display: flex;
   align-items: center;
   padding: 0;

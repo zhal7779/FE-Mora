@@ -1,4 +1,8 @@
-const DeleteButton = ({ onClick }) => {
+interface DeleteButtonProps {
+  onClick: () => void;
+}
+
+const DeleteButton = ({ onClick }: DeleteButtonProps) => {
   return (
     <span style={{ cursor: 'pointer' }}>
       <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none' onClick={onClick}>

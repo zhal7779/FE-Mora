@@ -5,7 +5,12 @@ import {
   TableTitleBlock,
 } from '../../adminUser/styledComponents/TableComponent';
 
-const LoadingComponent = ({ search, title }) => {
+interface LoadingComponentProps {
+  search: string;
+  title: string;
+}
+
+const LoadingComponent = ({ search, title }: LoadingComponentProps) => {
   return (
     <>
       <SearchBar placeholder={search?.slice(0, 4) !== '2023' ? `${search} 검색` : search} />
@@ -14,11 +19,7 @@ const LoadingComponent = ({ search, title }) => {
         <TableTitleBlock>
           <TableTitle className='table-title'>{title} 관리</TableTitle>
         </TableTitleBlock>
-        {title !== '게시물' && (
-          <EnrollButton className='modal-button-submit' $purple>
-            등록
-          </EnrollButton>
-        )}
+        {title !== '게시물' && <EnrollButton className='modal-button-submit'>등록</EnrollButton>}
       </MainContentHeaderBlock>
     </>
   );

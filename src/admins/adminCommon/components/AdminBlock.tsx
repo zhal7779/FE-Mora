@@ -1,6 +1,11 @@
+import React from 'react';
 import { Container, InnerContainer } from '../styledComponents/AdminBlockStyle';
 
-const AdminBlock = ({ children }) => {
+interface AdminBlockProps {
+  children: React.ReactNode;
+}
+
+const AdminBlock = ({ children }: AdminBlockProps) => {
   return (
     <Container>
       <InnerContainer>{children}</InnerContainer>

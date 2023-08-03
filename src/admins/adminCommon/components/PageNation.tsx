@@ -1,6 +1,12 @@
 import { PageNationBlock, PageNationBlockBtn } from '../styledComponents/TableComponent';
 
-const PageNation = ({ totalPages, currentPage, setCurrentPage }) => {
+interface PageNationProps {
+  totalPages: number;
+  currentPage: number;
+  setCurrentPage: (num: number) => void;
+}
+
+const PageNation = ({ totalPages, currentPage, setCurrentPage }: PageNationProps) => {
   const totalPagesArray = Array(totalPages).fill(true);
 
   return (

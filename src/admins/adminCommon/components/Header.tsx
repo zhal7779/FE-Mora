@@ -15,6 +15,10 @@ import {
   MenuBarLi,
 } from '../styledComponents/HeaderStyle';
 
+interface TokenData {
+  name: string;
+}
+
 const Header = () => {
   const [token, setToken] = useState('');
   const [name, setName] = useState('');
@@ -30,7 +34,7 @@ const Header = () => {
   useEffect(() => {
     const sessionToken = sessionStorage.getItem('adminToken');
     if (sessionToken && token !== sessionToken) {
-      const decodedToken = jwt_decode(sessionToken);
+      const decodedToken = jwt_decode<TokenData>(sessionToken);
       setName(decodedToken.name);
       setToken(sessionToken);
     } else if (pathname !== '/admin/signin') {
@@ -51,7 +55,7 @@ const Header = () => {
           <AdminName>{name ? `${name}님` : ''}</AdminName>
         </AdminInfoBlock>
         <div className='hamburger-menu-block' onClick={handleMenuClick}>
-          <HamburgerMenu className='hamburger-menu' />
+          <HamburgerMenu />
         </div>
         {menu && (
           <MenuBarUl>

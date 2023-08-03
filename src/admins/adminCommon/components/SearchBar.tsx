@@ -2,16 +2,23 @@ import { useState } from 'react';
 
 import { SearchBarBlock, SearchBarInput } from '../styledComponents/SearchBarStyle';
 
-const SearchBar = ({ placeholder, setKeyword }) => {
+interface SearchBarProps {
+  placeholder: string;
+  setYearMonth?: (date: string) => void;
+}
+
+const SearchBar = ({ placeholder, setYearMonth }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setKeyword(searchTerm);
+    if (setYearMonth) {
+      setYearMonth(searchTerm);
+    }
   };
 
   return (
