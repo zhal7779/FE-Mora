@@ -18,45 +18,70 @@ import {
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
-const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+interface EnrollModalProps {
+  title: string;
+  enrollModal: boolean;
+  toggleEnrollModal: () => void;
+}
+
+interface TokenData {
+  name: string;
+}
+
+interface ContentsProps {
+  title: string;
+  content: string;
+  startDate: string;
+  endDate: string;
+  links: string;
+}
+
+const EnrollModal = ({ title, enrollModal, toggleEnrollModal }: EnrollModalProps) => {
   const [adminName, setAdminName] = useState('');
-  const [contents, setContents] = useState({
+  const [contents, setContents] = useState<ContentsProps>({
     title: '',
     content: '',
     startDate: '',
     endDate: '',
     links: '',
   });
-  const titleInput = useRef(null);
+  const titleInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const sessionToken = sessionStorage.getItem('adminToken');
-    const decodedToken = jwt_decode(sessionToken);
-    setAdminName(decodedToken.name);
+    const decodedToken = sessionToken && jwt_decode<TokenData>(sessionToken);
+    if (decodedToken) setAdminName(decodedToken.name);
   }, []);
 
   useEffect(() => {
-    titleInput.current.focus();
+    if (titleInput.current) {
+      titleInput.current.focus();
+    }
   }, [enrollModal]);
 
-  const handleFormChange = (e) => {
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const changedValue = e.target.name;
     const newContents = {
       ...contents,
     };
-    newContents[changedValue] = e.target.value;
+    newContents[changedValue as keyof ContentsProps] = e.target.value;
 
     setContents(newContents);
   };
 
-  const { mutate: createPlan, error } = useMutation(async () => await fetchCreatePlan(contents), {
-    onError(error) {
-      console.error(error);
-    },
-  });
+  const { mutate: createPlan } = useMutation(
+    async (contents: ContentsProps) => await fetchCreatePlan(contents),
+    {
+      onError(error) {
+        console.error(error);
+      },
+    }
+  );
 
   const handleSubmit = () => {
-    const result = confirm('공지를 등록하시겠습니까?');
+    const result = confirm('일정을 등록하시겠습니까?');
     if (result) {
       createPlan(contents);
       toggleEnrollModal();

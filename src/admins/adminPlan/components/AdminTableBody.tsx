@@ -6,11 +6,28 @@ import PlanModal from './PlanModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
 import { DetailBtn, PlanInfo, PlanListBlock } from '../styledComponents/TableComponent';
 
-const AdminTableBody = ({ plans }) => {
+interface DataProps {
+  Admin: { name: string; email: string };
+  adminId: string;
+  PlanLinks: string[];
+  content: string;
+  createdAt: string;
+  endDate: string;
+  id: string;
+  startDate: string;
+  title: string;
+  updatedAt: string;
+}
+
+interface PlansProps {
+  plans: DataProps[];
+}
+
+const AdminTableBody = ({ plans }: PlansProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPlanId, setModalPlanId] = useState('');
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deletePlan(id);
@@ -18,7 +35,7 @@ const AdminTableBody = ({ plans }) => {
     }
   };
 
-  const handleDetailClick = (id) => {
+  const handleDetailClick = (id: string) => {
     setModalPlanId(id);
     setIsModalOpen(true);
   };
@@ -27,7 +44,7 @@ const AdminTableBody = ({ plans }) => {
     setIsModalOpen(false);
   };
 
-  const { mutate: deletePlan, error } = useMutation((id) => fetchDeletePlan(id), {
+  const { mutate: deletePlan, error } = useMutation((id: string) => fetchDeletePlan(id), {
     onError(error) {
       console.error(error);
     },
@@ -35,7 +52,7 @@ const AdminTableBody = ({ plans }) => {
 
   return (
     <PlanListBlock className='user-info-list'>
-      {plans.map((data, idx) => {
+      {plans.map((data: DataProps, idx: number) => {
         return (
           <PlanInfo className='user-info' key={idx}>
             <span className='name'>{data.Admin.name}</span>

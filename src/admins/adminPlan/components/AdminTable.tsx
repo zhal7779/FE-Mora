@@ -37,7 +37,7 @@ const AdminTable = () => {
 
   return (
     <>
-      <SearchBar placeholder={yearMonth} setYearMonth={setYearMonth} />
+      <SearchBar placeholder={yearMonth} setKeyword={setYearMonth} />
 
       <MainContentHeaderBlock>
         <TableTitleBlock>

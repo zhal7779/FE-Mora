@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+interface ModalButtonProps {
+  $purple?: boolean;
+}
+
+interface ModalContentTextarea {
+  type?: string;
+}
+
 export const ModalOverlay = styled.div`
   position: fixed;
 
@@ -67,7 +75,7 @@ export const ModalContentInput = styled.input`
     margin-bottom: 16px;
   }
 `;
-export const ModalContentTextarea = styled.textarea`
+export const ModalContentTextarea = styled.textarea<ModalContentTextarea>`
   width: 100%;
   height: 10rem;
   padding: 1rem 1.5rem;
@@ -119,7 +127,7 @@ export const ModalHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-export const ModalButton = styled.button`
+export const ModalButton = styled.button<ModalButtonProps>`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;

@@ -16,28 +16,47 @@ import {
   ModalContentTextarea,
 } from '../styledComponents/ModalComponents';
 
-const PlanModal = ({ id, handleModalCancelClick }) => {
+interface PlanModalProps {
+  id: string;
+  handleModalCancelClick: () => void;
+}
+
+interface ContentsProps {
+  title: string;
+  content: string;
+  startDate: string;
+  endDate: string;
+  links: string;
+}
+
+interface LinksProps {
+  url: string;
+}
+
+const PlanModal = ({ id, handleModalCancelClick }: PlanModalProps) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({
+  const [contents, setContents] = useState<ContentsProps>({
     title: '',
     content: '',
     startDate: '',
     endDate: '',
     links: '',
   });
-  const firstInput = useRef(null);
+  const firstInput = useRef<HTMLInputElement>(null);
 
   const handleUpdatable = () => {
     setUpdatable(true);
-    if (!updatable) firstInput.current.focus();
+    if (!updatable && firstInput.current) firstInput.current.focus();
   };
 
-  const handleChangeContents = (e) => {
+  const handleChangeContents = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const changedValue = e.target.name;
     const newContents = {
       ...contents,
     };
-    newContents[changedValue] = e.target.value;
+    newContents[changedValue as keyof ContentsProps] = e.target.value;
 
     setContents(newContents);
   };
@@ -56,13 +75,13 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
     setUpdatable(false);
   };
 
-  const { data, isLoading } = useQuery(
+  const { data } = useQuery(
     ['admin', 'plan', 'detail', 'get', id],
     () => fetchReadPlanInfoDetail(id),
     {
       onSuccess(data) {
         let newLinks = '';
-        data.PlanLinks.map((link) => {
+        data.PlanLinks.map((link: LinksProps) => {
           newLinks += `${link.url}\n`;
         });
         setContents({
@@ -75,7 +94,7 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
     }
   );
 
-  const { mutate: updateNotification, error: updateError } = useMutation(
+  const { mutate: updateNotification } = useMutation(
     async () => await fetchUpdatePlan(id, contents),
     {
       onError(updateError) {
@@ -84,21 +103,13 @@ const PlanModal = ({ id, handleModalCancelClick }) => {
     }
   );
 
-  if (isLoading) return <span>로딩중...</span>;
-  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
-
   return (
     <>
       <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
           <ModalTitle className='modal-title'>일정 정보</ModalTitle>
-          <ModalHeaderButton
-            className='modal-button-update'
-            onClick={handleUpdatable}
-            $purple
-            $header
-          >
+          <ModalHeaderButton className='modal-button-update' onClick={handleUpdatable}>
             수정하기
           </ModalHeaderButton>
         </ModalHeader>
