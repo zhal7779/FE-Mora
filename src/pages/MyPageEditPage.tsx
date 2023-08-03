@@ -50,15 +50,10 @@ const MyPageEdit = () => {
   };
 
   // 기존 내 정보 가져오기
-  const mainProfileDataQuery = useQuery(
-    'mainProfileData',
-    () =>
-      fetch(`${URL}/api/users/mypage`, {
-        headers: headers,
-      }).then((response) => response.json()),
-    {
-      staleTime: Infinity,
-    }
+  const mainProfileDataQuery = useQuery('mainProfileData', () =>
+    fetch(`${URL}/api/users/mypage`, {
+      headers: headers,
+    }).then((response) => response.json())
   );
 
   const { data: mainProfileData } = mainProfileDataQuery;
