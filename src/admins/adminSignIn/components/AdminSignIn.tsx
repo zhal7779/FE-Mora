@@ -15,18 +15,26 @@ import {
   SignInContentInput,
 } from '../styledComponents/SignInModal';
 
+interface AdminInfoData {
+  email: string;
+  name: string;
+  password: string;
+}
+
 const AdminSignIn = () => {
-  const [adminInfo, setAdminInfo] = useState({ email: '', name: '', password: '' });
-  const firstInput = useRef(null);
+  const [adminInfo, setAdminInfo] = useState<AdminInfoData>({ email: '', name: '', password: '' });
+  const firstInput = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    firstInput.current.focus();
+    if (firstInput.current) {
+      firstInput.current.focus();
+    }
   }, []);
 
-  const handleChangeAdminInfo = (e) => {
+  const handleChangeAdminInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newAdminInfo = { ...adminInfo };
-    newAdminInfo[e.target.name] = e.target.value;
+    newAdminInfo[e.target.name as keyof AdminInfoData] = e.target.value;
 
     setAdminInfo(newAdminInfo);
   };

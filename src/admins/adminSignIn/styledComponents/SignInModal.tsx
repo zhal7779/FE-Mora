@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface SignInButtonProps {
+  $purple?: boolean;
+}
+
 export const SignInOverlay = styled.div`
   position: fixed;
 
@@ -94,7 +98,7 @@ export const SignInHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-export const SignInButton = styled.button`
+export const SignInButton = styled.button<SignInButtonProps>`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
