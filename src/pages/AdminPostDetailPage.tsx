@@ -9,7 +9,7 @@ const AdminPostDetailPage = () => {
   return (
     <>
       <Header />
-      <AdminPostDetail postId={boardId} />;
+      {boardId && <AdminPostDetail postId={boardId} />}
     </>
   );
 };
