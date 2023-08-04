@@ -15,27 +15,45 @@ import {
   ModalContentInput,
 } from '../styledComponents/ModalComponents';
 
-const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
+interface EnrollModalProps {
+  title: string;
+  enrollModal: boolean;
+  toggleEnrollModal: () => void;
+}
+
+interface TokenData {
+  name: string;
+}
+
+interface ContentsType {
+  email: string;
+  name: string;
+  password: string;
+}
+
+const EnrollModal = ({ title, enrollModal, toggleEnrollModal }: EnrollModalProps) => {
   const [adminName, setAdminName] = useState('');
-  const [contents, setContents] = useState({ email: '', password: '', name: '' });
-  const titleInput = useRef(null);
+  const [contents, setContents] = useState<ContentsType>({ email: '', password: '', name: '' });
+  const titleInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const sessionToken = sessionStorage.getItem('adminToken');
-    const decodedToken = jwt_decode(sessionToken);
-    setAdminName(decodedToken.name);
+    const decodedToken = sessionToken && jwt_decode<TokenData>(sessionToken);
+    if (decodedToken) setAdminName(decodedToken.name);
   }, []);
 
   useEffect(() => {
-    titleInput.current.focus();
+    if (titleInput.current) {
+      titleInput.current.focus();
+    }
   }, [enrollModal]);
 
-  const handleFormChange = (e) => {
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.target.name;
     const newContents = {
       ...contents,
     };
-    newContents[changedValue] = e.target.value;
+    newContents[changedValue as keyof ContentsType] = e.target.value;
 
     setContents(newContents);
   };
@@ -48,11 +66,14 @@ const EnrollModal = ({ title, enrollModal, toggleEnrollModal }) => {
     }
   };
 
-  const { mutate: createUser, error } = useMutation(async () => await fetchCreateUser(contents), {
-    onError(error) {
-      console.error(error);
-    },
-  });
+  const { mutate: createUser } = useMutation(
+    async (contents: ContentsType) => await fetchCreateUser(contents),
+    {
+      onError(error) {
+        console.error(error);
+      },
+    }
+  );
 
   return (
     <>

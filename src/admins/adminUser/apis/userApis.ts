@@ -1,7 +1,13 @@
 const domainPort = process.env.REACT_APP_URL;
 
+interface newUserType {
+  email: string;
+  name: string;
+  password: string;
+}
+
 // READ
-export const fetchReadUserInfo = async (page, size, keyword) => {
+export const fetchReadUserInfo = async (page: number, size: number, keyword: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(
     `${domainPort}/api/adminUsers?page=${page}&size=${size}&keyword=${keyword}`,
@@ -14,7 +20,7 @@ export const fetchReadUserInfo = async (page, size, keyword) => {
   return data;
 };
 
-export const fetchReadUserInfoDetail = async (id) => {
+export const fetchReadUserInfoDetail = async (id: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/adminUsers/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
@@ -25,7 +31,7 @@ export const fetchReadUserInfoDetail = async (id) => {
 };
 
 // CREATE
-export const fetchCreateUser = async (newNotification) => {
+export const fetchCreateUser = async (newUser: newUserType) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/adminUsers`, {
     method: 'POST',
@@ -33,7 +39,7 @@ export const fetchCreateUser = async (newNotification) => {
       Authorization: `Bearer ${adminToken}`,
       'Content-type': 'application/json',
     },
-    body: JSON.stringify(newNotification),
+    body: JSON.stringify(newUser),
   });
 
   const data = await response.json();
@@ -41,7 +47,7 @@ export const fetchCreateUser = async (newNotification) => {
 };
 
 // UPDATE
-export const fetchUpdateUser = async (email, newNotification) => {
+export const fetchUpdateUser = async (email: string, newUser: newUserType) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/adminUsers/${email}`, {
     method: 'PATCH',
@@ -49,7 +55,7 @@ export const fetchUpdateUser = async (email, newNotification) => {
       Authorization: `Bearer ${adminToken}`,
       'Content-type': 'application/json',
     },
-    body: JSON.stringify(newNotification),
+    body: JSON.stringify(newUser),
   });
 
   const data = await response.json();
@@ -58,9 +64,9 @@ export const fetchUpdateUser = async (email, newNotification) => {
 };
 
 // DELETE
-export const fetchDeleteUser = async (email) => {
+export const fetchDeleteUser = async (email: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
-  const response = fetch(`${domainPort}/api/adminUsers/${email}`, {
+  const response = await fetch(`${domainPort}/api/adminUsers/${email}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${adminToken}`,

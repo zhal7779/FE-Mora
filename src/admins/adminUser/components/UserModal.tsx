@@ -14,23 +14,36 @@ import {
   ModalHeaderButton,
 } from '../styledComponents/ModalComponents';
 
-const UserModal = ({ id, handleModalCancelClick }) => {
+interface UserModal {
+  id: string;
+  handleModalCancelClick: () => void;
+}
+
+interface ContentsType {
+  email: string;
+  name: string;
+  password: string;
+}
+
+const UserModal = ({ id, handleModalCancelClick }: UserModal) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ name: '', email: '', password: '' });
-  const firstInput = useRef(null);
+  const [contents, setContents] = useState<ContentsType>({ name: '', email: '', password: '' });
+  const firstInput = useRef<HTMLInputElement>(null);
 
   const handleUpdatable = () => {
     setUpdatable(true);
-    if (!updatable) firstInput.current.focus();
+    if (!updatable && firstInput.current) {
+      firstInput.current.focus();
+    }
   };
 
-  const handleChangeContents = (e) => {
+  const handleChangeContents = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newContent = { ...contents };
-    newContent[e.target.name] = e.target.value;
+    newContent[e.target.name as keyof ContentsType] = e.target.value;
     setContents(() => newContent);
   };
 
-  const handleUpdate = (email) => {
+  const handleUpdate = (email: string) => {
     const result = confirm('수정하시겠습니까?');
     if (result) {
       updateNotification(email);
@@ -44,18 +57,14 @@ const UserModal = ({ id, handleModalCancelClick }) => {
     setUpdatable(false);
   };
 
-  const { data, isLoading, error } = useQuery(
-    ['admin', 'user', 'detail', 'get'],
-    () => fetchReadUserInfoDetail(id),
-    {
-      onSuccess(data) {
-        setContents({ name: data.name, email: data.email, password: '' });
-      },
-    }
-  );
+  const { data } = useQuery(['admin', 'user', 'detail', 'get'], () => fetchReadUserInfoDetail(id), {
+    onSuccess(data) {
+      setContents({ name: data.name, email: data.email, password: '' });
+    },
+  });
 
-  const { mutate: updateNotification, error: updateError } = useMutation(
-    async (email) => await fetchUpdateUser(email, contents),
+  const { mutate: updateNotification } = useMutation(
+    async (email: string) => await fetchUpdateUser(email, contents),
     {
       onError(updateError) {
         console.error(updateError);
@@ -63,21 +72,13 @@ const UserModal = ({ id, handleModalCancelClick }) => {
     }
   );
 
-  if (isLoading) return <span>로딩중...</span>;
-  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
-
   return (
     <>
       <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
           <ModalTitle className='modal-title'>사용자 정보</ModalTitle>
-          <ModalHeaderButton
-            className='modal-button-update'
-            onClick={handleUpdatable}
-            $purple
-            $header
-          >
+          <ModalHeaderButton className='modal-button-update' onClick={handleUpdatable}>
             수정하기
           </ModalHeaderButton>
         </ModalHeader>

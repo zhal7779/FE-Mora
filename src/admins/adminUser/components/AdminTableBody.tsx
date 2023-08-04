@@ -6,11 +6,24 @@ import UserModal from './UserModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
 import { DetailBtn, UserInfo } from '../styledComponents/TableComponent';
 
-const AdminTableBody = ({ users }) => {
+interface UserType {
+  createdAt: string;
+  email: string;
+  id: string;
+  name: string;
+  password: string;
+  updatedAt: string;
+}
+
+interface UsersType {
+  users: UserType[];
+}
+
+const AdminTableBody = ({ users }: UsersType) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalUserId, setModalUserId] = useState('');
 
-  const handleDelete = (email) => {
+  const handleDelete = (email: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteUser(email);
@@ -18,7 +31,7 @@ const AdminTableBody = ({ users }) => {
     }
   };
 
-  const handleDetailClick = (id) => {
+  const handleDetailClick = (id: string) => {
     setModalUserId(id);
     setIsModalOpen(true);
   };
@@ -27,7 +40,7 @@ const AdminTableBody = ({ users }) => {
     setIsModalOpen(false);
   };
 
-  const { mutate: deleteUser, error } = useMutation((email) => fetchDeleteUser(email), {
+  const { mutate: deleteUser } = useMutation((email: string) => fetchDeleteUser(email), {
     onError(error) {
       console.error(error);
     },

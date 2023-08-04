@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ModalButtonProps {
+  $purple?: boolean;
+}
+
 export const ModalOverlay = styled.div`
   position: fixed;
 
@@ -102,7 +106,7 @@ export const ModalHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-export const ModalButton = styled.button`
+export const ModalButton = styled.button<ModalButtonProps>`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
