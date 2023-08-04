@@ -3,6 +3,10 @@ import styled from 'styled-components';
 const normalWidth = '250px';
 const smallWidth = '230px';
 
+interface EnrollButtonProps {
+  $purple?: boolean;
+}
+
 export const PostGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, ${normalWidth});
@@ -30,7 +34,7 @@ export const Title = styled.h2`
   font-size: 1.8rem;
   font-weight: bold;
 `;
-export const EnrollButton = styled.button`
+export const EnrollButton = styled.button<EnrollButtonProps>`
   padding: 7px 15px;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;

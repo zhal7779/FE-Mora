@@ -18,28 +18,50 @@ import {
   CommentContentBlock,
 } from '../styledComponents/PostDetailStyle';
 
-const AdminPostDetail = ({ postId }) => {
+interface AdminPostDetailProps {
+  postId: string;
+}
+
+interface UserType {
+  name: string;
+  email: string;
+}
+
+interface CommentType {
+  User: UserType;
+  commenter: string;
+  content: string;
+  createdAt: string;
+  id: string;
+}
+
+interface PhotosType {
+  imgPath: string;
+}
+
+const AdminPostDetail = ({ postId }: AdminPostDetailProps) => {
   const [postOption, setPostOption] = useState(false);
   const [commentCnt, setCommentCnt] = useState(0);
   const navigate = useNavigate();
 
-  const { isLoading, data, error } = useQuery(
+  const { isLoading, data } = useQuery(
     ['detail', postId, commentCnt],
     () => fetchReadPostInfoDetail(postId),
     {
       onSuccess(data) {
+        console.log(data);
         setCommentCnt(data.Comments.length);
       },
     }
   );
 
-  const handleDeletePost = (id) => {
+  const handleDeletePost = (id: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deletePost(id);
     }
   };
-  const { mutate: deletePost, error: deleteError } = useMutation((id) => fetchDeletePost(id), {
+  const { mutate: deletePost } = useMutation((id: string) => fetchDeletePost(id), {
     onSuccess() {
       navigate(-1);
     },
@@ -48,28 +70,24 @@ const AdminPostDetail = ({ postId }) => {
     },
   });
 
-  const handleDeleteComment = (id) => {
+  const handleDeleteComment = (id: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteComment(id);
     }
   };
-  const { mutate: deleteComment, error: deleteCommentError } = useMutation(
-    (id) => fetchDeleteComment(id),
-    {
-      onSuccess() {
-        setCommentCnt((commentCnt) => commentCnt - 1);
-      },
-      onError(error) {
-        console.error(error);
-      },
-    }
-  );
+  const { mutate: deleteComment } = useMutation((id: string) => fetchDeleteComment(id), {
+    onSuccess() {
+      setCommentCnt((commentCnt) => commentCnt - 1);
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
+  console.log(data);
 
   if (isLoading) return <Status>Loading...⏳</Status>;
-  if (error) return <Status>{error.message}</Status>;
-  if (deleteError) return <Status>{deleteError.message}</Status>;
-  if (deleteCommentError) return <Status>{deleteCommentError.message}</Status>;
 
   return (
     <DetailContainer>
@@ -110,15 +128,15 @@ const AdminPostDetail = ({ postId }) => {
       <div className='content'>
         {data.Photos.length > 0 && (
           <ul className='content-img'>
-            {data.Photos.map((image, idx) => (
+            {data.Photos.map((image: PhotosType, idx: number) => (
               <li key={idx + image.imgPath}>
-                <img src={image.imgPath} alt={image.originName} />
+                <img src={image.imgPath} alt={image.imgPath} />
               </li>
             ))}
           </ul>
         )}
         <div className='content-text'>
-          {data.content.split('\n').map((line, idx) => (
+          {data.content.split('\n').map((line: string, idx: number) => (
             <span key={idx}>
               {line}
               <br />
@@ -131,7 +149,7 @@ const AdminPostDetail = ({ postId }) => {
 
       <CommentBlock>
         <CommentTitle>댓글</CommentTitle>
-        {data.Comments.map((comment) => (
+        {data.Comments.map((comment: CommentType) => (
           <CommentContentBlock key={comment.id}>
             <UserInfo>
               <p className='user-name'>{comment.User.name}</p>

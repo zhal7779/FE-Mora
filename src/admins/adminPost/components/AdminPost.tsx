@@ -13,7 +13,33 @@ import {
   ScrollTopButton,
 } from '../styledComponents/AdminPost';
 
-export const AdminPost = ({ keyword }) => {
+interface AdminPostProps {
+  keyword: string;
+}
+
+interface PhotosType {
+  imgPath: string;
+}
+
+interface UserType {
+  name: string;
+  email: string;
+}
+
+interface PostType {
+  Photos: PhotosType[];
+  User: UserType;
+  category: string;
+  content: string;
+  createdAt: string;
+  id: string;
+  title: string;
+  updatedAt: string;
+  viewCnt: number;
+  writer: string;
+}
+
+export const AdminPost = ({ keyword }: AdminPostProps) => {
   const observerElement = useRef(null);
 
   const { data, fetchNextPage, hasNextPage, isSuccess } = useInfiniteQuery(
@@ -29,7 +55,7 @@ export const AdminPost = ({ keyword }) => {
   );
 
   const handleObserver = useCallback(
-    (entries) => {
+    (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
       if (target.isIntersecting) {
         fetchNextPage();
@@ -48,14 +74,14 @@ export const AdminPost = ({ keyword }) => {
     return () => observer.unobserve(element);
   }, [fetchNextPage, hasNextPage, handleObserver]);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deletePost(id);
     }
   };
 
-  const { mutate: deletePost } = useMutation((id) => fetchDeletePost(id), {
+  const { mutate: deletePost } = useMutation((id: string) => fetchDeletePost(id), {
     onError(error) {
       console.error(error);
     },
@@ -73,7 +99,7 @@ export const AdminPost = ({ keyword }) => {
       <PostGrid className='grid-setting'>
         {isSuccess &&
           data.pages.map((page) =>
-            page.objArr.map((post, idx) => (
+            page.objArr.map((post: PostType, idx: number) => (
               <PostLayout key={post.id}>
                 <Link to={`/admin/posts/detail/${post.id}`}>
                   <PostImage className='image'>
@@ -82,7 +108,10 @@ export const AdminPost = ({ keyword }) => {
                         src={post.Photos[0].imgPath}
                         alt={'img'}
                         className='img-tag'
-                        onError={(e) => (e.target.src = images[Math.floor((idx % 15) / 3)])}
+                        onError={(e) => {
+                          const imageTarget = e.target as HTMLImageElement;
+                          imageTarget.src = images[Math.floor((idx % 15) / 3)];
+                        }}
                       />
                     ) : (
                       <img src={images[Math.floor((idx % 15) / 3)]} alt='엘리스 불토끼' />
