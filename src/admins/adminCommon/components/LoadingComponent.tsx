@@ -1,5 +1,6 @@
 import SearchBar from './SearchBar';
-import { TableTitle, EnrollButton } from '../../adminNotification/styledComponents/TableComponent';
+import { EnrollButton } from '../styledComponents/LoadingComponentStyle';
+import { TableTitle } from '../../adminNotification/styledComponents/TableComponent';
 import {
   MainContentHeaderBlock,
   TableTitleBlock,
