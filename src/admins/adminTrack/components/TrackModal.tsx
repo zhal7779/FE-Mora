@@ -14,19 +14,40 @@ import {
   ModalHeaderButton,
 } from '../styledComponents/ModalComponents';
 
-const TrackModal = ({ trackData, handleModalCancelClick }) => {
+interface ContentsType {
+  name: string;
+  phase: string;
+}
+
+interface TrackDataType extends ContentsType {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface TrackModalProps {
+  trackData: TrackDataType;
+  handleModalCancelClick: () => void;
+}
+
+const TrackModal = ({ trackData, handleModalCancelClick }: TrackModalProps) => {
   const [updatable, setUpdatable] = useState(false);
-  const [contents, setContents] = useState({ name: trackData.name, phase: trackData.phase });
-  const firstInput = useRef(null);
+  const [contents, setContents] = useState<ContentsType>({
+    name: trackData.name,
+    phase: trackData.phase,
+  });
+  const firstInput = useRef<HTMLInputElement>(null);
 
   const handleUpdatable = () => {
     setUpdatable(true);
-    if (!updatable) firstInput.current.focus();
+    if (!updatable && firstInput.current) {
+      firstInput.current.focus();
+    }
   };
 
-  const handleChangeContents = (e) => {
+  const handleChangeContents = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newContent = { ...contents };
-    newContent[e.target.name] = e.target.value;
+    newContent[e.target.name as keyof ContentsType] = e.target.value;
     setContents(() => newContent);
   };
 
@@ -44,7 +65,7 @@ const TrackModal = ({ trackData, handleModalCancelClick }) => {
     setUpdatable(false);
   };
 
-  const { mutate: updateTrack, error: updateError } = useMutation(
+  const { mutate: updateTrack } = useMutation(
     async () => await fetchUpdateTrack(trackData.id, contents),
     {
       onError(updateError) {
@@ -53,20 +74,13 @@ const TrackModal = ({ trackData, handleModalCancelClick }) => {
     }
   );
 
-  if (updateError) return <span>An updateError has occurred: {updateError.message}</span>;
-
   return (
     <>
       <ModalOverlay onClick={handleModalCancelClick} />
       <ModalContentBlock className='modal-content-block'>
         <ModalHeader className='modal-header'>
           <ModalTitle className='modal-title'>트랙 정보</ModalTitle>
-          <ModalHeaderButton
-            className='modal-button-update'
-            onClick={handleUpdatable}
-            $purple
-            $header
-          >
+          <ModalHeaderButton className='modal-button-update' onClick={handleUpdatable}>
             수정하기
           </ModalHeaderButton>
         </ModalHeader>

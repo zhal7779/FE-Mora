@@ -1,7 +1,12 @@
 const domainPort = process.env.REACT_APP_URL;
 
+interface NewTrackType {
+  name: string;
+  phase: string;
+}
+
 // READ
-export const fetchReadTrackInfo = async (page, size, keyword) => {
+export const fetchReadTrackInfo = async (page: number, size: number, keyword: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(
     `${domainPort}/api/generations?page=${page}&size=${size}&keyword=${keyword}`,
@@ -14,7 +19,7 @@ export const fetchReadTrackInfo = async (page, size, keyword) => {
   return data;
 };
 
-export const fetchReadTrackInfoDetail = async (id) => {
+export const fetchReadTrackInfoDetail = async (id: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/generations/${id}`, {
     headers: { Authorization: `Bearer ${adminToken}` },
@@ -25,7 +30,7 @@ export const fetchReadTrackInfoDetail = async (id) => {
 };
 
 // CREATE
-export const fetchCreateTrack = async (newTrack) => {
+export const fetchCreateTrack = async (newTrack: NewTrackType) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/generations`, {
     method: 'POST',
@@ -41,7 +46,7 @@ export const fetchCreateTrack = async (newTrack) => {
 };
 
 // UPDATE
-export const fetchUpdateTrack = async (id, newTrack) => {
+export const fetchUpdateTrack = async (id: string, newTrack: NewTrackType) => {
   const adminToken = sessionStorage.getItem('adminToken');
   const response = await fetch(`${domainPort}/api/generations/${id}`, {
     method: 'PATCH',
@@ -58,9 +63,9 @@ export const fetchUpdateTrack = async (id, newTrack) => {
 };
 
 // DELETE
-export const fetchDeleteTrack = async (id) => {
+export const fetchDeleteTrack = async (id: string) => {
   const adminToken = sessionStorage.getItem('adminToken');
-  const response = fetch(`${domainPort}/api/generations/${id}`, {
+  const response = await fetch(`${domainPort}/api/generations/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${adminToken}`,

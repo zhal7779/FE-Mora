@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const ModalOverlay = styled.div`
+interface ModalButtonProps {
+  $purple?: boolean;
+}
+
+export const ModalOverlay = styled.div`
   position: fixed;
 
   top: 0;
@@ -13,7 +17,7 @@ const ModalOverlay = styled.div`
   z-index: 1;
   opacity: 0.4;
 `;
-const ModalContentBlock = styled.div`
+export const ModalContentBlock = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -32,14 +36,14 @@ const ModalContentBlock = styled.div`
     padding: 30px 40px;
   }
 `;
-const ModalTitle = styled.h3`
+export const ModalTitle = styled.h3`
   display: block;
   font-size: 2rem;
   font-weight: bold;
 
   color: #424242;
 `;
-const ModalSubTitle = styled.p`
+export const ModalSubTitle = styled.p`
   margin-bottom: 0.8rem;
 
   color: #616161;
@@ -47,7 +51,7 @@ const ModalSubTitle = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
 `;
-const ModalContentInput = styled.input`
+export const ModalContentInput = styled.input`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -67,7 +71,7 @@ const ModalContentInput = styled.input`
     margin-bottom: 16px;
   }
 `;
-const ModalContentP = styled.p`
+export const ModalContentP = styled.p`
   width: 100%;
   padding: 1rem 1.5rem;
   border: 1px solid #d9d9d9;
@@ -79,19 +83,19 @@ const ModalContentP = styled.p`
 
   font-size: 1.4rem;
 `;
-const ModalButtonBlock = styled.div`
+export const ModalButtonBlock = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
   gap: 1.5rem;
   padding-top: 2rem;
 `;
-const ModalHeader = styled.div`
+export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5rem;
 `;
-const ModalHeaderButton = styled.button`
+export const ModalHeaderButton = styled.button`
   padding: 0.6rem 1rem;
   border: none;
   border-radius: 4px;
@@ -102,7 +106,7 @@ const ModalHeaderButton = styled.button`
   font-size: 1.2rem;
   font-weight: bold;
 `;
-const ModalButton = styled.button`
+export const ModalButton = styled.button<ModalButtonProps>`
   padding: 1rem 2rem;
   border: ${(props) => (props.$purple ? 'none' : '1px solid #d9d9d9')};
   border-radius: 4px;
@@ -113,16 +117,3 @@ const ModalButton = styled.button`
   font-size: 1.5rem;
   font-weight: bold;
 `;
-
-export {
-  ModalButton,
-  ModalButtonBlock,
-  ModalContentBlock,
-  ModalContentInput,
-  ModalContentP,
-  ModalHeader,
-  ModalHeaderButton,
-  ModalOverlay,
-  ModalSubTitle,
-  ModalTitle,
-};

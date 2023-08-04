@@ -6,11 +6,23 @@ import TrackModal from './TrackModal';
 import DeleteButton from '../../adminCommon/components/DeleteButton';
 import { DetailBtn, TrackInfo, TrackListBlock } from '../styledComponents/TableComponent';
 
-const AdminTableBody = ({ tracks }) => {
+interface TrackType {
+  name: string;
+  phase: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface TracksProps {
+  tracks: TrackType[];
+}
+
+const AdminTableBody = ({ tracks }: TracksProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTrackData, setModalTrackData] = useState({ id: '', name: '', phase: '' });
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     const response = confirm('삭제하시겠습니까?');
     if (response) {
       deleteTrack(id);
@@ -18,7 +30,7 @@ const AdminTableBody = ({ tracks }) => {
     }
   };
 
-  const handleDetailClick = (id, name, phase) => {
+  const handleDetailClick = (id: string, name: string, phase: string) => {
     const newTrackData = {
       ...modalTrackData,
       id,
@@ -33,7 +45,7 @@ const AdminTableBody = ({ tracks }) => {
     setIsModalOpen(false);
   };
 
-  const { mutate: deleteTrack, error } = useMutation((id) => fetchDeleteTrack(id), {
+  const { mutate: deleteTrack } = useMutation((id: string) => fetchDeleteTrack(id), {
     onError(error) {
       console.error(error);
     },

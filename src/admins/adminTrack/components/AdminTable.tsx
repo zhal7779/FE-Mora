@@ -25,7 +25,7 @@ const AdminTable = () => {
     setEnrollModal(!enrollModal);
   };
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading } = useQuery(
     ['admin', 'track', 'get', currentPage, keyword],
     async () => await fetchReadTrackInfo(currentPage, 12, keyword)
   );
