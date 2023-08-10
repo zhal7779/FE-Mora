@@ -5,9 +5,17 @@ import Headline from '../logIn/Headline';
 import LoginInput from '../logIn/LogInInput';
 import LoginButton from '../logIn/LogInButton';
 import LittleText from '../logIn/LittleText';
-import SigninAccordion from '../signIn/SignInAccordion';
+import upIcon from '../assets/icons/u_angle-up.svg';
+import downIcon from '../assets/icons/u_angle-down.svg';
+
 import { useMutation } from 'react-query';
+import styled, { keyframes } from 'styled-components';
 const URL = process.env.REACT_APP_URL;
+
+interface AccordionButtonProps {
+  expanded: boolean;
+  onClick: () => void;
+}
 
 const Signin = () => {
   const [userName, setUserName] = useState('');
@@ -16,6 +24,19 @@ const Signin = () => {
   const [showLittleText, setShowLittleText] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const firstChildRef = useRef<HTMLInputElement>(null);
+
+  const toggleAccordion = () => {
+    setExpanded(!expanded);
+  };
+
+  useEffect(() => {
+    if (expanded && firstChildRef.current) {
+      firstChildRef.current.focus();
+    }
+  }, [expanded]);
 
   // 유효성 검사용 ref 선언
   const emailInputRef = useRef<HTMLInputElement>(null);
@@ -89,7 +110,15 @@ const Signin = () => {
   return (
     <LoginContainer>
       <Headline title='엘리스 갱스터 회원 가입 🕶️' />
-      <SigninAccordion>
+      <AccordionButton onClick={toggleAccordion} expanded={expanded}>
+        이메일로 시작하기
+        {expanded ? (
+          <AccordionIcon src={upIcon} alt='Up Icon' />
+        ) : (
+          <AccordionIcon src={downIcon} alt='Down Icon' />
+        )}
+      </AccordionButton>
+      <AccordionContent expanded={expanded}>
         <LoginInput
           title='성함'
           type='text'
@@ -97,6 +126,7 @@ const Signin = () => {
           name='userName'
           onChange={(e) => setUserName(e.target.value)}
           value={userName}
+          ref={firstChildRef}
         />
         <LoginInput
           title='지메일'
@@ -122,7 +152,7 @@ const Signin = () => {
           }}
         />
         <LoginButton color='darkPurple' value='회원가입' onClick={handleSignin} />
-      </SigninAccordion>
+      </AccordionContent>
 
       {showLittleText ? (
         <LittleText wiggle text={errorMessage} />
@@ -136,3 +166,72 @@ const Signin = () => {
 };
 
 export default Signin;
+
+const AccordionIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin: 0 0 0.4rem 0.7rem;
+`;
+
+const AccordionButton = styled.button<AccordionButtonProps>`
+  display: inline-block;
+  width: 35.2rem;
+  height: 48px;
+  margin-top: 0.3rem;
+  border-radius: 1.2rem;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  background-color: #7353ea;
+  color: #ffffff;
+  padding: 11px 21px 9px 21px;
+  cursor: pointer;
+
+  &:hover {
+    background: #5e3de4;
+    transition: all 0.2s ease-in-out;
+  }
+  &:not(:hover) {
+    background: #7353ea;
+    transition: all 0.2s ease-in-out;
+  }
+  &:active {
+    background: #532eda;
+    transition: all 0.2s ease-in-out;
+  }
+`;
+
+const AccordionContent = styled.div<{ expanded: boolean }>`
+  background-color: #ffffff;
+  padding: 10px;
+  margin-top: 10px;
+  animation: ${({ expanded }) => (expanded ? slideDown : slideUp)} 0.3s ease-in-out;
+  max-height: ${({ expanded }) => (expanded ? '500px' : '0')};
+  opacity: ${({ expanded }) => (expanded ? '1' : '0')};
+  overflow: hidden;
+`;
+
+const slideDown = keyframes`
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 420px;
+    opacity: 1;
+  }
+`;
+
+const slideUp = keyframes`
+  from {
+    max-height: 420px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+`;
