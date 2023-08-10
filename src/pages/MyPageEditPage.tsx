@@ -87,7 +87,6 @@ const MyPageEdit = () => {
       if (data) {
         const imageUrl = `${URL}/` + data.file_name;
         setUserImg(imageUrl);
-        queryClient.invalidateQueries('mainProfileData');
       } else {
         console.log('이미지 업로드 실패');
       }

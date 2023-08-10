@@ -1,9 +1,17 @@
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  ReactNode,
+  Children,
+  cloneElement,
+  ReactElement,
+} from 'react';
 import styled, { keyframes } from 'styled-components';
 import upIcon from '../assets/icons/u_angle-up.svg';
 import downIcon from '../assets/icons/u_angle-down.svg';
 
-interface SigninAccordionProps {
+interface SignInAccordionProps {
   children: ReactNode;
 }
 interface AccordionButtonProps {
@@ -11,7 +19,7 @@ interface AccordionButtonProps {
   onClick: () => void;
 }
 
-const SigninAccordion = ({ children }: SigninAccordionProps) => {
+const SignInAccordion = ({ children }: SignInAccordionProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const firstChildRef = useRef<HTMLInputElement>(null);
 
@@ -36,9 +44,9 @@ const SigninAccordion = ({ children }: SigninAccordionProps) => {
         )}
       </AccordionButton>
       <AccordionContent expanded={expanded}>
-        {React.Children.map(children, (child, index) => {
+        {Children.map(children, (child, index) => {
           if (index === 0) {
-            return React.cloneElement(child as React.ReactElement, { ref: firstChildRef });
+            return cloneElement(child as ReactElement, { ref: firstChildRef });
           }
           return child;
         })}
@@ -53,14 +61,14 @@ const slideDown = keyframes`
     opacity: 0;
   }
   to {
-    max-height: 500px;
+    max-height: 420px;
     opacity: 1;
   }
 `;
 
 const slideUp = keyframes`
   from {
-    max-height: 500px;
+    max-height: 420px;
     opacity: 1;
   }
   to {
@@ -120,4 +128,4 @@ const AccordionContent = styled.div<{ expanded: boolean }>`
   overflow: hidden;
 `;
 
-export default SigninAccordion;
+export default SignInAccordion;
