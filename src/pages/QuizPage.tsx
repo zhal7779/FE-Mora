@@ -46,11 +46,6 @@ const Quiz = () => {
     });
   }
 
-  // 새로고침시 다른 퀴즈 보여주기
-  // useEffect(() => {
-  //   getOtherQuiz();
-  // }, []);
-
   // 인풋에 자동 포커스
   useEffect(() => {
     if (inputRef.current) {

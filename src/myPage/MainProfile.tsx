@@ -41,12 +41,8 @@ const MainProfile = () => {
 
   const mainProfileData = mainProfileDataQuery.data;
 
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
 
   // 유저 탈퇴 DELETE 뮤테이션 선언
@@ -68,7 +64,7 @@ const MainProfile = () => {
     try {
       await deleteAccountMutation.mutateAsync();
       sessionStorage.removeItem('userToken');
-      closeModal();
+      toggleModal();
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -90,7 +86,7 @@ const MainProfile = () => {
                 value='수정하기'
                 onClick={() => navigate('/mypage/edit')}
               />
-              <Button color='white' value='탈퇴하기' onClick={openModal} />
+              <Button color='white' value='탈퇴하기' onClick={toggleModal} />
             </div>
           </div>
           <h3>{mainProfileData.name}</h3>
@@ -125,7 +121,7 @@ const MainProfile = () => {
               value={password}
             />
             <div className='modal-buttons-container'>
-              <Button color='white' value='취소' onClick={closeModal} />
+              <Button color='white' value='취소' onClick={toggleModal} />
               <Button
                 color='darkPurple'
                 value='탈퇴'

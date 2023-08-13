@@ -44,7 +44,7 @@ const MyPageEdit = () => {
         return response.json();
       })
       .then((data) => {
-        setMySkillList(data); // Update mySkillList with the fetched data
+        setMySkillList(data);
         return data;
       });
   });
